@@ -207,10 +207,10 @@ do
     -xm)             shift;ccargs="$ccargs -xm $1";; # mwc
     -oneperfile)     ocargs="$ocargs $arg";;
     -cthreads)       objcrt=objcrtth;; 
-    -pthreads)       objcrt=objcrtrth;finlibs="$finlibs -lpthread"
+    -pthreads)       finlibs="$finlibs -lpthread"
 		     cpargs="$cpargs -DOBJC_REFCNT=1";
                      ocargs="$ocargs $arg";
-                     objcrt=objcrtr;objpak=objpakr;cakit=cakitr;;
+                     objcrt=objcrtrth;objpak=objpakr;cakit=cakitr;;
     -otb)            cpargs="$cpargs -DOTBCRT=1";
                      ocargs="$ocargs $arg";
 		     objcrt=otbcrt;objpak=otbpak;cakit=cakitb;
