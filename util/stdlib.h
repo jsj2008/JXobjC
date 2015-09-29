@@ -9,3 +9,6 @@
 #pragma OCbuiltInFctn memset
 #pragma OCbuiltInFctn abort
 
+#ifndef __dead2
+#define __dead2
+#endif

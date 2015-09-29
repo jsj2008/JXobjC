@@ -3,6 +3,8 @@
 # script to precompile compiler to C (bootstrap package)
 # $Id: bootSrc,v 1.28 2014/02/23 18:28:46 stes Exp $
 
+
+MAKE=make
 DST=$HOME/objc-bootstrap-3.2.12
 
 if test -f Makefile
@@ -17,7 +19,7 @@ ac_cv_func_memcpy=no;export ac_cv_func_memcpy
 ac_cv_func_snprintf=no;export ac_cv_func_snprintf
 ./configure --with-postlink --with-prefixed-names
 
-OBJCOPT='-C -traditional -traditional-cpp -noFwd -noFiler -postlink -init oc_objcInit -nostdinc -I../../util/ -T../../util/'
+OBJCOPT='-C -traditional -traditional-cpp -noFwd -noFiler -postlink -init oc_objcInit -nostdinc -T../../util/ -I../../util/ '
 export OBJCOPT
 
 (cd src/objcrt;make)
