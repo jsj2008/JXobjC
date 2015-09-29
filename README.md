@@ -1,3 +1,11 @@
+# The Portable Object Compiler #
+
+### Overview ###
+
+This is my branch of the Portable Object Compiler.
+The original Readme.txt follows below:
+
+
 Portable Object Compiler (c) 1997,98,99,2000,01,02,03,04.  All Rights Reserved.
 
 
