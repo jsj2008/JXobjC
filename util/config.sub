@@ -671,6 +671,10 @@ case $basic_machine in
 		basic_machine=i386-pc
 		os=-mingw32
 		;;
+	mingw64)
+		basic_machine=x86_64-pc
+		os=-mingw64
+		;;
 	miniframe)
 		basic_machine=m68000-convergent
 		;;
@@ -1181,7 +1185,7 @@ case $os in
 	      | -udi* | -eabi* | -lites* | -ieee* | -go32* | -aux* \
 	      | -chorusos* | -chorusrdb* \
 	      | -cygwin* | -pe* | -psos* | -moss* | -proelf* | -rtems* \
-	      | -mingw32* | -linux-gnu* | -linux-uclibc* | -uxpv* | -beos* | -mpeix* | -udk* \
+	      | -mingw32* | -mingw64* | -linux-gnu* | -linux-uclibc* | -uxpv* | -beos* | -mpeix* | -udk* \
 	      | -interix* | -uwin* | -mks* | -rhapsody* | -darwin* | -opened* \
 	      | -openstep* | -oskit* | -conix* | -pw32* | -nonstopux* \
 	      | -storm-chaos* | -tops10* | -tenex* | -tops20* | -its* \
