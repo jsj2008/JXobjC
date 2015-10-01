@@ -49,7 +49,7 @@ int yylex() ;
 %start translunit
 
 %token identifier constant stringcomp builtinfun typeword
-%token storageclass typedefkeyw typequal externlang
+%token storageclass typedefkeyw typequal externlang namespace
 
 %token cppdirect 
 /* cppdirectives such as c pragmas. unlike poc 1.x we handle this in 2.x */
@@ -428,6 +428,8 @@ extdef : fundef
      { $$ = $1; }
   | externlangblock  
      { $$ = nil; }
+  | namespaceblock
+     { $$ = nil; }
   ;
 
 externlangblock : externlang '{' '}'
@@ -437,6 +439,20 @@ externlangblock : externlang '{' '}'
     translunit '}' 
      { [$5 gen]; }
   ;
+
+namespacepre
+    : namespace
+    | namespace gnuattribdecl
+    ;
+
+namespaceblock
+    : namespacepre '{' '}'
+    { [$1 gen];[$2 gen];[$3 gen]; }
+    | namespacepre '{'
+    { [$1 gen];[$2 gen]; /* to support CC or g++ as C compiler */ }
+    translunit '}'
+    { [$5 gen]; }
+    ;
 
 funbody : /* id a,b; {} */
     compoundstmt  
