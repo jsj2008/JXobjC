@@ -1,4 +1,4 @@
-# The Portable Object Compiler #
+# Portable Object Compiler++ #
 
 ### Overview ###
 
