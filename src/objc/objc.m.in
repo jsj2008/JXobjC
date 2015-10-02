@@ -462,6 +462,8 @@ ddefaults(void)
 
   libs = [OrdCltn new];
   finlibs = [OrdCltn new];
+
+  [finlibs add:[String str:"-lpthread"]];
 }
 
 /*
@@ -1016,15 +1018,6 @@ doptions(id args)
       cakit="cakitb";
       [ocargs add:arg];
       [cpargs add:makeD("OTBCRT=1")];
-      continue;
-    }
-    if (eq("-cthreads")) {
-      objcrt="objcrtth";
-      continue;
-    }
-    if (eq("-pthreads")) {
-      objcrt="objcrtth";
-      [finlibs add:[String str:"-lpthread"]];
       continue;
     }
     if (eq("-gc") || eq("-refcnt")) {

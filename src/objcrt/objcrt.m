@@ -35,15 +35,8 @@
 #include <stdlib.h>
 #include <string.h>		/* memset */
 
-#if OBJCRT_PTHREADS
 #include <pthread.h>		/* POSIX 1003.1c thread-safe messenger */
 static pthread_mutex_t cLock;
-#endif
-
-#if OBJCRT_CTHREADS
-#include <cthreads.h>		/* Mach C thread-safe messenger */
-static struct mutex cLock = MUTEX_INITIALIZER;
-#endif
 
 #if OBJCRT_BOEHM
 #include <gc.h>			/* _alloc vectors to use Hans-J. Boehm gc */
@@ -1196,9 +1189,7 @@ msgiods (void)
 	}
     }
 
-#if OBJCRT_PTHREADS
   pthread_mutex_init (&cLock, NULL);
-#endif
 }
 
 int EXPORT 
@@ -1682,26 +1673,8 @@ BOOL dbgFlag = NO;
 BOOL allocFlag = NO;
 FILE *dbgIOD;
 
-/* optional thread-safe messenger 
- * idea is that runtime can be recompiled with various threads pkgs
- * the compiler has a flag (such as -pthreads) to link then against the
- * appropriate runtime
- */
-
-#if !defined(OBJCRT_PTHREADS) && !defined(OBJCRT_CTHREADS)
-#define CACHE_LOCK		/* nothing */
-#define CACHE_UNLOCK		/* nothing */
-#endif
-
-#if OBJCRT_PTHREADS
 #define CACHE_LOCK pthread_mutex_lock(&cLock);
 #define CACHE_UNLOCK pthread_mutex_unlock(&cLock);
-#endif
-
-#if OBJCRT_CTHREADS
-#define CACHE_LOCK if (!mutex_try_lock(&cLock)) mutex_wait_lock(&cLock);
-#define CACHE_UNLOCK (&cLock)->lock = 0;
-#endif
 
 /*
  * computing index of IMP pointer in method look-up cache

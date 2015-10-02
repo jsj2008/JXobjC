@@ -69,7 +69,7 @@ link=y
 linkdl=n
 include=y
 libs=""
-finlibs=""
+finlibs="-lpthread"
 uselibs=y
 blocks=1
 ppi=0
@@ -206,20 +206,15 @@ do
     -sym)            shift;ccargs="$ccargs -sym $1";; # mwc
     -xm)             shift;ccargs="$ccargs -xm $1";; # mwc
     -oneperfile)     ocargs="$ocargs $arg";;
-    -cthreads)       objcrt=objcrtth;; 
-    -pthreads)       finlibs="$finlibs -lpthread"
-		     cpargs="$cpargs -DOBJC_REFCNT=1";
-                     ocargs="$ocargs $arg";
-                     objcrt=objcrtrth;objpak=objpakr;cakit=cakitr;;
     -otb)            cpargs="$cpargs -DOTBCRT=1";
                      ocargs="$ocargs $arg";
 		     objcrt=otbcrt;objpak=otbpak;cakit=cakitb;
 		     ;;
-    -boehm)    objcrt=objcrtgc;
+    -boehm)          objcrt=objcrtgc;
                      cpargs="$cpargs -I$gcprefix/include";
 		     finlibs="$finlibs $gcprefix/lib/gc.a";
 		     ;;
-    -gc|-refcnt)	     cpargs="$cpargs -DOBJC_REFCNT=1";
+    -gc|-refcnt)     cpargs="$cpargs -DOBJC_REFCNT=1";
                      ocargs="$ocargs $arg";
                      objcrt=objcrtr;objpak=objpakr;cakit=cakitr;;
     -postlink|-postLink) postlink=1;;

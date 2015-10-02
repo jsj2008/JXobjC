@@ -18,10 +18,6 @@ default ::
 	$(MAKE) bootstrap
 	$(MAKE) cleanruntime
 	$(MAKE) runtime
-	$(MAKE) cleanruntime
-	$(MAKE) objcrtrth
-
-thruntime: objcrtrth
 
 runtime : objcrtr objpakr cakitr
 
@@ -32,9 +28,6 @@ objcrt ::
 
 objcrtr ::
 	$(CD) src;$(CD) objcrt; $(MAKE) OBJC="objc -q -refcnt" LIBRARY=objcrtr.a
-
-objcrtrth :;
-	$(CD) src;$(CD) objcrt; $(MAKE) OBJC="objc -q -refcnt -DOBJCRT_PTHREADS" LIBRARY=objcrtrth.a
 
 objpak ::
 	$(CD) src; $(CD) objpak; $(MAKE)
@@ -65,7 +58,6 @@ shlib ::
 bootstrap :
 	-$(CD) src; $(CD) objcrt; $(MAKE) bootstrap
 	-$(CD) src; $(CD) objcrt; $(MAKE) LIBRARY=objcrtr.a bootstrap
-	-$(CD) src; $(CD) objcrt; $(MAKE) LIBRARY=objcrtrth.a bootstrap
 	-$(CD) src; $(CD) objpak; $(MAKE) bootstrap
 	-$(CD) src; $(CD) objpak; $(MAKE) LIBRARY=objpakr.a bootstrap
 	-$(CD) src; $(CD) oclib;  $(MAKE) bootstrap
