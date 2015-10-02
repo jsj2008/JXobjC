@@ -30,7 +30,6 @@ copy util\config.%1 src\objcrt\config.h
 copy util\config.%1 src\objpak\config.h
 copy util\config.%1 src\oclib\config.h
 copy util\config.%1 src\objc\config.h
-copy util\config.%1 src\cakit\config.h
 
 copy src\objc\objc.%1 src\objc\objc.m
 
@@ -38,8 +37,6 @@ copy src\objcrt\Makefile.%1 src\objcrt\Makefile
 copy src\objpak\Makefile.%1 src\objpak\Makefile
 copy src\oclib\Makefile.%1 src\oclib\Makefile
 copy src\objc\Makefile.%1 src\objc\Makefile
-copy src\cakit\Makefile.%1 src\cakit\Makefile
-copy words\Makefile.%1 words\Makefile
 
 goto done
 

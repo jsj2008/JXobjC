@@ -112,7 +112,7 @@ DBLSUFFIX ([fFlL]{1,3})
 "_Imaginary"			{ return keyw(typeword); }
 "int"				{ return keyw(typeword); }
 "long"				{ return keyw(typeword); }
-"inline namespace "({NONBLANK}*) { printf("Namespace lol: %s\n", yytext); if (o_cplus) return keyw(namespace); }
+"inline namespace "({NONBLANK}*) { if (o_cplus) return keyw(namespace); }
 "namespace "({NONBLANK}*)	{ if (o_cplus) return keyw(namespace); }
 "register"			{ return keyw(storageclass); }
 "return"			{ return keyw(returnkeyw); }

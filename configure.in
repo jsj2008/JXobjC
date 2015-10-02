@@ -337,7 +337,6 @@ OBJCRT_IFLAGS="$NOI"
 OBJPAK_IFLAGS="$OBJCRT_INC"
 OCLIB_IFLAGS="$OBJCRT_INC $OBJPAK_INC"
 OBJC_IFLAGS="-I. $OBJCRT_INC $OBJPAK_INC -I${UP}oclib"
-CAKIT_IFLAGS="-I. $OBJCRT_INC"
 
 OBJC_BOOTLIBS="${NOLIBS} ${UP}oclib${PATHSEP}oclib.${LIBSUFFIX}"
 OBJC_BOOTLIBS="$OBJC_BOOTLIBS ${UP}objpak${PATHSEP}objpak.${LIBSUFFIX}"
@@ -347,7 +346,6 @@ AC_SUBST(OBJCRT_IFLAGS)
 AC_SUBST(OBJPAK_IFLAGS)
 AC_SUBST(OCLIB_IFLAGS)
 AC_SUBST(OBJC_IFLAGS)
-AC_SUBST(CAKIT_IFLAGS)
 AC_SUBST(OBJC_BOOTLIBS)
 
 dnl Since the quality of the POC depends on lex/yacc, we require flex/byacc
@@ -664,7 +662,7 @@ AC_SUBST(SQLEXT)
 case $btrap in
 1)	list='Makefile objc'
 	;;
-0)	list='config.h Makefile src/objcrt/config.h src/objcrt/Makefile src/objpak/config.h src/objpak/Makefile src/oclib/config.h src/oclib/Makefile src/objc/config.h src/objc/Makefile src/objc/objc src/objc/objc.m src/cakit/config.h src/cakit/Makefile examples/Makefile words/Makefile'
+0)	list='config.h Makefile src/objcrt/config.h src/objcrt/Makefile src/objpak/config.h src/objpak/Makefile src/oclib/config.h src/oclib/Makefile src/objc/config.h src/objc/Makefile src/objc/objc src/objc/objc.m examples/Makefile'
 	;;
 esac
 

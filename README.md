@@ -2,7 +2,36 @@
 
 ### Overview ###
 
-This is my branch of the Portable Object Compiler.
+This is the **Portable Object Compiler++**, a branch of David Stes' *Portable
+Object Compiler*.
+
+It provides a compiler for *Objective-C*, which includes support for novel
+functionality like *Blocks* (which are an implementation of closures or lambda
+expressions).
+
+An implementation of *ICpak 101* is included; this is called **ObjPak**. This
+provides a powerful set of container classes which work similarly to those
+provided in the *SmallTalk-80* standard library.
+
+A variety of other libraries are also available; one of these is **CAkit**, the
+*Computer Algebra Kit*, which provides classes allowing multiple precision
+arithmetic and polynomial mathematics.
+
+**CAkit** and an *Objective-C* interpreter and debugger known as VICI are found
+in the PC++-Extras repository.
+
+### Compiling ###
+
+Instructions are available in `doc/compile` detailing compilation on various
+platforms.
+
+Before you can build the Portable Object Compiler, you will need to build and
+install the bootstrap package. This is available in the **Releases** section of
+the GitHub page.
+
+
+## Original Readme.txt ##
+
 The original Readme.txt follows below:
 
 

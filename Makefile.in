@@ -14,12 +14,11 @@ INSTALLDIR=@INSTALLDIR@
 default ::
 	$(MAKE) cleanruntime
 	$(MAKE) compiler
-	$(MAKE) cakit
 	$(MAKE) bootstrap
 	$(MAKE) cleanruntime
 	$(MAKE) runtime
 
-runtime : objcrtr objpakr cakitr
+runtime : objcrtr objpakr
 
 compiler : objcrt objpak oclib objc
 
@@ -41,12 +40,6 @@ oclib ::
 objc ::
 	$(CD) src; $(CD) objc;   $(MAKE)
 
-cakit ::
-	$(CD) src; $(CD) cakit;  $(MAKE)
-
-cakitr ::
-	$(CD) src;$(CD) cakit;$(MAKE) OBJC="objc -q -refcnt" LIBRARY=cakitr.a
-
 browse ::
 	objc -browse tmp browse.h
 	cd tmp;cursel Menu.main
@@ -62,8 +55,6 @@ bootstrap :
 	-$(CD) src; $(CD) objpak; $(MAKE) LIBRARY=objpakr.a bootstrap
 	-$(CD) src; $(CD) oclib;  $(MAKE) bootstrap
 	-$(CD) src; $(CD) objc;   $(MAKE) bootstrap
-	-$(CD) src; $(CD) cakit;  $(MAKE) bootstrap
-	-$(CD) src; $(CD) cakit;  $(MAKE) LIBRARY=cakitr.a bootstrap
 
 #
 # tags file (vi -t isEqual , for example, brings you to isEqual)
@@ -86,20 +77,16 @@ cleantmp :
 	-$(CD) src; $(CD) objpak; $(MAKE) cleantmp
 	-$(CD) src; $(CD) oclib;  $(MAKE) cleantmp
 	-$(CD) src; $(CD) objc;   $(MAKE) cleantmp
-	-$(CD) src; $(CD) cakit;  $(MAKE) cleantmp
 	-$(CD) examples;          $(MAKE) cleantmp
-	-$(CD) words;             $(MAKE) cleantmp
 
 cleanruntime :
 	-$(CD) src; $(CD) objcrt; $(MAKE) clean
 	-$(CD) src; $(CD) objpak; $(MAKE) clean
-	-$(CD) src; $(CD) cakit;  $(MAKE) clean
 
 clean : cleanruntime
 	-$(CD) src; $(CD) oclib;  $(MAKE) clean
 	-$(CD) src; $(CD) objc;   $(MAKE) clean
 	-$(CD) examples;          $(MAKE) clean
-	-$(CD) words;             $(MAKE) clean
 
 distclean :
 	-$(RM) Makefile tags
@@ -108,9 +95,7 @@ distclean :
 	-$(CD) src; $(CD) objpak; $(MAKE) distclean
 	-$(CD) src; $(CD) oclib;  $(MAKE) distclean
 	-$(CD) src; $(CD) objc;   $(MAKE) distclean
-	-$(CD) src; $(CD) cakit;  $(MAKE) distclean
 	-$(CD) examples;          $(MAKE) distclean
-	-$(CD) words;             $(MAKE) distclean
 
 
 
