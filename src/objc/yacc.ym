@@ -324,10 +324,11 @@ datadefspecs : storageclass
      { $$ = mklist($1,$2);$$ = mklist($$,$3); $$ = mklist($$,$4); $$ = mklist($$,$5); $$ = mklist($$,$6); $$ = mklist($$,$7); }
   | externlang
      { $$ = mklist(nil,$1); /* o_cplus case */ }
+  |  templdecl
   ;
 
 datadefx : datadefspecs decl
-     { datadefokblock(nil,$1,$2); }
+     { datadefokblock(nil,$1,$2); [$2 print]; }
     optinitializer 
      { okblock=0;$$ = mkdatadef(nil,$1,$2,$4); }
   | datadefx ',' decl
@@ -335,6 +336,12 @@ datadefx : datadefspecs decl
     optinitializer
      { okblock=0;$$ = mkdatadef($1,nil,$3,$5); }
   ;
+
+templdecl
+    : identifier relop optparmdeflist relop
+    {
+        $$ = mklist(nil, nil);
+    }
 
 decl : declx
      { $$ = $1; }
@@ -785,8 +792,8 @@ shiftexpr : plusexpr
      { $$ = mkbinexpr($1,[$2 strCopy],$3); }
   ;
 
-structspec : structkeyw identifier '{' optcomponentdeflist '}'
-     { $$ = mkstructspec($1,$2,$3,$4,$5); }
+structspec : structkeyw identifier opttemplinst '{' optcomponentdeflist '}'
+     { $$ = mkstructspec($1,$2,$4,$5,$6); }
   | structkeyw typeword '{' optcomponentdeflist '}'
      { $$ = mkstructspec($1,$2,$3,$4,$5); }
   | structkeyw '{' optcomponentdeflist '}'
@@ -814,6 +821,18 @@ componentdeflist : componentdef
   | componentdeflist atdefs '(' identifier ')'
      { $$ = atdefsaddall($1,$4); }
   ;
+
+opttemplinst
+    : /* empty */ { $$ = mklist(nil, nil); }
+    | templinst
+    ;
+
+templinst
+    : relop identifier relop
+    {
+        $$ = mklist (nil, nil);
+    }
+    ;
 
 componentdef : componentdefx ';'
      { $$ = $1; }
