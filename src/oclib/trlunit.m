@@ -46,6 +46,8 @@
 #include "classdef.h"
 #include "msgxpr.h"
 
+#define CL "C"
+
 id trlunit;
 
 @implementation TranslationUnit
@@ -243,7 +245,7 @@ mystrrchr(const char *s, int c)
   if (o_inlinecache)
     [self inlinecacheprologue];
 
-  gf("extern struct modDescriptor %s *%s(void);\n", o_bind, bindfunname);
+  gf("extern %s struct modDescriptor %s *%s(void);\n", o_cplus ? "\"C\"" :"", o_bind, bindfunname);
 
   if (o_refbind) {
     /* workaround 'mwcc' dead code optimizer, force reference to bindfun */
@@ -268,6 +270,7 @@ mystrrchr(const char *s, int c)
   }
 
   /* type for Objective C modules */
+  o_cplus ? gextc() : gs("");
   gs("struct modDescriptor {\n");
   /* keep the following compat. with Stepstone objcc */
   gs("  char *modName;\n");
@@ -282,7 +285,7 @@ mystrrchr(const char *s, int c)
   /* POC extensions if any */
   gs("};\n");
 
-  gf("extern struct modDescriptor %s;\n", moddescname);
+  gf("extern %s struct modDescriptor %s;\n", o_cplus ? "\"C\"" :"", moddescname);
   if (o_checkbind)
     [self checkbindprologue];
   if (o_comments)

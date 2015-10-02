@@ -32,7 +32,7 @@
 #include "node.h"
 #include "stclass.h"
 #include "util.h"
-#include "yacc.h"
+#include "y.tab.h"
 #include "type.h"
 #include "options.h"
 #include "stmt.h"
@@ -112,8 +112,6 @@ DBLSUFFIX ([fFlL]{1,3})
 "_Imaginary"			{ return keyw(typeword); }
 "int"				{ return keyw(typeword); }
 "long"				{ return keyw(typeword); }
-"inline namespace "({NONBLANK}*) { if (o_cplus) return keyw(namespace); }
-"namespace "({NONBLANK}*)	{ if (o_cplus) return keyw(namespace); }
 "register"			{ return keyw(storageclass); }
 "return"			{ return keyw(returnkeyw); }
 "short"				{ return keyw(typeword); }
@@ -156,6 +154,12 @@ DBLSUFFIX ([fFlL]{1,3})
 "__asm"[ \t]*"{"[^}]*"}"	{ yylval=[DosAsmStmt str:yytext];return dosasmstmt; }
 
 "__asm"{BLANK}+{LETTER}{ALPHNUM}+{BLANK}+{NONBLANKORCOMMA}+{BLANK}*","{BLANK}*{NONBLANK}+		{yylval=[DosAsmStmt str:yytext];return dosasmstmt; }
+
+ /* C++ */
+
+"inline namespace "({NONBLANK}*) { if (o_cplus) return keyw(namespace); }
+"namespace "({NONBLANK}*)	 { if (o_cplus) return keyw(namespace); }
+"using"                          { if (o_cplus) return keyw(usingkeyw); }
 
 "__thread"		{ return gnukeyw(typequal); }
 "__const__"		{ return gnukeyw(typequal); }

@@ -50,7 +50,7 @@ int yylex() ;
 %start translunit
 
 %token identifier constant stringcomp builtinfun typeword
-%token storageclass typedefkeyw typequal externlang namespace
+%token storageclass typedefkeyw typequal externlang
 
 %token cppdirect 
 /* cppdirectives such as c pragmas. unlike poc 1.x we handle this in 2.x */
@@ -69,6 +69,9 @@ int yylex() ;
 
 %token atdefs atselector atinterface atend atencode atrequires 
 %token blockbegin
+
+/* C++ */
+%token namespace usingkeyw
 
 /* compiler specific */
 %token gnuextension attributekeyw
@@ -290,6 +293,12 @@ datadef : datadefspecs ';'  /* id a,b; or id foo(id z); */
      { $$ = $1; }
   | requiresclause /* Objective C 3.3 */
      { $$ = $1; }
+  | usingdecl ';'
+  {
+    gs([$1 str]);
+    gs(";");
+    $$ = nil;
+  }
   ;
 
 datadeflist : datadef
@@ -1006,6 +1015,27 @@ unaryexpr : primaryexpr
 
 unaryselector : identifier | reservedword | typeword | builtinfun
   ;
+
+
+ /* C++ */
+
+scoperesop
+    : ':' ':' { $$ = [String str:"::"]; }
+    ;
+
+scopedid1
+    : scoperesop identifier { $$ = [String sprintf:"%s%s", [$1 str], [$2 str]]; }
+    | scoperesop typeword   { $$ = [String sprintf:"%s%s", [$1 str], [$2 str]]; }
+    ;
+
+scoped_id
+    : scopedid1 { $$ = $1; }
+    | scoped_id scopedid1 { $$ = [$1 concat:$2]; }
+    ;
+
+usingdecl
+    : usingkeyw scoped_id { $$ = [String sprintf:"%s %s", [$1 str], [$2 str]]; }
+    ;
 
 %%
 

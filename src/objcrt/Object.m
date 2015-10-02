@@ -539,7 +539,7 @@ inherits (Cls_t aCls, STR name)
 
 - doesNotRecognize:(SEL)aSelector
 {
-  return [self error:"Message not recognized by this class."];
+  return [self error:"(%s): Message not recognized by this class.",aSelector];
 }
 - doesNotUnderstand:aMessage
 {

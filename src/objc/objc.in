@@ -439,7 +439,9 @@ for input in $inputs
 	     fi
 	     ;;
 	  *) echo '#line 1 "'$input'"' > $tmpc ;
-	     cat $input >> $tmpc ; junk="$junk $tmpc" ;;
+	     cat $input >> $tmpc ;
+
+             ;;
 	esac
 
         if [ $precompile = y ]; then
