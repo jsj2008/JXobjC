@@ -1056,13 +1056,15 @@ mkcomponentdef(id cdef, id specs, id decl)
 }
 
 id 
-mkstructspec(id keyw, id name, id lb, id defs, id rb)
+mkstructspec(id keyw, id name, id ti, id lb, id defs, id rb)
 {
   id r = [StructSpec new];
 
   [r keyw:keyw];
   [r name:name];
   [r lbrace:lb];
+  if (ti)
+    [r tmplinst:ti];
   if (defs)
     [r defs:defs];
   [r rbrace:rb];

@@ -28,6 +28,7 @@
 #include <stdio.h> /* FILE */
 #include "Object.h" /* Stepstone Object.h assumes #import */
 #endif
+#include <Block.h>
 #include <ocstring.h>
 #include <ordcltn.h>
 #include <dictnary.h>
@@ -62,6 +63,12 @@ id curstruct;
 - name:akeyw
 {
   name = akeyw;
+  return self;
+}
+
+- tmplinst:ti
+{
+  tmplinst = ti;
   return self;
 }
 
@@ -119,6 +126,8 @@ id curstruct;
   [keyw gen];
   if (name)
     [name gen];			/* it may be unnamed */
+  if (tmplinst)
+    [tmplinst do:{ :each | [each gen]}];
   if (defs) {
     if (lbrace)
       [lbrace gen];

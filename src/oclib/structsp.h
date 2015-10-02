@@ -28,12 +28,14 @@ extern id curstruct;
   id defs;
   id rbrace;
   id compdic, compnames, comptypes;
+  id tmplinst;
 }
 
 - (int)lineno;
 - filename;
 - keyw:aKeyw;
 - name:aKeyw;
+- tmplinst:ti;
 - defs:aList;
 - lbrace:lb;
 - rbrace:rb;

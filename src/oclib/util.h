@@ -88,7 +88,7 @@ id mkgnuattribdecl(id keyw, id list);
 id mklistexpr(id lb, id x, id rb);
 id mktypename(id specs, id decl);
 id mkcomponentdef(id cdef, id specs, id decl);
-id mkstructspec(id keyw, id name, id lb, id defs, id rb);
+id mkstructspec(id keyw, id name, id ti, id lb, id defs, id rb);
 id mkkeywarg(id sel, id arg);
 id mkkeywdecl(id sel, id cast, id arg);
 id mkmethproto(id cast, id usel, id ksel, BOOL varargs);
