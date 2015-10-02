@@ -308,7 +308,7 @@ id curclassdef;
   if (!names) {
     char *me = [self classname];
 
-    fatal("'%s' was previously declared without %s variables", me, what);
+    //fatal("'%s' was previously declared without %s variables", me, what);
   } else {
     int i, n;
     id outerstruct = curstruct;
