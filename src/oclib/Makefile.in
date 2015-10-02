@@ -104,6 +104,7 @@ OBJFILES=\
     globdef.$(OBJSUFFIX)\
     structsp.$(OBJSUFFIX)\
     classdef.$(OBJSUFFIX)\
+    propdef.$(OBJSUFFIX)\
     enumtor.$(OBJSUFFIX)\
     enumsp.$(OBJSUFFIX)\
     parmdef.$(OBJSUFFIX)\

@@ -61,6 +61,7 @@ void declarefun(id specs, id decl);
 void declaremeth(BOOL factory, id decl);
 id mkfundef(id specs, id decl, id body);
 id mkmethdef(BOOL factory, id decl, id body);
+id mkpropdef(id type, id name);
 id mkmesgexpr(id receiver, id args);
 id mkdecl(id ident);
 id mkprecdecl(id tquals, id decl);

@@ -67,7 +67,7 @@ int yylex() ;
 
 /* Objective C */
 
-%token atdefs atselector atinterface atend atencode atrequires 
+%token atdefs atselector atinterface atend atencode atrequires atproperty
 %token blockbegin
 
 /* C++ */
@@ -430,25 +430,28 @@ exprlist : assignexpr
      { $$ = mklist($1,$3); }
   ;
 
-extdef : fundef
-     { $$ = $1; }
-  | datadef
-     { $$ = $1; }
-  | classdef
-     { $$ = $1; }
-  | methoddef
-     { $$ = $1; }
-  | atend
-     { $$ = nil;finclassdef(); }
-  | ';'
-     { gc(';');$$ = nil; }
-  | gnuasmstmt /* gcc allows asm() at toplevel */
-     { $$ = $1; }
-  | externlangblock  
-     { $$ = nil; }
-  | namespaceblock
-     { $$ = nil; }
-  ;
+extdef 
+    : fundef
+    { $$ = $1; }
+    | datadef
+    { $$ = $1; }
+    | classdef
+    { $$ = $1; }
+    | methoddef
+    { $$ = $1; }
+    | propdecl
+    { $$ = $1; }
+    | atend
+    { $$ = nil;finclassdef(); }
+    | ';'
+    { gc(';');$$ = nil; }
+    | gnuasmstmt /* gcc allows asm() at toplevel */
+    { $$ = $1; }
+    | externlangblock  
+    { $$ = nil; }
+    | namespaceblock
+    { $$ = nil; }
+    ;
 
 externlangblock : externlang '{' '}'
      { [$1 gen];[$2 gen];[$3 gen]; }
@@ -1016,6 +1019,14 @@ unaryexpr : primaryexpr
 unaryselector : identifier | reservedword | typeword | builtinfun
   ;
 
+ /* Objective-C 2.0 */
+
+propdecl
+    : atproperty typename identifier ';'
+    {
+        $$ = mkpropdef($2, $3);
+    }
+    ;
 
  /* C++ */
 

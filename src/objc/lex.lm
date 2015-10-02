@@ -145,6 +145,7 @@ DBLSUFFIX ([fFlL]{1,3})
 "id"				{ return keyw(typeword); }
 "@requires"			{ return keyw(atrequires); }
 "@public"			{ warn("ignoring @public."); }
+"@property"                     { return keyw(atproperty); }
 "@protected"			{ warn("ignoring @protected."); }
 "@private"			{ warn("ignoring @private."); }
 

@@ -107,6 +107,7 @@
 #include "gasmstmt.h"
 #include "gattrib.h"
 #include "gatrdecl.h"
+#include "propdef.h"
 
 void 
 procextdef(id def)
@@ -699,6 +700,18 @@ mkmethdef(BOOL factory, id decl, id body)
 }
 
 id 
+mkpropdef(id type, id name)
+{
+  id r = [PropertyDef new];
+
+  [r proptype:type];
+  [r propname:name];
+  [curclassdef defcomp:name astype:type];
+  [curclassdef synth];
+  return r;
+}
+
+id 
 mkmesgexpr(id receiver, id args)
 {
   id r = [MesgExpr new];
@@ -1044,7 +1057,7 @@ mktypename(id specs, id decl)
   return r;
 }
 
-id 
+id
 mkcomponentdef(id cdef, id specs, id decl)
 {
   if (cdef == nil)
