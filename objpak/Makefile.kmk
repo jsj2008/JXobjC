@@ -1,10 +1,9 @@
 SUB_DEPTH = ..
 include $(KBUILD_PATH)/subheader.kmk
 
-LIBRARIES = objpak
+LIBRARIES += objpak
 
 objpak_TEMPLATE = OBJC
-objpak_INCS = $(PATH_ROOT)/lib/s16db
 objpak_SOURCES = badvers.m notfound.m octext.m rectangl.m sortcltn.m \
     typeinc.m bag.m dictnary.m objgraph.m ordcltn.m runarray.m stack.m \
     unknownt.m array.m bagseq.m idarray.m outofbnd.m sequence.m \

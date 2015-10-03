@@ -1,10 +1,9 @@
 SUB_DEPTH = ..
 include $(KBUILD_PATH)/subheader.kmk
 
-LIBRARIES = objcrt
+LIBRARIES += objcrt
 
 objcrt_TEMPLATE = OBJC
-objcrt_INCS = $(PATH_ROOT)/lib/s16db
-objcrt_SOURCES = Block.m Exceptn.m Message.m Object.m OutOfMem.m objcrt.m
+objcrt_SOURCES = Block.m Exceptn.m Message.m Object.m OutOfMem.m crt.m
 
 include $(FILE_KBUILD_SUB_FOOTER)
