@@ -132,6 +132,8 @@ finclassdef(void)
 	[curclassdef synthrefcntmethods];
       }
     }
+    if ([curclassdef propmeths])
+        [[curclassdef propmeths] do:{ :each | [each gen]; }];
     if (o_warnmissingmethods && [curclassdef isimpl]) {
       [curclassdef warnimplnotfound];
     }
@@ -709,6 +711,50 @@ mkpropdef(id compdec)
     [curclassdef synth];
     return r;
 }
+
+id 
+mkpropsetmeth(id compdec, id type, id name, int ispointer)
+{
+  id d, b, r;
+  id selnam = [String sprintf:"%s%s","set",[name str]];
+  id usel;
+
+  [selnam charAt:3 put:toupper([selnam charAt:3])];
+
+  usel = [Selector str:[selnam str]];
+
+  r = [MethodDef new];
+  if ((d = [Method new])) 
+  {
+    [d unarysel:usel];
+    [d canforward:NO];
+    [d restype:type];
+    [r method:d];
+  }
+  [r prototype];
+  if ((b = [CompoundStmt new])) {
+    int i, n;
+    id s = [OrdCltn new];
+        //id ee = [String sprintf:"self->%s",[name str]];
+	//id e = [mkidentexpr([Symbol str:[ee str] lineno:0 filename:[String str:"<generated>"]]) lhsself:YES];
+        //[name lhsself:YES];
+
+    id vartoset = mkarrowexpr(e_self,name);
+
+	[s add:mkexprstmtx(mkassignexpr(vartoset, "=", mkidentexpr([Symbol str:"random"])))];
+
+/*id f = mkidentexpr(sfun);
+
+    [s add:mkrefsupermsg(usel)];
+    id e = mkidentexpr([ivarnames at:i]);
+    [s add:mkexprstmtx(mkassignexpr(e, "=", mkfuncall(f, mklist(nil, e))))];*/
+    [s add:mkreturnx([e_nil copy])];
+    [b stmts:s];
+    [r body:b];
+  }
+  return r;
+}
+
 
 id 
 mkmesgexpr(id receiver, id args)

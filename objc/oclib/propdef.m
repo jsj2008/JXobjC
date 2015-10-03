@@ -27,6 +27,7 @@
 #include <stdio.h> /* FILE */
 #include "Object.h" /* Stepstone Object.h assumes #import */
 #endif
+#include "Block.h"
 #include <set.h>
 #include <ocstring.h>
 #include <ordcltn.h>
@@ -35,6 +36,7 @@
 #include "selector.h"
 #include "node.h"
 #include "def.h"
+#include "decl.h"
 #include "propdef.h"
 #include "stmt.h"
 #include "datadef.h"
@@ -71,6 +73,7 @@
         id ivars = [curclassdef ivars];
         id decllist = [compdec decllist];
         id specs = [compdec specs];
+        id meths = [OrdCltn new];
         int i, n;
 
         [ivars add:compdec];
@@ -95,7 +98,10 @@
                     [t addspec:s_int];	/* C default */
                     [t decl:d];
                 }
+                /*printf("Lol %s %d\n", [var str], [d ispointer]);
+                [specs do:{ :each | printf("SPEC: %s\n", [each str]); }];*/
                 [curclassdef defcomp:var astype:t];
+                [curclassdef addpropmeth:[mkpropsetmeth (compdec, t, var, [d ispointer]) synth]];
             }
         }
 

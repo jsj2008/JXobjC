@@ -58,7 +58,7 @@ extern id curstruct;
   id cvardic, cvarnames, cvartypes;
   id allivarnames, allcvarnames;
   id fileinmethod, fileoutmethod;
-  id decrefsmethod, increfsmethod;
+  id decrefsmethod, increfsmethod, propmeths;
   int offset;
 }
 
@@ -123,6 +123,9 @@ extern id curstruct;
 
 - getivarval:instance:(BOOL)infactory:varname;
 - setivarval:instance:(BOOL)infactory:varname:value;
+
+- addpropmeth:propmeth;
+- propmeths;
 
 @end
  

@@ -1310,5 +1310,18 @@ id curclassdef;
   return self;
 }
 
+- addpropmeth:propmeth
+{
+    if (!propmeths)
+        propmeths = [OrdCltn new];
+    [propmeths add:propmeth];
+    return self;
+}
+
+- propmeths
+{
+    return propmeths;
+}
+
 @end
  
