@@ -1250,7 +1250,7 @@ _objcInitNoShared (
 
 #ifndef OBJCRT_NOSHARED
 int EXPORT 
-_objcInit (int debug, BOOL traceInit)
+oc_objcInit (int debug, BOOL traceInit)
 {
   return _objcInitNoShared (_objcModules, OCU_main);
 }

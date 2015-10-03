@@ -1,6 +1,9 @@
 WFLAGS = -Wall -Wno-unused-function -Wno-format -Wno-switch
 PKGCONF ?= pkg-config
 
+INTERNAL_INCS = $(PATH_ROOT)/objcrt $(PATH_ROOT)/objpak $(PATH_ROOT)/objc/oclib
+INTERNAL_LIBS = $(objcrt_1_TARGET) $(objpak_1_TARGET)
+
 TEMPLATE_OBJC = C
 TEMPLATE_OBJC_TOOL = PCPP
 TEMPLATE_OBJC_CXXFLAGS = -ggdb $(WFLAGS)

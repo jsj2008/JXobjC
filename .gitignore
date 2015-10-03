@@ -34,15 +34,3 @@
 # Building
 out/*
 bld/*
-bin/*
-lib/*
-config.h
-config.log
-config.status
-y.tab.h
-yacc.h
-objc.m
-objc
-objc1
-postlink
-Makefile

@@ -301,7 +301,7 @@ EXTERNC id EXPORT iddecref (id obj);
 
 /* Remapping Vectors. 
  */
-
+/*
 #define _alloc			oc_alloc
 #define _dealloc		oc_dealloc
 #define _copy 			oc_copy
@@ -309,7 +309,7 @@ EXTERNC id EXPORT iddecref (id obj);
 #define _cvtToId		oc_cvtToId
 #define _cvtToSel		oc_cvtToSel
 #define _objcInit		oc_objcInit
-
+*/
 /* Vectors.
  * Can't make those vectors public unless we
  * make OBJCRT_USE_PREFIXED_NAMES public

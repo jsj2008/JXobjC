@@ -1,0 +1,49 @@
+SUB_DEPTH = ..
+include $(KBUILD_PATH)/subheader.kmk
+
+include $(PATH_SUB_CURRENT)/oclib/Makefile.kmk
+
+PROGRAMS += objc1 postlink
+
+objc1_TEMPLATE = OBJC
+objc1_INCS = $(INTERNAL_INCS)
+objc1_LIBS = $(oclib_1_TARGET) $(INTERNAL_LIBS)
+objc1_SOURCES = objc1.m yacc.m flex.m lexfiltr.m
+objc1_ORDERDEPS = $(PATH_ROOT)/objc/yacc.m $(PATH_ROOT)/objc/lex.m
+objc1_CLEAN = $(PATH_ROOT)/objc/yacc.m $(PATH_ROOT)/objc/lex.m \
+	$(PATH_ROOT)/objc/y.tab.h $(PATH_ROOT)/y.output
+
+postlink_TEMPLATE = OBJC
+postlink_INCS = $(INTERNAL_INCS)
+postlink_LIBS = $(INTERNAL_LIBS)
+postlink_SOURCES = postlink.m
+postlink_ORDERDEPS = $(PATH_OUT)/_prelink.o $(PATH_OUT)/_predll.o
+
+$(PATH_OUT)/_prelink.o: $(PATH_ROOT)/objc/_prelink.c
+	$(TOOL_PCPP_OBJC) -c $<
+	kmk_mv _prelink.o $@
+
+$(PATH_OUT)/_predll.o: $(PATH_ROOT)/objc/_predll.c
+	$(TOOL_PCPP_OBJC) -c $<
+	kmk_mv _predll.o $@
+
+$(PATH_SUB_CURRENT)/yacc.m: $(PATH_SUB_CURRENT)/yacc.ym
+	@printf " B-YaCC \t$(@)\n"
+	@byacc -dtv -o $@ $<
+	@kmk_mv y.tab.h objc/
+
+$(PATH_SUB_CURRENT)/lex.m: $(PATH_SUB_CURRENT)/lex.lm $(PATH_SUB_CURRENT)/yacc.m
+	@printf " Lex \t$(@)\n"
+	@flex -o $@ $<
+
+OBJC_INST = bin/
+OBJC_IFFLAGS = -m 755
+OBJC_SOURCES = objc
+
+LINKFILES_INST = lib/
+LINKFILES_IFFLAGS = -m 644
+LINKFILES_SOURCES = objcdlso.ld $(PATH_OUT)/_prelink.o $(PATH_OUT)/_predll.o
+
+INSTALLS += LINKFILES OBJC
+
+include $(FILE_KBUILD_SUB_FOOTER)

@@ -93,10 +93,10 @@ TOOL_PCPP_COMPILE_OBJC_OUTPUT =
 TOOL_PCPP_COMPILE_OBJC_DEPEND =
 TOOL_PCPP_COMPILE_OBJC_DEPORD =
 define TOOL_PCPP_COMPILE_OBJC_CMDS
-	$(TOOL_PCPP_OBJC) -c\
+	$(QUIET)$(TOOL_PCPP_OBJC) -c\
 		$(flags) $(addprefix -I, $(incs)) $(addprefix -D, $(defs))\
 		-Wp,-Wp,-MD,$(dep) -Wp,-MT,$(obj) \
-		-o $(obj)\
+		-ggdb -o $(obj)\
 		$(abspath $(source))
 	$(QUIET)$(APPEND) -n "$(dep)" "" "$(source):" ""
 endef
