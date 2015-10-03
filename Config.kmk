@@ -1,0 +1,8 @@
+WFLAGS = -Wall -Wno-unused-function -Wno-format -Wno-switch
+PKGCONF ?= pkg-config
+
+TEMPLATE_OBJC = C
+TEMPLATE_OBJC_TOOL = PCPP
+TEMPLATE_OBJC_CXXFLAGS = -ggdb $(WFLAGS)
+TEMPLATE_OBJC_CFLAGS = $(CFLAGS) -ggdb $(WFLAGS)
+TEMPLATE_OBJC_INCS = $(PATH_ROOT)/hdr

@@ -1,0 +1,11 @@
+SUB_DEPTH = .
+BUILD_TYPE ?= debug
+
+include $(KBUILD_PATH)/subheader.kmk
+include $(PATH_CURRENT)/Kmk/OBJC.kmk
+
+include $(PATH_CURRENT)/objcrt/Makefile.kmk
+include $(PATH_CURRENT)/objpak/Makefile.kmk
+include $(PATH_CURRENT)/objc/Makefile.kmk
+
+include $(FILE_KBUILD_SUB_FOOTER)
