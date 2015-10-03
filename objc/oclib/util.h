@@ -62,6 +62,7 @@ void declaremeth(BOOL factory, id decl);
 id mkfundef(id specs, id decl, id body);
 id mkmethdef(BOOL factory, id decl, id body);
 id mkpropdef(id compdec);
+id mkpropgetmeth(id compdec, id type, id name, int ispointer);
 id mkpropsetmeth(id compdec, id type, id name, int ispointer);
 id mkmesgexpr(id receiver, id args);
 id mkdecl(id ident);

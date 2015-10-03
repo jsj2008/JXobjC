@@ -101,7 +101,8 @@
                 /*printf("Lol %s %d\n", [var str], [d ispointer]);
                 [specs do:{ :each | printf("SPEC: %s\n", [each str]); }];*/
                 [curclassdef defcomp:var astype:t];
-                [curclassdef addpropmeth:[mkpropsetmeth (compdec, t, var, [d ispointer]) synth]];
+                [curclassdef addpropmeth:mkpropsetmeth (compdec, t, var, [d ispointer])];
+                [curclassdef addpropmeth:mkpropgetmeth (compdec, t, var, [d ispointer])];
             }
         }
 

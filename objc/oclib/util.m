@@ -133,7 +133,7 @@ finclassdef(void)
       }
     }
     if ([curclassdef propmeths])
-        [[curclassdef propmeths] do:{ :each | [each gen]; }];
+        [[curclassdef propmeths] do:{ :each | [[each synth] gen]; }];
     if (o_warnmissingmethods && [curclassdef isimpl]) {
       [curclassdef warnimplnotfound];
     }
@@ -726,32 +726,54 @@ mkpropsetmeth(id compdec, id type, id name, int ispointer)
   r = [MethodDef new];
   if ((d = [Method new])) 
   {
-    [d unarysel:usel];
+    [d keywsel:[OrdCltn add:mkkeywdecl(usel, type, [Symbol str:"valset"])]];
     [d canforward:NO];
-    [d restype:type];
+    /*[d restype:type];*/
     [r method:d];
   }
   [r prototype];
   if ((b = [CompoundStmt new])) {
     int i, n;
     id s = [OrdCltn new];
-        //id ee = [String sprintf:"self->%s",[name str]];
-	//id e = [mkidentexpr([Symbol str:[ee str] lineno:0 filename:[String str:"<generated>"]]) lhsself:YES];
-        //[name lhsself:YES];
 
-    id vartoset = mkarrowexpr(e_self,name);
+    id vartoset = mkarrowexpr(s_self,name);
 
-	[s add:mkexprstmtx(mkassignexpr(vartoset, "=", mkidentexpr([Symbol str:"random"])))];
+	[s add:mkexprstmtx(mkassignexpr(vartoset, "=", mkidentexpr([Symbol str:"valset"])))];
 
-/*id f = mkidentexpr(sfun);
-
-    [s add:mkrefsupermsg(usel)];
-    id e = mkidentexpr([ivarnames at:i]);
-    [s add:mkexprstmtx(mkassignexpr(e, "=", mkfuncall(f, mklist(nil, e))))];*/
-    [s add:mkreturnx([e_nil copy])];
+    [s add:mkreturnx(e_self)];
     [b stmts:s];
     [r body:b];
   }
+  return r;
+}
+
+id 
+mkpropgetmeth(id compdec, id type, id name, int ispointer)
+{
+  id d, b, r;
+  id usel = [Selector str:[name str]];
+  
+  r = [MethodDef new];
+  if ((d = [Method new])) 
+{
+    [d unarysel:usel];
+    [d canforward:NO];
+    [d restype:type];
+    [r method:d];
+}
+  [r prototype];
+  if ((b = [CompoundStmt new])) {
+    int i, n;
+    id s = [OrdCltn new];
+
+    id vartoget = mkarrowexpr(s_self,name);
+
+	//[s add:mkexprstmtx(mkassignexpr(vartoset, "=", mkidentexpr([Symbol str:"valset"])))];
+
+    [s add:mkreturnx(vartoget)];
+    [b stmts:s];
+    [r body:b];
+}
   return r;
 }
 
