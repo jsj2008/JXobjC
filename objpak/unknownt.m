@@ -6,7 +6,7 @@
 
 /*
  * This library is free software; you can redistribute it and/or modify it
- * under the terms of the GNU Library General Public License as published 
+ * under the terms of the GNU Library General Public License as published
  * by the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
  *
@@ -25,16 +25,12 @@
 #include "unknownt.h"
 
 @implementation UnknownType
-- (char) typeDesc
-{
-  return aChar;
-}
+- (char)typeDesc { return aChar; }
 
 - typeDesc:(char)c
 {
-  aChar = c;
-  return self;
+    aChar = c;
+    return self;
 }
 
 @end
- 

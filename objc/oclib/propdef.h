@@ -4,9 +4,9 @@
 
 @interface PropertyDef : Def
 {
-  id unit;
-  id compdec;
-  id classdef;
+    id unit;
+    id compdec;
+    id classdef;
 }
 
 - classdef:aClass;

@@ -48,15 +48,15 @@
 #if OBJCRT_USE_STDARG
 #include "stdarg.h"
 #define OC_VA_LIST va_list
-#define OC_VA_START(ap,larg) va_start(ap,larg)
-#define OC_VA_ARG(ap,type) va_arg(ap,type)
-#define OC_VA_END(ap) va_end(ap)
+#define OC_VA_START(ap, larg) va_start (ap, larg)
+#define OC_VA_ARG(ap, type) va_arg (ap, type)
+#define OC_VA_END(ap) va_end (ap)
 #else
 #include "varargs.h"
 #define OC_VA_LIST va_list
-#define OC_VA_START(ap,larg) va_start(ap)
-#define OC_VA_ARG(ap,type) va_arg(ap,type)
-#define OC_VA_END(ap) va_end(ap)
+#define OC_VA_START(ap, larg) va_start (ap)
+#define OC_VA_ARG(ap, type) va_arg (ap, type)
+#define OC_VA_END(ap) va_end (ap)
 #endif /* OBJCRT_USE_STDARG */
 
 /*
@@ -83,10 +83,10 @@
  */
 
 #ifdef OBJCRTDLL
-#define EXPORT 
+#define EXPORT
 #else
 #define EXPORT /* null */
-#endif /* OBJCRTDLL */
+#endif         /* OBJCRTDLL */
 
 /*
  * For some cross-compiles, notably those with some Stepstone
@@ -109,7 +109,7 @@
 /*
  * Compiled in path separator. (Module.m and objc.m)
  */
- 
+
 #define OBJCRT_DEFAULT_PATHSEPC "/"
 
 /*
@@ -121,4 +121,3 @@
 #define OBJC_HAVE_SYSTEM_CALL 1
 
 #endif /* OBJCRT_CONFIG_H */
-

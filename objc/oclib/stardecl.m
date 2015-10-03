@@ -3,7 +3,7 @@
  * Copyright (c) 1998 David Stes.
  *
  * This library is free software; you can redistribute it and/or modify it
- * under the terms of the GNU Library General Public License as published 
+ * under the terms of the GNU Library General Public License as published
  * by the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
  *
@@ -24,7 +24,7 @@
 #include <assert.h>
 #ifndef __OBJECT_INCLUDED__
 #define __OBJECT_INCLUDED__
-#include <stdio.h> /* FILE */
+#include <stdio.h>  /* FILE */
 #include "Object.h" /* Stepstone Object.h assumes #import */
 #endif
 #include "node.h"
@@ -36,121 +36,120 @@
 
 - abstrdecl
 {
-  if (decl) {
-    id x = [decl abstrdecl];
+    if (decl)
+    {
+        id x = [decl abstrdecl];
 
-    if (x) {
-      return [[[StarDecl new] decl:x] pointer:pointer];
-    } else {
-      return pointer;
+        if (x)
+        {
+            return [[[StarDecl new] decl:x] pointer:pointer];
+        }
+        else
+        {
+            return pointer;
+        }
     }
-  } else {
-    return pointer;
-  }
+    else
+    {
+        return pointer;
+    }
 }
 
 - pointer:aPointer
 {
-  pointer = aPointer;
-  return self;
+    pointer = aPointer;
+    return self;
 }
 
 - decl:aDecl
 {
-  decl = aDecl;
-  return self;
+    decl = aDecl;
+    return self;
 }
 
-- identifier
-{
-  return (decl) ? [decl identifier] : nil;
-}
+- identifier { return (decl) ? [decl identifier] : nil; }
 
-- (BOOL)isfunproto
-{
-  return (decl) ? [decl isfunproto] : NO;
-}
+- (BOOL)isfunproto { return (decl) ? [decl isfunproto] : NO; }
 
-- (BOOL)ispointer
-{
-  return YES;
-}
+- (BOOL)ispointer { return YES; }
 
-- (BOOL)canforward
-{
-  return YES;
-}
+- (BOOL)canforward { return YES; }
 
-- (BOOL)isscalartype
-{
-  return YES;
-}
+- (BOOL)isscalartype { return YES; }
 
 - hide:x rename:y
 {
-  if (decl)
-    [decl hide:x rename:y];
-  return self;
+    if (decl)
+        [decl hide:x rename:y];
+    return self;
 }
 
 - star
 {
-  if (decl) {
-    return [[self copy] decl:[decl star]];
-  } else {
-    id p = [pointer star];
+    if (decl)
+    {
+        return [[self copy] decl:[decl star]];
+    }
+    else
+    {
+        id p = [pointer star];
 
-    return (p) ? [[self copy] pointer : p]:nil;
-  }
+        return (p) ? [[self copy] pointer:p] : nil;
+    }
 }
 
 - funcall
 {
-  if (decl) {
-    id p = [decl funcall];
+    if (decl)
+    {
+        id p = [decl funcall];
 
-    if (p)
-      return [[self copy] decl:p];
-    if (pointer)
-      return [[self copy] decl:nil];
-    return nil;
-  } else {
-    return nil;
-  }
+        if (p)
+            return [[self copy] decl:p];
+        if (pointer)
+            return [[self copy] decl:nil];
+        return nil;
+    }
+    else
+    {
+        return nil;
+    }
 }
 
 - gen
 {
-  [pointer gen];
-  if (decl)
-    [decl gen];
-  return self;
+    [pointer gen];
+    if (decl)
+        [decl gen];
+    return self;
 }
 
 - gendef:sym
 {
-  if (decl) {
-    [pointer gen];
-    [decl gendef:sym];
-  } else {
-    [pointer gendef:sym];
-  }
-  return self;
+    if (decl)
+    {
+        [pointer gen];
+        [decl gendef:sym];
+    }
+    else
+    {
+        [pointer gendef:sym];
+    }
+    return self;
 }
 
 - synth
 {
-  if (decl)
-    [decl synth];
-  return self;
+    if (decl)
+        [decl synth];
+    return self;
 }
 
 - st80
 {
-  if (decl)
-    [decl st80];
-  return self;
+    if (decl)
+        [decl st80];
+    return self;
 }
 
 @end
- 

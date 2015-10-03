@@ -3,7 +3,7 @@
  * Copyright (c) 1999 David Stes.
  *
  * This library is free software; you can redistribute it and/or modify it
- * under the terms of the GNU Library General Public License as published 
+ * under the terms of the GNU Library General Public License as published
  * by the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
  *
@@ -23,14 +23,14 @@ extern id topframe;
 
 @interface Stackframe : Object
 {
-  id vals;
-  id def;
-  id compound;
-  id previous,next;
-  BOOL quitframe;
-  BOOL breakframe;
-  BOOL contframe;
-  id returnval;
+    id vals;
+    id def;
+    id compound;
+    id previous, next;
+    BOOL quitframe;
+    BOOL breakframe;
+    BOOL contframe;
+    id returnval;
 }
 
 + push;
@@ -61,4 +61,3 @@ extern id topframe;
 - printBtOn:(IOD)d;
 
 @end
- 

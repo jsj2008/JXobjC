@@ -3,7 +3,7 @@
  * Copyright (c) 1998 David Stes.
  *
  * This library is free software; you can redistribute it and/or modify it
- * under the terms of the GNU Library General Public License as published 
+ * under the terms of the GNU Library General Public License as published
  * by the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
  *
@@ -24,7 +24,7 @@
 #include <assert.h>
 #ifndef __OBJECT_INCLUDED__
 #define __OBJECT_INCLUDED__
-#include <stdio.h> /* FILE */
+#include <stdio.h>  /* FILE */
 #include "Object.h" /* Stepstone Object.h assumes #import */
 #endif
 #include <ordcltn.h>
@@ -37,49 +37,42 @@
 
 - funname:aRcvr
 {
-  funname = aRcvr;
-  return self;
+    funname = aRcvr;
+    return self;
 }
 
 - funargs:args
 {
-  funargs = args;
-  return self;
+    funargs = args;
+    return self;
 }
 
-- (int)lineno
-{
-  return [funname lineno];
-}
+- (int)lineno { return [funname lineno]; }
 
-- filename
-{
-  return [funname filename];
-}
+- filename { return [funname filename]; }
 
 - gen
 {
-  [funname gen];
-  gc('(');
-  if (funargs)
-    gcommalist(funargs);
-  gc(')');
-  return self;
+    [funname gen];
+    gc ('(');
+    if (funargs)
+        gcommalist (funargs);
+    gc (')');
+    return self;
 }
 
 - typesynth
 {
-  type = t_int;
-  return self;
+    type = t_int;
+    return self;
 }
 
 - synth
 {
-  [funname synth];
-  if (funargs)
-    [funargs elementsPerform:_cmd];
-  return self;
+    [funname synth];
+    if (funargs)
+        [funargs elementsPerform:_cmd];
+    return self;
 }
 
 @end
- 

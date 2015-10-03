@@ -3,7 +3,7 @@
  * Copyright (c) 1998 David Stes.
  *
  * This library is free software; you can redistribute it and/or modify it
- * under the terms of the GNU Library General Public License as published 
+ * under the terms of the GNU Library General Public License as published
  * by the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
  *
@@ -21,14 +21,14 @@
 
 @interface MethodDef : Def
 {
-  id unit;
-  BOOL factory;
-  id method;
-  id body;
-  char *impname;
-  char *selname;
-  id classdef;
-  id breakpt;
+    id unit;
+    BOOL factory;
+    id method;
+    id body;
+    char * impname;
+    char * selname;
+    id classdef;
+    id breakpt;
 }
 
 - (unsigned)hash;
@@ -40,8 +40,8 @@
 - method:aDecl;
 - body:aBody;
 - classdef:aClass;
-- (char*)impname;
-- (char*)selname;
+- (char *)impname;
+- (char *)selname;
 - method;
 - selector;
 
@@ -53,4 +53,3 @@
 - fcall:x;
 
 @end
- 

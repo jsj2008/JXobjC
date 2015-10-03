@@ -3,7 +3,7 @@
  * Copyright (c) 1998 David Stes.
  *
  * This library is free software; you can redistribute it and/or modify it
- * under the terms of the GNU Library General Public License as published 
+ * under the terms of the GNU Library General Public License as published
  * by the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
  *
@@ -24,7 +24,7 @@
 #include <assert.h>
 #ifndef __OBJECT_INCLUDED__
 #define __OBJECT_INCLUDED__
-#include <stdio.h> /* FILE */
+#include <stdio.h>  /* FILE */
 #include "Object.h" /* Stepstone Object.h assumes #import */
 #endif
 #include <ordcltn.h>
@@ -35,33 +35,33 @@
 
 - anyword:w
 {
-  anyword = w;
-  return self;
+    anyword = w;
+    return self;
 }
 
 - exprlist:aList
 {
-  exprlist = aList;
-  return self;
+    exprlist = aList;
+    return self;
 }
 
 - synth
 {
-  [exprlist elementsPerform:_cmd];
-  return self;
+    [exprlist elementsPerform:_cmd];
+    return self;
 }
 
 - gen
 {
-  if (anyword)
-    [anyword gen];
-  if (exprlist) {
-    gc('(');
-    gcommalist(exprlist);
-    gc(')');
-  }
-  return self;
+    if (anyword)
+        [anyword gen];
+    if (exprlist)
+    {
+        gc ('(');
+        gcommalist (exprlist);
+        gc (')');
+    }
+    return self;
 }
 
 @end
- 

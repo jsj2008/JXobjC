@@ -3,7 +3,7 @@
  * Copyright (c) 1998 David Stes.
  *
  * This library is free software; you can redistribute it and/or modify it
- * under the terms of the GNU Library General Public License as published 
+ * under the terms of the GNU Library General Public License as published
  * by the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
  *
@@ -21,18 +21,18 @@
 
 @interface IdentifierExpr : Expr
 {
-  id identifier;
-  BOOL ivar;
-  BOOL cvar;
-  BOOL isself;
-  BOOL lhsself;
-  BOOL isclassref;
-  BOOL infactory;
-  BOOL isglobal;
-  BOOL isstkvar;
-  id heapvarblock;		/* it's a block variable */
-  id maybeheapvarblock;
-  id classdef;			/* it's a ivar or cvar */
+    id identifier;
+    BOOL ivar;
+    BOOL cvar;
+    BOOL isself;
+    BOOL lhsself;
+    BOOL isclassref;
+    BOOL infactory;
+    BOOL isglobal;
+    BOOL isstkvar;
+    id heapvarblock; /* it's a block variable */
+    id maybeheapvarblock;
+    id classdef; /* it's a ivar or cvar */
 }
 
 + str:(STR)s;
@@ -45,4 +45,3 @@
 - assignvar:v;
 
 @end
- 

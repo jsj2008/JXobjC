@@ -3,7 +3,7 @@
  * Copyright (c) 1998 David Stes.
  *
  * This library is free software; you can redistribute it and/or modify it
- * under the terms of the GNU Library General Public License as published 
+ * under the terms of the GNU Library General Public License as published
  * by the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
  *
@@ -48,22 +48,22 @@ extern id s_decrefs;
 extern id s_idincref;
 extern id s_iddecref;
 
-BOOL istypeword(id sym);
-BOOL isbuiltinfun(id sym);
-int  pragmatoggle(char *s);
-void definebuiltintype(char *s);
-void definebuiltinfun(char *s);
-void definebuiltinvar(char *s);
+BOOL istypeword (id sym);
+BOOL isbuiltinfun (id sym);
+int pragmatoggle (char * s);
+void definebuiltintype (char * s);
+void definebuiltinfun (char * s);
+void definebuiltinvar (char * s);
 
 @interface Symbol : String
 {
-  int lineno;
-  id filename;
-  id type;
+    int lineno;
+    id filename;
+    id type;
 }
 
 + commonsymbols;
-+ str:(char*)s lineno:(int)no filename:fn;
++ str:(char *)s lineno:(int)no filename:fn;
 - type;
 - filename;
 - (int)lineno;
@@ -90,4 +90,3 @@ void definebuiltinvar(char *s);
 - toscores;
 
 @end
- 

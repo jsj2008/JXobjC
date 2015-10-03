@@ -6,7 +6,7 @@
 
 /*
  * This library is free software; you can redistribute it and/or modify it
- * under the terms of the GNU Library General Public License as published 
+ * under the terms of the GNU Library General Public License as published
  * by the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
  *
@@ -24,111 +24,77 @@
 
 #ifndef __OBJECT_INCLUDED__
 #define __OBJECT_INCLUDED__
-#include "Object.h"		/* Stepstone Object.h assumes #import */
+#include "Object.h" /* Stepstone Object.h assumes #import */
 #endif
 
-#include "Block.h"		/* blockRaise */
-#include "Exceptn.h"		/* signal exceptions */
-#include "OutOfMem.h"		/* signal exceptions */
-#include "Message.h"		/* selector:args: */
+#include "Block.h"    /* blockRaise */
+#include "Exceptn.h"  /* signal exceptions */
+#include "OutOfMem.h" /* signal exceptions */
+#include "Message.h"  /* selector:args: */
 #include <assert.h>
 #include <stdlib.h>
-#include <string.h>		/* memset */
+#include <string.h> /* memset */
 
-#include <pthread.h>		/* POSIX 1003.1c thread-safe messenger */
+#include <pthread.h> /* POSIX 1003.1c thread-safe messenger */
 static pthread_mutex_t cLock;
 
 #if OBJCRT_BOEHM
-#include <gc.h>			/* _alloc vectors to use Hans-J. Boehm gc */
+#include <gc.h> /* _alloc vectors to use Hans-J. Boehm gc */
 #endif
 
 #ifdef OBJC_REFCNT
-#pragma OCRefCnt 0		/* if compiled with -refcnt, turn of refcnt now */
-static BOOL
-isrefcntclass (Cls_t cls)
-{
-  return (cls)->clsStatus & CLS_REFCNT;
-}
+#pragma OCRefCnt 0 /* if compiled with -refcnt, turn of refcnt now */
+static BOOL isrefcntclass (Cls_t cls) { return (cls)->clsStatus & CLS_REFCNT; }
 #endif
 
-static BOOL 
-isfactory (Cls_t cls)
+static BOOL isfactory (Cls_t cls) { return (cls)->clsStatus & CLS_FACTORY; }
+
+static BOOL ismeta (Cls_t cls) { return (cls)->clsStatus & CLS_META; }
+
+static BOOL iscatgry (Cls_t cls) { return (cls)->clsStatus & CLS_CAT; }
+
+static Cls_t getmeta (Cls_t cls)
 {
-  return (cls)->clsStatus & CLS_FACTORY;
+    return ismeta (cls) ? cls : getcls (cls->isa);
 }
 
-static BOOL 
-ismeta (Cls_t cls)
+static BOOL initlzd (Cls_t cls)
 {
-  return (cls)->clsStatus & CLS_META;
+    return getmeta (cls)->clsStatus & CLS_INITIALIZED;
 }
 
-static BOOL 
-iscatgry (Cls_t cls)
+static void markinitlzd (Cls_t cls)
 {
-  return (cls)->clsStatus & CLS_CAT;
+    getmeta (cls)->clsStatus |= CLS_INITIALIZED;
 }
 
-static Cls_t 
-getmeta (Cls_t cls)
-{
-  return ismeta (cls) ? cls : getcls (cls->isa);
-}
+static BOOL ismapped (Cls_t aCls) { return (aCls)->clsStatus & CLS_MAPPED; }
 
-static BOOL 
-initlzd (Cls_t cls)
-{
-  return getmeta (cls)->clsStatus & CLS_INITIALIZED;
-}
+static void markmapped (Cls_t aCls) { aCls->clsStatus |= CLS_MAPPED; }
 
-static void 
-markinitlzd (Cls_t cls)
-{
-  getmeta (cls)->clsStatus |= CLS_INITIALIZED;
-}
-
-static BOOL 
-ismapped (Cls_t aCls)
-{
-  return (aCls)->clsStatus & CLS_MAPPED;
-}
-
-static void 
-markmapped (Cls_t aCls)
-{
-  aCls->clsStatus |= CLS_MAPPED;
-}
-
-static id 
-getisa (id anObject)
+static id getisa (id anObject)
 {
 #if !OTBCRT
-  return anObject->isa;
+    return anObject->isa;
 #else
-  return anObject->ptr->isa;
+    return anObject->ptr->isa;
 #endif
 }
 
-static void 
-setisa (id anObject, id aClass)
+static void setisa (id anObject, id aClass)
 {
 #if !OTBCRT
-  anObject->isa = aClass;
+    anObject->isa = aClass;
 #else
-  anObject->ptr->isa = aClass;
+    anObject->ptr->isa = aClass;
 #endif
 }
 
-static short 
-nstsize (id aClass)
-{
-  return getcls (aClass)->clsSizInstance;
-}
+static short nstsize (id aClass) { return getcls (aClass)->clsSizInstance; }
 
+#define SIZEHASHTABLE 73 /* default initial size */
 
-#define SIZEHASHTABLE 73	/* default initial size */
-
-static PHASH *hashList;
+static PHASH * hashList;
 static int nHashLists;
 
 #if 0
@@ -139,25 +105,19 @@ ismodmapped (struct objcrt_modDescriptor *aMod)
 }
 #endif
 
-static void 
-markmodmapped (struct objcrt_modDescriptor *aMod)
+static void markmodmapped (struct objcrt_modDescriptor * aMod)
 {
-  (aMod)->modStatus |= MOD_MAPPED;
+    (aMod)->modStatus |= MOD_MAPPED;
 }
 
-static BOOL 
-morethanone (struct objcrt_modDescriptor *aMod)
+static BOOL morethanone (struct objcrt_modDescriptor * aMod)
 {
-  return (aMod)->modStatus & MOD_MORETHANONE;	/* TRUE for 1.4.x */
+    return (aMod)->modStatus & MOD_MORETHANONE; /* TRUE for 1.4.x */
 }
 
 static SEL minsel, maxsel;
 
-static BOOL 
-isminmaxsel (SEL s)
-{
-  return (minsel <= s) && (s <= maxsel);
-}
+static BOOL isminmaxsel (SEL s) { return (minsel <= s) && (s <= maxsel); }
 
 /* _objcModules is defined as NULL for auto-initialization
  * it's defined as the table of BIND functions that need to be called
@@ -186,29 +146,26 @@ Mentry_t _objcModules;
  */
 
 typedef struct modnode
-  {
+{
     Mentry_t objcmodules;
-    struct modnode *next;
-  }
- *modnode_t;
+    struct modnode * next;
+} * modnode_t;
 
 static modnode_t modnodelist;
 
-static modnode_t 
-newmodnode (Mentry_t me, modnode_t next)
+static modnode_t newmodnode (Mentry_t me, modnode_t next)
 {
-  modnode_t r;
-  r = (modnode_t) OC_Malloc (sizeof (struct modnode));
-  r->next = next;
-  r->objcmodules = me;
-  return r;
+    modnode_t r;
+    r = (modnode_t)OC_Malloc (sizeof (struct modnode));
+    r->next = next;
+    r->objcmodules = me;
+    return r;
 }
 
-static void 
-freemodnode (modnode_t * n, modnode_t m)
+static void freemodnode (modnode_t * n, modnode_t m)
 {
-  *n = m->next;
-  OC_Free (m);
+    *n = m->next;
+    OC_Free (m);
 }
 
 /*****************************************************************************
@@ -217,95 +174,90 @@ freemodnode (modnode_t * n, modnode_t m)
  *
  ****************************************************************************/
 
-static id outOfMem;		/* must be allocated before error happens */
+static id outOfMem; /* must be allocated before error happens */
 
-void EXPORT *
-OC_Malloc (size_t nBytes)
+void EXPORT * OC_Malloc (size_t nBytes)
 {
-  void *data;
+    void * data;
 
-  /* DEC alpha malloc() returns NULL for 0 bytes */
-  if (!nBytes)
-    nBytes = sizeof (void *);
-  if (nBytes > 32 * 1024)
-    dbg ("OC_Malloc call for %i bytes\n", nBytes);
+    /* DEC alpha malloc() returns NULL for 0 bytes */
+    if (!nBytes)
+        nBytes = sizeof (void *);
+    if (nBytes > 32 * 1024)
+        dbg ("OC_Malloc call for %i bytes\n", nBytes);
 
 #if OBJCRT_BOEHM
-  data = GC_malloc (nBytes);
+    data = GC_malloc (nBytes);
 #else
-  data = malloc (nBytes);
+    data = malloc (nBytes);
 #endif
 
-  /* signal the OutOfMemory exception */
-  if (!data)
-    [outOfMem signal];
-  return data;
+    /* signal the OutOfMemory exception */
+    if (!data)
+        [outOfMem signal];
+    return data;
 }
 
-void EXPORT *
-OC_MallocAtomic (size_t nBytes)
+void EXPORT * OC_MallocAtomic (size_t nBytes)
 {
-  void *data;
-  /* DEC alpha malloc() returns NULL for 0 bytes */
-  if (!nBytes)
-    nBytes = sizeof (void *);
-  if (nBytes > 32 * 1024)
-    dbg ("OC_MallocAtomic call for %i bytes\n", nBytes);
+    void * data;
+    /* DEC alpha malloc() returns NULL for 0 bytes */
+    if (!nBytes)
+        nBytes = sizeof (void *);
+    if (nBytes > 32 * 1024)
+        dbg ("OC_MallocAtomic call for %i bytes\n", nBytes);
 
 #if OBJCRT_BOEHM
-  data = GC_malloc_atomic (nBytes);
+    data = GC_malloc_atomic (nBytes);
 #else
-  data = malloc (nBytes);
+    data = malloc (nBytes);
 #endif
 
-  /* signal the OutOfMemory exception */
-  if (!data)
-    [outOfMem signal];
-  return data;
+    /* signal the OutOfMemory exception */
+    if (!data)
+        [outOfMem signal];
+    return data;
 }
 
-void EXPORT *
-OC_Calloc (size_t nBytes)
+void EXPORT * OC_Calloc (size_t nBytes)
 {
-  char *p;
+    char * p;
 
-  p = (char *) OC_Malloc (nBytes);
+    p = (char *)OC_Malloc (nBytes);
 
-  memset (p, 0, nBytes);
+    memset (p, 0, nBytes);
 
-  return (void *) p;
+    return (void *)p;
 }
 
-void EXPORT *
-OC_Realloc (void *data, size_t nBytes)
+void EXPORT * OC_Realloc (void * data, size_t nBytes)
 {
-  /* DEC alpha malloc() returns NULL for 0 bytes */
-  if (!nBytes)
-    nBytes = sizeof (void *);
-  if (nBytes > 32 * 1024)
-    dbg ("OC_Realloc call for %i bytes\n", nBytes);
+    /* DEC alpha malloc() returns NULL for 0 bytes */
+    if (!nBytes)
+        nBytes = sizeof (void *);
+    if (nBytes > 32 * 1024)
+        dbg ("OC_Realloc call for %i bytes\n", nBytes);
 
 #if OBJCRT_BOEHM
-  data = GC_realloc (data, nBytes);
+    data = GC_realloc (data, nBytes);
 #else
-  data = realloc (data, nBytes);
+    data = realloc (data, nBytes);
 #endif
 
-  /* signal the OutOfMemory exception */
-  if (!data)
-    [outOfMem signal];
-  return data;
+    /* signal the OutOfMemory exception */
+    if (!data)
+        [outOfMem signal];
+    return data;
 }
 
-void EXPORT *
-OC_Free (void *data)
+void EXPORT * OC_Free (void * data)
 {
 #if OBJCRT_BOEHM
-  /* do not call GC_free */
+/* do not call GC_free */
 #else
-  free (data);
+    free (data);
 #endif
-  return NULL;
+    return NULL;
 }
 
 /*****************************************************************************
@@ -315,25 +267,23 @@ OC_Free (void *data)
  ****************************************************************************/
 
 #ifdef OTBCRT
-static void 
-linkotb (id a, id b, id c)
+static void linkotb (id a, id b, id c)
 {
-  a->nextinst = b;
-  b->previnst = a;
-  b->nextinst = c;
-  if (c)
-    c->previnst = b;
+    a->nextinst = b;
+    b->previnst = a;
+    b->nextinst = c;
+    if (c)
+        c->previnst = b;
 }
 
-static void 
-unlinkotb (id a)
+static void unlinkotb (id a)
 {
-  id p = a->previnst;
-  id n = a->nextinst;
-  if (p)
-    p->nextinst = n;
-  if (n)
-    n->previnst = p;
+    id p = a->previnst;
+    id n = a->nextinst;
+    if (p)
+        p->nextinst = n;
+    if (n)
+        n->previnst = p;
 }
 #endif /* OTBCRT */
 
@@ -345,135 +295,130 @@ unlinkotb (id a)
 #define _REFCNT(x) (x)->ptr->_refcnt
 #endif
 
-id EXPORT 
-idassign (id * lhs, id rhs)
+id EXPORT idassign (id * lhs, id rhs)
 {
 #ifdef OBJC_REFCNT
-  id e = *lhs;
-  if (allocFlag)
+    id e = *lhs;
+    if (allocFlag)
     {
-      dbg ("%p --%i %p %i++\n", e, (e) ? _REFCNT (e) : 0, rhs, (rhs) ? _REFCNT (rhs) : 0);
+        dbg ("%p --%i %p %i++\n", e, (e) ? _REFCNT (e) : 0, rhs,
+             (rhs) ? _REFCNT (rhs) : 0);
     }
-  if (e)
+    if (e)
     {
-      if (_REFCNT (e))
-	_REFCNT (e)--;
-      else
-	[e release];
+        if (_REFCNT (e))
+            _REFCNT (e)--;
+        else
+            [e release];
     }
-  if (rhs)
+    if (rhs)
     {
-      _REFCNT (rhs)++;
+        _REFCNT (rhs)++;
     }
 #endif
-  return (*lhs = rhs);
+    return (*lhs = rhs);
 }
 
-id EXPORT 
-idincref (id rhs)
+id EXPORT idincref (id rhs)
 {
 #ifdef OBJC_REFCNT
-  if (allocFlag)
+    if (allocFlag)
     {
-      dbg ("%p %i++\n", rhs, (rhs) ? _REFCNT (rhs) : 0);
+        dbg ("%p %i++\n", rhs, (rhs) ? _REFCNT (rhs) : 0);
     }
-  if (rhs)
+    if (rhs)
     {
-      _REFCNT (rhs)++;
+        _REFCNT (rhs)++;
     }
 #endif
-  return rhs;
+    return rhs;
 }
 
-id EXPORT 
-iddecref (id e)
+id EXPORT iddecref (id e)
 {
 #ifdef OBJC_REFCNT
-  if (allocFlag)
+    if (allocFlag)
     {
-      dbg ("%p --%i\n", e, (e) ? _REFCNT (e) : 0);
+        dbg ("%p --%i\n", e, (e) ? _REFCNT (e) : 0);
     }
-  if (e)
+    if (e)
     {
-      if (_REFCNT (e))
-	_REFCNT (e)--;
-      else
-	[e release];
+        if (_REFCNT (e))
+            _REFCNT (e)--;
+        else
+            [e release];
     }
 #endif
-  return nil;
+    return nil;
 }
 
-static id 
-nstalloc (id aClass, unsigned int nBytes)
+static id nstalloc (id aClass, unsigned int nBytes)
 {
-  id anObject;
-  unsigned aSize;
-  if (!aClass)
-    [Object error:"alloc: nil class"];
-  aSize = nstsize (aClass) + nBytes;
+    id anObject;
+    unsigned aSize;
+    if (!aClass)
+        [Object error:"alloc: nil class"];
+    aSize = nstsize (aClass) + nBytes;
 #ifndef OTBCRT
-  anObject = (id) OC_Calloc (aSize);
+    anObject = (id)OC_Calloc (aSize);
 #else
-  anObject = (id) OC_Malloc (sizeof (struct OTB));
-  anObject->ptr = (struct _PRIVATE *) OC_Calloc (aSize);
-  linkotb (aClass, anObject, aClass->nextinst);
+    anObject = (id)OC_Malloc (sizeof (struct OTB));
+    anObject->ptr = (struct _PRIVATE *)OC_Calloc (aSize);
+    linkotb (aClass, anObject, aClass->nextinst);
 #endif
-  setisa (anObject, aClass);
-  return anObject;
+    setisa (anObject, aClass);
+    return anObject;
 }
 
-static id 
-nstcopy (id anObject, unsigned int nBytes)
+static id nstcopy (id anObject, unsigned int nBytes)
 {
-  char *p, *q;
-  id newObject;
-  unsigned aSize;
-  id aClass = getisa (anObject);
+    char *p, *q;
+    id newObject;
+    unsigned aSize;
+    id aClass = getisa (anObject);
 
-  aSize = nstsize (aClass) + nBytes;
+    aSize = nstsize (aClass) + nBytes;
 
 #ifndef OTBCRT
-  newObject = (id) OC_Malloc (aSize);
-  p = (char *) newObject;
-  q = (char *) anObject;
+    newObject = (id)OC_Malloc (aSize);
+    p = (char *)newObject;
+    q = (char *)anObject;
 #else
-  newObject = (id) OC_Malloc (sizeof (struct OTB));
-  newObject->ptr = (struct _PRIVATE *) OC_Malloc (aSize);
-  p = (char *) newObject->ptr;
-  q = (char *) anObject->ptr;
-  linkotb (aClass, newObject, aClass->nextinst);
+    newObject = (id)OC_Malloc (sizeof (struct OTB));
+    newObject->ptr = (struct _PRIVATE *)OC_Malloc (aSize);
+    p = (char *)newObject->ptr;
+    q = (char *)anObject->ptr;
+    linkotb (aClass, newObject, aClass->nextinst);
 #endif
 
-  memcpy (p, q, aSize);
+    memcpy (p, q, aSize);
 #ifdef OBJC_REFCNT
-  _REFCNT (newObject) = 0;
+    _REFCNT (newObject) = 0;
 #endif
 
-  assert (getisa (newObject) == aClass);
-  return newObject;
+    assert (getisa (newObject) == aClass);
+    return newObject;
 }
 
-static id 
-nstdealloc (id anObject)
+static id nstdealloc (id anObject)
 {
-  setisa (anObject, nil);
+    setisa (anObject, nil);
 
 #ifndef OTBCRT
-  OC_Free (anObject);
+    OC_Free (anObject);
 #else
-  unlinkotb (anObject);
-  OC_Free (anObject->ptr);
-  OC_Free (anObject);
+    unlinkotb (anObject);
+    OC_Free (anObject->ptr);
+    OC_Free (anObject);
 #endif
 
-  return nil;
+    return nil;
 }
 
 id (*_alloc) (id, unsigned int) = nstalloc;
 id (*_copy) (id, unsigned int) = nstcopy;
 #if OBJCRT_BOEHM
-id (*_dealloc) (id);		/* NULL, nothing to call */
+id (*_dealloc) (id); /* NULL, nothing to call */
 #else
 id (*_dealloc) (id) = nstdealloc;
 #endif
@@ -494,34 +439,34 @@ id (*_realloc) (id, unsigned int);	/* clash IRIX 6.2 and not used */
  *
  ****************************************************************************/
 
-#if (defined(__LCC__) && defined(WIN32)) || ((i386 || m68k) && (__FreeBSD__ || linux || __NetBSD__ || __NeXT__ || __svr4__ ))
+#if (defined(__LCC__) && defined(WIN32)) ||                                    \
+    ((i386 || m68k) &&                                                         \
+     (__FreeBSD__ || linux || __NetBSD__ || __NeXT__ || __svr4__))
 
 /* stack frame layout (for messages) */
 
 typedef struct _msgframe
-  {
-    struct _msgframe *prev;	/* link to prev frame */
-      id (*ret) ();		/* return address from subroutine */
+{
+    struct _msgframe * prev; /* link to prev frame */
+    id (*ret) ();            /* return address from subroutine */
     struct _argframe
-      {
-	id receiver;		/* id of receiver */
-	SEL cmd;		/* message selector */
-	int arg;		/* first message argument */
-      }
-    argfrm;
-  }
- *msgframe;
+    {
+        id receiver; /* id of receiver */
+        SEL cmd;     /* message selector */
+        int arg;     /* first message argument */
+    } argfrm;
+} * msgframe;
 
 #ifdef m68k
-#define ispointer(addr) (((unsigned)addr&0x1)==0)
+#define ispointer(addr) (((unsigned)addr & 0x1) == 0)
 #else
-#define ispointer(addr) 1	/* (((unsigned)addr&0x1)==0) */
+#define ispointer(addr) 1 /* (((unsigned)addr&0x1)==0) */
 #endif
 
-#define instack(addr) (((unsigned)(addr) & 0xfff00000) != 0)
-#define isstackframe(fp) (ispointer(fp) && instack(fp) && (fp) < (fp)->prev)
+#define instack(addr) (((unsigned)(addr)&0xfff00000) != 0)
+#define isstackframe(fp) (ispointer (fp) && instack (fp) && (fp) < (fp)->prev)
 #define firstargpos ((unsigned)&(((msgframe)0)->argfrm.receiver))
-#define getframe(firstArg) ((msgframe)((unsigned)&firstArg - firstargpos))
+#define getframe(firstArg) ((msgframe) ((unsigned)&firstArg - firstargpos))
 
 #define PRINT_STACK_BACKTRACE 1
 #endif
@@ -547,40 +492,40 @@ typedef struct _msgframe
   }
  *msgframe;
 
-#define ispointer(addr) (((unsigned)addr&0x1)==0)
-#define instack(addr) (((unsigned)(addr) & 0xfff00000) != 0)
-#define isstackframe(fp) (ispointer(fp) && instack(fp) && (fp) < (fp)->prev)
+#define ispointer(addr) (((unsigned)addr & 0x1) == 0)
+#define instack(addr) (((unsigned)(addr)&0xfff00000) != 0)
+#define isstackframe(fp) (ispointer (fp) && instack (fp) && (fp) < (fp)->prev)
 #define firstargpos ((unsigned)&(((msgframe)0)->argfrm.receiver))
-#define getframe(firstArg) ((msgframe)((unsigned)&firstArg - firstargpos))
+#define getframe(firstArg) ((msgframe) ((unsigned)&firstArg - firstargpos))
 
 #define PRINT_STACK_BACKTRACE 1
 #endif
 
 #define PRNSTKMAX 100
 
-void EXPORT 
-prnstack (FILE * firstArg)
+void EXPORT prnstack (FILE * firstArg)
 {
 #ifndef PRINT_STACK_BACKTRACE
-  fprintf (firstArg, "(Use a debugger to see a stack backtrace).\n");
-  fflush (firstArg);
+    fprintf (firstArg, "(Use a debugger to see a stack backtrace).\n");
+    fflush (firstArg);
 #else
-  FILE *stream = firstArg;
-  msgframe pf, f = getframe (firstArg);
-  int nsels = 0;
-  SEL sels [PRNSTKMAX];
+    FILE * stream = firstArg;
+    msgframe pf, f = getframe (firstArg);
+    int nsels = 0;
+    SEL sels[PRNSTKMAX];
 
-  fprintf (stream, "Message backtrace:\n");
+    fprintf (stream, "Message backtrace:\n");
 
-  for (pf = f->prev; isstackframe (pf) && nsels < PRNSTKMAX; f = pf, pf = pf->prev)
+    for (pf = f->prev; isstackframe (pf) && nsels < PRNSTKMAX;
+         f = pf, pf = pf->prev)
     {
-      SEL s = f->argfrm.cmd;
-      if (isminmaxsel (s) && ispointer (s) && selUid (s) != NULL)
-	sels [nsels++] = s;
+        SEL s = f->argfrm.cmd;
+        if (isminmaxsel (s) && ispointer (s) && selUid (s) != NULL)
+            sels[nsels++] = s;
     }
 
-  while (nsels--)
-    fprintf (stream, " %.80s\n", sels [nsels]);
+    while (nsels--)
+        fprintf (stream, " %.80s\n", sels[nsels]);
 #endif
 }
 
@@ -593,27 +538,25 @@ prnstack (FILE * firstArg)
  *
  ****************************************************************************/
 
-static id 
-reportv (id self, STR fmt, OC_VA_LIST ap)
+static id reportv (id self, STR fmt, OC_VA_LIST ap)
 {
-  fflush (stderr);
-  prnstack (stderr);
-  fprintf (stderr, "error: ");
-  vfprintf (stderr, fmt, ap);
-  fprintf (stderr, "\n");
-  abort ();
-  return self;
+    fflush (stderr);
+    prnstack (stderr);
+    fprintf (stderr, "error: ");
+    vfprintf (stderr, fmt, ap);
+    fprintf (stderr, "\n");
+    abort ();
+    return self;
 }
 
-static id 
-report (id self, STR fmt,...)
+static id report (id self, STR fmt, ...)
 {
-  OC_VA_LIST ap;
-  /* use OC macros here for porting to SunOS4 */
-  OC_VA_START (ap, fmt);
-  reportv (self, fmt, ap);
-  OC_VA_END (ap);
-  return self;
+    OC_VA_LIST ap;
+    /* use OC macros here for porting to SunOS4 */
+    OC_VA_START (ap, fmt);
+    reportv (self, fmt, ap);
+    OC_VA_END (ap);
+    return self;
 }
 
 id (*_error) (id self, STR fmt, OC_VA_LIST ap) = reportv;
@@ -626,49 +569,44 @@ id (*_error) (id self, STR fmt, OC_VA_LIST ap) = reportv;
  *
  ****************************************************************************/
 
-static void 
-nofiler (void)
+static void nofiler (void)
 {
-  [Object error:"No filer class linked into application."];
+    [Object error:"No filer class linked into application."];
 }
 
-static id 
-readfilein (STR aFileName)
+static id readfilein (STR aFileName)
 {
-  FILE *f;
-  id r = nil;
-  if ((f = fopen (aFileName, "r")))
+    FILE * f;
+    id r = nil;
+    if ((f = fopen (aFileName, "r")))
     {
-      r = (*_fileIn) (f);
-      fclose (f);
+        r = (*_fileIn) (f);
+        fclose (f);
     }
-  return r;
+    return r;
 }
 
-static BOOL 
-storefileout (STR aFileName, id anObject)
+static BOOL storefileout (STR aFileName, id anObject)
 {
-  FILE *f;
-  BOOL r = NO;
-  if ((f = fopen (aFileName, "w")))
+    FILE * f;
+    BOOL r = NO;
+    if ((f = fopen (aFileName, "w")))
     {
-      r = (*_fileOut) (f, anObject);
-      fclose (f);
+        r = (*_fileOut) (f, anObject);
+        fclose (f);
     }
-  return r;
+    return r;
 }
 
-static id 
-nofilein (FILE * f)
+static id nofilein (FILE * f)
 {
-  nofiler ();
-  return nil;
+    nofiler ();
+    return nil;
 }
-static BOOL 
-nofileout (FILE * f, id anObject)
+static BOOL nofileout (FILE * f, id anObject)
 {
-  nofiler ();
-  return NO;
+    nofiler ();
+    return NO;
 }
 
 id (*_fileIn) (FILE *) = nofilein;
@@ -678,26 +616,17 @@ BOOL (*_storeOn) (STR, id) = storefileout;
 
 /* functions are necessary to do this on Windows (with DLLs) */
 
-void EXPORT 
-setfilein (id (*f) (FILE *))
-{
-  _fileIn = f;
-}
-void EXPORT 
-setfileout (BOOL (*f) (FILE *, id))
-{
-  _fileOut = f;
-}
+void EXPORT setfilein (id (*f) (FILE *)) { _fileIn = f; }
+void EXPORT setfileout (BOOL (*f) (FILE *, id)) { _fileOut = f; }
 
 /* function scoped extern since it can be useful from within debugger
  * in particular if it's not easy to send the |show| message from the debugger
  */
 
-id EXPORT 
-__showOn (id self, unsigned level /* unused */ )
+id EXPORT __showOn (id self, unsigned level /* unused */)
 {
-  (*_fileOut) (stderr, self);
-  return nil;
+    (*_fileOut) (stderr, self);
+    return nil;
 }
 
 id (*_showOn) (id, unsigned) = __showOn;
@@ -710,124 +639,117 @@ id (*_showOn) (id, unsigned) = __showOn;
  *
  ****************************************************************************/
 
-static int 
-strCmp (char *s1, char *s2)
+static int strCmp (char * s1, char * s2)
 {
-  int r;
-  int c1, c2;
+    int r;
+    int c1, c2;
 
-  while (1)
+    while (1)
     {
-      c1 = *s1++;
-      c2 = *s2++;
-      if (c1 == '\0')
-	return (c2 == 0) ? 0 : -1;
-      if (c2 == '\0')
-	return 1;
-      if ((r = c1 - c2))
-	return r;
+        c1 = *s1++;
+        c2 = *s2++;
+        if (c1 == '\0')
+            return (c2 == 0) ? 0 : -1;
+        if (c2 == '\0')
+            return 1;
+        if ((r = c1 - c2))
+            return r;
     }
 }
 
-static unsigned 
-strHash (char *s)
+static unsigned strHash (char * s)
 {
-  unsigned hash = 0;
+    unsigned hash = 0;
 
-  while (1)
+    while (1)
     {
-      if (*s == '\0')
-	break;
-      else
-	hash ^= *s++;
-      if (*s == '\0')
-	break;
-      else
-	hash ^= (*s++ << 8);
-      if (*s == '\0')
-	break;
-      else
-	hash ^= (*s++ << 16);
-      if (*s == '\0')
-	break;
-      else
-	hash ^= (*s++ << 24);
+        if (*s == '\0')
+            break;
+        else
+            hash ^= *s++;
+        if (*s == '\0')
+            break;
+        else
+            hash ^= (*s++ << 8);
+        if (*s == '\0')
+            break;
+        else
+            hash ^= (*s++ << 16);
+        if (*s == '\0')
+            break;
+        else
+            hash ^= (*s++ << 24);
     }
 
-  return hash;
+    return hash;
 }
 
-static void 
-hashInit ()
+static void hashInit ()
 {
-  int i;
-  nHashLists = SIZEHASHTABLE;
+    int i;
+    nHashLists = SIZEHASHTABLE;
 
-  hashList = (PHASH *) OC_Malloc (nHashLists * sizeof (PHASH));
+    hashList = (PHASH *)OC_Malloc (nHashLists * sizeof (PHASH));
 
-  for (i = 0; i < nHashLists; i++)
-    hashList [i] = 0;
+    for (i = 0; i < nHashLists; i++)
+        hashList[i] = 0;
 }
 
-static PHASH 
-hashNew (STR key, PHASH link)
+static PHASH hashNew (STR key, PHASH link)
 {
-  int n;
-  PHASH obj;
-  assert (key != NULL);
-  obj = (PHASH) OC_Malloc (sizeof (HASH));
-  obj->next = link;
-  n = strlen (key);
-  obj->key = (STR) OC_Malloc (n + 1);
-  strcpy (obj->key, key);
-  return obj;
+    int n;
+    PHASH obj;
+    assert (key != NULL);
+    obj = (PHASH)OC_Malloc (sizeof (HASH));
+    obj->next = link;
+    n = strlen (key);
+    obj->key = (STR)OC_Malloc (n + 1);
+    strcpy (obj->key, key);
+    return obj;
 }
 
-static PHASH 
-search (STR key, int *slot, PHASH * prev)
+static PHASH search (STR key, int * slot, PHASH * prev)
 {
-  PHASH target;
+    PHASH target;
 
-  *slot = strHash (key) % nHashLists;
-  *prev = 0;
-  target = hashList [*slot];
+    *slot = strHash (key) % nHashLists;
+    *prev = 0;
+    target = hashList[*slot];
 
-  while (target && (strCmp (key, target->key) != 0))
+    while (target && (strCmp (key, target->key) != 0))
     {
-      *prev = target;
-      target = target->next;
+        *prev = target;
+        target = target->next;
     }
 
-  return target;
+    return target;
 }
 
-static PHASH 
-hashEnter (STR key, int slot)
+static PHASH hashEnter (STR key, int slot)
 {
-  assert (key != NULL);
-  if (minsel)
+    assert (key != NULL);
+    if (minsel)
     {
-      if (key < minsel)
-	minsel = key;
-      if (key > maxsel)
-	maxsel = key;
+        if (key < minsel)
+            minsel = key;
+        if (key > maxsel)
+            maxsel = key;
     }
-  else
+    else
     {
-      minsel = key;
-      maxsel = key;
+        minsel = key;
+        maxsel = key;
     }
-  if (slot < 0)
-    slot = strHash (key) % nHashLists;
-  hashList [slot] = hashNew (key, hashList [slot]);
-  return hashList [slot];
+    if (slot < 0)
+        slot = strHash (key) % nHashLists;
+    hashList[slot] = hashNew (key, hashList[slot]);
+    return hashList[slot];
 }
 
-static PHASH 
-hashLookup (STR key, int *slot)
+static PHASH hashLookup (STR key, int * slot)
 {
-  PHASH prev;
-  return search (key, slot, &prev);
+    PHASH prev;
+    return search (key, slot, &prev);
 }
 
 #if 0
@@ -881,68 +803,65 @@ hashRemove (STR key)
 
 #endif
 
-static void 
-mapsels (PMOD info, SEL * sel)
+static void mapsels (PMOD info, SEL * sel)
 {
-  PHASH ent;
-  int i, slot;
+    PHASH ent;
+    int i, slot;
 
-  for (i = 0; i < info->modSelRef; i++)
+    for (i = 0; i < info->modSelRef; i++)
     {
-      SEL k;
+        SEL k;
 
-      if (!(ent = hashLookup (info->modSelTbl [i], &slot)))
-	{
-	  ent = hashEnter (info->modSelTbl [i], slot);
-	}
+        if (!(ent = hashLookup (info->modSelTbl[i], &slot)))
+        {
+            ent = hashEnter (info->modSelTbl[i], slot);
+        }
 
-      k = ent->key;
+        k = ent->key;
 
-      if (sel != 0 && *sel == info->modSelTbl [i])
-	{
-	  *sel = k;
-	}
+        if (sel != 0 && *sel == info->modSelTbl[i])
+        {
+            *sel = k;
+        }
 
-      /* 'unique' the string (replace by shared one) */
-      info->modSelTbl [i] = k;
+        /* 'unique' the string (replace by shared one) */
+        info->modSelTbl[i] = k;
     }
 
-  /* mark module as mapped */
-  markmodmapped (info);
+    /* mark module as mapped */
+    markmodmapped (info);
 }
 
-static void 
-mapcls (Cls_t cls)
+static void mapcls (Cls_t cls)
 {
-  PHASH ent;
-  int i, slot;
+    PHASH ent;
+    int i, slot;
 
-  for (i = 0; i < cls->clsSizDict; i++)
+    for (i = 0; i < cls->clsSizDict; i++)
     {
-      if (!(ent = hashLookup (cls->clsDispTable [i]._cmd, &slot)))
-	{
-	  ent = hashEnter (cls->clsDispTable [i]._cmd, slot);
-	}
+        if (!(ent = hashLookup (cls->clsDispTable[i]._cmd, &slot)))
+        {
+            ent = hashEnter (cls->clsDispTable[i]._cmd, slot);
+        }
 
-      /* unique string */
-      cls->clsDispTable [i]._cmd = ent->key;
+        /* unique string */
+        cls->clsDispTable[i]._cmd = ent->key;
     }
 
-  markmapped (cls);
+    markmapped (cls);
 }
 
-static void 
-mapclass (Cls_t cls)
+static void mapclass (Cls_t cls)
 {
-  if (!ismapped (cls))
-    mapcls (cls);
+    if (!ismapped (cls))
+        mapcls (cls);
 
-  /* also do the meta */
-  while (isfactory (cls))
+    /* also do the meta */
+    while (isfactory (cls))
     {
-      cls = getmeta (cls);
-      if (!ismapped (cls))
-	mapcls (cls);
+        cls = getmeta (cls);
+        if (!ismapped (cls))
+            mapcls (cls);
     }
 }
 
@@ -952,189 +871,185 @@ mapclass (Cls_t cls)
  *
  ****************************************************************************/
 
-static BOOL objcinitflag;	/* YES after initialization */
+static BOOL objcinitflag; /* YES after initialization */
 
 /*
  *  modlist is the handle of a linked list of modules with _BIND
  *  entries found so far.  Since the order of entries is not
  *  important, it can be maintained efficiently with only a single
- *  pointer. 
+ *  pointer.
  */
 
-static struct objcrt_useDescriptor *modlist = 0;
-static int bindcnt = 0;		/* _BIND entries found so far */
+static struct objcrt_useDescriptor * modlist = 0;
+static int bindcnt = 0; /* _BIND entries found so far */
 
 #ifndef OBJCRT_NOSHARED
-extern struct objcrt_useDescriptor *OCU_main;	/* entry point for the program */
+extern struct objcrt_useDescriptor * OCU_main; /* entry point for the program */
 #endif
 
 /*
  *  Recursively process each of the module use descriptors
  */
 
-static void 
-traverse (struct objcrt_useDescriptor *desc)
+static void traverse (struct objcrt_useDescriptor * desc)
 {
-  struct objcrt_useDescriptor ***nxt;
+    struct objcrt_useDescriptor *** nxt;
 
-  /*  Mark this one as processed to break any cycles */
-  desc->processed = 1;
+    /*  Mark this one as processed to break any cycles */
+    desc->processed = 1;
 
-  /* process each of the pointers in turn */
-  for (nxt = desc->uses; *nxt; nxt++)
+    /* process each of the pointers in turn */
+    for (nxt = desc->uses; *nxt; nxt++)
     {
-      if (**nxt && !((**nxt)->processed))
-	traverse (**nxt);
+        if (**nxt && !((**nxt)->processed))
+            traverse (**nxt);
     }
 
-  /*
-   *  If this module has a bind entry point, add it to the linked
-   *  list of modules with bind entries and increment the count of
-   *  modules with bind entries that have been processed.
-   */
+    /*
+     *  If this module has a bind entry point, add it to the linked
+     *  list of modules with bind entries and increment the count of
+     *  modules with bind entries that have been processed.
+     */
 
-  if (desc->bind)
+    if (desc->bind)
     {
-      desc->next = modlist;
-      modlist = desc;
-      bindcnt++;
+        desc->next = modlist;
+        modlist = desc;
+        bindcnt++;
     }
 }
 
-static Mentry_t 
-findmods (struct objcrt_useDescriptor *desc)
+static Mentry_t findmods (struct objcrt_useDescriptor * desc)
 {
-  Mentry_t tmp;
-  unsigned aSize;
-  Mentry_t theModules;
-  struct objcrt_useDescriptor *md;
+    Mentry_t tmp;
+    unsigned aSize;
+    Mentry_t theModules;
+    struct objcrt_useDescriptor * md;
 
-  if (desc && !(desc->processed))
-    traverse (desc);
+    if (desc && !(desc->processed))
+        traverse (desc);
 
-  aSize = (bindcnt + 1) * sizeof (struct objcrt_modEntry);
-  theModules = (Mentry_t) OC_Malloc (aSize);
+    aSize = (bindcnt + 1) * sizeof (struct objcrt_modEntry);
+    theModules = (Mentry_t)OC_Malloc (aSize);
 
-  /*
-   *  initialize it with the entries we have just found
-   */
+    /*
+     *  initialize it with the entries we have just found
+     */
 
-  for (md = modlist, tmp = theModules; md; md = md->next, tmp++)
+    for (md = modlist, tmp = theModules; md; md = md->next, tmp++)
     {
-      tmp->modLink = md->bind;
-      tmp->modInfo = 0;
+        tmp->modLink = md->bind;
+        tmp->modInfo = 0;
     }
 
-  /* initsels() depends on modLink of last element null'ed */
-  tmp->modLink = 0;
-  tmp->modInfo = 0;
+    /* initsels() depends on modLink of last element null'ed */
+    tmp->modLink = 0;
+    tmp->modInfo = 0;
 
-  return theModules;
+    return theModules;
 }
 
-static void 
-initsels (Mentry_t modPtr)
+static void initsels (Mentry_t modPtr)
 {
-  static int needHashInit = 1;
+    static int needHashInit = 1;
 
-  /* we can get here from _objcInit() or from loadobjc()
-   * for some shared library that gets loaded _before_ the main()
-   */
+    /* we can get here from _objcInit() or from loadobjc()
+     * for some shared library that gets loaded _before_ the main()
+     */
 
-  if (needHashInit)
+    if (needHashInit)
     {
-      hashInit ();
-      needHashInit = 0;
+        hashInit ();
+        needHashInit = 0;
     }
 
-  for (; modPtr && modPtr->modLink; modPtr++)
+    for (; modPtr && modPtr->modLink; modPtr++)
     {
-      PMOD info = modPtr->modInfo = (*modPtr->modLink) ();
+        PMOD info = modPtr->modInfo = (*modPtr->modLink) ();
 
-      if (info)
-	{
-	  id *cls;
+        if (info)
+        {
+            id * cls;
 
-	  if (info->modSelTbl)
-	    mapsels (info, 0);
+            if (info->modSelTbl)
+                mapsels (info, 0);
 
-	  cls = modPtr->modInfo->modClsLst;
+            cls = modPtr->modInfo->modClsLst;
 
-	  if (morethanone (modPtr->modInfo))
-	    {
-	      while (*cls)
-		mapclass (getcls (*cls++));
-	    }
-	  else
-	    {
-	      if (cls)
-		mapclass (getcls (*cls));
-	    }
-	}
+            if (morethanone (modPtr->modInfo))
+            {
+                while (*cls)
+                    mapclass (getcls (*cls++));
+            }
+            else
+            {
+                if (cls)
+                    mapclass (getcls (*cls));
+            }
+        }
     }
 }
 
-static void 
-initcls (id cls)
+static void initcls (id cls)
 {
-  Cls_t aCls = getcls (cls);
+    Cls_t aCls = getcls (cls);
 
-  if (initlzd (aCls))
-    return;
+    if (initlzd (aCls))
+        return;
 
 #ifdef OBJC_REFCNT
-  if (!isrefcntclass (aCls))
+    if (!isrefcntclass (aCls))
     {
-      char *msg = "Classes compiled with and without -refcnt cannot be mixed.";
-      report (nil, msg);
+        char * msg =
+            "Classes compiled with and without -refcnt cannot be mixed.";
+        report (nil, msg);
     }
 #endif
 
-  /* force initialization of superclasses first */
-  /* if we're a category, this will also force initialization of class */
-  /* (which is just the superclass) */
+    /* force initialization of superclasses first */
+    /* if we're a category, this will also force initialization of class */
+    /* (which is just the superclass) */
 
-  if (aCls->clsSuper)
+    if (aCls->clsSuper)
     {
-      initcls (aCls->clsSuper);
+        initcls (aCls->clsSuper);
     }
 
-  /* It's possible my superclass has sent a message back to me
-   * from its 'initialize' method, which has caused me to get
-   * initlzd! Check again.
-   */
+    /* It's possible my superclass has sent a message back to me
+     * from its 'initialize' method, which has caused me to get
+     * initlzd! Check again.
+     */
 
-  if (initlzd (aCls))
-    return;
-  markinitlzd (aCls);
+    if (initlzd (aCls))
+        return;
+    markinitlzd (aCls);
 
-  if (iscatgry (aCls))
-    addMethods (cls, aCls->clsSuper);
-  [cls initialize];
+    if (iscatgry (aCls))
+        addMethods (cls, aCls->clsSuper);
+    [cls initialize];
 }
 
-static void 
-initmods (Mentry_t modPtr)
+static void initmods (Mentry_t modPtr)
 {
-  for (; modPtr->modInfo; modPtr++)
+    for (; modPtr->modInfo; modPtr++)
     {
-      id *cls = modPtr->modInfo->modClsLst;
+        id * cls = modPtr->modInfo->modClsLst;
 
-      if (morethanone (modPtr->modInfo))
-	{
-	  while (*cls)
-	    {
-	      initcls (*cls);
-	      cls++;
-	    }
-	}
-      else
-	{
-	  if (cls && *cls)
-	    {
-	      initcls (*cls);
-	    }
-	}
+        if (morethanone (modPtr->modInfo))
+        {
+            while (*cls)
+            {
+                initcls (*cls);
+                cls++;
+            }
+        }
+        else
+        {
+            if (cls && *cls)
+            {
+                initcls (*cls);
+            }
+        }
     }
 }
 
@@ -1150,97 +1065,95 @@ initmods (Mentry_t modPtr)
  * instead.
  */
 
-static void 
-msgiods (void)
+static void msgiods (void)
 {
-  STR s;
+    STR s;
 
-  /* this is not a constant on cygwin32 */
-  dbgIOD = stderr;
-  if ((s = (getenv ("OBJCRTDBG"))))
+    /* this is not a constant on cygwin32 */
+    dbgIOD = stderr;
+    if ((s = (getenv ("OBJCRTDBG"))))
     {
-      dbgFlag = YES;
-      if (strcmp (s, "stderr") == 0)
-	{
-	  dbgIOD = stderr;
-	}
-      else
-	{
-	  dbgIOD = fopen (s, "w");
-	  setbuf (dbgIOD, NULL);
-	}
+        dbgFlag = YES;
+        if (strcmp (s, "stderr") == 0)
+        {
+            dbgIOD = stderr;
+        }
+        else
+        {
+            dbgIOD = fopen (s, "w");
+            setbuf (dbgIOD, NULL);
+        }
     }
 
-  msgIOD = stderr;
-  if ((s = (getenv ("OBJCRTMSG"))))
+    msgIOD = stderr;
+    if ((s = (getenv ("OBJCRTMSG"))))
     {
-      msgFlag = YES;
-      if (strcmp (s, "stderr") == 0)
-	{
-	  msgIOD = stderr;
-	}
-      else
-	{
-	  msgIOD = fopen (s, "w");
-	  /* if both dbgFlag and msgFlag, unbuffer */
-	  /* large amounts of output, so prefer block buffer */
-	  if (dbgFlag)
-	    setbuf (msgIOD, NULL);
-	}
+        msgFlag = YES;
+        if (strcmp (s, "stderr") == 0)
+        {
+            msgIOD = stderr;
+        }
+        else
+        {
+            msgIOD = fopen (s, "w");
+            /* if both dbgFlag and msgFlag, unbuffer */
+            /* large amounts of output, so prefer block buffer */
+            if (dbgFlag)
+                setbuf (msgIOD, NULL);
+        }
     }
 
-  pthread_mutex_init (&cLock, NULL);
+    pthread_mutex_init (&cLock, NULL);
 }
 
-int EXPORT 
-_objcInitNoShared (
-	       Mentry_t _objcModules, struct objcrt_useDescriptor *OCU_main)
+int EXPORT _objcInitNoShared (Mentry_t _objcModules,
+                              struct objcrt_useDescriptor * OCU_main)
 {
-  modnode_t m;
+    modnode_t m;
 
-  if (objcinitflag)
+    if (objcinitflag)
     {
-      return 1;
+        return 1;
     }
-  else
+    else
     {
 
-      msgiods ();
+        msgiods ();
 
-      /* Do auto-initialize if _objcModules is zero.  Otherwise,
-         * assume that it is the list of all bind functions to be called
-       */
+        /* Do auto-initialize if _objcModules is zero.  Otherwise,
+           * assume that it is the list of all bind functions to be called
+         */
 
-      if (!_objcModules)
-	_objcModules = findmods (OCU_main);
-      loadobjc (_objcModules);
+        if (!_objcModules)
+            _objcModules = findmods (OCU_main);
+        loadobjc (_objcModules);
 
-      /* do initialize of modules that were already registered
-       * via shlibs that got loaded before _objcInit()
-       * first call all BIND functions (including OBJCBIND_objcrt!)
-       * then start sending +initialize messages.
-       */
+        /* do initialize of modules that were already registered
+         * via shlibs that got loaded before _objcInit()
+         * first call all BIND functions (including OBJCBIND_objcrt!)
+         * then start sending +initialize messages.
+         */
 
-      for (m = modnodelist; m; m = m->next)
-	initsels (m->objcmodules);
-      for (m = modnodelist; m; m = m->next)
-	initmods (m->objcmodules);
+        for (m = modnodelist; m; m = m->next)
+            initsels (m->objcmodules);
+        for (m = modnodelist; m; m = m->next)
+            initmods (m->objcmodules);
 
-      /* initialize the Malloc exception blocks cause we can't allocate
-         * them when we run out of memory !
-         * This must be done after initializing the runtime
-       */
+        /* initialize the Malloc exception blocks cause we can't allocate
+           * them when we run out of memory !
+           * This must be done after initializing the runtime
+         */
 
-      outOfMem = [OutOfMemory new];
+        outOfMem = [OutOfMemory new];
 
-      /* finished _objcInit(). it's now safe for loadobjc() to
-       * call initobjc()
-       */
+        /* finished _objcInit(). it's now safe for loadobjc() to
+         * call initobjc()
+         */
 
-      objcinitflag = YES;
+        objcinitflag = YES;
 
-      /* Stepstone objcc returns maxSelector, probably not used */
-      return 0;
+        /* Stepstone objcc returns maxSelector, probably not used */
+        return 0;
     }
 }
 
@@ -1249,10 +1162,9 @@ _objcInitNoShared (
  */
 
 #ifndef OBJCRT_NOSHARED
-int EXPORT 
-oc_objcInit (int debug, BOOL traceInit)
+int EXPORT oc_objcInit (int debug, BOOL traceInit)
 {
-  return _objcInitNoShared (_objcModules, OCU_main);
+    return _objcInitNoShared (_objcModules, OCU_main);
 }
 #endif
 
@@ -1262,80 +1174,76 @@ oc_objcInit (int debug, BOOL traceInit)
  *
  ****************************************************************************/
 
-STR EXPORT 
-selName (SEL sel)
+STR EXPORT selName (SEL sel)
 {
-  if (isminmaxsel (sel))
+    if (isminmaxsel (sel))
     {
-      return (STR) (sel);	/* trivial for our runtime */
+        return (STR) (sel); /* trivial for our runtime */
     }
-  else
+    else
     {
-      return NULL;
+        return NULL;
     }
 }
 
-SEL EXPORT 
-selUid (STR sel)
+SEL EXPORT selUid (STR sel)
 {
-  int slot;
-  PHASH retVal;
-  if ((retVal = hashLookup (sel, &slot)))
-    return (SEL) retVal->key;
-  return NULL;
-}
-
-static SEL 
-cvtToSel (STR aString)
-{
-  if (aString == NULL)
+    int slot;
+    PHASH retVal;
+    if ((retVal = hashLookup (sel, &slot)))
+        return (SEL)retVal->key;
     return NULL;
-  return selUid (aString);
 }
 
-static id 
-cvtToId (STR aClassName)
+static SEL cvtToSel (STR aString)
 {
-  modnode_t m;
-  Mentry_t modPtr;
+    if (aString == NULL)
+        return NULL;
+    return selUid (aString);
+}
 
-  if (aClassName == NULL)
-    return nil;
+static id cvtToId (STR aClassName)
+{
+    modnode_t m;
+    Mentry_t modPtr;
 
-  for (m = modnodelist; m; m = m->next)
+    if (aClassName == NULL)
+        return nil;
+
+    for (m = modnodelist; m; m = m->next)
     {
-      for (modPtr = m->objcmodules; modPtr && modPtr->modLink; modPtr++)
-	{
-	  id *cls;
-	  Cls_t aCls;
+        for (modPtr = m->objcmodules; modPtr && modPtr->modLink; modPtr++)
+        {
+            id * cls;
+            Cls_t aCls;
 
-	  cls = modPtr->modInfo->modClsLst;
+            cls = modPtr->modInfo->modClsLst;
 
-	  if (morethanone (modPtr->modInfo))
-	    {
-	      while (*cls)
-		{
-		  aCls = getcls (*cls);
-		  if (strCmp (aCls->clsName, aClassName) == 0)
-		    {
-		      return *cls;
-		    }
-		  cls++;
-		}
-	    }
-	  else
-	    {
-	      if (cls)
-		{
-		  aCls = getcls (*cls);
-		  if (strCmp (aCls->clsName, aClassName) == 0)
-		    return *cls;
-		}
-	    }
-	}
+            if (morethanone (modPtr->modInfo))
+            {
+                while (*cls)
+                {
+                    aCls = getcls (*cls);
+                    if (strCmp (aCls->clsName, aClassName) == 0)
+                    {
+                        return *cls;
+                    }
+                    cls++;
+                }
+            }
+            else
+            {
+                if (cls)
+                {
+                    aCls = getcls (*cls);
+                    if (strCmp (aCls->clsName, aClassName) == 0)
+                        return *cls;
+                }
+            }
+        }
     }
 
-  return nil;
+    return nil;
 }
 
 /* for cplusplus the (STR) cannot be () */
@@ -1348,55 +1256,53 @@ SEL (*_cvtToSel) (STR) = cvtToSel;
  *
  ****************************************************************************/
 
-static BOOL 
-issubclass (Cls_t aCls, STR aClassname)
+static BOOL issubclass (Cls_t aCls, STR aClassname)
 {
-  if (aCls->clsSuper)
+    if (aCls->clsSuper)
     {
-      Cls_t clsSuper = getcls (aCls->clsSuper);
-      return strCmp (clsSuper->clsName, aClassname) == 0;
+        Cls_t clsSuper = getcls (aCls->clsSuper);
+        return strCmp (clsSuper->clsName, aClassname) == 0;
     }
-  else
+    else
     {
-      return 0;
+        return 0;
     }
 }
 
-void 
-addSubclassesTo (id c, STR aClassname)
+void addSubclassesTo (id c, STR aClassname)
 {
-  modnode_t m;
-  Mentry_t modPtr;
+    modnode_t m;
+    Mentry_t modPtr;
 
-  for (m = modnodelist; m; m = m->next)
+    for (m = modnodelist; m; m = m->next)
     {
-      for (modPtr = m->objcmodules; modPtr && modPtr->modLink; modPtr++)
-	{
-	  id *cls;
-	  Cls_t aCls;
+        for (modPtr = m->objcmodules; modPtr && modPtr->modLink; modPtr++)
+        {
+            id * cls;
+            Cls_t aCls;
 
-	  cls = modPtr->modInfo->modClsLst;
+            cls = modPtr->modInfo->modClsLst;
 
-	  if (morethanone (modPtr->modInfo))
-	    {
-	      while (*cls)
-		{
-		  aCls = getcls (*cls);
-		  if (issubclass (aCls, aClassname))
-		    [c add:*cls];
-		  cls++;
-		}
-	    }
-	  else
-	    {
-	      if (cls)
-		{
-		  aCls = getcls (*cls);
-		  if (issubclass (aCls, aClassname))
-		    [c add:*cls];
-		}
-	    }
-	}
+            if (morethanone (modPtr->modInfo))
+            {
+                while (*cls)
+                {
+                    aCls = getcls (*cls);
+                    if (issubclass (aCls, aClassname))
+                        [c add:*cls];
+                    cls++;
+                }
+            }
+            else
+            {
+                if (cls)
+                {
+                    aCls = getcls (*cls);
+                    if (issubclass (aCls, aClassname))
+                        [c add:*cls];
+                }
+            }
+        }
     }
 }
 
@@ -1406,163 +1312,145 @@ addSubclassesTo (id c, STR aClassname)
  *
  ****************************************************************************/
 
-static id 
-newShared (int aSize)
+static id newShared (int aSize) { return (id)OC_Malloc (aSize); }
+
+static id newMeta (STR name, id superClass, int esize)
 {
-  return (id) OC_Malloc (aSize);
+    id m;
+    Cls_t n;
+
+    m = newShared (sizeof (struct objcrt_shared));
+    n = getcls (m);
+
+    n->isa = getcls (superClass)->isa; /* isa of meta is root class */
+    n->clsSuper = superClass;
+    n->clsName = name; /* strdup ? */
+    n->clsTypes = getcls (superClass)->clsTypes;
+    n->clsSizInstance = getcls (superClass)->clsSizInstance + esize;
+    n->clsSizDict = 0;
+    n->clsDispTable = NULL;
+    n->clsStatus = 0;
+    n->clsMod = NULL; /* unused anyhow */
+    n->clsVersion = getcls (superClass)->clsVersion;
+    n->clsGlbl = NULL;
+
+    return m;
 }
 
-static id 
-newMeta (STR name, id superClass, int esize)
+static id newClass (STR name, id superClass, int eisize, int ecsize)
 {
-  id m;
-  Cls_t n;
+    id m, meta;
+    Cls_t n, c;
 
-  m = newShared (sizeof (struct objcrt_shared));
-  n = getcls (m);
+    meta = newMeta (name, getcls (superClass)->isa, ecsize);
+    m = newShared (getcls (meta)->clsSizInstance); /* includes cvars */
+    n = getcls (m);
+    c = getcls (superClass);
 
-  n->isa = getcls (superClass)->isa;	/* isa of meta is root class */
-  n->clsSuper = superClass;
-  n->clsName = name;		/* strdup ? */
-  n->clsTypes = getcls (superClass)->clsTypes;
-  n->clsSizInstance = getcls (superClass)->clsSizInstance + esize;
-  n->clsSizDict = 0;
-  n->clsDispTable = NULL;
-  n->clsStatus = 0;
-  n->clsMod = NULL;		/* unused anyhow */
-  n->clsVersion = getcls (superClass)->clsVersion;
-  n->clsGlbl = NULL;
+    n->isa = meta;
+    n->clsSuper = superClass;
+    n->clsName = name; /* strdup ? */
+    n->clsTypes = c->clsTypes;
+    n->clsSizInstance = c->clsSizInstance + eisize;
+    n->clsSizDict = 0;
+    n->clsDispTable = NULL;
+    n->clsStatus = 0;
+    n->clsMod = NULL; /* unused anyhow */
+    n->clsVersion = c->clsVersion;
+    n->clsGlbl = NULL; /* could set this to clsLst */
 
-  return m;
+    return m;
 }
 
-static id 
-newClass (STR name, id superClass, int eisize, int ecsize)
+static PMOD newModDesc (id * clsLst)
 {
-  id m, meta;
-  Cls_t n, c;
+    PMOD mod = (PMOD)OC_Malloc (sizeof (MOD));
 
-  meta = newMeta (name, getcls (superClass)->isa, ecsize);
-  m = newShared (getcls (meta)->clsSizInstance);	/* includes cvars */
-  n = getcls (m);
-  c = getcls (superClass);
+    mod->modName = "dynamic";
+    mod->modName = "2.3.15";
+    /* not MOD_MORETHANONE (clsLst is not NULL terminated, it's just 1 class) */
+    mod->modStatus = 0;
+    mod->modMinSel = NULL;
+    mod->modMaxSel = NULL;
+    mod->modClsLst = clsLst;
+    mod->modSelRef = 0;
+    mod->modSelTbl = NULL;
+    mod->modMapTbl = NULL;
 
-  n->isa = meta;
-  n->clsSuper = superClass;
-  n->clsName = name;		/* strdup ? */
-  n->clsTypes = c->clsTypes;
-  n->clsSizInstance = c->clsSizInstance + eisize;
-  n->clsSizDict = 0;
-  n->clsDispTable = NULL;
-  n->clsStatus = 0;
-  n->clsMod = NULL;		/* unused anyhow */
-  n->clsVersion = c->clsVersion;
-  n->clsGlbl = NULL;		/* could set this to clsLst */
-
-  return m;
+    return mod;
 }
 
-static PMOD 
-newModDesc (id * clsLst)
+static PMOD dynMod; /* ugh - hack to communicate between dynBind and addMod */
+static PMOD dynBIND (void) { return dynMod; }
+
+static void addModEntry (id aCls)
 {
-  PMOD mod = (PMOD) OC_Malloc (sizeof (MOD));
+    id * clsLst;
+    Mentry_t entry, sentin;
+    entry = (Mentry_t)OC_Malloc (2 * sizeof (struct objcrt_modEntry));
 
-  mod->modName = "dynamic";
-  mod->modName = "2.3.15";
-  /* not MOD_MORETHANONE (clsLst is not NULL terminated, it's just 1 class) */
-  mod->modStatus = 0;
-  mod->modMinSel = NULL;
-  mod->modMaxSel = NULL;
-  mod->modClsLst = clsLst;
-  mod->modSelRef = 0;
-  mod->modSelTbl = NULL;
-  mod->modMapTbl = NULL;
+    clsLst = OC_Malloc (sizeof (id));
+    *clsLst = aCls;
+    dynMod = newModDesc (clsLst);
 
-  return mod;
+    entry->modLink = dynBIND;
+    entry->modInfo = NULL;
+
+    /* initsels depends on sentinel */
+    sentin = entry + 1;
+    sentin->modLink = NULL;
+    sentin->modInfo = NULL;
+
+    loadobjc (entry); /* dynBIND will use dynMod */
 }
 
-static PMOD dynMod;		/* ugh - hack to communicate between dynBind and addMod */
-static PMOD 
-dynBIND (void)
+id newsubclass (STR name, id superClass, int ivars, int cvars)
 {
-  return dynMod;
+    return newClass (name, superClass, ivars, cvars);
 }
 
-static void 
-addModEntry (id aCls)
+void linkclass (id aclass) { addModEntry (aclass); }
+
+void unlinkclass (id aclass)
 {
-  id *clsLst;
-  Mentry_t entry, sentin;
-  entry = (Mentry_t) OC_Malloc (2 * sizeof (struct objcrt_modEntry));
+    modnode_t m;
+    Mentry_t modPtr;
 
-  clsLst = OC_Malloc (sizeof (id));
-  *clsLst = aCls;
-  dynMod = newModDesc (clsLst);
+    if (aclass == nil)
+        return;
 
-  entry->modLink = dynBIND;
-  entry->modInfo = NULL;
-
-  /* initsels depends on sentinel */
-  sentin = entry + 1;
-  sentin->modLink = NULL;
-  sentin->modInfo = NULL;
-
-  loadobjc (entry);		/* dynBIND will use dynMod */
-}
-
-id 
-newsubclass (STR name, id superClass, int ivars, int cvars)
-{
-  return newClass (name, superClass, ivars, cvars);
-}
-
-void 
-linkclass (id aclass)
-{
-  addModEntry (aclass);
-}
-
-void 
-unlinkclass (id aclass)
-{
-  modnode_t m;
-  Mentry_t modPtr;
-
-  if (aclass == nil)
-    return;
-
-  for (m = modnodelist; m; m = m->next)
+    for (m = modnodelist; m; m = m->next)
     {
-      for (modPtr = m->objcmodules; modPtr && modPtr->modLink; modPtr++)
-	{
-	  id *cls;
+        for (modPtr = m->objcmodules; modPtr && modPtr->modLink; modPtr++)
+        {
+            id * cls;
 
-	  cls = modPtr->modInfo->modClsLst;
+            cls = modPtr->modInfo->modClsLst;
 
-	  if (morethanone (modPtr->modInfo))
-	    {
-	      while (*cls)
-		{
-		  if (*cls == aclass)
-		    {
-		      unloadobjc (modPtr);
-		      return;
-		    }
-		  cls++;
-		}
-	    }
-	  else
-	    {
-	      if (cls)
-		{
-		  if (*cls == aclass)
-		    {
-		      unloadobjc (modPtr);
-		      return;
-		    }
-		}
-	    }
-	}
+            if (morethanone (modPtr->modInfo))
+            {
+                while (*cls)
+                {
+                    if (*cls == aclass)
+                    {
+                        unloadobjc (modPtr);
+                        return;
+                    }
+                    cls++;
+                }
+            }
+            else
+            {
+                if (cls)
+                {
+                    if (*cls == aclass)
+                    {
+                        unloadobjc (modPtr);
+                        return;
+                    }
+                }
+            }
+        }
     }
 }
 
@@ -1577,58 +1465,55 @@ unlinkclass (id aclass)
  * is not initialized. (Checked for every selector, not enabled by default).
  */
 
-char EXPORT *
-objcrt_bindError (char *m)
+char EXPORT * objcrt_bindError (char * m)
 {
-  fprintf (stderr, "objcrt initialization error (_OBJCBIND_%s)", m);
-  return NULL;
+    fprintf (stderr, "objcrt initialization error (_OBJCBIND_%s)", m);
+    return NULL;
 }
 
-static void 
-prnframe (FILE * f, id obj, SEL sel, BOOL isSuper)
+static void prnframe (FILE * f, id obj, SEL sel, BOOL isSuper)
 {
-  char *nam, *fac;
+    char *nam, *fac;
 
-  if (obj)
+    if (obj)
     {
-      Cls_t cls = getcls (getisa (obj));
-      nam = cls->clsName;
-      fac = (ismeta (cls)) ? "+" : "-";
+        Cls_t cls = getcls (getisa (obj));
+        nam = cls->clsName;
+        fac = (ismeta (cls)) ? "+" : "-";
     }
-  else
+    else
     {
-      nam = "nil";
-      fac = "";
+        nam = "nil";
+        fac = "";
     }
 
-  fprintf (f, (isSuper ? "%s\t%s%s\tsuper\n" : "%s\t%s%s\n"), nam, fac, sel);
+    fprintf (f, (isSuper ? "%s\t%s%s\tsuper\n" : "%s\t%s%s\n"), nam, fac, sel);
 }
 
-static id 
-_errHandler (id self, SEL sel)
+static id _errHandler (id self, SEL sel)
 {
-  if (sel == @selector (doesNotRecognize:))
-    {				/* possible ! */
-      char *msg;
-      msg = "Completely messed up: Object does not recognize -doesNotRecognize:";
-      return report (self, msg);
+    if (sel == @selector (doesNotRecognize:))
+    { /* possible ! */
+        char * msg;
+        msg = "Completely messed up: Object does not recognize "
+              "-doesNotRecognize:";
+        return report (self, msg);
     }
-  else
+    else
     {
-      return [self doesNotRecognize:sel];
+        return [self doesNotRecognize:sel];
     }
 }
 
-static id 
-_nofwdHandler (id self, SEL sel)
+static id _nofwdHandler (id self, SEL sel)
 {
-  return report (self, "'%s': This type of message cannot be forwarded.", sel);
+    return report (self, "'%s': This type of message cannot be forwarded.",
+                   sel);
 }
 
-static id 
-_freedHandler (id self, SEL sel)
+static id _freedHandler (id self, SEL sel)
 {
-  return report (self, "Message '%s' sent to freed object.", sel);
+    return report (self, "Message '%s' sent to freed object.", sel);
 }
 
 /* stes - feb 12, 97 - scoped extern for inlineCache messenger */
@@ -1636,10 +1521,9 @@ _freedHandler (id self, SEL sel)
 
 BOOL noNilRcvr = NO;
 
-id EXPORT 
-_nilHandler (id self, SEL sel)
+id EXPORT _nilHandler (id self, SEL sel)
 {
-  return (noNilRcvr) ? report (self, "Message '%s' sent to nil.", sel) : nil;
+    return (noNilRcvr) ? report (self, "Message '%s' sent to nil.", sel) : nil;
 }
 
 /*****************************************************************************
@@ -1652,29 +1536,28 @@ _nilHandler (id self, SEL sel)
  *
  ****************************************************************************/
 
-#define	CACHESIZE 1031		/* a prime number */
+#define CACHESIZE 1031 /* a prime number */
 
-static id clsCache [CACHESIZE];
-static SEL selCache [CACHESIZE];
-static IMP impCache [CACHESIZE];
+static id clsCache[CACHESIZE];
+static SEL selCache[CACHESIZE];
+static IMP impCache[CACHESIZE];
 
-static void 
-flushCache (void)
+static void flushCache (void)
 {
-  int i = 0;
-  for (i = 0; i < CACHESIZE; i++)
-    clsCache [i] = nil;
+    int i = 0;
+    for (i = 0; i < CACHESIZE; i++)
+        clsCache[i] = nil;
 }
 
-FILE *msgIOD;
+FILE * msgIOD;
 BOOL msgFlag = NO;
 BOOL noCacheFlag = NO;
 BOOL dbgFlag = NO;
 BOOL allocFlag = NO;
-FILE *dbgIOD;
+FILE * dbgIOD;
 
-#define CACHE_LOCK pthread_mutex_lock(&cLock);
-#define CACHE_UNLOCK pthread_mutex_unlock(&cLock);
+#define CACHE_LOCK pthread_mutex_lock (&cLock);
+#define CACHE_UNLOCK pthread_mutex_unlock (&cLock);
 
 /*
  * computing index of IMP pointer in method look-up cache
@@ -1683,54 +1566,52 @@ FILE *dbgIOD;
  * as argument to the _getImp() which does a linear search.
  */
 
-#define CACHE_INDEX(aSel,aShr) \
-	(int)((((unsigned long)aSel) ^ ((unsigned long)aShr)) % CACHESIZE)
+#define CACHE_INDEX(aSel, aShr)                                                \
+    (int) ((((unsigned long)aSel) ^ ((unsigned long)aShr)) % CACHESIZE)
 
-static IMP 
-_getImp (id cls, SEL sel, int index, IMP fwd)
+static IMP _getImp (id cls, SEL sel, int index, IMP fwd)
 {
-  Cls_t wCls;
-  id ncls = cls;		/* working class */
+    Cls_t wCls;
+    id ncls = cls; /* working class */
 
-  do
+    do
     {
-      int n;
-      struct objcrt_slt *smt;
+        int n;
+        struct objcrt_slt * smt;
 
-      wCls = getcls (ncls);
-      smt = wCls->clsDispTable;
+        wCls = getcls (ncls);
+        smt = wCls->clsDispTable;
 
-      for (n = 0; n < wCls->clsSizDict; n++, smt++)
-	{
-	  /* selectors can be compared with '==' */
-	  if (sel == smt->_cmd)
-	    {
-	      if (noCacheFlag)
-		{
-		  return smt->_imp;
-		}
-	      else
-		{
-		  IMP imp = smt->_imp;
-		  CACHE_LOCK
-		    selCache [index] = sel;
-		  clsCache [index] = cls;
-		  impCache [index] = imp;
-		  CACHE_UNLOCK
-		    return imp;
-		}
-	    }
-	}
+        for (n = 0; n < wCls->clsSizDict; n++, smt++)
+        {
+            /* selectors can be compared with '==' */
+            if (sel == smt->_cmd)
+            {
+                if (noCacheFlag)
+                {
+                    return smt->_imp;
+                }
+                else
+                {
+                    IMP imp = smt->_imp;
+                    CACHE_LOCK
+                    selCache[index] = sel;
+                    clsCache[index] = cls;
+                    impCache[index] = imp;
+                    CACHE_UNLOCK
+                    return imp;
+                }
+            }
+        }
+    } while ((ncls = wCls->clsSuper));
+
+    if (objcinitflag)
+    {
+        return (fwd) ? fwd : _nofwdHandler;
     }
-  while ((ncls = wCls->clsSuper));
-
-  if (objcinitflag)
+    else
     {
-      return (fwd) ? fwd : _nofwdHandler;
-    }
-  else
-    {
-      return _errHandler;
+        return _errHandler;
     }
 }
 
@@ -1741,126 +1622,120 @@ _getImp (id cls, SEL sel, int index, IMP fwd)
  * the old _imp can be defined in terms of fwdimp.
  */
 
-IMP EXPORT 
-_imp (id aRecvr, SEL aSel)
+IMP EXPORT _imp (id aRecvr, SEL aSel)
 {
-  return fwdimp (aRecvr, aSel, (IMP) _errHandler);
+    return fwdimp (aRecvr, aSel, (IMP)_errHandler);
 }
 
-IMP EXPORT 
-_impSuper (id aRecvr, SEL aSel)
+IMP EXPORT _impSuper (id aRecvr, SEL aSel)
 {
-  return fwdimpSuper (aRecvr, aSel, (IMP) _errHandler);
+    return fwdimpSuper (aRecvr, aSel, (IMP)_errHandler);
 }
 
-IMP EXPORT 
-fwdimp (id aRecvr, SEL aSel, IMP fwd)
+IMP EXPORT fwdimp (id aRecvr, SEL aSel, IMP fwd)
 {
-  id shr;
-  int index;
-  Cls_t wCls;
-  BOOL inSuper = NO;
+    id shr;
+    int index;
+    Cls_t wCls;
+    BOOL inSuper = NO;
 
-  if (msgFlag)
-    prnframe (msgIOD, aRecvr, aSel, inSuper);
-  if (!aRecvr)
-    return (IMP) _nilHandler;
-  shr = getisa (aRecvr);
-  if (!shr)
-    return (IMP) _freedHandler;
+    if (msgFlag)
+        prnframe (msgIOD, aRecvr, aSel, inSuper);
+    if (!aRecvr)
+        return (IMP)_nilHandler;
+    shr = getisa (aRecvr);
+    if (!shr)
+        return (IMP)_freedHandler;
 
-  /* try cache hit before extra function call _getImp() */
-  index = CACHE_INDEX (aSel, shr);
+    /* try cache hit before extra function call _getImp() */
+    index = CACHE_INDEX (aSel, shr);
 
-  if (!noCacheFlag)
+    if (!noCacheFlag)
     {
-      CACHE_LOCK
-	if (clsCache [index] == shr && selCache [index] == aSel)
-	{
-	  IMP imp = impCache [index];
-	  CACHE_UNLOCK return imp;
-	}
-      CACHE_UNLOCK
+        CACHE_LOCK
+        if (clsCache[index] == shr && selCache[index] == aSel)
+        {
+            IMP imp = impCache[index];
+            CACHE_UNLOCK return imp;
+        }
+        CACHE_UNLOCK
     }
 
-  /* it can happen, for msgs sent from within +initialize,
-   * that we have to force an +initialize */
+    /* it can happen, for msgs sent from within +initialize,
+     * that we have to force an +initialize */
 
-  if (ismeta ((wCls = getcls (shr))))
+    if (ismeta ((wCls = getcls (shr))))
     {
-      if (!initlzd (wCls))
-	initcls (aRecvr);
+        if (!initlzd (wCls))
+            initcls (aRecvr);
     }
-  else
+    else
     {
-      if (!initlzd (wCls))
-	initcls (shr);
+        if (!initlzd (wCls))
+            initcls (shr);
     }
 
-  return _getImp (shr, aSel, index, fwd);
+    return _getImp (shr, aSel, index, fwd);
 }
 
-IMP EXPORT 
-fwdimpSuper (id aClass, SEL aSel, IMP fwd)
+IMP EXPORT fwdimpSuper (id aClass, SEL aSel, IMP fwd)
 {
-  int index;
-  BOOL inSuper = YES;
+    int index;
+    BOOL inSuper = YES;
 
-  if (msgFlag)
-    prnframe (msgIOD, aClass, aSel, inSuper);
-  if (!aClass)
-    return (IMP) _nilHandler;
+    if (msgFlag)
+        prnframe (msgIOD, aClass, aSel, inSuper);
+    if (!aClass)
+        return (IMP)_nilHandler;
 
-  /* try cache hit before extra function call _getImp() */
-  index = CACHE_INDEX (aSel, aClass);
+    /* try cache hit before extra function call _getImp() */
+    index = CACHE_INDEX (aSel, aClass);
 
-  if (!noCacheFlag)
+    if (!noCacheFlag)
     {
-      CACHE_LOCK
-	if (clsCache [index] == aClass && selCache [index] == aSel)
-	{
-	  IMP imp = impCache [index];
-	  CACHE_UNLOCK return imp;
-	}
-      CACHE_UNLOCK
+        CACHE_LOCK
+        if (clsCache[index] == aClass && selCache[index] == aSel)
+        {
+            IMP imp = impCache[index];
+            CACHE_UNLOCK return imp;
+        }
+        CACHE_UNLOCK
     }
 
-  return _getImp (aClass, aSel, index, fwd);
+    return _getImp (aClass, aSel, index, fwd);
 }
 
-void EXPORT 
-fwdmsg (id self, SEL sel, void *args, ARGIMP disp)
+void EXPORT fwdmsg (id self, SEL sel, void * args, ARGIMP disp)
 {
-  if (sel == @selector (doesNotUnderstand:))
-    {				/* possible ! */
-      char *msg;
-      msg = "Completely messed up: Object does not understand -doesNotUnderstand:";
-      report (self, msg);
+    if (sel == @selector (doesNotUnderstand:))
+    { /* possible ! */
+        char * msg;
+        msg = "Completely messed up: Object does not understand "
+              "-doesNotUnderstand:";
+        report (self, msg);
     }
-  else
+    else
     {
-      id msg = [Message selector:sel dispatch:disp args:args];
-      [self doesNotUnderstand:msg];
-      msg = [msg free];
+        id msg = [Message selector:sel dispatch:disp args:args];
+        [self doesNotUnderstand:msg];
+        msg = [msg free];
     }
 }
 
-static void 
-selptrdisp (id self, SEL sel, id * p)
+static void selptrdisp (id self, SEL sel, id * p)
 {
-  p [0] = (*fwdimp (self, sel, selptrfwd)) (self, sel, p [1], p [2], p [3], p [4]);
+    p[0] = (*fwdimp (self, sel, selptrfwd)) (self, sel, p[1], p[2], p[3], p[4]);
 }
 
-id EXPORT 
-selptrfwd (id self, SEL sel, id a, id b, id c, id d)
+id EXPORT selptrfwd (id self, SEL sel, id a, id b, id c, id d)
 {
-  id p [5];
-  p [1] = a;
-  p [2] = b;
-  p [3] = c;
-  p [4] = d;
-  fwdmsg (self, sel, p, (ARGIMP) selptrdisp);
-  return p [0];
+    id p[5];
+    p[1] = a;
+    p[2] = b;
+    p[3] = c;
+    p[4] = d;
+    fwdmsg (self, sel, p, (ARGIMP)selptrdisp);
+    return p[0];
 }
 
 /*
@@ -1868,16 +1743,15 @@ selptrfwd (id self, SEL sel, id a, id b, id c, id d)
  * Used in Producer.
  */
 
-void EXPORT 
-dbg (char *fmt,...)
+void EXPORT dbg (char * fmt, ...)
 {
-  if (dbgFlag)
+    if (dbgFlag)
     {
-      OC_VA_LIST arglist;
-      OC_VA_START (arglist, fmt);
-      vfprintf (dbgIOD, fmt, arglist);
-      OC_VA_END (arglist);
-      fflush (dbgIOD);
+        OC_VA_LIST arglist;
+        OC_VA_START (arglist, fmt);
+        vfprintf (dbgIOD, fmt, arglist);
+        OC_VA_END (arglist);
+        fflush (dbgIOD);
     }
 }
 
@@ -1887,78 +1761,73 @@ dbg (char *fmt,...)
  *
  ****************************************************************************/
 
-
-static struct objcrt_slt *
-newDispTable (int n)
+static struct objcrt_slt * newDispTable (int n)
 {
-  return (struct objcrt_slt *) OC_Malloc (n * sizeof (struct objcrt_slt));
+    return (struct objcrt_slt *)OC_Malloc (n * sizeof (struct objcrt_slt));
 }
 
-static void 
-copyDispTable (struct objcrt_slt *dst, struct objcrt_slt *src, int n)
+static void copyDispTable (struct objcrt_slt * dst, struct objcrt_slt * src,
+                           int n)
 {
-  while (n--)
+    while (n--)
     {
-      dst->_imp = src->_imp;
-      dst->_cmd = src->_cmd;
-      dst++;
-      src++;
+        dst->_imp = src->_imp;
+        dst->_cmd = src->_cmd;
+        dst++;
+        src++;
     }
 }
 
-static void 
-freeDispTable (struct objcrt_slt *self)
+static void freeDispTable (struct objcrt_slt * self)
 {
-  /* in any case, don't free the statically (compiler) allocated ones */
+    /* in any case, don't free the statically (compiler) allocated ones */
 }
 
-static void 
-addnstmeth (Cls_t src, Cls_t dst)
+static void addnstmeth (Cls_t src, Cls_t dst)
 {
-  struct objcrt_slt *n = newDispTable (dst->clsSizDict + src->clsSizDict);
-  copyDispTable (n, dst->clsDispTable, dst->clsSizDict);
-  copyDispTable (n + dst->clsSizDict, src->clsDispTable, src->clsSizDict);
-  dst->clsSizDict += src->clsSizDict;
-  freeDispTable (dst->clsDispTable);
-  dst->clsDispTable = n;
+    struct objcrt_slt * n = newDispTable (dst->clsSizDict + src->clsSizDict);
+    copyDispTable (n, dst->clsDispTable, dst->clsSizDict);
+    copyDispTable (n + dst->clsSizDict, src->clsDispTable, src->clsSizDict);
+    dst->clsSizDict += src->clsSizDict;
+    freeDispTable (dst->clsDispTable);
+    dst->clsDispTable = n;
 }
 
-void 
-addMethods (id isrc, id idst)
+void addMethods (id isrc, id idst)
 {
-  STR srcName, dstName;
-  Cls_t src = getcls (isrc);
-  Cls_t dst = getcls (idst);
+    STR srcName, dstName;
+    Cls_t src = getcls (isrc);
+    Cls_t dst = getcls (idst);
 
-  /* can happen from inside +initialize */
-  if (src == dst)
-    return;
+    /* can happen from inside +initialize */
+    if (src == dst)
+        return;
 
-  /* check direct subclass; otherwise, if A has subclass B, and B
-   * has subclass C, and [C poseAs:A] then B will inherit from both
-   * C and A
-   */
+    /* check direct subclass; otherwise, if A has subclass B, and B
+     * has subclass C, and [C poseAs:A] then B will inherit from both
+     * C and A
+     */
 
-  srcName = src->clsName;
-  dstName = dst->clsName;
+    srcName = src->clsName;
+    dstName = dst->clsName;
 
-  if (src->clsSuper && getcls (src->clsSuper) != dst)
+    if (src->clsSuper && getcls (src->clsSuper) != dst)
     {
-      [isrc error:"addMethods: %s not direct subclass of %s.",
-       srcName, dstName];
+        [isrc error:"addMethods: %s not direct subclass of %s.", srcName,
+                    dstName];
     }
 
-  if (src->clsSizInstance != dst->clsSizInstance)
+    if (src->clsSizInstance != dst->clsSizInstance)
     {
-      [isrc error:"addMethods: %s adds instance variables to %s.",
-       srcName, dstName];
+        [isrc error:"addMethods: %s adds instance variables to %s.", srcName,
+                    dstName];
     }
 
-  addnstmeth (src, dst);
-  addnstmeth (getmeta (src), getmeta (dst));
+    addnstmeth (src, dst);
+    addnstmeth (getmeta (src), getmeta (dst));
 
-  /* flush message caches */
-  flushCache ();
+    /* flush message caches */
+    flushCache ();
 }
 
 /*****************************************************************************
@@ -1967,122 +1836,120 @@ addMethods (id isrc, id idst)
  *
  ****************************************************************************/
 
-id 
-swapclass (id self, id other)
+id swapclass (id self, id other)
 {
 #if OTBCRT
-  struct OTB *fake = (struct OTB *) self;
-  struct _PRIVATE *temp = fake->ptr;
-  fake->ptr = other->ptr;
-  other->ptr = temp;
-  flushCache ();		/* important for classes */
+    struct OTB * fake = (struct OTB *)self;
+    struct _PRIVATE * temp = fake->ptr;
+    fake->ptr = other->ptr;
+    other->ptr = temp;
+    flushCache (); /* important for classes */
 #endif
-  return self;
+    return self;
 }
 
-void 
-poseAs (id iposing, id itarget)
+void poseAs (id iposing, id itarget)
 {
-  modnode_t m;
-  Mentry_t modPtr;
-  STR newName, posingName, targetName;
-  Cls_t posing = getcls (iposing);
-  Cls_t target = getcls (itarget);
+    modnode_t m;
+    Mentry_t modPtr;
+    STR newName, posingName, targetName;
+    Cls_t posing = getcls (iposing);
+    Cls_t target = getcls (itarget);
 
-  /* can happen from inside +initialize */
-  if (posing == target)
-    return;
+    /* can happen from inside +initialize */
+    if (posing == target)
+        return;
 
-  /* check direct subclass; otherwise, if A has subclass B, and B
-   * has subclass C, and [C poseAs:A] then B will inherit from both
-   * C and A
-   */
+    /* check direct subclass; otherwise, if A has subclass B, and B
+     * has subclass C, and [C poseAs:A] then B will inherit from both
+     * C and A
+     */
 
-  posingName = posing->clsName;
-  targetName = target->clsName;
+    posingName = posing->clsName;
+    targetName = target->clsName;
 
-  if (!hasposing (target))
+    if (!hasposing (target))
     {
-      [itarget error:"poseAs: %s needs to be recompiled", targetName];
+        [itarget error:"poseAs: %s needs to be recompiled", targetName];
     }
 
-  if (posing->clsSuper && getcls (posing->clsSuper) != target)
+    if (posing->clsSuper && getcls (posing->clsSuper) != target)
     {
-      [iposing error:"poseAs: %s not direct subclass of %s.",
-       posingName, targetName];
+        [iposing error:"poseAs: %s not direct subclass of %s.", posingName,
+                       targetName];
     }
 
-  if (posing->clsSizInstance != target->clsSizInstance)
+    if (posing->clsSizInstance != target->clsSizInstance)
     {
-      [iposing error:"poseAs: %s adds instance variables to %s.",
-       posingName, targetName];
+        [iposing error:"poseAs: %s adds instance variables to %s.", posingName,
+                       targetName];
     }
 
-  /* first change names.  this means that findClass: will return
-   * the posing class in the future; the old class can still be
-   * obtained as "_%<classname>".
-   */
+    /* first change names.  this means that findClass: will return
+     * the posing class in the future; the old class can still be
+     * obtained as "_%<classname>".
+     */
 
-  newName = (char *) OC_Malloc (strlen (targetName) + 2 + 1);
-  strcpy (newName, "_%");
-  strcpy (newName + 2, targetName);
+    newName = (char *)OC_Malloc (strlen (targetName) + 2 + 1);
+    strcpy (newName, "_%");
+    strcpy (newName + 2, targetName);
 
-  posing->clsName = targetName;
-  getmeta (posing)->clsName = getmeta (target)->clsName;
-  target->clsName = newName + 1;
-  getmeta (target)->clsName = newName;
+    posing->clsName = targetName;
+    getmeta (posing)->clsName = getmeta (target)->clsName;
+    target->clsName = newName + 1;
+    getmeta (target)->clsName = newName;
 
-  /* now "patch" the hierarchy.  look for subclasses of 'target'
-   * and (if != posing) make their clsSuper point to posing.
-   */
+    /* now "patch" the hierarchy.  look for subclasses of 'target'
+     * and (if != posing) make their clsSuper point to posing.
+     */
 
-  for (m = modnodelist; m; m = m->next)
+    for (m = modnodelist; m; m = m->next)
     {
-      for (modPtr = m->objcmodules; modPtr && modPtr->modLink; modPtr++)
-	{
-	  id *cls;
-	  Cls_t aCls;
+        for (modPtr = m->objcmodules; modPtr && modPtr->modLink; modPtr++)
+        {
+            id * cls;
+            Cls_t aCls;
 
-	  cls = modPtr->modInfo->modClsLst;
+            cls = modPtr->modInfo->modClsLst;
 
-	  if (morethanone (modPtr->modInfo))
-	    {
-	      while (*cls)
-		{
-		  aCls = getcls (*cls++);
-		  if (aCls == posing)
-		    continue;
-		  if (aCls->clsSuper == itarget)
-		    {
-		      aCls->clsSuper = iposing;
-		      getmeta (aCls)->clsSuper = posing->isa;
-		    }
-		}
-	    }
-	  else
-	    {
-	      if (cls)
-		{
-		  aCls = getcls (*cls);
-		  if (aCls == posing)
-		    continue;
-		  if (aCls->clsSuper == itarget)
-		    {
-		      aCls->clsSuper = iposing;
-		      getmeta (aCls)->clsSuper = posing->isa;
-		    }
-		}
-	    }
-	}
+            if (morethanone (modPtr->modInfo))
+            {
+                while (*cls)
+                {
+                    aCls = getcls (*cls++);
+                    if (aCls == posing)
+                        continue;
+                    if (aCls->clsSuper == itarget)
+                    {
+                        aCls->clsSuper = iposing;
+                        getmeta (aCls)->clsSuper = posing->isa;
+                    }
+                }
+            }
+            else
+            {
+                if (cls)
+                {
+                    aCls = getcls (*cls);
+                    if (aCls == posing)
+                        continue;
+                    if (aCls->clsSuper == itarget)
+                    {
+                        aCls->clsSuper = iposing;
+                        getmeta (aCls)->clsSuper = posing->isa;
+                    }
+                }
+            }
+        }
     }
 
-  /* finally, assign the class external */
-  assert (hasposing (target));
-  if (target->clsGlbl)
-    *(target->clsGlbl) = iposing;
+    /* finally, assign the class external */
+    assert (hasposing (target));
+    if (target->clsGlbl)
+        *(target->clsGlbl) = iposing;
 
-  /* flush message caches */
-  flushCache ();
+    /* flush message caches */
+    flushCache ();
 }
 
 /*
@@ -2090,68 +1957,64 @@ poseAs (id iposing, id itarget)
  * (dynamically loaded modules for instance)
  */
 
-static void 
-initobjc (Mentry_t modPtr)
+static void initobjc (Mentry_t modPtr)
 {
-  initsels (modPtr);
-  initmods (modPtr);
+    initsels (modPtr);
+    initmods (modPtr);
 }
 
-void EXPORT 
-loadobjc (void *p)
+void EXPORT loadobjc (void * p)
 {
-  Mentry_t modPtr = (Mentry_t) p;
+    Mentry_t modPtr = (Mentry_t)p;
 
-  if (!modPtr)
-    report (nil, "loadobjc with NULL argument");
+    if (!modPtr)
+        report (nil, "loadobjc with NULL argument");
 
-  /* check whether we're being called from a shlib that gets loaded
-   * _before_ objcInit() has been executed; in this case we want to
-   * delay adding the classes, since most likely superclasses (such
-   * as Object) are not yet loaded.
-   *
-   * We simply remember the modules, and main()'s _objcInit() will
-   * take care of those.
-   */
+    /* check whether we're being called from a shlib that gets loaded
+     * _before_ objcInit() has been executed; in this case we want to
+     * delay adding the classes, since most likely superclasses (such
+     * as Object) are not yet loaded.
+     *
+     * We simply remember the modules, and main()'s _objcInit() will
+     * take care of those.
+     */
 
-  modnodelist = newmodnode (modPtr, modnodelist);
+    modnodelist = newmodnode (modPtr, modnodelist);
 
-  if (!objcinitflag)
+    if (!objcinitflag)
     {
-      return;
+        return;
     }
-  else
+    else
     {
-      initobjc (modPtr);
-      return;
+        initobjc (modPtr);
+        return;
     }
 }
 
-void EXPORT 
-unloadobjc (void *p)
+void EXPORT unloadobjc (void * p)
 {
-  modnode_t m, *n;
-  Mentry_t modPtr = (Mentry_t) p;
+    modnode_t m, *n;
+    Mentry_t modPtr = (Mentry_t)p;
 
-  if (!modPtr)
-    report (nil, "unloadobjc with NULL argument");
+    if (!modPtr)
+        report (nil, "unloadobjc with NULL argument");
 
-  for (n = (&modnodelist), m = (*n); m; m = (*n))
+    for (n = (&modnodelist), m = (*n); m; m = (*n))
     {
-      if (modPtr == m->objcmodules)
-	{
-	  freemodnode (n, m);
-	  flushCache ();
-	  return;
-	}
-      else
-	{
-	  n = &(m->next);
-	}
+        if (modPtr == m->objcmodules)
+        {
+            freemodnode (n, m);
+            flushCache ();
+            return;
+        }
+        else
+        {
+            n = &(m->next);
+        }
     }
 
-  [Object error:"unloadobjc() for module that is not loaded."];
+    [Object error:"unloadobjc() for module that is not loaded."];
 }
 
 #endif /* __PORTABLE_OBJC__ */
- 

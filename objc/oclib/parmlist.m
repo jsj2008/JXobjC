@@ -3,7 +3,7 @@
  * Copyright (c) 1998 David Stes.
  *
  * This library is free software; you can redistribute it and/or modify it
- * under the terms of the GNU Library General Public License as published 
+ * under the terms of the GNU Library General Public License as published
  * by the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
  *
@@ -24,7 +24,7 @@
 #include <assert.h>
 #ifndef __OBJECT_INCLUDED__
 #define __OBJECT_INCLUDED__
-#include <stdio.h> /* FILE */
+#include <stdio.h>  /* FILE */
 #include "Object.h" /* Stepstone Object.h assumes #import */
 #endif
 #include <ordcltn.h>
@@ -36,47 +36,48 @@
 
 - idents:aList
 {
-  idents = aList;
-  return self;
+    idents = aList;
+    return self;
 }
 
 - parmdefs:aList
 {
-  parmdefs = aList;
-  return self;
+    parmdefs = aList;
+    return self;
 }
 
 - varargs:(BOOL)flag
 {
-  varargs = flag;
-  return self;
+    varargs = flag;
+    return self;
 }
 
 - gen
 {
-  if (idents) {
-    assert(parmdefs == nil);
-    gcommalist(idents);
+    if (idents)
+    {
+        assert (parmdefs == nil);
+        gcommalist (idents);
+        if (varargs)
+            gc (',');
+    }
+    if (parmdefs)
+    {
+        assert (idents == nil);
+        gcommalist (parmdefs);
+        if (varargs)
+            gc (',');
+    }
     if (varargs)
-      gc(',');
-  }
-  if (parmdefs) {
-    assert(idents == nil);
-    gcommalist(parmdefs);
-    if (varargs)
-      gc(',');
-  }
-  if (varargs)
-    gs("...");
-  return self;
+        gs ("...");
+    return self;
 }
 
 - synth
 {
-  if (parmdefs)
-    [parmdefs elementsPerform:_cmd];
-  return self;
+    if (parmdefs)
+        [parmdefs elementsPerform:_cmd];
+    return self;
 }
 
 @end
- 

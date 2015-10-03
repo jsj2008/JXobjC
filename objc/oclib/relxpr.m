@@ -3,7 +3,7 @@
  * Copyright (c) 1998 David Stes.
  *
  * This library is free software; you can redistribute it and/or modify it
- * under the terms of the GNU Library General Public License as published 
+ * under the terms of the GNU Library General Public License as published
  * by the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
  *
@@ -24,7 +24,7 @@
 #include <assert.h>
 #ifndef __OBJECT_INCLUDED__
 #define __OBJECT_INCLUDED__
-#include <stdio.h> /* FILE */
+#include <stdio.h>  /* FILE */
 #include "Object.h" /* Stepstone Object.h assumes #import */
 #endif
 #include "node.h"
@@ -39,37 +39,49 @@
 
 - typesynth
 {
-  type = t_int;
-  return self;
+    type = t_int;
+    return self;
 }
 
 - go
 {
-  id a,b,r;
-  int s = 0;
-  int av,bv;
-  a = [lhs go];
-  b = [rhs go];
-  r = [Scalar new];
-  if ([a isKindOf:(id)[Scalar class]]) {
-    av = [a u_int];
-  } else {
-    av = (a)?1:0;
-  }
-  if ([b isKindOf:(id)[Scalar class]]) {
-    bv = [b u_int];
-  } else {
-    bv = (b)?1:0;
-  }
-  if (strcmp(op,"<")  == 0) s = av < bv;
-  else if (strcmp(op,">")  == 0) s = av > bv;
-  else if (strcmp(op,"==") == 0) s = av == bv;
-  else if (strcmp(op,"!=") == 0) s = av != bv;
-  else if (strcmp(op,">=") == 0) s = av >= bv;
-  else if (strcmp(op,"<=") == 0) s = av <= bv;
-  else [self notImplemented:_cmd];
-  return [r u_int:s];
+    id a, b, r;
+    int s = 0;
+    int av, bv;
+    a = [lhs go];
+    b = [rhs go];
+    r = [Scalar new];
+    if ([a isKindOf:(id)[Scalar class]])
+    {
+        av = [a u_int];
+    }
+    else
+    {
+        av = (a) ? 1 : 0;
+    }
+    if ([b isKindOf:(id)[Scalar class]])
+    {
+        bv = [b u_int];
+    }
+    else
+    {
+        bv = (b) ? 1 : 0;
+    }
+    if (strcmp (op, "<") == 0)
+        s = av < bv;
+    else if (strcmp (op, ">") == 0)
+        s = av > bv;
+    else if (strcmp (op, "==") == 0)
+        s = av == bv;
+    else if (strcmp (op, "!=") == 0)
+        s = av != bv;
+    else if (strcmp (op, ">=") == 0)
+        s = av >= bv;
+    else if (strcmp (op, "<=") == 0)
+        s = av <= bv;
+    else
+        [self notImplemented:_cmd];
+    return [r u_int:s];
 }
 
 @end
- 

@@ -6,7 +6,7 @@
 
 /*
  * This library is free software; you can redistribute it and/or modify it
- * under the terms of the GNU Library General Public License as published 
+ * under the terms of the GNU Library General Public License as published
  * by the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
  *
@@ -26,22 +26,21 @@
 #include "bag.h"
 
 typedef struct objbagseq
-  {
+{
     objbag_t set;
     int offset;
     int cnt;
-  }
- *objbagseq_t;
+} * objbagseq_t;
 
 @interface BagSequence : Object
 {
-  struct objbagseq value;
+    struct objbagseq value;
 }
-- (objbagseq_t) objbagseqvalue;
+- (objbagseq_t)objbagseqvalue;
 + over:bag;
 - copy;
 - free;
-- (unsigned) size;
+- (unsigned)size;
 - next;
 - peek;
 - previous;
@@ -51,4 +50,3 @@ typedef struct objbagseq
 @end
 
 #endif /* __OBJBAGSEQ_H__ */
- 

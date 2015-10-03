@@ -3,7 +3,7 @@
  * Copyright (c) 1998 David Stes.
  *
  * This library is free software; you can redistribute it and/or modify it
- * under the terms of the GNU Library General Public License as published 
+ * under the terms of the GNU Library General Public License as published
  * by the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
  *
@@ -25,7 +25,7 @@
 #include <string.h>
 #ifndef __OBJECT_INCLUDED__
 #define __OBJECT_INCLUDED__
-#include <stdio.h> /* FILE */
+#include <stdio.h>  /* FILE */
 #include "Object.h" /* Stepstone Object.h assumes #import */
 #endif
 #include <ordcltn.h>
@@ -40,75 +40,78 @@
 
 @implementation ComponentDef
 
-- specs  {
-  return specs;
-}
+- specs { return specs; }
 
 - specs:aSpec
 {
-  specs = aSpec;
-  return self;
+    specs = aSpec;
+    return self;
 }
 
-- decllist  {
-  return decllist;
-}
+- decllist { return decllist; }
 
 - add:aDecl
 {
-  if (!decllist)
-    decllist = [OrdCltn new];
-  [decllist add:aDecl];
-  return self;
+    if (!decllist)
+        decllist = [OrdCltn new];
+    [decllist add:aDecl];
+    return self;
 }
 
 - gen
 {
-  if (specs)
-    [specs elementsPerform:@selector(gen)];
-  if (decllist)
-    gcommalist(decllist);
-  gc(';');
-  return self;
+    if (specs)
+        [specs elementsPerform:@selector (gen)];
+    if (decllist)
+        gcommalist (decllist);
+    gc (';');
+    return self;
 }
 
 - synth
 {
-  int i, n;
+    int i, n;
 
-  assert(curstruct);
-  for (i = 0, n = [decllist size]; i < n; i++) {
-    id var = [[decllist at:i] identifier];
+    assert (curstruct);
+    for (i = 0, n = [decllist size]; i < n; i++)
+    {
+        id var = [[decllist at:i] identifier];
 
-    if (var) {
-      id t = [Type new];
-      id d = [decllist at:i];
+        if (var)
+        {
+            id t = [Type new];
+            id d = [decllist at:i];
 
-      if (specs) {
-        [specs elementsPerform:_cmd];
-	[t specs:specs];	/* type filters out storage class */
-	[t decl:d];		/* type makes a -abstrdecl of it */
-      } else {
-	[t addspec:s_int];	/* C default */
-	[t decl:d];
-      }
-      [curstruct defcomp:var astype:t];
-    } else {
-      if (![[decllist at:i] isKindOf:(id)[BitfieldDecl class]]) {
-	char *what = "class definition";
-	char *ms = "missing name in component of %s";
+            if (specs)
+            {
+                [specs elementsPerform:_cmd];
+                [t specs:specs]; /* type filters out storage class */
+                [t decl:d];      /* type makes a -abstrdecl of it */
+            }
+            else
+            {
+                [t addspec:s_int]; /* C default */
+                [t decl:d];
+            }
+            [curstruct defcomp:var astype:t];
+        }
+        else
+        {
+            if (![[decllist at:i] isKindOf:(id)[BitfieldDecl class]])
+            {
+                char * what = "class definition";
+                char * ms = "missing name in component of %s";
 
-	if ([curstruct isKindOf:(id) [StructSpec class]])
-	  what = "struct or union";
-	if (specs)
-	  warnat([specs at:0], ms, what);
-	else
-	  warn(ms, what);
-      }
+                if ([curstruct isKindOf:(id)[StructSpec class]])
+                    what = "struct or union";
+                if (specs)
+                    warnat ([specs at:0], ms, what);
+                else
+                    warn (ms, what);
+            }
+        }
     }
-  }
-  return self;
+    return self;
 }
 
 @end
- 

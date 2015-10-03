@@ -3,7 +3,7 @@
  * Copyright (c) 1998 David Stes.
  *
  * This library is free software; you can redistribute it and/or modify it
- * under the terms of the GNU Library General Public License as published 
+ * under the terms of the GNU Library General Public License as published
  * by the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
  *
@@ -24,7 +24,7 @@
 #include <assert.h>
 #ifndef __OBJECT_INCLUDED__
 #define __OBJECT_INCLUDED__
-#include <stdio.h> /* FILE */
+#include <stdio.h>  /* FILE */
 #include "Object.h" /* Stepstone Object.h assumes #import */
 #endif
 #include <ordcltn.h>
@@ -35,50 +35,45 @@
 
 @implementation FunctionBody
 
-- compound  {
-  return compound;
+- compound { return compound; }
+- datadefs:defs
+{
+    int i, n;
+    for (i = 0, n = [defs size]; i < n; i++)
+    {
+        [[defs at:i] iskandr:YES];
+    }
+    datadefs = defs;
+    return self;
 }
-- datadefs:defs  {
-  int i,n;
-  for(i=0,n=[defs size];i<n;i++) {
-   [[defs at:i] iskandr:YES];
-  }
-  datadefs = defs;
-  return self;
-}
-- compound:aCompound  {
-  compound = aCompound;
-  return self;
+- compound:aCompound
+{
+    compound = aCompound;
+    return self;
 }
 
 - gen
 {
-  assert(compound);
-  if (datadefs)
-    [datadefs elementsPerform:@selector(gen)];
-  [compound gen];
-  return self;
+    assert (compound);
+    if (datadefs)
+        [datadefs elementsPerform:@selector (gen)];
+    [compound gen];
+    return self;
 }
 
 - synth
 {
-  /* process K&R style parameters */
-  if (datadefs) {
-    [datadefs elementsPerform:_cmd];
-  } 
-  [compound synth];
-  return self;
+    /* process K&R style parameters */
+    if (datadefs)
+    {
+        [datadefs elementsPerform:_cmd];
+    }
+    [compound synth];
+    return self;
 }
 
-- fcall:x
-{
-  return [compound fcall:x];
-}
+- fcall:x { return [compound fcall:x]; }
 
-- go
-{
-  return [compound go];
-}
+- go { return [compound go]; }
 
 @end
- 

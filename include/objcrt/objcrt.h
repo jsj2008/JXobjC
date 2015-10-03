@@ -6,7 +6,7 @@
 
 /*
  * This library is free software; you can redistribute it and/or modify it
- * under the terms of the GNU Library General Public License as published 
+ * under the terms of the GNU Library General Public License as published
  * by the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
  *
@@ -25,11 +25,11 @@
 #ifndef __objcrt__
 #define __objcrt__
 
-#include <stdio.h>		/* FILE */
-#include <stddef.h>		/* size_t */
+#include <stdio.h>  /* FILE */
+#include <stddef.h> /* size_t */
 
 #ifndef EXPORT
-#define EXPORT			/* empty */
+#define EXPORT /* empty */
 #endif
 
 #ifndef EXTERNC
@@ -40,7 +40,6 @@
 #endif
 #endif
 
-
 /* The "id" type is assumed to be defined by the compiler
  * (in the case of objc or objcc, by emitting a typedef)
  * This also allows for cross compiles with gcc in ObjC mode
@@ -50,45 +49,45 @@
 /* The traditional Objective C types (see Brad Cox' book)
  */
 
-typedef char *SEL;		/* Uniqued String for Selector */
-typedef char *STR;		/* C, NULL-terminated, String */
-typedef char BOOL;		/* Boolean */
-typedef FILE *IOD;		/* I/O Device */
-typedef id SHR;			/* type of class, for us, it's id */
+typedef char * SEL; /* Uniqued String for Selector */
+typedef char * STR; /* C, NULL-terminated, String */
+typedef char BOOL;  /* Boolean */
+typedef FILE * IOD; /* I/O Device */
+typedef id SHR;     /* type of class, for us, it's id */
 
 #ifdef __cplusplus
-typedef id (*IMP) (...);	/* Method pointer */
+typedef id (*IMP) (...); /* Method pointer */
 #else
-typedef id (*IMP) ();		/* Method pointer */
+typedef id (*IMP) (); /* Method pointer */
 #endif
 
-typedef void (*ARGIMP) (id, SEL, void *);	/* dispatcher */
+typedef void (*ARGIMP) (id, SEL, void *); /* dispatcher */
 
-/* The traditional Objective C defines 
+/* The traditional Objective C defines
  */
 
 #ifndef YES
-#define YES (BOOL)1		/* Boolean TRUE */
+#define YES (BOOL)1 /* Boolean TRUE */
 #endif
 
 #ifndef NO
-#define NO (BOOL)0		/* Boolean FALSE */
+#define NO (BOOL)0 /* Boolean FALSE */
 #endif
 
 #ifndef nil
-#define nil (id)0		/* id of Nil instance */
+#define nil (id)0 /* id of Nil instance */
 #endif
 
 /* C Messenger interface - try to be compatible */
 
 /* msg tracing */
-extern BOOL msgFlag;		/* message tracing */
-extern FILE *msgIOD;		/* device for message tracing */
-extern FILE *dbgIOD;		/* device for dbg() call */
-extern BOOL allocFlag;		/* allocation tracing */
-extern BOOL dbgFlag;		/* verbose dbg() calls */
-extern BOOL noCacheFlag;	/* disable messenger caching */
-extern BOOL noNilRcvr;		/* do not allow msg. to nil */
+extern BOOL msgFlag;     /* message tracing */
+extern FILE * msgIOD;    /* device for message tracing */
+extern FILE * dbgIOD;    /* device for dbg() call */
+extern BOOL allocFlag;   /* allocation tracing */
+extern BOOL dbgFlag;     /* verbose dbg() calls */
+extern BOOL noCacheFlag; /* disable messenger caching */
+extern BOOL noNilRcvr;   /* do not allow msg. to nil */
 
 /* all in the name of backw. compat. */
 #ifndef NAMEOF
@@ -97,11 +96,10 @@ extern BOOL noNilRcvr;		/* do not allow msg. to nil */
 
 SEL EXPORT selUid (STR);
 STR EXPORT selName (SEL);
-void EXPORT dbg (char *fmt,...);
+void EXPORT dbg (char * fmt, ...);
 void EXPORT prnstack (FILE * file);
-void EXPORT loadobjc (void *modPtr);
-void EXPORT unloadobjc (void *modPtr);
-
+void EXPORT loadobjc (void * modPtr);
+void EXPORT unloadobjc (void * modPtr);
 
 /* our own (new) forwarding C messenger */
 EXTERNC IMP EXPORT fwdimp (id, SEL, IMP);
@@ -123,13 +121,12 @@ void EXPORT setfileout (BOOL (*f) (FILE *, id));
 
 extern id (*_showOn) (id, unsigned);
 
-void EXPORT *OC_Malloc (size_t);
-void EXPORT *OC_MallocAtomic (size_t);
-void EXPORT *OC_Calloc (size_t);
-void EXPORT *OC_Realloc (void *, size_t);
-void EXPORT *OC_Free (void *data);
+void EXPORT * OC_Malloc (size_t);
+void EXPORT * OC_MallocAtomic (size_t);
+void EXPORT * OC_Calloc (size_t);
+void EXPORT * OC_Realloc (void *, size_t);
+void EXPORT * OC_Free (void * data);
 
 #endif /* __objcrt__ */
 
 #endif /* __PORTABLE_OBJC__ */
- 

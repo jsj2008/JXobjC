@@ -3,7 +3,7 @@
  * Copyright (c) 1998,1999,2011 David Stes.
  *
  * This library is free software; you can redistribute it and/or modify it
- * under the terms of the GNU Library General Public License as published 
+ * under the terms of the GNU Library General Public License as published
  * by the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
  *
@@ -26,7 +26,7 @@
 #include <stdlib.h>
 #ifndef __OBJECT_INCLUDED__
 #define __OBJECT_INCLUDED__
-#include <stdio.h> /* FILE */
+#include <stdio.h>  /* FILE */
 #include "Object.h" /* Stepstone Object.h assumes #import */
 #endif
 #include "Block.h"
@@ -110,600 +110,596 @@
 #include "gatrdecl.h"
 #include "propdef.h"
 
-void 
-procextdef(id def)
+void procextdef (id def)
 {
-  [def synth];
-  if (o_outputcode)
-    [def gen];
-  if (o_st80)
-    [def st80];
+    [def synth];
+    if (o_outputcode)
+        [def gen];
+    if (o_st80)
+        [def st80];
 }
 
-void 
-finclassdef(void)
+void finclassdef (void)
 {
-  if (curclassdef) {
-    if ([curclassdef numidivars]) {
-      if (o_filer) {
-	[curclassdef synthfilermethods];
-      }
-      if (o_refcnt) {
-	[curclassdef synthrefcntmethods];
-      }
+    if (curclassdef)
+    {
+        if ([curclassdef numidivars])
+        {
+            if (o_filer)
+            {
+                [curclassdef synthfilermethods];
+            }
+            if (o_refcnt)
+            {
+                [curclassdef synthrefcntmethods];
+            }
+        }
+        if ([curclassdef propmeths])
+            [[curclassdef propmeths] do:
+                                     { :each | [[each synth] gen];
+                                     }];
+        if (o_warnmissingmethods && [curclassdef isimpl])
+        {
+            [curclassdef warnimplnotfound];
+        }
+        curclassdef = nil;
     }
-    if ([curclassdef propmeths])
-        [[curclassdef propmeths] do:{ :each | [[each synth] gen]; }];
-    if (o_warnmissingmethods && [curclassdef isimpl]) {
-      [curclassdef warnimplnotfound];
+    else
+    {
+        fatal ("illegal end of class definition.");
     }
-    curclassdef = nil;
-  } else {
-    fatal("illegal end of class definition.");
-  }
 }
 
-FILE *
-openfile(STR name, STR modfs)
+FILE * openfile (STR name, STR modfs)
 {
-  FILE *f;
+    FILE * f;
 
-  if ((f = fopen(name, modfs)) == NULL) {
-    fprintf(stderr, "objc1: Unable to open %s\n", name);
-    exit(1);
-  }
-  return f;
-}
-
-FILE *
-reopenfile(STR name, STR modfs, FILE * of)
-{
-  FILE *f;
-
-  if ((f = freopen(name, modfs, of)) == NULL) {
-    fprintf(stderr, "objc1: Unable to open %s\n", name);
-    exit(1);
-  }
-  return f;
-}
-
-static char *
-setinlineno(char *s)
-{
-  char *p = s;
-  int c, n = 0;
-
-  while ((c = *p++) && '0' <= c && c <= '9') {
-    n = n * 10 + (c - '0');
-  }
-
-  inlineno = n;
-  return p - 1;
-}
-
-static BOOL 
-setinfilename(char *s)
-{
-  char *p = s;
-  int c, n = 0;
-
-  while ((c = *p++) && c != '"')
-    n++;
-
-  /* implies no \" in filenames (yet) */
-  if (c == '"') {
-    infilename = [String chars:s count:n];
-    return YES;
-  } else {
-    return NO;
-  }
-}
-
-static BOOL 
-isline(char *s)
-{
-  int c;
-  char *p = s;
-
-  /* match hash */
-  c = *p++;
-  if (c == '#') {
-    c = *p++;
-  } else {
-    return NO;
-  }
-
-  /* optional whitespace */
-  while (c && (c == ' ' || c == '\t'))
-    c = *p++;
-
-  /* accept both "# no name" and "# line no name" */
-  if (c == 'l') {
-    char *key = "ine";		/* l already consumed */
-
-    if (strncmp(p, key, strlen(key)) == 0) {
-      p += strlen(key);
-      c = *p++;
-    } else {
-      return NO;
+    if ((f = fopen (name, modfs)) == NULL)
+    {
+        fprintf (stderr, "objc1: Unable to open %s\n", name);
+        exit (1);
     }
-  }
-  /* optional whitespace */
-  while (c && (c == ' ' || c == '\t'))
-    c = *p++;
+    return f;
+}
 
-  /* get the line number */
-  if (c && '0' <= c && c <= '9') {
-    p = setinlineno(p - 1);
-    c = *p++;
-  } else {
-    return NO;
-  }
+FILE * reopenfile (STR name, STR modfs, FILE * of)
+{
+    FILE * f;
 
-  /* optional whitespace */
-  while (c && (c == ' ' || c == '\t'))
-    c = *p++;
+    if ((f = freopen (name, modfs, of)) == NULL)
+    {
+        fprintf (stderr, "objc1: Unable to open %s\n", name);
+        exit (1);
+    }
+    return f;
+}
 
-  /* get the filename */
-  if (c && c == '"') {
-    return setinfilename(p);
-    /* ignore everything else on the line after the fn */
-  } else {
-    /* # lineno style (HP-UX emits #line without filename) */
-    /* ignore everything else on the line after the fn */
-    return YES;
-  }
+static char * setinlineno (char * s)
+{
+    char * p = s;
+    int c, n = 0;
+
+    while ((c = *p++) && '0' <= c && c <= '9')
+    {
+        n = n * 10 + (c - '0');
+    }
+
+    inlineno = n;
+    return p - 1;
+}
+
+static BOOL setinfilename (char * s)
+{
+    char * p = s;
+    int c, n = 0;
+
+    while ((c = *p++) && c != '"')
+        n++;
+
+    /* implies no \" in filenames (yet) */
+    if (c == '"')
+    {
+        infilename = [String chars:s count:n];
+        return YES;
+    }
+    else
+    {
+        return NO;
+    }
+}
+
+static BOOL isline (char * s)
+{
+    int c;
+    char * p = s;
+
+    /* match hash */
+    c = *p++;
+    if (c == '#')
+    {
+        c = *p++;
+    }
+    else
+    {
+        return NO;
+    }
+
+    /* optional whitespace */
+    while (c && (c == ' ' || c == '\t'))
+        c = *p++;
+
+    /* accept both "# no name" and "# line no name" */
+    if (c == 'l')
+    {
+        char * key = "ine"; /* l already consumed */
+
+        if (strncmp (p, key, strlen (key)) == 0)
+        {
+            p += strlen (key);
+            c = *p++;
+        }
+        else
+        {
+            return NO;
+        }
+    }
+    /* optional whitespace */
+    while (c && (c == ' ' || c == '\t'))
+        c = *p++;
+
+    /* get the line number */
+    if (c && '0' <= c && c <= '9')
+    {
+        p = setinlineno (p - 1);
+        c = *p++;
+    }
+    else
+    {
+        return NO;
+    }
+
+    /* optional whitespace */
+    while (c && (c == ' ' || c == '\t'))
+        c = *p++;
+
+    /* get the filename */
+    if (c && c == '"')
+    {
+        return setinfilename (p);
+        /* ignore everything else on the line after the fn */
+    }
+    else
+    {
+        /* # lineno style (HP-UX emits #line without filename) */
+        /* ignore everything else on the line after the fn */
+        return YES;
+    }
 }
 
 /* some pragma's for dealing with types such as __long_long or __int64 */
 /* those are also supported by the Stepstone compiler */
 
-static BOOL 
-ispragma(char *s)
+static BOOL ispragma (char * s)
 {
-  char *t;
-  id x = [String str:s];
-  char *sep = " #/\t\n\r";
+    char * t;
+    id x = [String str:s];
+    char * sep = " #/\t\n\r";
 
-  t = strtok([x str],sep);
-  if (strcmp(t,"pragma") != 0) return NO;
-  if ((t = strtok(NULL,sep)) == NULL) return NO;
+    t = strtok ([x str], sep);
+    if (strcmp (t, "pragma") != 0)
+        return NO;
+    if ((t = strtok (NULL, sep)) == NULL)
+        return NO;
 
-  if (strcmp(t,"OCbuiltInFctn") == 0) {
-    definebuiltinfun(strtok(NULL,sep));
-    return YES; /* do not emit */
-  }
-  if (strcmp(t,"OCbuiltInVar") == 0) {
-    definebuiltinvar(strtok(NULL,sep));
-    return YES; /* do not emit */
-  }
-  if (strcmp(t,"OCbuiltInType") == 0) {
-    definebuiltintype(strtok(NULL,sep));
-    return YES; /* do not emit */
-  }
-  if (strcmp(t,"OCRefCnt") == 0) {
-    o_refcnt = pragmatoggle(strtok(NULL,sep));
-    return YES; /* do not emit */
-  }
-  if (strcmp(t,"OCInlineCache") == 0) {
-    o_inlinecache = pragmatoggle(strtok(NULL,sep));
-    return YES; /* do not emit */
-  }
-  if (strcmp(t,"token") == 0) {
-    if ((t = strtok(NULL,sep)) == NULL) return NO;
-
-    /* tcc (tendra C compiler) stupid pragma (required for tcc compile) */
-    if (strcmp(t,"TYPE") == 0) {
-      definebuiltintype(strtok(NULL,sep));
-      return NO; /* reemit */
+    if (strcmp (t, "OCbuiltInFctn") == 0)
+    {
+        definebuiltinfun (strtok (NULL, sep));
+        return YES; /* do not emit */
     }
-
-    /* tcc (tendra C compiler) stupid pragma (required for tcc compile) */
-    if (strcmp(t,"VARIETY") == 0) {
-       if ((t = strtok(NULL,sep)) == NULL) return NO;
-       
-       if (strcmp(t,"signed") == 0 || strcmp(t,"unsigned") == 0) {
-          if ((t = strtok(NULL,sep)) == NULL) return NO;
-       }
-
-       definebuiltintype(t);
-       return NO; /* reemit */
+    if (strcmp (t, "OCbuiltInVar") == 0)
+    {
+        definebuiltinvar (strtok (NULL, sep));
+        return YES; /* do not emit */
     }
-
-    /* tcc (tendra C compiler) stupid pragma (required for tcc compile) */
-    if (strcmp(t,"PROC") == 0) {
-      /* #pragma token PROC (blahblah) foo # */
-      while (1) {
-	char *s;
-	if ((s = strtok(NULL," \t\n\r")) == NULL) return NO;
-	if (strcmp(s,"#") == 0) break;
-	t = s;
-      }
-      definebuiltinfun(t);
-      return NO; /* reemit */
+    if (strcmp (t, "OCbuiltInType") == 0)
+    {
+        definebuiltintype (strtok (NULL, sep));
+        return YES; /* do not emit */
     }
-    
-    /* other token pragma's as well (FUNC, EXP) don't seem to be needed */
+    if (strcmp (t, "OCRefCnt") == 0)
+    {
+        o_refcnt = pragmatoggle (strtok (NULL, sep));
+        return YES; /* do not emit */
+    }
+    if (strcmp (t, "OCInlineCache") == 0)
+    {
+        o_inlinecache = pragmatoggle (strtok (NULL, sep));
+        return YES; /* do not emit */
+    }
+    if (strcmp (t, "token") == 0)
+    {
+        if ((t = strtok (NULL, sep)) == NULL)
+            return NO;
+
+        /* tcc (tendra C compiler) stupid pragma (required for tcc compile) */
+        if (strcmp (t, "TYPE") == 0)
+        {
+            definebuiltintype (strtok (NULL, sep));
+            return NO; /* reemit */
+        }
+
+        /* tcc (tendra C compiler) stupid pragma (required for tcc compile) */
+        if (strcmp (t, "VARIETY") == 0)
+        {
+            if ((t = strtok (NULL, sep)) == NULL)
+                return NO;
+
+            if (strcmp (t, "signed") == 0 || strcmp (t, "unsigned") == 0)
+            {
+                if ((t = strtok (NULL, sep)) == NULL)
+                    return NO;
+            }
+
+            definebuiltintype (t);
+            return NO; /* reemit */
+        }
+
+        /* tcc (tendra C compiler) stupid pragma (required for tcc compile) */
+        if (strcmp (t, "PROC") == 0)
+        {
+            /* #pragma token PROC (blahblah) foo # */
+            while (1)
+            {
+                char * s;
+                if ((s = strtok (NULL, " \t\n\r")) == NULL)
+                    return NO;
+                if (strcmp (s, "#") == 0)
+                    break;
+                t = s;
+            }
+            definebuiltinfun (t);
+            return NO; /* reemit */
+        }
+
+        /* other token pragma's as well (FUNC, EXP) don't seem to be needed */
+        return NO;
+    }
     return NO;
-  }
-  return NO;
 }
 
-id 
-mkcppdirect(char *s)
+id mkcppdirect (char * s)
 {
-  id r;
-  int n;
-  char *t;
+    id r;
+    int n;
+    char * t;
 
-  if (isline(s))
-    return nil;
-  if (ispragma(s))
-    return nil;
+    if (isline (s))
+        return nil;
+    if (ispragma (s))
+        return nil;
 
-  /* (POC specific) #printLine #include blah emits #include blah */
-  t = "#printLine ";
-  n = strlen(t);
-  if (strncmp(s, t, n) == 0)
-    s += n;
-  t = "#pragma printLine ";
-  n = strlen(t);
-  if (strncmp(s, t, n) == 0)
-    s += n;
-  /* SunOS cc turns space into tab after pragma */
-  t = "#pragma\tprintLine ";
-  n = strlen(t);
-  if (strncmp(s, t, n) == 0)
-    s += n;
+    /* (POC specific) #printLine #include blah emits #include blah */
+    t = "#printLine ";
+    n = strlen (t);
+    if (strncmp (s, t, n) == 0)
+        s += n;
+    t = "#pragma printLine ";
+    n = strlen (t);
+    if (strncmp (s, t, n) == 0)
+        s += n;
+    /* SunOS cc turns space into tab after pragma */
+    t = "#pragma\tprintLine ";
+    n = strlen (t);
+    if (strncmp (s, t, n) == 0)
+        s += n;
 
-  r = [CppDirective str:s lineno:inlineno filename:infilename];
-  return r;
+    r = [CppDirective str:s lineno:inlineno filename:infilename];
+    return r;
 }
 
-id 
-mkexprstmt(id expr)
+id mkexprstmt (id expr)
 {
-  id r = [ExprStmt new];
-  [r expr:expr];
-  return r;
+    id r = [ExprStmt new];
+    [r expr:expr];
+    return r;
 }
 
-id 
-mkexprstmtx(id expr)
+id mkexprstmtx (id expr)
 {
-  id r = [ExprStmt new];
-  [r expr:expr];
-  [r forcenewline:YES];
-  return r;
+    id r = [ExprStmt new];
+    [r expr:expr];
+    [r forcenewline:YES];
+    return r;
 }
 
-id 
-mklabeledstmt(id label, id stmt)
+id mklabeledstmt (id label, id stmt)
 {
-  id r = [LabeledStmt new];
+    id r = [LabeledStmt new];
 
-  [r label:label];
-  [r stmt:stmt];
-  return r;
+    [r label:label];
+    [r stmt:stmt];
+    return r;
 }
 
-id 
-mkcasestmt(id keyw, id expr, id stmt)
+id mkcasestmt (id keyw, id expr, id stmt)
 {
-  id r = [CaseStmt new];
+    id r = [CaseStmt new];
 
-  [r keyw:keyw];
-  [r expr:expr];
-  [r stmt:stmt];
-  return r;
+    [r keyw:keyw];
+    [r expr:expr];
+    [r stmt:stmt];
+    return r;
 }
 
-id 
-mkdefaultstmt(id keyw, id stmt)
+id mkdefaultstmt (id keyw, id stmt)
 {
-  id r = [DefaultStmt new];
+    id r = [DefaultStmt new];
 
-  [r keyw:keyw];
-  [r stmt:stmt];
-  return r;
+    [r keyw:keyw];
+    [r stmt:stmt];
+    return r;
 }
 
-id 
-mkifstmt(id keyw, id expr, id stmt)
+id mkifstmt (id keyw, id expr, id stmt)
 {
-  id r = [IfStmt new];
+    id r = [IfStmt new];
 
-  [r keyw:keyw];
-  [r expr:expr];
-  [r stmt:stmt];
-  return r;
+    [r keyw:keyw];
+    [r expr:expr];
+    [r stmt:stmt];
+    return r;
 }
 
-id 
-mkifelsestmt(id keyw, id expr, id stmt, id ekeyw, id estmt)
+id mkifelsestmt (id keyw, id expr, id stmt, id ekeyw, id estmt)
 {
-  id r = [IfStmt new];
+    id r = [IfStmt new];
 
-  [r keyw:keyw];
-  [r expr:expr];
-  [r stmt:stmt];
-  [r ekeyw:ekeyw];
-  [r estmt:estmt];
-  return r;
+    [r keyw:keyw];
+    [r expr:expr];
+    [r stmt:stmt];
+    [r ekeyw:ekeyw];
+    [r estmt:estmt];
+    return r;
 }
 
-id 
-mkswitchstmt(id keyw, id expr, id stmt)
+id mkswitchstmt (id keyw, id expr, id stmt)
 {
-  id r = [SwitchStmt new];
+    id r = [SwitchStmt new];
 
-  [r keyw:keyw];
-  [r expr:expr];
-  [r stmt:stmt];
-  return r;
+    [r keyw:keyw];
+    [r expr:expr];
+    [r stmt:stmt];
+    return r;
 }
 
-id 
-mkwhilestmt(id keyw, id expr, id stmt)
+id mkwhilestmt (id keyw, id expr, id stmt)
 {
-  id r = [WhileStmt new];
+    id r = [WhileStmt new];
 
-  [r keyw:keyw];
-  [r expr:expr];
-  [r stmt:stmt];
-  return r;
+    [r keyw:keyw];
+    [r expr:expr];
+    [r stmt:stmt];
+    return r;
 }
 
-id 
-mkdostmt(id keyw, id stmt, id wkeyw, id expr)
+id mkdostmt (id keyw, id stmt, id wkeyw, id expr)
 {
-  id r = [DoStmt new];
+    id r = [DoStmt new];
 
-  [r keyw:keyw];
-  [r stmt:stmt];
-  [r wkeyw:wkeyw];
-  [r expr:expr];
-  return r;
+    [r keyw:keyw];
+    [r stmt:stmt];
+    [r wkeyw:wkeyw];
+    [r expr:expr];
+    return r;
 }
 
-id 
-mkforstmt(id keyw, id a, id b, id c, id stmt)
+id mkforstmt (id keyw, id a, id b, id c, id stmt)
 {
-  id r = [ForStmt new];
+    id r = [ForStmt new];
 
-  [r keyw:keyw];
-  [r begin:a cond:b step:c];
-  [r stmt:stmt];
-  return r;
+    [r keyw:keyw];
+    [r begin:a cond:b step:c];
+    [r stmt:stmt];
+    return r;
 }
 
-id 
-mkgotostmt(id keyw, id label)
+id mkgotostmt (id keyw, id label)
 {
-  id r = [GotoStmt new];
+    id r = [GotoStmt new];
 
-  [r keyw:keyw];
-  [r label:label];
-  return r;
+    [r keyw:keyw];
+    [r label:label];
+    return r;
 }
 
-id 
-mkcontinuestmt(id keyw)
+id mkcontinuestmt (id keyw)
 {
-  id r = [ContinueStmt new];
+    id r = [ContinueStmt new];
 
-  [r keyw:keyw];
-  return r;
+    [r keyw:keyw];
+    return r;
 }
 
-id 
-mkbreakstmt(id keyw)
+id mkbreakstmt (id keyw) { return mkcontinuestmt (keyw); }
+
+id mkreturnstmt (id keyw, id expr)
 {
-  return mkcontinuestmt(keyw);
+    id r = [ReturnStmt new];
+
+    [r keyw:keyw];
+    [r expr:expr];
+    return r;
 }
 
-id 
-mkreturnstmt(id keyw, id expr)
+id mkreturnx (id x) { return [[ReturnStmt new] expr:x]; }
+
+id mkcastexpr (id a, id b)
 {
-  id r = [ReturnStmt new];
+    id r = [CastExpr new];
 
-  [r keyw:keyw];
-  [r expr:expr];
-  return r;
+    [r cast:a];
+    [r expr:b];
+    return r;
 }
 
-id 
-mkreturnx(id x)
+id mkcondexpr (id a, id b, id c)
 {
-  return [[ReturnStmt new] expr:x];
+    id r = [CondExpr new];
+
+    [r expr:a];
+    [r lhs:b];
+    [r rhs:c];
+    return r;
 }
 
-id 
-mkcastexpr(id a, id b)
+id mkunaryexpr (STR op, id a)
 {
-  id r = [CastExpr new];
+    id r = [UnaryExpr new];
 
-  [r cast:a];
-  [r expr:b];
-  return r;
+    [r op:op];
+    [r expr:a];
+    return r;
 }
 
-id 
-mkcondexpr(id a, id b, id c)
+id mkdereference (id a)
 {
-  id r = [CondExpr new];
+    id r = [Dereference new];
 
-  [r expr:a];
-  [r lhs:b];
-  [r rhs:c];
-  return r;
+    [r expr:a];
+    return r;
 }
 
-id 
-mkunaryexpr(STR op, id a)
+id mksizeof (id a)
 {
-  id r = [UnaryExpr new];
+    id r = [SizeOf new];
 
-  [r op:op];
-  [r expr:a];
-  return r;
+    [r expr:a];
+    return r;
 }
 
-id 
-mkdereference(id a)
+id mktypeof (id kw, id a)
 {
-  id r = [Dereference new];
+    id r = [TypeOf new];
 
-  [r expr:a];
-  return r;
+    [r keyw:kw];
+    [r expr:a];
+    return r;
 }
 
-id 
-mksizeof(id a)
+id mkaddressof (id a)
 {
-  id r = [SizeOf new];
+    id r = [AddressOf new];
 
-  [r expr:a];
-  return r;
+    [r expr:a];
+    return r;
 }
 
-id 
-mktypeof(id kw,id a)
+id mkbinexpr (id a, STR op, id b)
 {
-  id r = [TypeOf new];
+    id r = [BinaryExpr new];
 
-  [r keyw:kw];
-  [r expr:a];
-  return r;
+    [r lhs:a];
+    [r rhs:b];
+    [r op:op];
+    return r;
 }
 
-id 
-mkaddressof(id a)
+id mkcommaexpr (id a, id b)
 {
-  id r = [AddressOf new];
+    id r = [CommaExpr new];
 
-  [r expr:a];
-  return r;
+    [r lhs:a];
+    [r rhs:b];
+    return r;
 }
 
-id 
-mkbinexpr(id a, STR op, id b)
+id mkassignexpr (id a, STR op, id b)
 {
-  id r = [BinaryExpr new];
+    id r = [Assignment new];
 
-  [r lhs:a];
-  [r rhs:b];
-  [r op:op];
-  return r;
+    [r lhs:a];
+    [r rhs:b];
+    [r op:op];
+    return r;
 }
 
-id 
-mkcommaexpr(id a, id b)
+id mkrelexpr (id a, STR op, id b)
 {
-  id r = [CommaExpr new];
+    id r = [RelationExpr new];
 
-  [r lhs:a];
-  [r rhs:b];
-  return r;
+    [r lhs:a];
+    [r rhs:b];
+    [r op:op];
+    return r;
 }
 
-id 
-mkassignexpr(id a, STR op, id b)
+id mkbuiltincall (id funname, id args)
 {
-  id r = [Assignment new];
+    id r = [BuiltinCall new];
 
-  [r lhs:a];
-  [r rhs:b];
-  [r op:op];
-  return r;
+    [r funname:funname]; /* stuff like alignof() or sizeof() etc */
+    [r funargs:args];
+    return r;
 }
 
-id 
-mkrelexpr(id a, STR op, id b)
+id mkfuncall (id funname, id args)
 {
-  id r = [RelationExpr new];
+    id r = [FunctionCall new];
 
-  [r lhs:a];
-  [r rhs:b];
-  [r op:op];
-  return r;
+    [r funname:funname];
+    [r funargs:args];
+    return r;
 }
 
-id 
-mkbuiltincall(id funname, id args)
+id mkfunbody (id datadefs, id compound)
 {
-  id r = [BuiltinCall new];
+    id r = [FunctionBody new];
 
-  [r funname:funname];		/* stuff like alignof() or sizeof() etc */
-  [r funargs:args];
-  return r;
+    [r datadefs:datadefs];
+    [r compound:compound];
+    return r;
 }
 
-id 
-mkfuncall(id funname, id args)
+void declarefun (id specs, id decl)
 {
-  id r = [FunctionCall new];
+    id d = [DataDef new];
 
-  [r funname:funname];
-  [r funargs:args];
-  return r;
+    if (specs)
+        [d specs:specs];
+    [d add:decl];
+    [d synth];
 }
 
-id 
-mkfunbody(id datadefs, id compound)
+void declaremeth (BOOL factory, id decl)
 {
-  id r = [FunctionBody new];
+    id r = [MethodDef new];
 
-  [r datadefs:datadefs];
-  [r compound:compound];
-  return r;
+    [r factory:factory];
+    [r method:decl];
+    [r prototype];
 }
 
-void 
-declarefun(id specs, id decl)
+id mkfundef (id specs, id decl, id body)
 {
-  id d = [DataDef new];
+    id r = [FunctionDef new];
 
-  if (specs)
-    [d specs:specs];
-  [d add:decl];
-  [d synth];
+    [r datadefspecs:specs];
+    [r decl:decl];
+    [r body:body];
+    return r;
 }
 
-void 
-declaremeth(BOOL factory, id decl)
+id mkmethdef (BOOL factory, id decl, id body)
 {
-  id r = [MethodDef new];
+    id r = [MethodDef new];
 
-  [r factory:factory];
-  [r method:decl];
-  [r prototype];
+    [r factory:factory];
+    [r method:decl];
+    [r body:body];
+    return r;
 }
 
-id 
-mkfundef(id specs, id decl, id body)
-{
-  id r = [FunctionDef new];
-
-  [r datadefspecs:specs];
-  [r decl:decl];
-  [r body:body];
-  return r;
-}
-
-id 
-mkmethdef(BOOL factory, id decl, id body)
-{
-  id r = [MethodDef new];
-
-  [r factory:factory];
-  [r method:decl];
-  [r body:body];
-  return r;
-}
-
-id 
-mkpropdef(id compdec)
+id mkpropdef (id compdec)
 {
     id r = [PropertyDef new];
 
@@ -712,725 +708,699 @@ mkpropdef(id compdec)
     return r;
 }
 
-id 
-mkpropsetmeth(id compdec, id type, id name, int ispointer)
+id mkpropsetmeth (id compdec, id type, id name, int ispointer)
 {
-  id d, b, r;
-  id selnam = [String sprintf:"%s%s","set",[name str]];
-  id usel;
+    id d, b, r;
+    id selnam = [String sprintf:"%s%s", "set", [name str]];
+    id usel;
 
-  [selnam charAt:3 put:toupper([selnam charAt:3])];
+    [selnam charAt:3 put:toupper ([selnam charAt:3])];
 
-  usel = [Selector str:[selnam str]];
+    usel = [Selector str:[selnam str]];
 
-  r = [MethodDef new];
-  if ((d = [Method new])) 
-  {
-    [d keywsel:[OrdCltn add:mkkeywdecl(usel, type, [Symbol str:"valset"])]];
-    [d canforward:NO];
-    /*[d restype:type];*/
-    [r method:d];
-  }
-  [r prototype];
-  if ((b = [CompoundStmt new])) {
-    int i, n;
-    id s = [OrdCltn new];
+    r = [MethodDef new];
+    if ((d = [Method new]))
+    {
+        [d keywsel:[OrdCltn
+                       add:mkkeywdecl (usel, type, [Symbol str:"valset"])]];
+        [d canforward:NO];
+        /*[d restype:type];*/
+        [r method:d];
+    }
+    [r prototype];
+    if ((b = [CompoundStmt new]))
+    {
+        int i, n;
+        id s = [OrdCltn new];
 
-    id vartoset = mkarrowexpr(s_self,name);
+        id vartoset = mkarrowexpr (s_self, name);
 
-	[s add:mkexprstmtx(mkassignexpr(vartoset, "=", mkidentexpr([Symbol str:"valset"])))];
+        [s add:mkexprstmtx (mkassignexpr (
+                   vartoset, "=", mkidentexpr ([Symbol str:"valset"])))];
 
-    [s add:mkreturnx(e_self)];
-    [b stmts:s];
-    [r body:b];
-  }
-  return r;
+        [s add:mkreturnx (e_self)];
+        [b stmts:s];
+        [r body:b];
+    }
+    return r;
 }
 
-id 
-mkpropgetmeth(id compdec, id type, id name, int ispointer)
+id mkpropgetmeth (id compdec, id type, id name, int ispointer)
 {
-  id d, b, r;
-  id usel = [Selector str:[name str]];
-  
-  r = [MethodDef new];
-  if ((d = [Method new])) 
-{
-    [d unarysel:usel];
-    [d canforward:NO];
-    [d restype:type];
-    [r method:d];
-}
-  [r prototype];
-  if ((b = [CompoundStmt new])) {
-    int i, n;
-    id s = [OrdCltn new];
+    id d, b, r;
+    id usel = [Selector str:[name str]];
 
-    id vartoget = mkarrowexpr(s_self,name);
+    r = [MethodDef new];
+    if ((d = [Method new]))
+    {
+        [d unarysel:usel];
+        [d canforward:NO];
+        [d restype:type];
+        [r method:d];
+    }
+    [r prototype];
+    if ((b = [CompoundStmt new]))
+    {
+        int i, n;
+        id s = [OrdCltn new];
 
-	//[s add:mkexprstmtx(mkassignexpr(vartoset, "=", mkidentexpr([Symbol str:"valset"])))];
+        id vartoget = mkarrowexpr (s_self, name);
 
-    [s add:mkreturnx(vartoget)];
-    [b stmts:s];
-    [r body:b];
-}
-  return r;
-}
+        //[s add:mkexprstmtx(mkassignexpr(vartoset, "=", mkidentexpr([Symbol
+        //str:"valset"])))];
 
-
-id 
-mkmesgexpr(id receiver, id args)
-{
-  id r = [MesgExpr new];
-
-  [r receiver:receiver];
-  [r msg:args];
-  return r;
+        [s add:mkreturnx (vartoget)];
+        [b stmts:s];
+        [r body:b];
+    }
+    return r;
 }
 
-id 
-mkdecl(id ident)
+id mkmesgexpr (id receiver, id args)
 {
-  id r = [NameDecl new];
+    id r = [MesgExpr new];
 
-  [r identifier:ident];
-  return r;
+    [r receiver:receiver];
+    [r msg:args];
+    return r;
 }
 
-id 
-mkprecdecl(id typequals, id decl)
+id mkdecl (id ident)
 {
-  id r = [PrecDecl new];
+    id r = [NameDecl new];
 
-  if (typequals)
-    [r typequals:typequals];
-  if (decl)
+    [r identifier:ident];
+    return r;
+}
+
+id mkprecdecl (id typequals, id decl)
+{
+    id r = [PrecDecl new];
+
+    if (typequals)
+        [r typequals:typequals];
+    if (decl)
+        [r decl:decl];
+    return r;
+}
+
+id mkarraydecl (id lhs, id ix)
+{
+    id r = [ArrayDecl new];
+
+    [r decl:lhs];
+    [r expr:ix];
+    return r;
+}
+
+id mkfundecl (id lhs, id args)
+{
+    id r = [FunctionDecl new];
+
+    [r decl:lhs];
+    [r args:args];
+    return r;
+}
+
+id mkprefixdecl (id lhs, id rhs)
+{
+    id r = [PostfixDecl new];
+
+    [r prefix:lhs];
+    [r decl:rhs];
+    return r;
+}
+
+id mkpostfixdecl (id lhs, id rhs)
+{
+    id r = [PostfixDecl new];
+
+    [r decl:lhs];
+    [r postfix:rhs];
+    return r;
+}
+
+id mkpointer (id specs, id pointer)
+{
+    id r = [Pointer new];
+
+    if (specs)
+        [r specs:specs];
+    if (pointer)
+        [r pointer:pointer];
+    return r;
+}
+
+id mkbitfielddecl (id decl, id expr)
+{
+    id r = [BitfieldDecl new];
+
     [r decl:decl];
-  return r;
+    [r expr:expr];
+    return r;
 }
 
-id 
-mkarraydecl(id lhs, id ix)
+id mkstardecl (id pointer, id decl)
 {
-  id r = [ArrayDecl new];
+    id r = [StarDecl new];
 
-  [r decl:lhs];
-  [r expr:ix];
-  return r;
-}
-
-id 
-mkfundecl(id lhs, id args)
-{
-  id r = [FunctionDecl new];
-
-  [r decl:lhs];
-  [r args:args];
-  return r;
-}
-
-id 
-mkprefixdecl(id lhs, id rhs)
-{
-  id r = [PostfixDecl new];
-
-  [r prefix:lhs];
-  [r decl:rhs];
-  return r;
-}
-
-id 
-mkpostfixdecl(id lhs, id rhs)
-{
-  id r = [PostfixDecl new];
-
-  [r decl:lhs];
-  [r postfix:rhs];
-  return r;
-}
-
-id 
-mkpointer(id specs, id pointer)
-{
-  id r = [Pointer new];
-
-  if (specs)
-    [r specs:specs];
-  if (pointer)
     [r pointer:pointer];
-  return r;
+    [r decl:decl];
+    return r;
 }
 
-id 
-mkbitfielddecl(id decl, id expr)
+id mkasmop (id aList, id expr)
 {
-  id r = [BitfieldDecl new];
+    id r = [GnuAsmOp new];
 
-  [r decl:decl];
-  [r expr:expr];
-  return r;
+    [r stringchain:aList];
+    [r expr:expr];
+    return r;
 }
 
-id 
-mkstardecl(id pointer, id decl)
+id mkasmstmt (id keyw, id typequal, id expr, id asmop1, id asmop2, id clobbers)
 {
-  id r = [StarDecl new];
+    id r = [GnuAsmStmt new];
 
-  [r pointer:pointer];
-  [r decl:decl];
-  return r;
+    [r keyw:keyw];
+    [r typequal:typequal];
+    [r expr:expr];
+    [r asmop1:asmop1];
+    [r asmop2:asmop2];
+    [r clobbers:clobbers];
+    return r;
 }
 
-id 
-mkasmop(id aList, id expr)
+id mkcompstmt (id lbrace, id datadefs, id stmtlist, id subblock, id rbrace)
 {
-  id r = [GnuAsmOp new];
+    id r = [CompoundStmt new];
 
-  [r stringchain:aList];
-  [r expr:expr];
-  return r;
+    [r lbrace:lbrace];
+    [r datadefs:datadefs];
+    [r stmts:stmtlist];
+    [r subblock:subblock];
+    [r rbrace:rbrace];
+    return r;
 }
 
-id 
-mkasmstmt(id keyw, id typequal, id expr, id asmop1, id asmop2, id clobbers)
+id mklist (id c, id s)
 {
-  id r = [GnuAsmStmt new];
-
-  [r keyw:keyw];
-  [r typequal:typequal];
-  [r expr:expr];
-  [r asmop1:asmop1];
-  [r asmop2:asmop2];
-  [r clobbers:clobbers];
-  return r;
+    if (c == nil)
+        c = [OrdCltn new];
+    assert (s != nil);
+    [c add:s];
+    return c;
 }
 
-id 
-mkcompstmt(id lbrace, id datadefs, id stmtlist, id subblock, id rbrace)
+id mklist2 (id c, id s, id t)
 {
-  id r = [CompoundStmt new];
-
-  [r lbrace:lbrace];
-  [r datadefs:datadefs];
-  [r stmts:stmtlist];
-  [r subblock:subblock];
-  [r rbrace:rbrace];
-  return r;
+    if (c == nil)
+        c = [OrdCltn new];
+    assert (s != nil);
+    [c add:s];
+    [c add:t];
+    return c;
 }
 
-id 
-mklist(id c, id s)
+id atdefsadd (id c, id cls)
 {
-  if (c == nil)
-    c = [OrdCltn new];
-  assert(s != nil);
-  [c add:s];
-  return c;
+    id scls = [cls superclassdef];
+
+    if (scls)
+        atdefsadd (c, scls);
+    [c addAll:[cls ivars]];
+    return c;
 }
 
-id 
-mklist2(id c, id s,id t)
+id atdefsaddall (id c, id n)
 {
-  if (c == nil)
-    c = [OrdCltn new];
-  assert(s != nil);
-  [c add:s];
-  [c add:t];
-  return c;
-}
+    id cls;
 
-id 
-atdefsadd(id c, id cls)
-{
-  id scls = [cls superclassdef];
-
-  if (scls)
-    atdefsadd(c, scls);
-  [c addAll:[cls ivars]];
-  return c;
-}
-
-id 
-atdefsaddall(id c, id n)
-{
-  id cls;
-
-  if (c == nil)
-    c = [OrdCltn new];
-  assert(n != nil);
-  if ((cls = [trlunit lookupclass:n])) {
-    atdefsadd(c, cls);
-  } else {
-    fatal("cannot find @defs of '%s'", [n str]);
-  }
-  return c;
-}
-
-id 
-mkblockexpr(id lb, id parms, id datadefs, id stmts, id expr, id rb)
-{
-  id r = [BlockExpr new];
-
-  [r lbrace:lb];
-  [r parms:parms];
-  [r datadefs:datadefs];
-  [r stmts:stmts];
-  [r expr:expr];
-  [r rbrace:rb];
-  return r;
-}
-
-id 
-mkclassdef(id keyw, id name, id sname, id ivars, id cvars)
-{
-  id r;
-  BOOL intfkeyw = (keyw != nil && strstr([keyw str], "interface") != NULL);
-  BOOL implkeyw = (keyw != nil && strstr([keyw str], "implementation") != NULL);
-
-
-  if ((r = [trlunit lookupclass:name])) {
-    if (intfkeyw) {
-      fatal("multiple interfaces for class %s.", [r classname]);
-    } else {
-      if (sname)
-	[r checksupername:sname];
-      if (ivars)
-	[r checkivars:ivars];
-      if (cvars)
-	[r checkcvars:cvars];
+    if (c == nil)
+        c = [OrdCltn new];
+    assert (n != nil);
+    if ((cls = [trlunit lookupclass:n]))
+    {
+        atdefsadd (c, cls);
     }
-  } else {
-    r = [ClassDef new];
-    [r classname:name];
-    [r supername:sname];
-    [r ivars:ivars];
-    [r cvars:cvars];
-  }
-
-  if (implkeyw)
-    [r forceimpl];
-
-  if (curclassdef) {
-    warn("definition of %s not properly ended.", [curclassdef classname]);
-    curclassdef = r;
-  } else {
-    curclassdef = r;
-  }
-
-  return r;
+    else
+    {
+        fatal ("cannot find @defs of '%s'", [n str]);
+    }
+    return c;
 }
 
-BOOL 
-lhsisid(id specs, id decl)
+id mkblockexpr (id lb, id parms, id datadefs, id stmts, id expr, id rb)
 {
-  return [specs size] == 1 && [[specs at:0] isid] && [decl isKindOf:(id) [NameDecl class]];
+    id r = [BlockExpr new];
+
+    [r lbrace:lb];
+    [r parms:parms];
+    [r datadefs:datadefs];
+    [r stmts:stmts];
+    [r expr:expr];
+    [r rbrace:rb];
+    return r;
 }
 
-void 
-datadefokblock(id datadef, id specs, id decl)
+id mkclassdef (id keyw, id name, id sname, id ivars, id cvars)
 {
-  /* id aBlock = { :x | ... }; okblock = 1 */
-  /* id *exprs = { [Object new], [Object new] }; okblock = 0 */
+    id r;
+    BOOL intfkeyw = (keyw != nil && strstr ([keyw str], "interface") != NULL);
+    BOOL implkeyw =
+        (keyw != nil && strstr ([keyw str], "implementation") != NULL);
 
-  if (specs) {
-    okblock = lhsisid(specs, decl);
-  } else {
-    okblock = lhsisid([datadef specs], decl);
-  }
+    if ((r = [trlunit lookupclass:name]))
+    {
+        if (intfkeyw)
+        {
+            fatal ("multiple interfaces for class %s.", [r classname]);
+        }
+        else
+        {
+            if (sname)
+                [r checksupername:sname];
+            if (ivars)
+                [r checkivars:ivars];
+            if (cvars)
+                [r checkcvars:cvars];
+        }
+    }
+    else
+    {
+        r = [ClassDef new];
+        [r classname:name];
+        [r supername:sname];
+        [r ivars:ivars];
+        [r cvars:cvars];
+    }
+
+    if (implkeyw)
+        [r forceimpl];
+
+    if (curclassdef)
+    {
+        warn ("definition of %s not properly ended.", [curclassdef classname]);
+        curclassdef = r;
+    }
+    else
+    {
+        curclassdef = r;
+    }
+
+    return r;
 }
 
-id 
-mkdatadef(id datadef, id specs, id decl, id initializer)
+BOOL lhsisid (id specs, id decl)
 {
-  if (datadef == nil)
-    datadef = [DataDef new];
-  if (specs)
-    [datadef specs:specs];
-  if (initializer) {
-    decl = [[[InitDecl new] decl:decl] initializer:initializer];
-  }
-  [datadef add:decl];
-  return datadef;
+    return [specs size] == 1 && [[specs at:0] isid] &&
+           [decl isKindOf:(id)[NameDecl class]];
 }
 
-id 
-mkencodeexpr(id name)
+void datadefokblock (id datadef, id specs, id decl)
 {
-  return nil;
+    /* id aBlock = { :x | ... }; okblock = 1 */
+    /* id *exprs = { [Object new], [Object new] }; okblock = 0 */
+
+    if (specs)
+    {
+        okblock = lhsisid (specs, decl);
+    }
+    else
+    {
+        okblock = lhsisid ([datadef specs], decl);
+    }
 }
 
-id 
-mkenumspec(id keyw, id name, id lb, id list, id rb)
+id mkdatadef (id datadef, id specs, id decl, id initializer)
 {
-  id r = [EnumSpec new];
-
-  [r keyw:keyw];
-  [r name:name];
-  [r lbrace:lb];
-  if (list)
-    [r enumtors:list];
-  [r rbrace:rb];
-  return r;
+    if (datadef == nil)
+        datadef = [DataDef new];
+    if (specs)
+        [datadef specs:specs];
+    if (initializer)
+    {
+        decl = [[[InitDecl new] decl:decl] initializer:initializer];
+    }
+    [datadef add:decl];
+    return datadef;
 }
 
-id 
-mkenumerator(id name, id value)
-{
-  id r = [Enumerator new];
+id mkencodeexpr (id name) { return nil; }
 
-  [r name:name];
-  if (value) [r value:value];
-  return r;
+id mkenumspec (id keyw, id name, id lb, id list, id rb)
+{
+    id r = [EnumSpec new];
+
+    [r keyw:keyw];
+    [r name:name];
+    [r lbrace:lb];
+    if (list)
+        [r enumtors:list];
+    [r rbrace:rb];
+    return r;
 }
 
-id 
-mkgnuattrib(id anyword, id exprlist)
+id mkenumerator (id name, id value)
 {
-  id r = [GnuAttrib new];
+    id r = [Enumerator new];
 
-  [r anyword:anyword];
-  [r exprlist:exprlist];
-  return r;
+    [r name:name];
+    if (value)
+        [r value:value];
+    return r;
 }
 
-id 
-mkgnuattribdecl(id keyw, id list)
+id mkgnuattrib (id anyword, id exprlist)
 {
-  id r = [GnuAttribDecl new];
+    id r = [GnuAttrib new];
 
-  [r keyw:keyw];
-  [r attribs:list];
-  return r;
+    [r anyword:anyword];
+    [r exprlist:exprlist];
+    return r;
 }
 
-id 
-mklistexpr(id lb, id x, id rb)
+id mkgnuattribdecl (id keyw, id list)
 {
-  id r = [ListExpr new];
+    id r = [GnuAttribDecl new];
 
-  [r lbrace:lb];
-  [r exprs:x];
-  [r rbrace:rb];
-  return r;
+    [r keyw:keyw];
+    [r attribs:list];
+    return r;
 }
 
-id 
-mktypename(id specs, id decl)
+id mklistexpr (id lb, id x, id rb)
 {
-  id r = [Type new];
+    id r = [ListExpr new];
 
-  [r specs:specs];
-  [r decl:decl];
-  return r;
+    [r lbrace:lb];
+    [r exprs:x];
+    [r rbrace:rb];
+    return r;
 }
 
-id
-mkcomponentdef(id cdef, id specs, id decl)
+id mktypename (id specs, id decl)
 {
-  if (cdef == nil)
-    cdef = [ComponentDef new];
-  if (specs)
-    [cdef specs:specs];
-  [cdef add:decl];
-  return cdef;
-}
+    id r = [Type new];
 
-id 
-mkstructspec(id keyw, id name, id ti, id lb, id defs, id rb)
-{
-  id r = [StructSpec new];
-
-  [r keyw:keyw];
-  [r name:name];
-  [r lbrace:lb];
-  if (ti)
-    [r tmplinst:ti];
-  if (defs)
-    [r defs:defs];
-  [r rbrace:rb];
-  return r;
-}
-
-id 
-mkkeywarg(id sel, id arg)
-{
-  id r = [KeywExpr new];
-
-  [r keyw:sel];
-  [r arg:arg];
-  return r;
-}
-
-id 
-mkkeywdecl(id sel, id cast, id arg)
-{
-  id r = [KeywDecl new];
-
-  [r keyw:sel];
-  [r cast:cast];
-  [r arg:arg];
-  return r;
-}
-
-id 
-mkmethproto(id cast, id usel, id ksel, BOOL varargs)
-{
-  id r = [Method new];
-
-  [r restype:cast];
-  [r unarysel:usel];
-  [r keywsel:ksel];
-  [r varargs:varargs];
-  return r;
-}
-
-id 
-mkidentexpr(id name)
-{
-  id r = [IdentifierExpr new];
-
-  [r identifier:name];
-  return r;
-}
-
-id 
-mkconstexpr(id name, id schain)
-{
-  id r = [ConstantExpr new];
-
-  if (name)
-    [r identifier:name];
-  if (schain)
-    [r stringchain:schain];
-  return r;
-}
-
-id 
-mkprecexpr(id expr)
-{
-  id r = [PrecExpr new];
-
-  [r expr:expr];
-  return r;
-}
-
-id 
-mkbracedgroup(id expr)
-{
-  [expr setbracedgroup:YES];
-  return mkprecexpr(expr);
-}
-
-id 
-mkarrowexpr(id array, id ix)
-{
-  id r = [ArrowExpr new];
-
-  [r lhs:array];
-  [r rhs:ix];
-  return r;
-}
-
-id 
-mkdotexpr(id array, id ix)
-{
-  id r = [DotExpr new];
-
-  [r lhs:array];
-  [r rhs:ix];
-  return r;
-}
-
-id 
-mkindexexpr(id array, id ix)
-{
-  id r = [IndexExpr new];
-
-  [r lhs:array];
-  [r rhs:ix];
-  return r;
-}
-
-id 
-mkpostfixexpr(id expr, id pf)
-{
-  id r = [PostfixExpr new];
-
-  [r expr:expr];
-  [r op:[pf strCopy]];
-  return r;
-}
-
-id 
-mkparmdef(id parmdef, id specs, id decl)
-{
-  id r = [ParameterDef new];
-
-  if (specs)
     [r specs:specs];
-  [r decl:decl];
-  return r;
+    [r decl:decl];
+    return r;
 }
 
-id 
-mkparmdeflist(id idents, id parmdefs, BOOL varargs)
+id mkcomponentdef (id cdef, id specs, id decl)
 {
-  id r = [ParameterList new];
-
-  if (idents)
-    [r idents:idents];
-  if (parmdefs)
-    [r parmdefs:parmdefs];
-  [r varargs:varargs];
-  return r;
+    if (cdef == nil)
+        cdef = [ComponentDef new];
+    if (specs)
+        [cdef specs:specs];
+    [cdef add:decl];
+    return cdef;
 }
 
-id 
-mkselarg(id sel, id usel, int ncols)
+id mkstructspec (id keyw, id name, id ti, id lb, id defs, id rb)
 {
-  if (sel == nil) {
-    assert(ncols == 0 && usel != nil);
-    sel = [Selector str:[usel strCopy]];
-  } else {
-    if (usel)
-      [sel add:usel];
-    while (ncols--)
-      [sel addcol];
-  }
-  return sel;
+    id r = [StructSpec new];
+
+    [r keyw:keyw];
+    [r name:name];
+    [r lbrace:lb];
+    if (ti)
+        [r tmplinst:ti];
+    if (defs)
+        [r defs:defs];
+    [r rbrace:rb];
+    return r;
 }
 
-id 
-mkselectorexpr(id expr)
+id mkkeywarg (id sel, id arg)
 {
-  id r = [SelectorExpr new];
+    id r = [KeywExpr new];
 
-  [r selector:expr];
-  return r;
+    [r keyw:sel];
+    [r arg:arg];
+    return r;
 }
 
-id 
-mkfilesupermsg(id sel, id arg)
+id mkkeywdecl (id sel, id cast, id arg)
 {
-  id ksel, m;
+    id r = [KeywDecl new];
 
-  m = [MesgExpr new];
-  [m receiver:e_super];
-  ksel = [OrdCltn add:mkkeywarg(sel, arg)];
-  [m msg:mkmethproto(nil, nil, ksel, NO)];
-  return mkexprstmtx(m);
+    [r keyw:sel];
+    [r cast:cast];
+    [r arg:arg];
+    return r;
 }
 
-id 
-mkfilemsg(id sel, id name)
+id mkmethproto (id cast, id usel, id ksel, BOOL varargs)
 {
-  id ksel, m;
+    id r = [Method new];
 
-  m = [MesgExpr new];
-  [m receiver:e_aFiler];
-  ksel = [OrdCltn add:mkkeywarg(sel, mkaddressof(mkidentexpr(name)))];
-  [ksel add:mkkeywarg(s_type, e_ft_id)];
-  [m msg:mkmethproto(nil, nil, ksel, NO)];
-  return mkexprstmtx(m);
+    [r restype:cast];
+    [r unarysel:usel];
+    [r keywsel:ksel];
+    [r varargs:varargs];
+    return r;
 }
 
-id 
-mkfileinoutmeth(id ssel, id fsel, id ivarnames, id ivartypes)
+id mkidentexpr (id name)
 {
-  id d, b, r;
+    id r = [IdentifierExpr new];
 
-  r = [MethodDef new];
-  if ((d = [Method new])) {
-    id ksel = [OrdCltn add:mkkeywdecl(ssel, nil, s_aFiler)];
+    [r identifier:name];
+    return r;
+}
 
-    [d keywsel:ksel];
-    [d canforward:NO];
-    [r method:d];
-  }
-  [r prototype];
-  if ((b = [CompoundStmt new])) {
-    int i, n;
-    id s = [OrdCltn new];
+id mkconstexpr (id name, id schain)
+{
+    id r = [ConstantExpr new];
 
-    [s add:mkfilesupermsg(ssel, e_aFiler)];
-    for (i = 0, n = [ivartypes size]; i < n; i++) {
-      if ([[ivartypes at:i] isrefcounted]) {
-	[s add:mkfilemsg(fsel, [ivarnames at:i])];
-      }
+    if (name)
+        [r identifier:name];
+    if (schain)
+        [r stringchain:schain];
+    return r;
+}
+
+id mkprecexpr (id expr)
+{
+    id r = [PrecExpr new];
+
+    [r expr:expr];
+    return r;
+}
+
+id mkbracedgroup (id expr)
+{
+    [expr setbracedgroup:YES];
+    return mkprecexpr (expr);
+}
+
+id mkarrowexpr (id array, id ix)
+{
+    id r = [ArrowExpr new];
+
+    [r lhs:array];
+    [r rhs:ix];
+    return r;
+}
+
+id mkdotexpr (id array, id ix)
+{
+    id r = [DotExpr new];
+
+    [r lhs:array];
+    [r rhs:ix];
+    return r;
+}
+
+id mkindexexpr (id array, id ix)
+{
+    id r = [IndexExpr new];
+
+    [r lhs:array];
+    [r rhs:ix];
+    return r;
+}
+
+id mkpostfixexpr (id expr, id pf)
+{
+    id r = [PostfixExpr new];
+
+    [r expr:expr];
+    [r op:[pf strCopy]];
+    return r;
+}
+
+id mkparmdef (id parmdef, id specs, id decl)
+{
+    id r = [ParameterDef new];
+
+    if (specs)
+        [r specs:specs];
+    [r decl:decl];
+    return r;
+}
+
+id mkparmdeflist (id idents, id parmdefs, BOOL varargs)
+{
+    id r = [ParameterList new];
+
+    if (idents)
+        [r idents:idents];
+    if (parmdefs)
+        [r parmdefs:parmdefs];
+    [r varargs:varargs];
+    return r;
+}
+
+id mkselarg (id sel, id usel, int ncols)
+{
+    if (sel == nil)
+    {
+        assert (ncols == 0 && usel != nil);
+        sel = [Selector str:[usel strCopy]];
     }
-    [s add:mkreturnx([e_self copy])];
-    [b stmts:s];
-    [r body:b];
-  }
-  return r;
-}
-
-id 
-mkfileinmeth(id classdef, id ivarnames, id ivartypes)
-{
-  return mkfileinoutmeth(s_fileInIdsFrom, s_fileIn, ivarnames, ivartypes);
-}
-
-id 
-mkfileoutmeth(id classdef, id ivarnames, id ivartypes)
-{
-  return mkfileinoutmeth(s_fileOutIdsFor, s_fileOut, ivarnames, ivartypes);
-}
-
-id 
-mkrefsupermsg(id sel)
-{
-  id usel, m;
-
-  m = [MesgExpr new];
-  [m receiver:e_super];
-  usel = sel;
-  [m msg:mkmethproto(nil, usel, nil, NO)];
-  return mkexprstmtx(m);
-}
-
-id 
-mkrefmeth(id classdef, id ivarnames, id ivartypes, id ssel, id sfun)
-{
-  id d, b, r;
-  id usel = [Selector str:[ssel strCopy]];
-
-  r = [MethodDef new];
-  if ((d = [Method new])) {
-    [d unarysel:usel];
-    [d canforward:NO];
-    [r method:d];
-  }
-  [r prototype];
-  if ((b = [CompoundStmt new])) {
-    int i, n;
-    id s = [OrdCltn new];
-    id f = mkidentexpr(sfun);
-
-    [s add:mkrefsupermsg(usel)];
-    for (i = 0, n = [ivartypes size]; i < n; i++) {
-      if ([[ivartypes at:i] isid]) {
-	id e = mkidentexpr([ivarnames at:i]);
-
-	[s add:mkexprstmtx(mkassignexpr(e, "=", mkfuncall(f, mklist(nil, e))))];
-      }
+    else
+    {
+        if (usel)
+            [sel add:usel];
+        while (ncols--)
+            [sel addcol];
     }
-    [s add:mkreturnx([e_nil copy])];	/* nil so that self refcnt unchanged */
-    [b stmts:s];
-    [r body:b];
-  }
-  return r;
+    return sel;
 }
 
-id 
-mkincrefsmeth(id classdef, id ivarnames, id ivartypes)
+id mkselectorexpr (id expr)
 {
-  return mkrefmeth(classdef, ivarnames, ivartypes, s_increfs, s_idincref);
+    id r = [SelectorExpr new];
+
+    [r selector:expr];
+    return r;
 }
 
-id 
-mkdecrefsmeth(id classdef, id ivarnames, id ivartypes)
+id mkfilesupermsg (id sel, id arg)
 {
-  return mkrefmeth(classdef, ivarnames, ivartypes, s_decrefs, s_iddecref);
+    id ksel, m;
+
+    m = [MesgExpr new];
+    [m receiver:e_super];
+    ksel = [OrdCltn add:mkkeywarg (sel, arg)];
+    [m msg:mkmethproto (nil, nil, ksel, NO)];
+    return mkexprstmtx (m);
 }
- 
+
+id mkfilemsg (id sel, id name)
+{
+    id ksel, m;
+
+    m = [MesgExpr new];
+    [m receiver:e_aFiler];
+    ksel = [OrdCltn add:mkkeywarg (sel, mkaddressof (mkidentexpr (name)))];
+    [ksel add:mkkeywarg (s_type, e_ft_id)];
+    [m msg:mkmethproto (nil, nil, ksel, NO)];
+    return mkexprstmtx (m);
+}
+
+id mkfileinoutmeth (id ssel, id fsel, id ivarnames, id ivartypes)
+{
+    id d, b, r;
+
+    r = [MethodDef new];
+    if ((d = [Method new]))
+    {
+        id ksel = [OrdCltn add:mkkeywdecl (ssel, nil, s_aFiler)];
+
+        [d keywsel:ksel];
+        [d canforward:NO];
+        [r method:d];
+    }
+    [r prototype];
+    if ((b = [CompoundStmt new]))
+    {
+        int i, n;
+        id s = [OrdCltn new];
+
+        [s add:mkfilesupermsg (ssel, e_aFiler)];
+        for (i = 0, n = [ivartypes size]; i < n; i++)
+        {
+            if ([[ivartypes at:i] isrefcounted])
+            {
+                [s add:mkfilemsg (fsel, [ivarnames at:i])];
+            }
+        }
+        [s add:mkreturnx ([e_self copy])];
+        [b stmts:s];
+        [r body:b];
+    }
+    return r;
+}
+
+id mkfileinmeth (id classdef, id ivarnames, id ivartypes)
+{
+    return mkfileinoutmeth (s_fileInIdsFrom, s_fileIn, ivarnames, ivartypes);
+}
+
+id mkfileoutmeth (id classdef, id ivarnames, id ivartypes)
+{
+    return mkfileinoutmeth (s_fileOutIdsFor, s_fileOut, ivarnames, ivartypes);
+}
+
+id mkrefsupermsg (id sel)
+{
+    id usel, m;
+
+    m = [MesgExpr new];
+    [m receiver:e_super];
+    usel = sel;
+    [m msg:mkmethproto (nil, usel, nil, NO)];
+    return mkexprstmtx (m);
+}
+
+id mkrefmeth (id classdef, id ivarnames, id ivartypes, id ssel, id sfun)
+{
+    id d, b, r;
+    id usel = [Selector str:[ssel strCopy]];
+
+    r = [MethodDef new];
+    if ((d = [Method new]))
+    {
+        [d unarysel:usel];
+        [d canforward:NO];
+        [r method:d];
+    }
+    [r prototype];
+    if ((b = [CompoundStmt new]))
+    {
+        int i, n;
+        id s = [OrdCltn new];
+        id f = mkidentexpr (sfun);
+
+        [s add:mkrefsupermsg (usel)];
+        for (i = 0, n = [ivartypes size]; i < n; i++)
+        {
+            if ([[ivartypes at:i] isid])
+            {
+                id e = mkidentexpr ([ivarnames at:i]);
+
+                [s add:mkexprstmtx (mkassignexpr (
+                           e, "=", mkfuncall (f, mklist (nil, e))))];
+            }
+        }
+        [s add:mkreturnx (
+                   [e_nil copy])]; /* nil so that self refcnt unchanged */
+        [b stmts:s];
+        [r body:b];
+    }
+    return r;
+}
+
+id mkincrefsmeth (id classdef, id ivarnames, id ivartypes)
+{
+    return mkrefmeth (classdef, ivarnames, ivartypes, s_increfs, s_idincref);
+}
+
+id mkdecrefsmeth (id classdef, id ivarnames, id ivartypes)
+{
+    return mkrefmeth (classdef, ivarnames, ivartypes, s_decrefs, s_iddecref);
+}

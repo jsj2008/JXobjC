@@ -3,7 +3,7 @@
  * Copyright (c) 1998 David Stes.
  *
  * This library is free software; you can redistribute it and/or modify it
- * under the terms of the GNU Library General Public License as published 
+ * under the terms of the GNU Library General Public License as published
  * by the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
  *
@@ -24,7 +24,7 @@
 #include <assert.h>
 #ifndef __OBJECT_INCLUDED__
 #define __OBJECT_INCLUDED__
-#include <stdio.h> /* FILE */
+#include <stdio.h>  /* FILE */
 #include "Object.h" /* Stepstone Object.h assumes #import */
 #endif
 #include <ordcltn.h>
@@ -40,107 +40,87 @@ id curdef;
 
 @implementation Def
 
-- restype
-{
-  return [self subclassResponsibility:_cmd];
-}
+- restype { return [self subclassResponsibility:_cmd]; }
 
-- compound
-{
-  return [self notImplemented:_cmd];
-}
+- compound { return [self notImplemented:_cmd]; }
 
-- parmnames
-{
-  return parmnames;
-}
+- parmnames { return parmnames; }
 
 - defheapvar:x type:t
 {
-  if (!heapvars)
-    heapvars = [Set new];
-  [heapvars add:x];
-  [[self compound] defheapvar:x type:t];
-  return self;
+    if (!heapvars)
+        heapvars = [Set new];
+    [heapvars add:x];
+    [[self compound] defheapvar:x type:t];
+    return self;
 }
 
-- (BOOL)isfundef
-{
-  return NO;
-}
+- (BOOL)isfundef { return NO; }
 
-- (BOOL)ismethdef
-{
-  return NO;
-}
+- (BOOL)ismethdef { return NO; }
 
-- synth
-{
-  return [self subclassResponsibility];
-}
+- synth { return [self subclassResponsibility]; }
 
 - defparm:sym astype:aType
 {
-  if (!parmdic) {
-    parmdic = [Dictionary new];
-    parmnames = [OrdCltn new];
-  }
-  [parmdic atKey:sym put:aType];
-  [parmnames add:sym];
-  return self;
+    if (!parmdic)
+    {
+        parmdic = [Dictionary new];
+        parmnames = [OrdCltn new];
+    }
+    [parmdic atKey:sym put:aType];
+    [parmnames add:sym];
+    return self;
 }
 
-- lookupparm:sym
-{
-  return (parmdic) ? [parmdic atKey : sym]:nil;
-}
+- lookupparm:sym { return (parmdic) ? [parmdic atKey:sym] : nil; }
 
 - addclassreference:x
 {
-  if (!classreferences)
-    classreferences = [OrdCltn new];
-  [classreferences add:x];
-  return self;
+    if (!classreferences)
+        classreferences = [OrdCltn new];
+    [classreferences add:x];
+    return self;
 }
 
 - addblockreference:x
 {
-  if (!blockreferences)
-    blockreferences = [OrdCltn new];
-  [blockreferences add:x];
-  return self;
+    if (!blockreferences)
+        blockreferences = [OrdCltn new];
+    [blockreferences add:x];
+    return self;
 }
 
 - addheapvarblock:x
 {
-  if (!heapvarblocks)
-    heapvarblocks = [Set new];	/* order doesn't matter */
-  [heapvarblocks add:x];
-  return self;
+    if (!heapvarblocks)
+        heapvarblocks = [Set new]; /* order doesn't matter */
+    [heapvarblocks add:x];
+    return self;
 }
 
 - gen
 {
-  gc('\n');
-  if (classreferences) {
-    [classreferences elementsPerform:@selector(genintf)];
-  }
-  if (heapvarblocks) {
-    [heapvarblocks elementsPerform:@selector(genheapvartype)];
-  }
-  if (blockreferences) {
-    int n = [blockreferences size];	/* work from end (deepest blk) to begin */
+    gc ('\n');
+    if (classreferences)
+    {
+        [classreferences elementsPerform:@selector (genintf)];
+    }
+    if (heapvarblocks)
+    {
+        [heapvarblocks elementsPerform:@selector (genheapvartype)];
+    }
+    if (blockreferences)
+    {
+        int n =
+            [blockreferences size]; /* work from end (deepest blk) to begin */
 
-    while (n--)
-      [[blockreferences at:n] genblockfun];
-  }
-  return self;
+        while (n--)
+            [[blockreferences at:n] genblockfun];
+    }
+    return self;
 }
 
-- reset
-{
-  return self;
-}
+- reset { return self; }
 
 @end
- 

@@ -6,7 +6,7 @@
 
 /*
  * This library is free software; you can redistribute it and/or modify it
- * under the terms of the GNU Library General Public License as published 
+ * under the terms of the GNU Library General Public License as published
  * by the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
  *
@@ -33,21 +33,18 @@
 
 - key:aKey value:aValue
 {
-  key = aKey;
-  value = aValue;
-  return self;
+    key = aKey;
+    value = aValue;
+    return self;
 }
 
-+ key:aKey
-{
-  return [self key:aKey value:nil];
-}
++ key:aKey { return [self key:aKey value:nil]; }
 
 + key:aKey value:aValue
 {
-  id newObj = [super new];
-  [newObj key:aKey value:aValue];
-  return newObj;
+    id newObj = [super new];
+    [newObj key:aKey value:aValue];
+    return newObj;
 }
 
 /*****************************************************************************
@@ -56,42 +53,33 @@
  *
  ****************************************************************************/
 
-- key
-{
-  return key;
-}
+- key { return key; }
 
-- (STR) str
-{
-  return [key str];
-}
+- (STR)str { return [key str]; }
 
-- value
-{
-  return value;
-}
+- value { return value; }
 
 - free
 {
-  /* Stepstone -free does NOT free key/value */
-  return [super free];
+    /* Stepstone -free does NOT free key/value */
+    return [super free];
 }
 
 - freeAll
 {
-  key = [key free];
-  value = [value free];
-  return [super free];
+    key = [key free];
+    value = [value free];
+    return [super free];
 }
 
 - release
 {
 #ifdef OBJC_REFCNT
-  key = nil;
-  value = nil;
-  return [super release];
+    key = nil;
+    value = nil;
+    return [super release];
 #else
-  return [self notImplemented:_cmd];
+    return [self notImplemented:_cmd];
 #endif
 }
 
@@ -101,27 +89,21 @@
  *
  ****************************************************************************/
 
-- (unsigned) hash
-{
-  return [key hash];
-}
+- (unsigned)hash { return [key hash]; }
 
 - self
 {
-  /* trick to make associationAt: work without tmp object */
-  return key;
+    /* trick to make associationAt: work without tmp object */
+    return key;
 }
 
-- (BOOL) isEqual:anAssoc
+- (BOOL)isEqual:anAssoc
 {
-  /* anAssoc can be either a Key or an Assoc */
-  return (self == anAssoc) ? YES : [key isEqual:[anAssoc self]];
+    /* anAssoc can be either a Key or an Assoc */
+    return (self == anAssoc) ? YES : [key isEqual:[anAssoc self]];
 }
 
-- (int) compare:anAssoc
-{
-  return [key compare:[anAssoc self]];
-}
+- (int)compare:anAssoc { return [key compare:[anAssoc self]]; }
 
 /*****************************************************************************
  *
@@ -131,9 +113,9 @@
 
 - value:aValue
 {
-  id tmp = value;
-  value = aValue;
-  return tmp;
+    id tmp = value;
+    value = aValue;
+    return tmp;
 }
 
 /*****************************************************************************
@@ -144,11 +126,10 @@
 
 - printOn:(IOD)aFile
 {
-  [key printOn:aFile];
-  fprintf (aFile, "\t");
-  [value printOn:aFile];
-  return self;
+    [key printOn:aFile];
+    fprintf (aFile, "\t");
+    [value printOn:aFile];
+    return self;
 }
 
 @end
- 

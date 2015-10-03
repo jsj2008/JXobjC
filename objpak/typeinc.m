@@ -6,7 +6,7 @@
 
 /*
  * This library is free software; you can redistribute it and/or modify it
- * under the terms of the GNU Library General Public License as published 
+ * under the terms of the GNU Library General Public License as published
  * by the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
  *
@@ -27,31 +27,24 @@
 #include "ocstring.h"
 
 @implementation TypeInconsistency
-- (char) gotChar
-{
-  return gotChar;
-}
+- (char)gotChar { return gotChar; }
 
-- (char) wantChar
-{
-  return wantChar;
-}
+- (char)wantChar { return wantChar; }
 
 - got:(char)c wanted:(char)w
 {
-  gotChar = c;
-  wantChar = w;
-  return self;
+    gotChar = c;
+    wantChar = w;
+    return self;
 }
 
 - signal
 {
-  if (!messageText)
+    if (!messageText)
     {
-      messageText = [String sprintf:"Want %c, got %c", wantChar, gotChar];
+        messageText = [String sprintf:"Want %c, got %c", wantChar, gotChar];
     }
-  return [super signal];
+    return [super signal];
 }
 
 @end
- 

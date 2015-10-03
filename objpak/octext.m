@@ -6,7 +6,7 @@
 
 /*
  * This library is free software; you can redistribute it and/or modify it
- * under the terms of the GNU Library General Public License as published 
+ * under the terms of the GNU Library General Public License as published
  * by the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
  *
@@ -37,248 +37,210 @@
 
 - check
 {
-  [runs check];
-  assert ([string size] == [runs size]);
-  return self;
+    [runs check];
+    assert ([string size] == [runs size]);
+    return self;
 }
 
-+ new
-{
-  return [self fromString:[String new]];
-}
++ new { return [self fromString:[String new]]; }
 
-+ new:(unsigned)nChars
-{
-  return [self fromString:[String new:nChars]];
-}
++ new:(unsigned)nChars { return [self fromString:[String new:nChars]]; }
 
-+ vsprintf:(STR)format:(OC_VA_LIST*)ap
++ vsprintf:(STR)format:(OC_VA_LIST *)ap
 {
-  char aBuffer [SPRINTF_BUFSIZE];
+    char aBuffer[SPRINTF_BUFSIZE];
 
 #if OBJCRT_USE_SNPRINTF
-  if (vsnprintf (aBuffer, SPRINTF_BUFSIZE, format, *ap) >= SPRINTF_BUFSIZE)
+    if (vsnprintf (aBuffer, SPRINTF_BUFSIZE, format, *ap) >= SPRINTF_BUFSIZE)
     {
-      [OutOfBounds signal];
-      return nil;
+        [OutOfBounds signal];
+        return nil;
     }
 #else
-  vsprintf (aBuffer, format, *ap);
+    vsprintf (aBuffer, format, *ap);
 #endif
 
-  return [self str:aBuffer];
+    return [self str:aBuffer];
 }
 
 + str:(STR)aString
 {
-  return [self fromString:[String str:aString]];;
+    return [self fromString:[String str:aString]];
+    ;
 }
 
-+ sprintf:(STR)format,...
++ sprintf:(STR)format, ...
 {
-  id newtext;
+    id newtext;
 
-  /* use OC macros for porting to SunOS4 */
-  OC_VA_LIST ap;
-  OC_VA_START (ap, format);
-  newtext = [self vsprintf:format:&ap];
-  OC_VA_END (ap);
-  return newtext;
+    /* use OC macros for porting to SunOS4 */
+    OC_VA_LIST ap;
+    OC_VA_START (ap, format);
+    newtext = [self vsprintf:format:&ap];
+    OC_VA_END (ap);
+    return newtext;
 }
 
 + fromString:aString
 {
-  return [[super new] string:aString runs:[RunArray new]];
+    return [[super new] string:aString runs:[RunArray new]];
 }
 
 + string:aString attribute:attrib
 {
-  return [[self fromString:aString] addAttribute:attrib];
+    return [[self fromString:aString] addAttribute:attrib];
 }
 
 - string:aString runs:anArray
 {
-  string = aString;
-  runs = anArray;
-  return self;
+    string = aString;
+    runs = anArray;
+    return self;
 }
 
-- copy
-{
-  return [[isa new] string:[string copy] runs:[runs copy]];
-}
+- copy { return [[isa new] string:[string copy] runs:[runs copy]]; }
 
 - free
 {
-  string = [string free];
-  runs = [runs free];
-  return [super free];
+    string = [string free];
+    runs = [runs free];
+    return [super free];
 }
 
+- (unsigned)hash { return [string hash]; }
 
-- (unsigned) hash
+- (BOOL)isEqual:aStr
 {
-  return [string hash];
-}
-
-- (BOOL) isEqual:aStr
-{
-  [runs setsize:[string size]];
-  if (self == aStr)
+    [runs setsize:[string size]];
+    if (self == aStr)
     {
-      return YES;
+        return YES;
     }
-  else
+    else
     {
-      return [string isEqual:[aStr string]] && [runs isEqual:[aStr runs]];
+        return [string isEqual:[aStr string]] && [runs isEqual:[aStr runs]];
     }
 }
 
-
-- string
-{
-  return string;
-}
+- string { return string; }
 
 - runs
 {
-  [runs setsize:[string size]];
-  return runs;
+    [runs setsize:[string size]];
+    return runs;
 }
 
-- (STR) str
-{
-  return [string str];
-}
+- (STR)str { return [string str]; }
 
-- (unsigned) size
-{
-  return [string size];
-}
+- (unsigned)size { return [string size]; }
 
-- (char) charAt:(unsigned)anOffset
-{
-  return [string charAt:anOffset];
-}
+- (char)charAt:(unsigned)anOffset { return [string charAt:anOffset]; }
 
-- (char) charAt:(unsigned)anOffset put:(char)aChar
+- (char)charAt:(unsigned)anOffset put:(char)aChar
 {
-  return [string charAt:anOffset put:aChar];
+    return [string charAt:anOffset put:aChar];
 }
 
 - at:(unsigned)anOffset insert:aString
 {
-  return [self at:anOffset insert:[aString str] count:[aString size]];
+    return [self at:anOffset insert:[aString str] count:[aString size]];
 }
 
-- at:(unsigned)anOffset insert:(char*)aString count:(int)size
+- at:(unsigned)anOffset insert:(char *)aString count:(int)size
 {
-  [string at:anOffset insert:aString count:size];
-  [runs at:anOffset insert:aString count:size];
-  return self;
+    [string at:anOffset insert:aString count:size];
+    [runs at:anOffset insert:aString count:size];
+    return self;
 }
 
 - deleteFrom:(unsigned)p to:(unsigned)q
 {
-  [string deleteFrom:p to:q];
-  [runs deleteFrom:p to:q];
-  return self;
+    [string deleteFrom:p to:q];
+    [runs deleteFrom:p to:q];
+    return self;
 }
 
 - concat:b
 {
-  [string concat:[b string]];
-  [runs concat:[b runs]];
-  return self;
+    [string concat:[b string]];
+    [runs concat:[b runs]];
+    return self;
 }
 
 - concatSTR:(STR)b
 {
-  [string concatSTR:b];
-  [runs setsize:[string size]];
-  return self;
+    [string concatSTR:b];
+    [runs setsize:[string size]];
+    return self;
 }
-
 
 - allBold
 {
-  [self addAttribute:[TextAttribute bold]];
-  return self;
+    [self addAttribute:[TextAttribute bold]];
+    return self;
 }
 
 - makeBoldFrom:(unsigned)p to:(unsigned)q
 {
-  [self addAttribute:[TextAttribute bold] from:p to:q];
-  return self;
+    [self addAttribute:[TextAttribute bold] from:p to:q];
+    return self;
 }
 
 - addAttribute:attribute
 {
-  unsigned n = [string size];
-  [runs addAttribute:attribute from:0 size:n];
-  return self;
+    unsigned n = [string size];
+    [runs addAttribute:attribute from:0 size:n];
+    return self;
 }
 
 - addAttribute:attribute from:(unsigned)p to:(unsigned)q
 {
-  unsigned n = [string size];
-  if (p > q || q >= n)
+    unsigned n = [string size];
+    if (p > q || q >= n)
     {
-      [OutOfBounds signal];
-      return self;
+        [OutOfBounds signal];
+        return self;
     }
-  [runs addAttribute:attribute from:p size:q - p + 1];
-  assert ([self check]);
-  return self;
+    [runs addAttribute:attribute from:p size:q - p + 1];
+    assert ([self check]);
+    return self;
 }
 
 - attributesAt:(unsigned)i
 {
-  [runs setsize:[string size]];
-  return [runs at:i];
+    [runs setsize:[string size]];
+    return [runs at:i];
 }
 
-- (unsigned) runLengthFor:(unsigned)i
+- (unsigned)runLengthFor:(unsigned)i
 {
-  [runs setsize:[string size]];
-  return [runs runLengthAt:i];
+    [runs setsize:[string size]];
+    return [runs runLengthAt:i];
 }
 
-- (unsigned) fontNumberAt:(unsigned)i
+- (unsigned)fontNumberAt:(unsigned)i
 {
-  [runs setsize:[string size]];
-  return [runs fontNumberAt:i];
+    [runs setsize:[string size]];
+    return [runs fontNumberAt:i];
 }
 
 - fontAt:(unsigned)i withStyle:textStyle
 {
-  [runs setsize:[string size]];
-  return [runs fontAt:i withStyle:textStyle];
+    [runs setsize:[string size]];
+    return [runs fontAt:i withStyle:textStyle];
 }
 
+- asString { return string; }
 
-- asString
-{
-  return string;
-}
+- asText { return self; }
 
-- asText
-{
-  return self;
-}
-
-- asParagraph
-{
-  return [Paragraph withText:self];
-}
-
+- asParagraph { return [Paragraph withText:self]; }
 
 - printOn:(IOD)aFile
 {
-  fprintf (aFile, "Text for ");
-  [string printOn:aFile];
-  return self;
+    fprintf (aFile, "Text for ");
+    [string printOn:aFile];
+    return self;
 }
 
 @end
- 

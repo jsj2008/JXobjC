@@ -3,7 +3,7 @@
  * Copyright (c) 1998 David Stes.
  *
  * This library is free software; you can redistribute it and/or modify it
- * under the terms of the GNU Library General Public License as published 
+ * under the terms of the GNU Library General Public License as published
  * by the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
  *
@@ -23,22 +23,22 @@ extern id msgwraps; /* VICI */
 
 @interface MesgExpr : Expr
 {
-  id msg;
-  id sel;
-  id rcvr;
-  BOOL supermsg;
-  BOOL infactory;
-  BOOL indispatchfun;
-  BOOL methodfound;
-  id method;
-  id classdef;
-  id tmpvar;
-  id refvar;
-  id icache;
-  char *fwdname;
-  char *dispname;
-  char *argstructname;
-  id msgwrap; /* VICI */
+    id msg;
+    id sel;
+    id rcvr;
+    BOOL supermsg;
+    BOOL infactory;
+    BOOL indispatchfun;
+    BOOL methodfound;
+    id method;
+    id classdef;
+    id tmpvar;
+    id refvar;
+    id icache;
+    char * fwdname;
+    char * dispname;
+    char * argstructname;
+    id msgwrap; /* VICI */
 }
 
 - (unsigned)hash;
@@ -60,12 +60,11 @@ extern id msgwraps; /* VICI */
 - genfwdstub;
 - genargstruct;
 - gendispargsintostruct;
-- (char*)fwdname;
-- (char*)dispname;
-- (char*)argstructname;
+- (char *)fwdname;
+- (char *)dispname;
+- (char *)argstructname;
 
 - go;
 - send:(IMP)i sel:(SEL)sel with:kw to:rcvr;
 
 @end
- 

@@ -3,7 +3,7 @@
  * Copyright (c) 1998,1999 David Stes.
  *
  * This library is free software; you can redistribute it and/or modify it
- * under the terms of the GNU Library General Public License as published 
+ * under the terms of the GNU Library General Public License as published
  * by the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
  *
@@ -24,7 +24,7 @@
 #include <assert.h>
 #ifndef __OBJECT_INCLUDED__
 #define __OBJECT_INCLUDED__
-#include <stdio.h> /* FILE */
+#include <stdio.h>  /* FILE */
 #include "Object.h" /* Stepstone Object.h assumes #import */
 #endif
 #include <ordcltn.h>
@@ -45,83 +45,84 @@
 
 - funname:aRcvr
 {
-  funname = aRcvr;
-  return self;
+    funname = aRcvr;
+    return self;
 }
 
 - funargs:args
 {
-  funargs = args;
-  return self;
+    funargs = args;
+    return self;
 }
 
-- (int)lineno
-{
-  return [funname lineno];
-}
+- (int)lineno { return [funname lineno]; }
 
-- filename
-{
-  return [funname filename];
-}
+- filename { return [funname filename]; }
 
 - gen
 {
-  if (refvar) {
-    gl([self lineno],[[self filename] str]);
-    gc('(');
-    gs([refvar str]);
-    gc('=');
-  }
-  [funname gen];
-  gc('(');
-  if (funargs)
-    gcommalist(funargs);
-  gc(')');
-  if (refvar) gc(')');
-  return self;
+    if (refvar)
+    {
+        gl ([self lineno], [[self filename] str]);
+        gc ('(');
+        gs ([refvar str]);
+        gc ('=');
+    }
+    [funname gen];
+    gc ('(');
+    if (funargs)
+        gcommalist (funargs);
+    gc (')');
+    if (refvar)
+        gc (')');
+    return self;
 }
 
 - typesynth
 {
-  type = [funname type];
-  type = [type funcall];
-  if (!type) {
-    warn("can't make function call to this type of object");
-    type = t_int;
-  }
-  return self;
+    type = [funname type];
+    type = [type funcall];
+    if (!type)
+    {
+        warn ("can't make function call to this type of object");
+        type = t_int;
+    }
+    return self;
 }
 
 - synth
 {
-  [funname synth];
-  if (funargs)
-    [funargs elementsPerform:_cmd];
-  if (o_refcnt && [[self type] isid]) {
-    refvar = [trlunit gettmpvar];
-    [curcompound addtmpvar:refvar];
-    [curcompound adddecref:refvar];
-  }
-  return self;
+    [funname synth];
+    if (funargs)
+        [funargs elementsPerform:_cmd];
+    if (o_refcnt && [[self type] isid])
+    {
+        refvar = [trlunit gettmpvar];
+        [curcompound addtmpvar:refvar];
+        [curcompound adddecref:refvar];
+    }
+    return self;
 }
 
 - go
 {
-  id args;
-  int i,n;
-  id fdef = [funname go];
-  if ([fdef isfundef]) {
-    n = [funargs size];
-    args = [IdArray new:n];
-    for(i=0;i<n;i++) {
-      [args at:i put:[[funargs at:i] go]];
+    id args;
+    int i, n;
+    id fdef = [funname go];
+    if ([fdef isfundef])
+    {
+        n = [funargs size];
+        args = [IdArray new:n];
+        for (i = 0; i < n; i++)
+        {
+            [args at:i put:[[funargs at:i] go]];
+        }
+        return [fdef fcall:args];
     }
-    return [fdef fcall:args]; 
-  } else {
-    return [self error:"Object is not a function name"];
-  }
+    else
+    {
+        return [self error:"Object is not a function name"];
+    }
 }
 
 @end
- 

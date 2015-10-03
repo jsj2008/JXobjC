@@ -6,7 +6,7 @@
 
 /*
  * This library is free software; you can redistribute it and/or modify it
- * under the terms of the GNU Library General Public License as published 
+ * under the terms of the GNU Library General Public License as published
  * by the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
  *
@@ -25,19 +25,18 @@
 
 #define __objpak_revision__ "3.2.1"
 
-
-#include "stdio.h"		/* FILE for printOn: prototype */
+#include "stdio.h" /* FILE for printOn: prototype */
 
 #include "config.h"
 
-#include <assert.h>		/* assert() */
-#include <ctype.h>		/* isalpha for -dictCompare: */
+#include <assert.h> /* assert() */
+#include <ctype.h>  /* isalpha for -dictCompare: */
 #include <stdio.h>
 #include <stdlib.h>
 
 #ifndef __OBJECT_INCLUDED__
 #define __OBJECT_INCLUDED__
-#include "Object.h"		/* Stepstone Object.h assumes #import */
+#include "Object.h" /* Stepstone Object.h assumes #import */
 #endif
 
 #if OBJC_BLOCKS
@@ -65,7 +64,7 @@
 #include "stack.h"
 #include "sequence.h"
 #include "sortcltn.h"
-#include "ocstring.h"		/* avoid confusion with string.h */
+#include "ocstring.h" /* avoid confusion with string.h */
 #include "point.h"
 #include "array.h"
 #include "idarray.h"
@@ -81,4 +80,3 @@
 #include "treeseq.h"
 
 #endif /* __objpak__ */
- 

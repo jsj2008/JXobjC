@@ -3,7 +3,7 @@
  * Copyright (c) 1998 David Stes.
  *
  * This library is free software; you can redistribute it and/or modify it
- * under the terms of the GNU Library General Public License as published 
+ * under the terms of the GNU Library General Public License as published
  * by the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
  *
@@ -25,7 +25,7 @@
 #include <string.h>
 #ifndef __OBJECT_INCLUDED__
 #define __OBJECT_INCLUDED__
-#include <stdio.h> /* FILE */
+#include <stdio.h>  /* FILE */
 #include "Object.h" /* Stepstone Object.h assumes #import */
 #endif
 #include <ocstring.h>
@@ -36,81 +36,69 @@
 
 @implementation NameDecl
 
-- abstrdecl
-{
-  return nil;
-}
+- abstrdecl { return nil; }
 
 - identifier:aRcvr
 {
-  identifier = aRcvr;
-  return self;
+    identifier = aRcvr;
+    return self;
 }
 
 - (BOOL)isEqual:x
 {
-  BOOL ok = YES;
-  id y = [x identifier];
+    BOOL ok = YES;
+    id y = [x identifier];
 
-  if (identifier && y && ![identifier isEqual:y])
-    ok = NO;
-  if (!identifier || !y)
-    ok = (identifier == y);
-  return ok;
+    if (identifier && y && ![identifier isEqual:y])
+        ok = NO;
+    if (!identifier || !y)
+        ok = (identifier == y);
+    return ok;
 }
 
-- (BOOL)canforward
-{
-  return YES;
-}
+- (BOOL)canforward { return YES; }
 
-- (BOOL)isscalartype
-{
-  return YES;
-}
+- (BOOL)isscalartype { return YES; }
 
 - gen
 {
-  if (hide) {
-    [hide gen];
-  } else {
-    [identifier gen];
-  }
-  return self;
+    if (hide)
+    {
+        [hide gen];
+    }
+    else
+    {
+        [identifier gen];
+    }
+    return self;
 }
 
 - hide:x rename:y
 {
-  if ([identifier isEqual:x]) {
-    [y lineno:[identifier lineno]];
-    [y filename:[identifier filename]];
-    hide = y;
-  }
-  return self;
+    if ([identifier isEqual:x])
+    {
+        [y lineno:[identifier lineno]];
+        [y filename:[identifier filename]];
+        hide = y;
+    }
+    return self;
 }
 
-- identifier
-{
-  return identifier;
-}
+- identifier { return identifier; }
 
 - gendef:sym
 {
-  if (sym)
-    [sym gen];
-  return self;
+    if (sym)
+        [sym gen];
+    return self;
 }
 
-- synth
-{
-  return self;
-}
+- synth { return self; }
 
 - st80
 {
-  [identifier st80];
-  return self;
+    [identifier st80];
+    return self;
 }
 
 @end
- 

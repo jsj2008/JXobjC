@@ -6,7 +6,7 @@
 
 /*
  * This library is free software; you can redistribute it and/or modify it
- * under the terms of the GNU Library General Public License as published 
+ * under the terms of the GNU Library General Public License as published
  * by the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
  *
@@ -46,147 +46,119 @@
  *
  ****************************************************************************/
 
-static objbbt_t 
-alloc ()
+static objbbt_t alloc ()
 {
-  return (objbbt_t) OC_Malloc (sizeof (struct objbbt));
+    return (objbbt_t)OC_Malloc (sizeof (struct objbbt));
 }
 
-static objbbt_t 
-init (objbbt_t self, id key)
+static objbbt_t init (objbbt_t self, id key)
 {
-  self->ulink = NULL;
-  self->llink = NULL;
-  self->rlink = NULL;
-  self->key = key;
-  self->balance = 0;
-  return self;
+    self->ulink = NULL;
+    self->llink = NULL;
+    self->rlink = NULL;
+    self->key = key;
+    self->balance = 0;
+    return self;
 }
 
-static objbbt_t 
-create (id key)
+static objbbt_t create (id key) { return init (alloc (), key); }
+
+static int signum (objbbt_t ulink, objbbt_t self)
 {
-  return init (alloc (), key);
+    assert (ulink->llink == self || ulink->rlink == self);
+    return (ulink->llink == self) ? -1 : +1;
 }
 
-static int 
-signum (objbbt_t ulink, objbbt_t self)
+static objbbt_t slink (objbbt_t self, int sign)
 {
-  assert (ulink->llink == self || ulink->rlink == self);
-  return (ulink->llink == self) ? -1 : +1;
+    assert (sign == +1 || sign == -1);
+    return (sign > 0) ? self->rlink : self->llink;
 }
 
-static objbbt_t 
-slink (objbbt_t self, int sign)
+static void setllink (objbbt_t self, objbbt_t node)
 {
-  assert (sign == +1 || sign == -1);
-  return (sign > 0) ? self->rlink : self->llink;
+    self->llink = node;
+    if (node)
+        node->ulink = self;
 }
 
-static void 
-setllink (objbbt_t self, objbbt_t node)
+static void setrlink (objbbt_t self, objbbt_t node)
 {
-  self->llink = node;
-  if (node)
-    node->ulink = self;
+    self->rlink = node;
+    if (node)
+        node->ulink = self;
 }
 
-static void 
-setrlink (objbbt_t self, objbbt_t node)
+static void setslink (objbbt_t self, objbbt_t node, int sign)
 {
-  self->rlink = node;
-  if (node)
-    node->ulink = self;
+    if (sign > 0)
+        setrlink (self, node);
+    else
+        setllink (self, node);
 }
 
-static void 
-setslink (objbbt_t self, objbbt_t node, int sign)
+static void freeobjects (objbbt_t self)
 {
-  if (sign > 0)
-    setrlink (self, node);
-  else
-    setllink (self, node);
+    if (self->llink)
+        freeobjects (self->llink);
+    if (self->rlink)
+        freeobjects (self->rlink);
+    self->key = [self->key free];
 }
 
-static void 
-freeobjects (objbbt_t self)
+static objbbt_t destroy (objbbt_t self)
 {
-  if (self->llink)
-    freeobjects (self->llink);
-  if (self->rlink)
-    freeobjects (self->rlink);
-  self->key = [self->key free];
+    if (self->llink)
+        self->llink = destroy (self->llink);
+    if (self->rlink)
+        self->rlink = destroy (self->rlink);
+    self->key = nil;
+    OC_Free (self);
+    return NULL;
 }
 
-static objbbt_t 
-destroy (objbbt_t self)
-{
-  if (self->llink)
-    self->llink = destroy (self->llink);
-  if (self->rlink)
-    self->rlink = destroy (self->rlink);
-  self->key = nil;
-  OC_Free (self);
-  return NULL;
-}
++ new { return [self newCmpSel:@selector (compare:)]; }
 
-+ new
-{
-  return [self newCmpSel:@selector (compare:)];
-}
++ new:(unsigned)n { return [self new]; }
 
-+ new:(unsigned)n
-{
-  return [self new];
-}
-
-+ newDictCompare
-{
-  return [self newCmpSel:@selector (dictCompare:)];
-}
++ newDictCompare { return [self newCmpSel:@selector (dictCompare:)]; }
 
 - setupcmpblock:sortBlock
 {
-  cmpBlk = sortBlock;
-  init (&value, (id) 0xdeadbeaf);
-  return self;
+    cmpBlk = sortBlock;
+    init (&value, (id)0xdeadbeaf);
+    return self;
 }
 
 #ifndef __PORTABLE_OBJC__
-- shouldNotImplement
-{
-  return nil;
-}
+- shouldNotImplement { return nil; }
 #endif
 
 + sortBy:sortBlock
 {
 #if OBJC_BLOCKS
-  id newObj = [super new];
-  [newObj setupcmpblock:sortBlock];
-  return newObj;
+    id newObj = [super new];
+    [newObj setupcmpblock:sortBlock];
+    return newObj;
 #else
-  return [self shouldNotImplement];
+    return [self shouldNotImplement];
 #endif
 }
 
-+ sortBlock:sortBlock
-{
-  return [self sortBy:sortBlock];
-}
++ sortBlock:sortBlock { return [self sortBy:sortBlock]; }
 
 - setupcmpsel:(SEL)aSel
 {
-  cmpSel = aSel;
-  init (&value, (id) 0);
-  return self;
+    cmpSel = aSel;
+    init (&value, (id)0);
+    return self;
 }
 
 + newCmpSel:(SEL)aSel
 {
-  id newObj = [super new];
-  [newObj setupcmpsel:aSel];
-  return newObj;
+    id newObj = [super new];
+    [newObj setupcmpsel:aSel];
+    return newObj;
 }
 
 /*****************************************************************************
@@ -195,101 +167,95 @@ destroy (objbbt_t self)
  *
  ****************************************************************************/
 
-+ with:(int)nArgs,...
++ with:(int)nArgs, ...
 {
-  id newObject;
+    id newObject;
 
-  /* use OC macros for porting to SunOS4 */
-  OC_VA_LIST vp;
+    /* use OC macros for porting to SunOS4 */
+    OC_VA_LIST vp;
 
-  newObject = [self new];
+    newObject = [self new];
 
-  /* #if 0 this piece of code if problems with stdarg
-   * typically this means the driver is not configured with
-   * the right -builtintype
-   * or builtinfunction flags (because the macros might expand to these)
-   * 
-   * alternative solution: check the .P output (-retain) and 
-   * do a setenv OBJCOPT -builtinfunction __builtin_foo
-   * (and please let me know)
-   */
+/* #if 0 this piece of code if problems with stdarg
+ * typically this means the driver is not configured with
+ * the right -builtintype
+ * or builtinfunction flags (because the macros might expand to these)
+ *
+ * alternative solution: check the .P output (-retain) and
+ * do a setenv OBJCOPT -builtinfunction __builtin_foo
+ * (and please let me know)
+ */
 
 #ifdef NSTDARG
-  [self notImplemented];
+    [self notImplemented];
 #else
-  OC_VA_START (vp, nArgs);
-  while (nArgs-- > 0)
+    OC_VA_START (vp, nArgs);
+    while (nArgs-- > 0)
     {
-      id anObject = OC_VA_ARG (vp, id);
-      [newObject add:anObject];
+        id anObject = OC_VA_ARG (vp, id);
+        [newObject add:anObject];
     }
-  OC_VA_END (vp);
+    OC_VA_END (vp);
 #endif
 
-  return newObject;
+    return newObject;
 }
 
 + with:firstObject with:nextObject
 {
-  return [[[self new] add:firstObject] add:nextObject];
+    return [[[self new] add:firstObject] add:nextObject];
 }
 
-+ add:firstObject
-{
-  return [[self new] add:firstObject];
-}
++ add:firstObject { return [[self new] add:firstObject]; }
 
-- copy
-{
-  return [[isa new] addAll:self];
-}
+- copy { return [[isa new] addAll:self]; }
 
 - deepCopy
 {
-  id aSeq, elt;
-  id aCopy = [isa new];
+    id aSeq, elt;
+    id aCopy = [isa new];
 
-  aSeq = [self eachElement];
-  while ((elt = [aSeq next]))
-    [aCopy add:[elt deepCopy]];
+    aSeq = [self eachElement];
+    while ((elt = [aSeq next]))
+        [aCopy add:[elt deepCopy]];
 #ifndef OBJC_REFCNT
-  aSeq = [aSeq free];
+    aSeq = [aSeq free];
 #endif
 
-  return aCopy;
+    return aCopy;
 }
 
 - emptyYourself
 {
-  if (value.llink)
-    value.llink = destroy (value.llink);
-  return self;
+    if (value.llink)
+        value.llink = destroy (value.llink);
+    return self;
 }
 
 - freeContents
 {
-  if (value.llink)
+    if (value.llink)
     {
-      freeobjects (value.llink);
-      value.llink = destroy (value.llink);
+        freeobjects (value.llink);
+        value.llink = destroy (value.llink);
     }
-  return self;
+    return self;
 }
 
 - free
 {
-  if (value.llink)
-    value.llink = destroy (value.llink);
-  return [super free];
+    if (value.llink)
+        value.llink = destroy (value.llink);
+    return [super free];
 }
 
 - release
 {
 #ifdef OBJC_REFCNT
-  [self emptyYourself];
-  return [super release];
+    [self emptyYourself];
+    return [super release];
 #else
-  return [self notImplemented:_cmd];
+    return [self notImplemented:_cmd];
 #endif
 }
 
@@ -299,41 +265,28 @@ destroy (objbbt_t self)
  *
  ****************************************************************************/
 
-- (objbbt_t) objbbtTop
+- (objbbt_t)objbbtTop { return value.llink; }
+
+- (SEL)comparisonSelector { return cmpSel; }
+
+static int size (objbbt_t self)
 {
-  return value.llink;
+    int n = 1;
+    if (self->llink)
+        n += size (self->llink);
+    if (self->rlink)
+        n += size (self->rlink);
+    return n;
 }
 
-- (SEL) comparisonSelector
-{
-  return cmpSel;
-}
+- (unsigned)size { return (value.llink) ? size (value.llink) : 0; }
 
-static int 
-size (objbbt_t self)
-{
-  int n = 1;
-  if (self->llink)
-    n += size (self->llink);
-  if (self->rlink)
-    n += size (self->rlink);
-  return n;
-}
-
-- (unsigned) size
-{
-  return (value.llink) ? size (value.llink) : 0;
-}
-
-- (BOOL) isEmpty
-{
-  return value.llink == NULL;
-}
+- (BOOL)isEmpty { return value.llink == NULL; }
 
 - eachElement
 {
-  id aCarrier = [TreeSequence over:self];
-  return [Sequence over:aCarrier];
+    id aCarrier = [TreeSequence over:self];
+    return [Sequence over:aCarrier];
 }
 
 /*****************************************************************************
@@ -342,16 +295,16 @@ size (objbbt_t self)
  *
  ****************************************************************************/
 
-- (unsigned) hash
+- (unsigned)hash
 {
-  [self notImplemented:_cmd];
-  return 0;
+    [self notImplemented:_cmd];
+    return 0;
 }
 
-- (BOOL) isEqual:aSort
+- (BOOL)isEqual:aSort
 {
-  [self notImplemented:_cmd];
-  return NO;
+    [self notImplemented:_cmd];
+    return NO;
 }
 
 /*****************************************************************************
@@ -360,133 +313,133 @@ size (objbbt_t self)
  *
  ****************************************************************************/
 
-static int 
-cmp (objbbt_t self, id key, SEL cmpSel, id cmpBlk, objbbt_t * offset)
+static int cmp (objbbt_t self, id key, SEL cmpSel, id cmpBlk, objbbt_t * offset)
 {
-  int c = 0;
-  objbbt_t link;
-  id bkey = self->key;
+    int c = 0;
+    objbbt_t link;
+    id bkey = self->key;
 
-  if (cmpBlk)
+    if (cmpBlk)
     {
 #if OBJC_BLOCKS
-      if (key == bkey)
-	{
-	  c = 0;
-	}
-      else
-	{
-	  c = [cmpBlk intvalue:key value:bkey];
-	}
+        if (key == bkey)
+        {
+            c = 0;
+        }
+        else
+        {
+            c = [cmpBlk intvalue:key value:bkey];
+        }
 #endif
     }
-  else
+    else
     {
-      if (key == bkey)
-	{
-	  c = 0;
-	}
-      else
-	{
-	  c = ((int (*)(id, SEL, id)) [key methodFor:cmpSel]) (key, cmpSel, bkey);
-	}
+        if (key == bkey)
+        {
+            c = 0;
+        }
+        else
+        {
+            c = ((int (*)(id, SEL, id))[key methodFor:cmpSel]) (key, cmpSel,
+                                                                bkey);
+        }
     }
 
-  if (c == 0)
+    if (c == 0)
     {
-      *offset = self;
-      return c;
+        *offset = self;
+        return c;
     }
-  link = (c < 0) ? self->llink : self->rlink;
+    link = (c < 0) ? self->llink : self->rlink;
 
-  return (link) ? cmp (link, key, cmpSel, cmpBlk, offset) : (*offset = self, c);
+    return (link) ? cmp (link, key, cmpSel, cmpBlk, offset)
+                  : (*offset = self, c);
 }
 
-static int 
-cmpne (objbbt_t self, id key, SEL cmpSel, id cmpBlk, objbbt_t * offset)
+static int cmpne (objbbt_t self, id key, SEL cmpSel, id cmpBlk,
+                  objbbt_t * offset)
 {
-  int c = 0;
-  objbbt_t link;
-  id bkey = self->key;
+    int c = 0;
+    objbbt_t link;
+    id bkey = self->key;
 
-  if (cmpBlk)
+    if (cmpBlk)
     {
 #if OBJC_BLOCKS
-      if (key == bkey)
-	{
-	  c = 0;
-	}
-      else
-	{
-	  c = [cmpBlk intvalue:key value:bkey];
-	}
+        if (key == bkey)
+        {
+            c = 0;
+        }
+        else
+        {
+            c = [cmpBlk intvalue:key value:bkey];
+        }
 #endif
     }
-  else
+    else
     {
-      if (key == bkey)
-	{
-	  c = 0;
-	}
-      else
-	{
-	  c = ((int (*)(id, SEL, id)) [key methodFor:cmpSel]) (key, cmpSel, bkey);
-	}
+        if (key == bkey)
+        {
+            c = 0;
+        }
+        else
+        {
+            c = ((int (*)(id, SEL, id))[key methodFor:cmpSel]) (key, cmpSel,
+                                                                bkey);
+        }
     }
 
-  if (c == 0)
+    if (c == 0)
     {
-      c = +1;
+        c = +1;
     }
-  link = (c < 0) ? self->llink : self->rlink;
+    link = (c < 0) ? self->llink : self->rlink;
 
-  return (link) ? cmpne (link, key, cmpSel, cmpBlk, offset) : (*offset = self, c);
+    return (link) ? cmpne (link, key, cmpSel, cmpBlk, offset)
+                  : (*offset = self, c);
 }
 
-static int 
-height (objbbt_t self)
+static int height (objbbt_t self)
 {
-  if (self)
+    if (self)
     {
-      int a, b;
-      a = height (self->llink);
-      b = height (self->rlink);
-      assert (self->balance == (b - a));
-      return 1 + ((a > b) ? a : b);
+        int a, b;
+        a = height (self->llink);
+        b = height (self->rlink);
+        assert (self->balance == (b - a));
+        return 1 + ((a > b) ? a : b);
     }
-  else
+    else
     {
-      return 0;
+        return 0;
     }
 }
 
-static objbbt_t 
-bnode (objbbt_t top, objbbt_t newp)
+static objbbt_t bnode (objbbt_t top, objbbt_t newp)
 {
-  while (newp != top && newp->balance == 0)
-    newp = newp->ulink;
-  assert (newp->balance != 0 || newp == top);
-  return newp;
+    while (newp != top && newp->balance == 0)
+        newp = newp->ulink;
+    assert (newp->balance != 0 || newp == top);
+    return newp;
 }
 
-static int 
-adjust (objbbt_t b, objbbt_t newp)
+static int adjust (objbbt_t b, objbbt_t newp)
 {
-  int sign = 0;
-  objbbt_t ulink;
+    int sign = 0;
+    objbbt_t ulink;
 
-  while (1)
+    while (1)
     {
-      ulink = newp->ulink;
-      sign = signum (ulink, newp);
-      if (ulink == b)
-	break;
-      assert (ulink->balance == 0);
-      ulink->balance = sign;
-      newp = ulink;
+        ulink = newp->ulink;
+        sign = signum (ulink, newp);
+        if (ulink == b)
+            break;
+        assert (ulink->balance == 0);
+        ulink->balance = sign;
+        newp = ulink;
     }
 
-  return sign;
+    return sign;
 }
 
 /*
@@ -499,253 +452,241 @@ adjust (objbbt_t b, objbbt_t newp)
  *                      \
  */
 
-static void 
-sglrot (objbbt_t A, objbbt_t B, int sign)
+static void sglrot (objbbt_t A, objbbt_t B, int sign)
 {
-  objbbt_t U = A->ulink;
-  setslink (A, slink (B, -sign), sign);
-  setslink (B, A, -sign);
-  A->balance = 0;
-  B->balance = 0;
-  setslink (U, B, signum (U, A));
+    objbbt_t U = A->ulink;
+    setslink (A, slink (B, -sign), sign);
+    setslink (B, A, -sign);
+    A->balance = 0;
+    B->balance = 0;
+    setslink (U, B, signum (U, A));
 }
 
-/*                                            
- *                A                            X      
+/*
+ *                A                            X
  *               / \                        /     \
- *              a   B       --->           A       B   
- *             /   / \                    / \     / \ 
+ *              a   B       --->           A       B
+ *             /   / \                    / \     / \
  *                X   d                  a   b   c   d
- *               / \   \                /     \ /     \  
- *              b   c                                
+ *               / \   \                /     \ /     \
+ *              b   c
  *             /     \
  */
 
-static void 
-dblrot (objbbt_t A, objbbt_t B, int sign)
+static void dblrot (objbbt_t A, objbbt_t B, int sign)
 {
-  objbbt_t U = A->ulink;
-  objbbt_t X = slink (B, -sign);
+    objbbt_t U = A->ulink;
+    objbbt_t X = slink (B, -sign);
 
-  setslink (B, slink (X, sign), -sign);
-  setslink (X, B, +sign);
-  setslink (A, slink (X, -sign), sign);
-  setslink (X, A, -sign);
+    setslink (B, slink (X, sign), -sign);
+    setslink (X, B, +sign);
+    setslink (A, slink (X, -sign), sign);
+    setslink (X, A, -sign);
 
-  if (X->balance == +sign)
+    if (X->balance == +sign)
     {
-      A->balance = -sign;
-      B->balance = 0;
+        A->balance = -sign;
+        B->balance = 0;
     }
-  if (X->balance == 0)
+    if (X->balance == 0)
     {
-      A->balance = 0;
-      B->balance = 0;
+        A->balance = 0;
+        B->balance = 0;
     }
-  if (X->balance == -sign)
+    if (X->balance == -sign)
     {
-      A->balance = 0;
-      B->balance = +sign;
+        A->balance = 0;
+        B->balance = +sign;
     }
 
-  X->balance = 0;
-  setslink (U, X, signum (U, A));
+    X->balance = 0;
+    setslink (U, X, signum (U, A));
 }
 
-static void 
-rot (objbbt_t A, int sign)
+static void rot (objbbt_t A, int sign)
 {
-  objbbt_t B = slink (A, sign);
-  assert (sign == A->balance && sign != 0 && B->balance != 0);
-  /* SGI cc doesn't like return of a 'void' function */
-  if (sign == +B->balance)
+    objbbt_t B = slink (A, sign);
+    assert (sign == A->balance && sign != 0 && B->balance != 0);
+    /* SGI cc doesn't like return of a 'void' function */
+    if (sign == +B->balance)
     {
-      sglrot (A, B, sign);
-      return;
+        sglrot (A, B, sign);
+        return;
     }
-  if (sign == -B->balance)
+    if (sign == -B->balance)
     {
-      dblrot (A, B, sign);
-      return;
-    }
-}
-
-static void 
-rebalance (objbbt_t top, objbbt_t newp)
-{
-  int sign;
-  objbbt_t b;
-
-  b = bnode (top, newp);
-  sign = adjust (b, newp);
-
-  if (b->balance == 0)
-    {
-      b->balance = sign;
-      return;
-    }
-  if (b->balance == -sign)
-    {
-      b->balance = 0;
-      return;
-    }
-  if (b->balance == +sign)
-    {
-      rot (b, sign);
-      return;
+        dblrot (A, B, sign);
+        return;
     }
 }
 
-static void 
-addfirst (objbbt_t self, id key)
+static void rebalance (objbbt_t top, objbbt_t newp)
 {
-  setllink (self, create (key));
+    int sign;
+    objbbt_t b;
+
+    b = bnode (top, newp);
+    sign = adjust (b, newp);
+
+    if (b->balance == 0)
+    {
+        b->balance = sign;
+        return;
+    }
+    if (b->balance == -sign)
+    {
+        b->balance = 0;
+        return;
+    }
+    if (b->balance == +sign)
+    {
+        rot (b, sign);
+        return;
+    }
 }
 
-static void 
-addat (objbbt_t top, id key, int c, objbbt_t offset)
+static void addfirst (objbbt_t self, id key) { setllink (self, create (key)); }
+
+static void addat (objbbt_t top, id key, int c, objbbt_t offset)
 {
-  objbbt_t newp = create (key);
+    objbbt_t newp = create (key);
 
-  assert (c < 0 || c > 0);
-  if (c < 0)
-    setllink (offset, newp);
-  if (c > 0)
-    setrlink (offset, newp);
+    assert (c < 0 || c > 0);
+    if (c < 0)
+        setllink (offset, newp);
+    if (c > 0)
+        setrlink (offset, newp);
 
-  rebalance (top, newp);
+    rebalance (top, newp);
 
 #ifdef CHECK_BALANCE
-  assert (height (top) > 0);
+    assert (height (top) > 0);
 #endif
 }
 
-static void 
-add (objbbt_t top, id key, SEL selCmp, id cmpBlk)
+static void add (objbbt_t top, id key, SEL selCmp, id cmpBlk)
 {
-  objbbt_t offset = NULL;
-  int c = cmpne (top, key, selCmp, cmpBlk, &offset);
-  addat (top, key, c, offset);
+    objbbt_t offset = NULL;
+    int c = cmpne (top, key, selCmp, cmpBlk, &offset);
+    addat (top, key, c, offset);
 }
 
 - add:anObject
 {
-  if (anObject)
+    if (anObject)
     {
-      if (value.llink)
-	{
-	  add (value.llink, anObject, cmpSel, cmpBlk);
-	  return self;
-	}
-      else
-	{
-	  addfirst (&value, anObject);
-	  return self;
-	}
+        if (value.llink)
+        {
+            add (value.llink, anObject, cmpSel, cmpBlk);
+            return self;
+        }
+        else
+        {
+            addfirst (&value, anObject);
+            return self;
+        }
     }
-  else
+    else
     {
-      return nil;
+        return nil;
     }
 }
 
-static id 
-addnfind (objbbt_t top, id key, SEL selCmp, id cmpBlk)
+static id addnfind (objbbt_t top, id key, SEL selCmp, id cmpBlk)
 {
-  objbbt_t offset = NULL;
-  int c = cmpne (top, key, selCmp, cmpBlk, &offset);
-  if (c == 0)
+    objbbt_t offset = NULL;
+    int c = cmpne (top, key, selCmp, cmpBlk, &offset);
+    if (c == 0)
     {
-      return offset->key;
+        return offset->key;
     }
-  else
+    else
     {
-      addat (top, key, c, offset);
-      return key;
+        addat (top, key, c, offset);
+        return key;
     }
 }
 
 - addNTest:anObject
 {
-  if (anObject)
+    if (anObject)
     {
-      if (value.llink)
-	{
-	  id res = addnfind (value.llink, anObject, cmpSel, cmpBlk);
-	  return (res == anObject) ? anObject : nil;
-	}
-      else
-	{
-	  addfirst (&value, anObject);
-	  return anObject;
-	}
+        if (value.llink)
+        {
+            id res = addnfind (value.llink, anObject, cmpSel, cmpBlk);
+            return (res == anObject) ? anObject : nil;
+        }
+        else
+        {
+            addfirst (&value, anObject);
+            return anObject;
+        }
     }
-  else
+    else
     {
-      return nil;
+        return nil;
     }
 }
 
 - filter:anObject
 {
-  if (anObject)
+    if (anObject)
     {
-      if (value.llink)
-	{
-	  id res = addnfind (value.llink, anObject, cmpSel, cmpBlk);
+        if (value.llink)
+        {
+            id res = addnfind (value.llink, anObject, cmpSel, cmpBlk);
 #ifndef OBJC_REFCNT
-	  return (res == anObject) ? anObject : ([anObject free], res);
+            return (res == anObject) ? anObject : ([anObject free], res);
 #else
-	  return (res == anObject) ? anObject : res;
+            return (res == anObject) ? anObject : res;
 #endif
-	}
-      else
-	{
-	  addfirst (&value, anObject);
-	  return anObject;
-	}
+        }
+        else
+        {
+            addfirst (&value, anObject);
+            return anObject;
+        }
     }
-  else
+    else
     {
-      return nil;
+        return nil;
     }
 }
 
-static id 
-replace (objbbt_t top, id key, SEL selCmp, id cmpBlk)
+static id replace (objbbt_t top, id key, SEL selCmp, id cmpBlk)
 {
-  objbbt_t offset = NULL;
-  int c = cmpne (top, key, selCmp, cmpBlk, &offset);
-  if (c == 0)
+    objbbt_t offset = NULL;
+    int c = cmpne (top, key, selCmp, cmpBlk, &offset);
+    if (c == 0)
     {
-      id tmp = offset->key;
-      offset->key = key;
-      return tmp;
+        id tmp = offset->key;
+        offset->key = key;
+        return tmp;
     }
-  else
+    else
     {
-      addat (top, key, c, offset);
-      return nil;
+        addat (top, key, c, offset);
+        return nil;
     }
 }
 
 - replace:anObject
 {
-  if (anObject)
+    if (anObject)
     {
-      if (value.llink)
-	{
-	  return replace (value.llink, anObject, cmpSel, cmpBlk);
-	}
-      else
-	{
-	  addfirst (&value, anObject);
-	  return nil;
-	}
+        if (value.llink)
+        {
+            return replace (value.llink, anObject, cmpSel, cmpBlk);
+        }
+        else
+        {
+            addfirst (&value, anObject);
+            return nil;
+        }
     }
-  else
+    else
     {
-      return nil;
+        return nil;
     }
 }
 
@@ -757,13 +698,13 @@ replace (objbbt_t top, id key, SEL selCmp, id cmpBlk)
 
 - remove:oldObject
 {
-  if (oldObject)
+    if (oldObject)
     {
-      return [self notImplemented:_cmd];
+        return [self notImplemented:_cmd];
     }
-  else
+    else
     {
-      return nil;
+        return nil;
     }
 }
 
@@ -773,55 +714,55 @@ replace (objbbt_t top, id key, SEL selCmp, id cmpBlk)
  *
  ****************************************************************************/
 
-- (BOOL) includesAllOf:aCltn
+- (BOOL)includesAllOf:aCltn
 {
-  if (self == aCltn)
+    if (self == aCltn)
     {
-      return YES;
+        return YES;
     }
-  else
+    else
     {
-      BOOL res = YES;
-      id e, seq = [aCltn eachElement];
-      while ((e = [seq next]))
-	{
-	  if (![self includes:e])
-	    {
-	      res = NO;
-	      goto done;
-	    }
-	}
+        BOOL res = YES;
+        id e, seq = [aCltn eachElement];
+        while ((e = [seq next]))
+        {
+            if (![self includes:e])
+            {
+                res = NO;
+                goto done;
+            }
+        }
     done:
 #ifndef OBJC_REFCNT
-      [seq free];
+        [seq free];
 #endif
-      return res;
+        return res;
     }
 }
 
-- (BOOL) includesAnyOf:aCltn
+- (BOOL)includesAnyOf:aCltn
 {
-  if (self == aCltn)
+    if (self == aCltn)
     {
-      return YES;
+        return YES;
     }
-  else
+    else
     {
-      BOOL res = NO;
-      id e, seq = [aCltn eachElement];
-      while ((e = [seq next]))
-	{
-	  if ([self includes:e])
-	    {
-	      res = YES;
-	      goto done;
-	    }
-	}
+        BOOL res = NO;
+        id e, seq = [aCltn eachElement];
+        while ((e = [seq next]))
+        {
+            if ([self includes:e])
+            {
+                res = YES;
+                goto done;
+            }
+        }
     done:
 #ifndef OBJC_REFCNT
-      [seq free];
+        [seq free];
 #endif
-      return res;
+        return res;
     }
 }
 
@@ -833,69 +774,57 @@ replace (objbbt_t top, id key, SEL selCmp, id cmpBlk)
 
 - addAll:aCltn
 {
-  if (self == aCltn)
+    if (self == aCltn)
     {
-      [self addYourself];
+        [self addYourself];
     }
-  else
+    else
     {
-      id e, seq;
+        id e, seq;
 
-      seq = [aCltn eachElement];
-      while ((e = [seq next]))
-	{
-	  [self add:e];
-	}
+        seq = [aCltn eachElement];
+        while ((e = [seq next]))
+        {
+            [self add:e];
+        }
 #ifndef OBJC_REFCNT
-      seq = [seq free];
+        seq = [seq free];
 #endif
     }
 
-  return self;
+    return self;
 }
 
-- addContentsOf:aCltn
-{
-  return [self addAll:aCltn];
-}
+- addContentsOf:aCltn { return [self addAll:aCltn]; }
 
-- addContentsTo:aCltn
-{
-  return [aCltn addAll:self];
-}
+- addContentsTo:aCltn { return [aCltn addAll:self]; }
 
 - removeAll:aCltn
 {
-  if (self == aCltn)
+    if (self == aCltn)
     {
-      [self emptyYourself];
+        [self emptyYourself];
     }
-  else
+    else
     {
-      id e, seq;
+        id e, seq;
 
-      seq = [aCltn eachElement];
-      while ((e = [seq next]))
-	{
-	  [self remove:e];
-	}
+        seq = [aCltn eachElement];
+        while ((e = [seq next]))
+        {
+            [self remove:e];
+        }
 #ifndef OBJC_REFCNT
-      seq = [seq free];
+        seq = [seq free];
 #endif
     }
 
-  return self;
+    return self;
 }
 
-- removeContentsFrom:aCltn
-{
-  return [aCltn removeAll:self];
-}
+- removeContentsFrom:aCltn { return [aCltn removeAll:self]; }
 
-- removeContentsOf:aCltn
-{
-  return [self removeAll:aCltn];
-}
+- removeContentsOf:aCltn { return [self removeAll:aCltn]; }
 
 /*****************************************************************************
  *
@@ -905,50 +834,50 @@ replace (objbbt_t top, id key, SEL selCmp, id cmpBlk)
 
 - intersection:bag
 {
-  if (self == bag)
+    if (self == bag)
     {
-      return [self copy];
+        return [self copy];
     }
-  else
+    else
     {
-      id anElement, elements;
-      id intersection = [isa new];
+        id anElement, elements;
+        id intersection = [isa new];
 
-      elements = [self eachElement];
-      while ((anElement = [elements next]))
-	{
-	  if ([bag find:anElement])
-	    [intersection add:anElement];
-	}
+        elements = [self eachElement];
+        while ((anElement = [elements next]))
+        {
+            if ([bag find:anElement])
+                [intersection add:anElement];
+        }
 #ifndef OBJC_REFCNT
-      elements = [elements free];
+        elements = [elements free];
 #endif
 
-      return intersection;
+        return intersection;
     }
 }
 
 - union:bag
 {
-  if (self == bag)
+    if (self == bag)
     {
-      return [self copy];
+        return [self copy];
     }
-  else
+    else
     {
-      return [[self copy] addAll:bag];
+        return [[self copy] addAll:bag];
     }
 }
 
-- difference:bag
+    - difference : bag
 {
-  if (self == bag)
+    if (self == bag)
     {
-      return [isa new];
+        return [isa new];
     }
-  else
+    else
     {
-      return [[self copy] removeAll:bag];
+        return [[self copy] removeAll:bag];
     }
 }
 
@@ -960,27 +889,27 @@ replace (objbbt_t top, id key, SEL selCmp, id cmpBlk)
 
 - asSet
 {
-  /* Stepstone isKindOf takes a id but class returns SHR */
-  if ([self isKindOf:(id) [Set class]])
+    /* Stepstone isKindOf takes a id but class returns SHR */
+    if ([self isKindOf:(id)[Set class]])
     {
-      return self;
+        return self;
     }
-  else
+    else
     {
-      return [[Set new] addAll:self];
+        return [[Set new] addAll:self];
     }
 }
 
 - asOrdCltn
 {
-  /* Stepstone isKindOf takes a id but class returns SHR */
-  if ([self isKindOf:(id) [OrdCltn class]])
+    /* Stepstone isKindOf takes a id but class returns SHR */
+    if ([self isKindOf:(id)[OrdCltn class]])
     {
-      return self;
+        return self;
     }
-  else
+    else
     {
-      return [[OrdCltn new] addAll:self];
+        return [[OrdCltn new] addAll:self];
     }
 }
 
@@ -993,132 +922,132 @@ replace (objbbt_t top, id key, SEL selCmp, id cmpBlk)
 #if OBJC_BLOCKS
 - detect:aBlock
 {
-  id e, seq;
+    id e, seq;
 
-  seq = [self eachElement];
+    seq = [self eachElement];
 
-  while ((e = [seq next]))
+    while ((e = [seq next]))
     {
-      if (([aBlock value:e]))
-	{
+        if (([aBlock value:e]))
+        {
 #ifndef OBJC_REFCNT
-	  seq = [seq free];
+            seq = [seq free];
 #endif
-	  return e;
-	}
+            return e;
+        }
     }
 
 #ifndef OBJC_REFCNT
-  seq = [seq free];
+    seq = [seq free];
 #endif
-  return nil;
+    return nil;
 }
 
 - detect:aBlock ifNone:noneBlock
 {
-  id e, seq;
+    id e, seq;
 
-  seq = [self eachElement];
+    seq = [self eachElement];
 
-  while ((e = [seq next]))
+    while ((e = [seq next]))
     {
-      if (([aBlock value:e]))
-	{
+        if (([aBlock value:e]))
+        {
 #ifndef OBJC_REFCNT
-	  seq = [seq free];
+            seq = [seq free];
 #endif
-	  return e;
-	}
+            return e;
+        }
     }
 
 #ifndef OBJC_REFCNT
-  seq = [seq free];
+    seq = [seq free];
 #endif
-  return [noneBlock value];
+    return [noneBlock value];
 }
 
 - select:testBlock
 {
-  id e, seq;
-  id newObject = [isa new];
+    id e, seq;
+    id newObject = [isa new];
 
-  seq = [self eachElement];
+    seq = [self eachElement];
 
-  while ((e = [seq next]))
+    while ((e = [seq next]))
     {
-      if (([testBlock value:e]))
-	{
-	  [newObject add:e];
-	}
+        if (([testBlock value:e]))
+        {
+            [newObject add:e];
+        }
     }
 
 #ifndef OBJC_REFCNT
-  seq = [seq free];
+    seq = [seq free];
 #endif
-  return newObject;
+    return newObject;
 }
 
 - reject:testBlock
 {
-  id e, seq;
-  id newObject = [isa new];
+    id e, seq;
+    id newObject = [isa new];
 
-  seq = [self eachElement];
+    seq = [self eachElement];
 
-  while ((e = [seq next]))
+    while ((e = [seq next]))
     {
-      if (!([testBlock value:e]))
-	{
-	  [newObject add:e];
-	}
+        if (!([testBlock value:e]))
+        {
+            [newObject add:e];
+        }
     }
 
 #ifndef OBJC_REFCNT
-  seq = [seq free];
+    seq = [seq free];
 #endif
-  return newObject;
+    return newObject;
 }
 
 - collect:transformBlock
 {
-  id e, seq;
-  id newObject = [isa new];
+    id e, seq;
+    id newObject = [isa new];
 
-  seq = [self eachElement];
+    seq = [self eachElement];
 
-  while ((e = [seq next]))
+    while ((e = [seq next]))
     {
-      id anImage = [transformBlock value:e];
-      if (anImage)
-	{
-	  [newObject add:anImage];
-	}
+        id anImage = [transformBlock value:e];
+        if (anImage)
+        {
+            [newObject add:anImage];
+        }
     }
 
 #ifndef OBJC_REFCNT
-  seq = [seq free];
+    seq = [seq free];
 #endif
-  return newObject;
+    return newObject;
 }
 
-- (unsigned) count:aBlock
+- (unsigned)count:aBlock
 {
-  id e, seq;
-  unsigned c = 0;
+    id e, seq;
+    unsigned c = 0;
 
-  seq = [self eachElement];
-  while ((e = [seq next]))
+    seq = [self eachElement];
+    while ((e = [seq next]))
     {
-      if ([aBlock value:e])
-	{
-	  c++;
-	}
+        if ([aBlock value:e])
+        {
+            c++;
+        }
     }
 #ifndef OBJC_REFCNT
-  seq = [seq free];
+    seq = [seq free];
 #endif
 
-  return c;
+    return c;
 }
 
 #endif /* OBJC_BLOCKS */
@@ -1131,66 +1060,66 @@ replace (objbbt_t top, id key, SEL selCmp, id cmpBlk)
 
 - elementsPerform:(SEL)aSelector
 {
-  id e, seq;
+    id e, seq;
 
-  seq = [self eachElement];
-  while ((e = [seq next]))
+    seq = [self eachElement];
+    while ((e = [seq next]))
     {
-      [e perform:aSelector];
+        [e perform:aSelector];
     }
 #ifndef OBJC_REFCNT
-  seq = [seq free];
+    seq = [seq free];
 #endif
 
-  return self;
+    return self;
 }
 
 - elementsPerform:(SEL)aSelector with:anObject
 {
-  id e, seq;
+    id e, seq;
 
-  seq = [self eachElement];
-  while ((e = [seq next]))
+    seq = [self eachElement];
+    while ((e = [seq next]))
     {
-      [e perform:aSelector with:anObject];
+        [e perform:aSelector with:anObject];
     }
 #ifndef OBJC_REFCNT
-  seq = [seq free];
+    seq = [seq free];
 #endif
 
-  return self;
+    return self;
 }
 
 - elementsPerform:(SEL)aSelector with:anObject with:otherObject
 {
-  id e, seq;
+    id e, seq;
 
-  seq = [self eachElement];
-  while ((e = [seq next]))
+    seq = [self eachElement];
+    while ((e = [seq next]))
     {
-      [e perform:aSelector with:anObject with:otherObject];
+        [e perform:aSelector with:anObject with:otherObject];
     }
 #ifndef OBJC_REFCNT
-  seq = [seq free];
+    seq = [seq free];
 #endif
 
-  return self;
+    return self;
 }
 
 - elementsPerform:(SEL)aSelector with:anObject with:otherObject with:thirdObj
 {
-  id e, seq;
+    id e, seq;
 
-  seq = [self eachElement];
-  while ((e = [seq next]))
+    seq = [self eachElement];
+    while ((e = [seq next]))
     {
-      [e perform:aSelector with:anObject with:otherObject with:thirdObj];
+        [e perform:aSelector with:anObject with:otherObject with:thirdObj];
     }
 #ifndef OBJC_REFCNT
-  seq = [seq free];
+    seq = [seq free];
 #endif
 
-  return self;
+    return self;
 }
 /*****************************************************************************
  *
@@ -1201,37 +1130,37 @@ replace (objbbt_t top, id key, SEL selCmp, id cmpBlk)
 #if OBJC_BLOCKS
 - do:aBlock
 {
-  id e, seq;
+    id e, seq;
 
-  seq = [self eachElement];
+    seq = [self eachElement];
 
-  while ((e = [seq next]))
+    while ((e = [seq next]))
     {
-      [aBlock value:e];
+        [aBlock value:e];
     }
 
 #ifndef OBJC_REFCNT
-  seq = [seq free];
+    seq = [seq free];
 #endif
-  return self;
+    return self;
 }
-- do:aBlock until:(BOOL*)flag
+- do:aBlock until:(BOOL *)flag
 {
-  id e, seq;
+    id e, seq;
 
-  seq = [self eachElement];
+    seq = [self eachElement];
 
-  while ((e = [seq next]))
+    while ((e = [seq next]))
     {
-      [aBlock value:e];
-      if (*flag)
-	break;
+        [aBlock value:e];
+        if (*flag)
+            break;
     }
 
 #ifndef OBJC_REFCNT
-  seq = [seq free];
+    seq = [seq free];
 #endif
-  return self;
+    return self;
 }
 #endif /* OBJC_BLOCKS */
 
@@ -1241,39 +1170,36 @@ replace (objbbt_t top, id key, SEL selCmp, id cmpBlk)
  *
  ****************************************************************************/
 
-static id 
-find (objbbt_t self, id key, SEL cmpSel, id cmpBlk)
+static id find (objbbt_t self, id key, SEL cmpSel, id cmpBlk)
 {
-  int c;
-  objbbt_t offset = NULL;
+    int c;
+    objbbt_t offset = NULL;
 
-  if ((c = cmp (self, key, cmpSel, cmpBlk, &offset)))
+    if ((c = cmp (self, key, cmpSel, cmpBlk, &offset)))
     {
-      return nil;
+        return nil;
     }
-  else
+    else
     {
-      assert ([key isEqual:offset->key]);
-      return offset->key;
+        assert ([key isEqual:offset->key]);
+        return offset->key;
     }
 }
 
 - find:anObject
 {
-  if (anObject)
+    if (anObject)
     {
-      return (value.llink) ? find (value.llink, anObject, cmpSel, cmpBlk) : nil;
+        return (value.llink) ? find (value.llink, anObject, cmpSel, cmpBlk)
+                             : nil;
     }
-  else
+    else
     {
-      return nil;
+        return nil;
     }
 }
 
-- (BOOL) contains:anObject
-{
-  return (BOOL) ([self find:anObject] ? YES : NO);
-}
+- (BOOL)contains:anObject { return (BOOL) ([self find:anObject] ? YES : NO); }
 
 /*****************************************************************************
  *
@@ -1283,12 +1209,12 @@ find (objbbt_t self, id key, SEL cmpSel, id cmpBlk)
 
 - printOn:(IOD)aFile
 {
-  id s = [self eachElement];
-  [s printOn:aFile];
+    id s = [self eachElement];
+    [s printOn:aFile];
 #ifndef OBJC_REFCNT
-  [s free];
+    [s free];
 #endif
-  return self;
+    return self;
 }
 
 /*****************************************************************************
@@ -1297,15 +1223,8 @@ find (objbbt_t self, id key, SEL cmpSel, id cmpBlk)
  *
  ****************************************************************************/
 
-- fileOutOn:aFiler
-{
-  return [self notImplemented:_cmd];
-}
+- fileOutOn:aFiler { return [self notImplemented:_cmd]; }
 
-- fileInFrom:aFiler
-{
-  return [self notImplemented:_cmd];
-}
+- fileInFrom:aFiler { return [self notImplemented:_cmd]; }
 
 @end
- 

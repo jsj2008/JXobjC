@@ -6,7 +6,7 @@
 
 /*
  * This library is free software; you can redistribute it and/or modify it
- * under the terms of the GNU Library General Public License as published 
+ * under the terms of the GNU Library General Public License as published
  * by the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
  *
@@ -31,29 +31,25 @@
  *
  ****************************************************************************/
 
-
 - setUpCarrier:aCarrier
 {
-  carrier = aCarrier;
-  return self;
+    carrier = aCarrier;
+    return self;
 }
 
 + over:aCarrier
 {
-  id newObj = [super new];
-  [newObj setUpCarrier:aCarrier];
-  return newObj;
+    id newObj = [super new];
+    [newObj setUpCarrier:aCarrier];
+    return newObj;
 }
 
-- copy
-{
-  return [isa over:[carrier copy]];
-}
+- copy { return [isa over:[carrier copy]]; }
 
 - free
 {
-  carrier = [carrier free];
-  return [super free];
+    carrier = [carrier free];
+    return [super free];
 }
 
 /*****************************************************************************
@@ -62,11 +58,7 @@
  *
  ****************************************************************************/
 
-
-- (unsigned) size
-{
-  return [carrier size];
-}
+- (unsigned)size { return [carrier size]; }
 
 /*****************************************************************************
  *
@@ -74,31 +66,14 @@
  *
  ****************************************************************************/
 
+- next { return [[carrier next] key]; }
 
-- next
-{
-  return [[carrier next] key];
-}
+- peek { return [[carrier peek] key]; }
 
-- peek
-{
-  return [[carrier peek] key];
-}
+- previous { return [[carrier previous] key]; }
 
-- previous
-{
-  return [[carrier previous] key];
-}
+- first { return [[carrier first] key]; }
 
-- first
-{
-  return [[carrier first] key];
-}
-
-- last
-{
-  return [[carrier last] key];
-}
+- last { return [[carrier last] key]; }
 
 @end
- 

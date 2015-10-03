@@ -6,7 +6,7 @@
 
 /*
  * This library is free software; you can redistribute it and/or modify it
- * under the terms of the GNU Library General Public License as published 
+ * under the terms of the GNU Library General Public License as published
  * by the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
  *
@@ -26,29 +26,28 @@
 #include "array.h"
 
 typedef struct intary
-  {
+{
     int capacity;
-    int *ptr;
-  }
- *intary_t;
+    int * ptr;
+} * intary_t;
 
 @interface IntArray : Array
 {
-  struct intary value;
+    struct intary value;
 }
 
 + new;
 + new:(unsigned)n;
-+ with:(int)nArgs,...;
++ with:(int)nArgs, ...;
 - copy;
 - deepCopy;
 - free;
 
-- (unsigned) size;
-- (int) intAt:(unsigned)anOffset;
-- (int) intAt:(unsigned)anOffset put:(int)anInt;
+- (unsigned)size;
+- (int)intAt:(unsigned)anOffset;
+- (int)intAt:(unsigned)anOffset put:(int)anInt;
 
-- (unsigned) capacity;
+- (unsigned)capacity;
 - capacity:(unsigned)nSlots;
 - packContents;
 
@@ -62,4 +61,3 @@ typedef struct intary
 @end
 
 #endif /* __INTARRAY_H__ */
- 

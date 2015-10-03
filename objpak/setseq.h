@@ -6,7 +6,7 @@
 
 /*
  * This library is free software; you can redistribute it and/or modify it
- * under the terms of the GNU Library General Public License as published 
+ * under the terms of the GNU Library General Public License as published
  * by the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
  *
@@ -26,21 +26,20 @@
 #include "set.h"
 
 typedef struct objsetseq
-  {
+{
     objset_t set;
     int offset;
-  }
- *objsetseq_t;
+} * objsetseq_t;
 
 @interface SetSequence : Object
 {
-  struct objsetseq value;
+    struct objsetseq value;
 }
-- (objsetseq_t) objsetseqvalue;
+- (objsetseq_t)objsetseqvalue;
 + over:set;
 - copy;
 - free;
-- (unsigned) size;
+- (unsigned)size;
 - next;
 - peek;
 - previous;
@@ -50,4 +49,3 @@ typedef struct objsetseq
 @end
 
 #endif /* __OBJSETSEQ_H__ */
- 

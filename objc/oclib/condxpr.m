@@ -3,7 +3,7 @@
  * Copyright (c) 1998 David Stes.
  *
  * This library is free software; you can redistribute it and/or modify it
- * under the terms of the GNU Library General Public License as published 
+ * under the terms of the GNU Library General Public License as published
  * by the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
  *
@@ -24,7 +24,7 @@
 #include <assert.h>
 #ifndef __OBJECT_INCLUDED__
 #define __OBJECT_INCLUDED__
-#include <stdio.h> /* FILE */
+#include <stdio.h>  /* FILE */
 #include "Object.h" /* Stepstone Object.h assumes #import */
 #endif
 #include "node.h"
@@ -37,85 +37,87 @@
 
 - expr:aRcvr
 {
-  expr = aRcvr;
-  return self;
+    expr = aRcvr;
+    return self;
 }
 
 - lhs:args
 {
-  lhs = args;
-  return self;
+    lhs = args;
+    return self;
 }
 
 - rhs:args
 {
-  rhs = args;
-  return self;
+    rhs = args;
+    return self;
 }
 
-- (int)lineno
-{
-  return [expr lineno];
-}
+- (int)lineno { return [expr lineno]; }
 
-- filename
-{
-  return [expr filename];
-}
+- filename { return [expr filename]; }
 
 - typesynth
 {
-  if (lhs) type = [lhs type]; else type = [rhs type];
+    if (lhs)
+        type = [lhs type];
+    else
+        type = [rhs type];
 #if 0
   /* warn about (t)?t:NULL */
   if (![[rhs type] isEqual:type])
     warn("types in conditional expr not equal");
 #endif
-  return self;
+    return self;
 }
 
 - synth
 {
-  [expr synth];
-  if (lhs)[lhs synth];
-  [rhs synth];
-  return self;
+    [expr synth];
+    if (lhs)
+        [lhs synth];
+    [rhs synth];
+    return self;
 }
 
 - gen
 {
-  [expr gen];
-  gc('?');
-  if (lhs) [lhs gen]; /* gnu extension x?:y */
-  gc(':');
-  [rhs gen];
-  return self;
+    [expr gen];
+    gc ('?');
+    if (lhs)
+        [lhs gen]; /* gnu extension x?:y */
+    gc (':');
+    [rhs gen];
+    return self;
 }
 
 - st80
 {
-  gc('(');
-  gc('(');
-  [expr st80];
-  gc(')');
-  gs("ifTrue:[");
-  if (lhs) [lhs st80];
-  gs("]ifFalse:[");
-  [rhs st80];
-  gc(']');
-  gc(')');
-  return self;
+    gc ('(');
+    gc ('(');
+    [expr st80];
+    gc (')');
+    gs ("ifTrue:[");
+    if (lhs)
+        [lhs st80];
+    gs ("]ifFalse:[");
+    [rhs st80];
+    gc (']');
+    gc (')');
+    return self;
 }
 
 - go
 {
-  id c = [expr go];
-  if (!ISSCALARZERO(c)) {
-    return (lhs)?[lhs go]:c; /* gnu extension */
-  } else {
-    return [rhs go];
-  }
+    id c = [expr go];
+    if (!ISSCALARZERO (c))
+    {
+        return (lhs) ? [lhs go] : c; /* gnu extension */
+    }
+    else
+    {
+        return [rhs go];
+    }
 }
 
 @end
- 

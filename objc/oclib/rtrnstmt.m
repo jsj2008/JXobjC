@@ -3,7 +3,7 @@
  * Copyright (c) 1998,1999 David Stes.
  *
  * This library is free software; you can redistribute it and/or modify it
- * under the terms of the GNU Library General Public License as published 
+ * under the terms of the GNU Library General Public License as published
  * by the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
  *
@@ -24,7 +24,7 @@
 #include <assert.h>
 #ifndef __OBJECT_INCLUDED__
 #define __OBJECT_INCLUDED__
-#include <stdio.h> /* FILE */
+#include <stdio.h>  /* FILE */
 #include "Object.h" /* Stepstone Object.h assumes #import */
 #endif
 #include "node.h"
@@ -43,95 +43,108 @@
 
 - keyw:aKeyw
 {
-  keyw = aKeyw;
-  return self;
+    keyw = aKeyw;
+    return self;
 }
 
 - expr:anExpr
 {
-  expr = anExpr;
-  return self;
+    expr = anExpr;
+    return self;
 }
 
 - synth
 {
-  id c;
+    id c;
 
-  for (c = curcompound; c; c = [c enclosing]) {
-    if ([c isblockexpr]) {
-      fatalat(keyw, "non-local return from within block not yet supported");
+    for (c = curcompound; c; c = [c enclosing])
+    {
+        if ([c isblockexpr])
+        {
+            fatalat (keyw,
+                     "non-local return from within block not yet supported");
+        }
     }
-  }
-  [expr synth];
-  if (o_refcnt) {
-    if (expr) {
-      id t = [expr type];
+    [expr synth];
+    if (o_refcnt)
+    {
+        if (expr)
+        {
+            id t = [expr type];
 
-      if (![expr isconstexpr] && [t isid])
-	incretval++;
-      /* self is a bit special but must also be incref'ed */
-      else if (curclassdef) {
-	/* the following works in factory and instance case */
-	if (curdef && [curdef ismethdef]) {
-	  if ([t isEqual:[curclassdef selftype]])
-	    incretval++;
-	}
-      }
+            if (![expr isconstexpr] && [t isid])
+                incretval++;
+            /* self is a bit special but must also be incref'ed */
+            else if (curclassdef)
+            {
+                /* the following works in factory and instance case */
+                if (curdef && [curdef ismethdef])
+                {
+                    if ([t isEqual:[curclassdef selftype]])
+                        incretval++;
+                }
+            }
+        }
+
+        compound = curcompound;
+        [compound usereturnflag];
     }
 
-    compound = curcompound;
-    [compound usereturnflag];
-  }
-
-  return self;
+    return self;
 }
 
 - gen
 {
-  id label;
-  if (o_refcnt && (label=[compound nextreturnlabel]) != nil) {
-    if (keyw) {
-      gl([keyw lineno],[[keyw filename] str]);
+    id label;
+    if (o_refcnt && (label = [compound nextreturnlabel]) != nil)
+    {
+        if (keyw)
+        {
+            gl ([keyw lineno], [[keyw filename] str]);
+        }
+        gs ("if (_returnflag==0) {_returnflag++;");
+        if (expr)
+        {
+            gs ("_returnval=");
+            [expr gen];
+            gc (';');
+        }
+        if (incretval)
+        {
+            gs ("idincref(_returnval);");
+        }
+        gf ("goto %s;}", [label str]);
     }
-    gs("if (_returnflag==0) {_returnflag++;");
-    if (expr) {
-      gs("_returnval=");
-      [expr gen];
-      gc(';');
-    }
-    if (incretval) {
-      gs("idincref(_returnval);");
-    }
-    gf("goto %s;}", [label str]);
-  } else {
-    if (keyw)
-      [keyw gen];
     else
-      gs("return");
-    if (expr)
-      [expr gen];
-    gc(';');
-  }
-  return self;
+    {
+        if (keyw)
+            [keyw gen];
+        else
+            gs ("return");
+        if (expr)
+            [expr gen];
+        gc (';');
+    }
+    return self;
 }
 
 - st80
 {
-  gc('^');
-  if (expr)
-    [expr st80];
-  else
-    [e_self st80];
-  gs(".\n");
-  return self;
+    gc ('^');
+    if (expr)
+        [expr st80];
+    else
+        [e_self st80];
+    gs (".\n");
+    return self;
 }
 
 - go
 {
-  [topframe quitframe:YES];
-  if (expr) [topframe returnval:[expr go]];
-  return self;
+    [topframe quitframe:YES];
+    if (expr)
+        [topframe returnval:[expr go]];
+    return self;
 }
 
 @end
- 

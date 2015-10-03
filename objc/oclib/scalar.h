@@ -3,7 +3,7 @@
  * Copyright (c) 1999 David Stes.
  *
  * This library is free software; you can redistribute it and/or modify it
- * under the terms of the GNU Library General Public License as published 
+ * under the terms of the GNU Library General Public License as published
  * by the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
  *
@@ -19,22 +19,24 @@
  * $Id: scalar.h,v 1.2 2000/09/08 15:02:08 stes Exp $
  */
 
-#define ISSCALARZERO(e) (([e isKindOf:(id)[Scalar class]])?[e isZero]:((e)?0:1))
+#define ISSCALARZERO(e)                                                        \
+    (([e isKindOf:(id)[Scalar class]]) ? [e isZero] : ((e) ? 0 : 1))
 
 @interface Scalar : Variable
 {
-   id type;
-   union {
-     int un_int;
-     unsigned un_uns;
-     long un_long;
-     char un_char;
-     float un_float;
-     double un_double;
-     char *un_str;
-     void *un_voidstar;
-     FILE *un_fp;
-   } u;
+    id type;
+    union
+    {
+        int un_int;
+        unsigned un_uns;
+        long un_long;
+        char un_char;
+        float un_float;
+        double un_double;
+        char * un_str;
+        void * un_voidstar;
+        FILE * un_fp;
+    } u;
 }
 
 - type;
@@ -45,9 +47,9 @@
 - u_char:(char)x;
 - u_float:(float)x;
 - u_double:(double)x;
-- u_str:(char*)x;
-- u_voidstar:(void*)x;
-- u_fp:(FILE*)x;
+- u_str:(char *)x;
+- u_voidstar:(void *)x;
+- u_fp:(FILE *)x;
 
 - (int)u_int;
 - (long)u_long;
@@ -55,9 +57,9 @@
 - (char)u_char;
 - (float)u_float;
 - (double)u_double;
-- (char*)u_str;
-- (void*)u_voidstar;
-- (FILE*)u_fp;
+- (char *)u_str;
+- (void *)u_voidstar;
+- (FILE *)u_fp;
 
 - (BOOL)isZero;
 
@@ -65,4 +67,3 @@
 - increment;
 
 @end
- 

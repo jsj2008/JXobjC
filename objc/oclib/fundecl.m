@@ -3,7 +3,7 @@
  * Copyright (c) 1998 David Stes.
  *
  * This library is free software; you can redistribute it and/or modify it
- * under the terms of the GNU Library General Public License as published 
+ * under the terms of the GNU Library General Public License as published
  * by the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
  *
@@ -24,7 +24,7 @@
 #include <assert.h>
 #ifndef __OBJECT_INCLUDED__
 #define __OBJECT_INCLUDED__
-#include <stdio.h> /* FILE */
+#include <stdio.h>  /* FILE */
 #include "Object.h" /* Stepstone Object.h assumes #import */
 #endif
 #include <ordcltn.h>
@@ -40,84 +40,80 @@
 
 - abstrdecl
 {
-  id x = [decl abstrdecl];
+    id x = [decl abstrdecl];
 
-  if (x) {
-    return [[self copy] decl:x];
-  } else {
-    x = [[PrecDecl new] decl:[Pointer new]];
-    return [[self copy] decl:x];
-  }
+    if (x)
+    {
+        return [[self copy] decl:x];
+    }
+    else
+    {
+        x = [[PrecDecl new] decl:[Pointer new]];
+        return [[self copy] decl:x];
+    }
 }
 
-- (BOOL)isfunproto
-{
-  return YES;
-}
+- (BOOL)isfunproto { return YES; }
 
 - decl:aRcvr
 {
-  decl = aRcvr;
-  return self;
+    decl = aRcvr;
+    return self;
 }
 
 - args:aList
 {
-  args = aList;
-  return self;
+    args = aList;
+    return self;
 }
 
-- identifier
-{
-  return [decl identifier];
-}
+- identifier { return [decl identifier]; }
 
 - gendef:sym
 {
-  if (decl) {
-    [decl gendef:sym];
-  } else {
-    if (sym)
-      [sym gen];
-  }
-  gc('(');
-  if (args)
-    [args gen];
-  gc(')');
-  return self;
+    if (decl)
+    {
+        [decl gendef:sym];
+    }
+    else
+    {
+        if (sym)
+            [sym gen];
+    }
+    gc ('(');
+    if (args)
+        [args gen];
+    gc (')');
+    return self;
 }
 
 - gen
 {
-  if (decl)
-    [decl gen];
-  gc('(');
-  if (args)
-    [args gen];
-  gc(')');
-  return self;
+    if (decl)
+        [decl gen];
+    gc ('(');
+    if (args)
+        [args gen];
+    gc (')');
+    return self;
 }
 
-- star
-{
-  return [[self copy] decl:[decl star]];
-}
+- star { return [[self copy] decl:[decl star]]; }
 
 - funcall
 {
-  if (decl == nil || [decl star] == nil)
-    return nil;			/* success */
-  return [[self copy] decl:[decl funcall]];
+    if (decl == nil || [decl star] == nil)
+        return nil; /* success */
+    return [[self copy] decl:[decl funcall]];
 }
 
 - synth
 {
-  if (decl)
-    [decl synth];
-  if (args)
-    [args synth];
-  return self;
+    if (decl)
+        [decl synth];
+    if (args)
+        [args synth];
+    return self;
 }
 
 @end
- 

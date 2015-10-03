@@ -6,7 +6,7 @@
 
 /*
  * This library is free software; you can redistribute it and/or modify it
- * under the terms of the GNU Library General Public License as published 
+ * under the terms of the GNU Library General Public License as published
  * by the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
  *
@@ -30,68 +30,46 @@
 
 - collection:aCol
 {
-  collection = aCol;
-  offset = 0;
-  return self;
+    collection = aCol;
+    offset = 0;
+    return self;
 }
 
 + over:aCol
 {
-  id newObj = [super new];
-  [newObj collection:aCol];
-  return newObj;
+    id newObj = [super new];
+    [newObj collection:aCol];
+    return newObj;
 }
 
-- copy
-{
-  return [super copy];
-}
+- copy { return [super copy]; }
 
-- free
-{
-  return [super free];
-}
+- free { return [super free]; }
 
 - release
 {
 #ifdef OBJC_REFCNT
-  collection = nil;
-  return [super release];
+    collection = nil;
+    return [super release];
 #else
-  return [self notImplemented:_cmd];
+    return [self notImplemented:_cmd];
 #endif
 }
 
-- (unsigned) size
-{
-  return [collection size];
-}
+- (unsigned)size { return [collection size]; }
 
-- next
-{
-  return (offset < [collection size]) ? [collection at : offset++]:nil;
-}
+- next { return (offset < [collection size]) ? [collection at:offset++] : nil; }
 
-- peek
-{
-  return (offset < [collection size]) ? [collection at : offset]:nil;
-}
+- peek { return (offset < [collection size]) ? [collection at:offset] : nil; }
 
 - previous
 {
-  assert (offset <= [collection size]);
-  return (0 < offset) ? [collection at : offset - 1]:nil;
+    assert (offset <= [collection size]);
+    return (0 < offset) ? [collection at:offset - 1] : nil;
 }
 
-- first
-{
-  return [collection firstElement];
-}
+- first { return [collection firstElement]; }
 
-- last
-{
-  return [collection lastElement];
-}
+- last { return [collection lastElement]; }
 
 @end
- 

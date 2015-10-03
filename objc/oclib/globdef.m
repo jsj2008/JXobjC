@@ -3,7 +3,7 @@
  * Copyright (c) 1998,1999,2000 David Stes.
  *
  * This library is free software; you can redistribute it and/or modify it
- * under the terms of the GNU Library General Public License as published 
+ * under the terms of the GNU Library General Public License as published
  * by the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
  *
@@ -24,7 +24,7 @@
 #include <assert.h>
 #ifndef __OBJECT_INCLUDED__
 #define __OBJECT_INCLUDED__
-#include <stdio.h> /* FILE */
+#include <stdio.h>  /* FILE */
 #include "Object.h" /* Stepstone Object.h assumes #import */
 #endif
 #include <ocstring.h>
@@ -43,46 +43,36 @@
 #include "stmt.h"
 #include "compstmt.h"
 
-@implementation GlobDef 
+@implementation GlobDef
 
-- (BOOL)isextern
-{
-  return isextern;
-}
+- (BOOL)isextern { return isextern; }
 
-- (BOOL)isstatic
-{
-  return isstatic;
-}
+- (BOOL)isstatic { return isstatic; }
 
-- value
-{
-  return value;
-}
+- value { return value; }
 
 - defval:v
 {
-  value = v;
-  return self;
+    value = v;
+    return self;
 }
 
 - type:i
 {
-  type = i;
-  return self;
+    type = i;
+    return self;
 }
 
 - initializer:i
 {
-  initializer = i;
-  return self;
+    initializer = i;
+    return self;
 }
 
 - reset
 {
-  value = (initializer)?[initializer go]:[type zero];
-  return self;
+    value = (initializer) ? [initializer go] : [type zero];
+    return self;
 }
 
 @end
- 

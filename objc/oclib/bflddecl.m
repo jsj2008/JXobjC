@@ -3,7 +3,7 @@
  * Copyright (c) 1998 David Stes.
  *
  * This library is free software; you can redistribute it and/or modify it
- * under the terms of the GNU Library General Public License as published 
+ * under the terms of the GNU Library General Public License as published
  * by the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
  *
@@ -24,7 +24,7 @@
 #include <assert.h>
 #ifndef __OBJECT_INCLUDED__
 #define __OBJECT_INCLUDED__
-#include <stdio.h> /* FILE */
+#include <stdio.h>  /* FILE */
 #include "Object.h" /* Stepstone Object.h assumes #import */
 #endif
 #include "node.h"
@@ -33,37 +33,30 @@
 
 @implementation BitfieldDecl
 
-- abstrdecl
-{
-  return [decl abstrdecl];
-}
+- abstrdecl { return [decl abstrdecl]; }
 
 - decl:aRcvr
 {
-  decl = aRcvr;
-  return self;
+    decl = aRcvr;
+    return self;
 }
 
 - expr:anExpr
 {
-  expr = anExpr;
-  return self;
+    expr = anExpr;
+    return self;
 }
 
-- identifier
-{
-  return [decl identifier];
-}
+- identifier { return [decl identifier]; }
 
 - gen
 {
-  assert(expr != nil);
-  if (decl)
-    [decl gen];
-  gc(':');
-  [expr gen];
-  return self;
+    assert (expr != nil);
+    if (decl)
+        [decl gen];
+    gc (':');
+    [expr gen];
+    return self;
 }
 
 @end
- 

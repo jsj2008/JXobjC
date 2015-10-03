@@ -6,7 +6,7 @@
 
 /*
  * This library is free software; you can redistribute it and/or modify it
- * under the terms of the GNU Library General Public License as published 
+ * under the terms of the GNU Library General Public License as published
  * by the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
  *
@@ -28,85 +28,53 @@
 
 @implementation TextAttribute
 
-+ normal
-{
-  return [self emphasiscode:0];
-}
++ normal { return [self emphasiscode:0]; }
 
-+ new
-{
-  return [self normal];
-}
++ new { return [self normal]; }
 
-+ bold
-{
-  return [self emphasiscode:1];
-}
++ bold { return [self emphasiscode:1]; }
 
-+ emphasiscode:(unsigned)n
-{
-  return [[super new] emphasiscode:n];
-}
++ emphasiscode:(unsigned)n { return [[super new] emphasiscode:n]; }
 
-
-- (unsigned) emphasiscode
-{
-  return emphasiscode;
-}
+- (unsigned)emphasiscode { return emphasiscode; }
 
 - emphasiscode:(unsigned)c
 {
-  emphasiscode = c;
-  return self;
+    emphasiscode = c;
+    return self;
 }
 
-
-- (BOOL) isEqual:attrib
+- (BOOL)isEqual:attrib
 {
-  if (self == attrib)
+    if (self == attrib)
     {
-      return YES;
+        return YES;
     }
-  else
+    else
     {
-      return ([attrib isMemberOf:(id) isa]) && (emphasiscode == [attrib emphasiscode]);
-    }
-}
-
-
-- (BOOL) dominates:attrib
-{
-  if ([attrib isMemberOf:(id) isa])
-    {
-      return [self isEqual:attrib];
-    }
-  else
-    {
-      return NO;
+        return ([attrib isMemberOf:(id)isa]) &&
+               (emphasiscode == [attrib emphasiscode]);
     }
 }
 
-- reset
+- (BOOL)dominates:attrib
 {
-  return self;
+    if ([attrib isMemberOf:(id)isa])
+    {
+        return [self isEqual:attrib];
+    }
+    else
+    {
+        return NO;
+    }
 }
 
-- (BOOL) set
-{
-  return YES;
-}
+- reset { return self; }
 
+- (BOOL)set { return YES; }
 
-- emphasizeScanner:aScanner
-{
-  return self;
-}
+- emphasizeScanner:aScanner { return self; }
 
-
-- printOn:(IOD)aFile
-{
-  return self;
-}
+- printOn:(IOD)aFile { return self; }
 
 @end
- 

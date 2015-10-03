@@ -6,7 +6,7 @@
 
 /*
  * This library is free software; you can redistribute it and/or modify it
- * under the terms of the GNU Library General Public License as published 
+ * under the terms of the GNU Library General Public License as published
  * by the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
  *
@@ -27,36 +27,29 @@
 #include "ocstring.h"
 
 @implementation OutOfBounds
-- (unsigned) size
-{
-  return size;
-}
+- (unsigned)size { return size; }
 
 - at:(unsigned)n
 {
-  offset = n;
-  return self;
+    offset = n;
+    return self;
 }
 
-+ new:(unsigned)n
-{
-  return [[super new] new:n];
-}
++ new:(unsigned)n { return [[super new] new:n]; }
 
 - new:(unsigned)n
 {
-  size = n;
-  return self;
+    size = n;
+    return self;
 }
 
 - signal
 {
-  if (!messageText)
+    if (!messageText)
     {
-      messageText = [String sprintf:"offset %u, size %u", offset, size];
+        messageText = [String sprintf:"offset %u, size %u", offset, size];
     }
-  return [super signal];
+    return [super signal];
 }
 
 @end
- 

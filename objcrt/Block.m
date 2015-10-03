@@ -6,7 +6,7 @@
 
 /*
  * This library is free software; you can redistribute it and/or modify it
- * under the terms of the GNU Library General Public License as published 
+ * under the terms of the GNU Library General Public License as published
  * by the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
  *
@@ -24,11 +24,11 @@
 
 #ifndef __OBJECT_INCLUDED__
 #define __OBJECT_INCLUDED__
-#include "Object.h"		/* Stepstone Object.h assumes #import */
+#include "Object.h" /* Stepstone Object.h assumes #import */
 #endif
 
 #ifndef EXPORT
-#define EXPORT			/* empty */
+#define EXPORT /* empty */
 #endif
 
 #include "Block.h"
@@ -50,77 +50,67 @@
  * Compiler emits calls to newBlock() for creation of Blocks.
  */
 
-id EXPORT newBlock (int n, IMP f, void *d, IMP c)
+id EXPORT newBlock (int n, IMP f, void * d, IMP c)
 {
-  return [Block blkc:n blkfn:f blkv:(void **) d blkdtor:c];
+    return [Block blkc:n blkfn:f blkv:(void **)d blkdtor:c];
 }
 
 /*
  * Might be nice to have a panel here, on the Macintosh
- * (otherwise the app just disappears and you have to look for 
+ * (otherwise the app just disappears and you have to look for
  * a file "stderr" which contains (somewhere) the error message
  *
  */
 
-static id 
-err_fun (id thisBlock, void **data, id msg, id rcv)
+static id err_fun (id thisBlock, void ** data, id msg, id rcv)
 {
 #ifdef __PORTABLE_OBJC__
-  prnstack (stderr);
+    prnstack (stderr);
 #endif
-  if (rcv)
-    fprintf (stderr, "%s: ", [rcv name]);
-  if (msg)
-    [msg printOn:stderr];
-  else
-    fprintf (stderr, "(null message)");
-  if (rcv != nil || msg != nil)
-    fprintf (stderr, "\n");
-  abort ();
-  return nil;
+    if (rcv)
+        fprintf (stderr, "%s: ", [rcv name]);
+    if (msg)
+        [msg printOn:stderr];
+    else
+        fprintf (stderr, "(null message)");
+    if (rcv != nil || msg != nil)
+        fprintf (stderr, "\n");
+    abort ();
+    return nil;
 }
 
-- blkc:(int)n blkfn:(IMP)f blkv:(void**)d blkdtor:(IMP)c
+- blkc:(int)n blkfn:(IMP)f blkv:(void **)d blkdtor:(IMP)c
 {
-  nVars = n;
-  fn = f;
-  data = d;
-  dtor = c;
-  return self;
+    nVars = n;
+    fn = f;
+    data = d;
+    dtor = c;
+    return self;
 }
 
-+ new
-{
-  return [self shouldNotImplement];
-}
++ new { return [self shouldNotImplement]; }
 
-- copy
-{
-  return [self shouldNotImplement];
-}
+- copy { return [self shouldNotImplement]; }
 
-- deepCopy
-{
-  return [self shouldNotImplement];
-}
+- deepCopy { return [self shouldNotImplement]; }
 
-+ blkc:(int)n blkfn:(IMP)f blkv:(void**)d blkdtor:(IMP)c
++ blkc:(int)n blkfn:(IMP)f blkv:(void **)d blkdtor:(IMP)c
 {
-  return [[super new] blkc:n blkfn:f blkv:d blkdtor:c];
+    return [[super new] blkc:n blkfn:f blkv:d blkdtor:c];
 }
 
 - free
 {
-  if (data)
-    (*((void (*)(void **)) dtor)) (data);
-  return [super free];
+    if (data)
+        (*((void (*)(void **))dtor)) (data);
+    return [super free];
 }
 
 - release
 {
-  if (data)
-    (*((void (*)(void **)) dtor)) (data);
-  return [super release];
+    if (data)
+        (*((void (*)(void **))dtor)) (data);
+    return [super release];
 }
 
 /*****************************************************************************
@@ -134,97 +124,92 @@ static id defaultHandler;
 
 + errorHandler
 {
-  if (!defaultHandler)
+    if (!defaultHandler)
     {
-      defaultHandler = newBlock (2, (IMP) err_fun, NULL, NULL);
+        defaultHandler = newBlock (2, (IMP)err_fun, NULL, NULL);
     }
-  if (errorHandler)
+    if (errorHandler)
     {
-      return errorHandler;
+        return errorHandler;
     }
-  else
+    else
     {
-      return defaultHandler;
+        return defaultHandler;
     }
 }
 
 + errorHandler:aHandler
 {
-  id ret = defaultHandler;
-  defaultHandler = [aHandler errorGoodHandler];
-  return ret;
+    id ret = defaultHandler;
+    defaultHandler = [aHandler errorGoodHandler];
+    return ret;
 }
 
 + halt:message value:receiver
 {
-  id handler = [self errorHandler];
-  if (errorHandler)
+    id handler = [self errorHandler];
+    if (errorHandler)
     {
-      errorHandler = [errorHandler pop];	// sets errorHandler to "nextBlock"
-
+        errorHandler = [errorHandler pop]; // sets errorHandler to "nextBlock"
     }
-  return [handler value:message value:receiver];
+    return [handler value:message value:receiver];
 }
 
 - ifError:aHandler
 {
-  id returnValue;
-  if (errorHandler)
+    id returnValue;
+    if (errorHandler)
     {
-      errorHandler = [errorHandler push:[aHandler errorGoodHandler]];
+        errorHandler = [errorHandler push:[aHandler errorGoodHandler]];
     }
-  else
+    else
     {
-      errorHandler = [aHandler errorGoodHandler];
+        errorHandler = [aHandler errorGoodHandler];
     }
-  returnValue = [self value];
-  errorHandler = [errorHandler pop];
-  return returnValue;
+    returnValue = [self value];
+    errorHandler = [errorHandler pop];
+    return returnValue;
 }
 
 - value:anObject ifError:aHandler
 {
-  id returnValue;
-  if (errorHandler)
+    id returnValue;
+    if (errorHandler)
     {
-      errorHandler = [errorHandler push:[aHandler errorGoodHandler]];
+        errorHandler = [errorHandler push:[aHandler errorGoodHandler]];
     }
-  else
+    else
     {
-      errorHandler = [aHandler errorGoodHandler];
+        errorHandler = [aHandler errorGoodHandler];
     }
-  returnValue = [self value:anObject];
-  [aHandler pop];
-  return returnValue;
+    returnValue = [self value:anObject];
+    [aHandler pop];
+    return returnValue;
 }
 
 - push:aBlock
 {
-  nextBlock = aBlock;
-  return self;
+    nextBlock = aBlock;
+    return self;
 }
 
-- pop
-{
-  return nextBlock;
-}
+- pop { return nextBlock; }
 
 - on:aClassOfExceptions do:aHandler
 {
-  id returnValue;
-  [aClassOfExceptions install:aHandler];
-  returnValue = [self value];
-  return returnValue;
+    id returnValue;
+    [aClassOfExceptions install:aHandler];
+    returnValue = [self value];
+    return returnValue;
 }
 
 - value:anObject on:aClassOfExceptions do:aHandler
 {
-  id returnValue;
-  [aClassOfExceptions install:aHandler];
-  returnValue = [self value:anObject];
-  return returnValue;
+    id returnValue;
+    [aClassOfExceptions install:aHandler];
+    returnValue = [self value:anObject];
+    return returnValue;
 }
-
 
 /*****************************************************************************
  *
@@ -232,26 +217,17 @@ static id defaultHandler;
  *
  ****************************************************************************/
 
-- errorNumArgs
-{
-  return [self error:"Block has wrong number of arguments."];
-}
+- errorNumArgs { return [self error:"Block has wrong number of arguments."]; }
 
-- errorGoodHandler
-{
-  return (nVars == 2) ? self : [self errorNumArgs];
-}
+- errorGoodHandler { return (nVars == 2) ? self : [self errorNumArgs]; }
 
-- value
-{
-  return (nVars == 0) ? (id) (*fn) (self, data) : [self errorNumArgs];
-}
+- value { return (nVars == 0) ? (id) (*fn) (self, data) : [self errorNumArgs]; }
 
-- (int) intvalue
+- (int)intvalue
 {
-  if (nVars != 0)
-    [self errorNumArgs];
-  return (*((int (*)(id, void *)) fn)) (self, data);
+    if (nVars != 0)
+        [self errorNumArgs];
+    return (*((int (*)(id, void *))fn)) (self, data);
 }
 
 #if 0
@@ -269,84 +245,84 @@ valueAtExit (void)
 - atExit
 {
 #if 1
-  /* no atexit() on Sunos4.1.2 it seems? */
-  return [self notImplemented];
+    /* no atexit() on Sunos4.1.2 it seems? */
+    return [self notImplemented];
 #else
-  if (nVars == 0)
+    if (nVars == 0)
     {
-      atExitBlocks [atExitCount++] = self;
-      atexit (valueAtExit);
-      return self;
+        atExitBlocks[atExitCount++] = self;
+        atexit (valueAtExit);
+        return self;
     }
-  else
+    else
     {
-      return [self errorNumArgs];
+        return [self errorNumArgs];
     }
 #endif
 }
 
 - value:anObject
 {
-  return (nVars == 1) ? (id) (*fn) (self, data, anObject) : [self errorNumArgs];
+    return (nVars == 1) ? (id) (*fn) (self, data, anObject)
+                        : [self errorNumArgs];
 }
 
-- (int) intvalue:anObject
+- (int)intvalue:anObject
 {
-  if (nVars != 1)
-    [self errorNumArgs];
-  return (*((int (*)(id, void *, id)) fn)) (self, data, anObject);
+    if (nVars != 1)
+        [self errorNumArgs];
+    return (*((int (*)(id, void *, id))fn)) (self, data, anObject);
 }
 
 - value:firstObject value:secondObject
 {
-  if (nVars == 2)
+    if (nVars == 2)
     {
-      return (id) (*fn) (self, data, firstObject, secondObject);
+        return (id) (*fn) (self, data, firstObject, secondObject);
     }
-  else
+    else
     {
-      return [self errorNumArgs];
+        return [self errorNumArgs];
     }
 }
 
-- (int) intvalue:firstObject value:secondObject
+- (int)intvalue:firstObject value:secondObject
 {
-  if (nVars != 2)
-    [self errorNumArgs];
-  return (*((int (*)(id, void *, id, id)) fn)) (self, data, firstObject, secondObject);
+    if (nVars != 2)
+        [self errorNumArgs];
+    return (*((int (*)(id, void *, id, id))fn)) (self, data, firstObject,
+                                                 secondObject);
 }
-
 
 /*****************************************************************************
  *
- * Control Flow 
+ * Control Flow
  *
  ****************************************************************************/
 
 - repeatTimes:(int)n
 {
-  int i;
-  for (i = 0; i < n; i++)
-    [self value];
-  return self;
+    int i;
+    for (i = 0; i < n; i++)
+        [self value];
+    return self;
 }
 
 - shouldNotImplement
 {
-  /* this is just here to avoid a warning on GNU */
-  /* when we use their Object, doesn't have this method */
-  [self error:"Message is not approriate for this class."];
-  return self;
+    /* this is just here to avoid a warning on GNU */
+    /* when we use their Object, doesn't have this method */
+    [self error:"Message is not approriate for this class."];
+    return self;
 }
 
 - printOn:(IOD)anIod
 {
-  /* this is just here to avoid a warning on GNU */
-  /* when we use their Object, doesn't have this method */
-  return [self shouldNotImplement];
+    /* this is just here to avoid a warning on GNU */
+    /* when we use their Object, doesn't have this method */
+    return [self shouldNotImplement];
 }
 
 @end
 
 #endif /* __PORTABLE_OBJC__ */
- 

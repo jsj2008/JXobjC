@@ -6,7 +6,7 @@
 
 /*
  * This library is free software; you can redistribute it and/or modify it
- * under the terms of the GNU Library General Public License as published 
+ * under the terms of the GNU Library General Public License as published
  * by the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
  *
@@ -29,21 +29,20 @@
 #define OrderedCollection OrdCltn
 
 typedef struct objcol
-  {
+{
     int count;
     int capacity;
-    id *ptr;
-  }
- *objcol_t;
+    id * ptr;
+} * objcol_t;
 
 @interface OrdCltn : Cltn
 {
-  struct objcol value;
+    struct objcol value;
 }
 
 + new;
 + new:(unsigned)n;
-+ with:(int)nArgs,...;
++ with:(int)nArgs, ...;
 + with:firstObject with:nextObject;
 + add:firstObject;
 - copy;
@@ -52,14 +51,14 @@ typedef struct objcol
 - freeContents;
 - free;
 
-- (unsigned) size;
-- (BOOL) isEmpty;
-- (unsigned) lastOffset;
+- (unsigned)size;
+- (BOOL)isEmpty;
+- (unsigned)lastOffset;
 - eachElement;
 - firstElement;
 - lastElement;
 
-- (BOOL) isEqual:aCltn;
+- (BOOL)isEqual:aCltn;
 
 - add:anObject;
 - addFirst:newObject;
@@ -67,27 +66,26 @@ typedef struct objcol
 - addIfAbsent:anObject;
 - addIfAbsentMatching:anObject;
 
-- at:(unsigned )anOffset insert:anObject;
+- at:(unsigned)anOffset insert:anObject;
 - insert:newObject after:oldObject;
 - insert:newObject before:oldObject;
 
 - after:anObject;
 - before:anObject;
-- at:(unsigned )anOffset;
-- at:(unsigned )anOffset put:anObject;
+- at:(unsigned)anOffset;
+- at:(unsigned)anOffset put:anObject;
 
 - removeFirst;
 - removeLast;
-- removeAt:(unsigned )anOffset;
-- removeAtIndex:(unsigned )anOffset;
+- removeAt:(unsigned)anOffset;
+- removeAtIndex:(unsigned)anOffset;
 - remove:oldObject;
 #if OBJC_BLOCKS
 - remove:oldObject ifAbsent:exceptionBlock;
 #endif /* OBJC_BLOCKS */
 
-
-- (BOOL) includesAllOf:aCltn;
-- (BOOL) includesAnyOf:aCltn;
+- (BOOL)includesAllOf:aCltn;
+- (BOOL)includesAnyOf:aCltn;
 
 - addAll:aCltn;
 - addContentsOf:aCltn;
@@ -109,9 +107,8 @@ typedef struct objcol
 - select:testBlock;
 - reject:testBlock;
 - collect:transformBlock;
-- (unsigned) count:aBlock;
+- (unsigned)count:aBlock;
 #endif /* OBJC_BLOCKS */
-
 
 - elementsPerform:(SEL)aSelector;
 - elementsPerform:(SEL)aSelector with:anObject;
@@ -120,17 +117,16 @@ typedef struct objcol
 
 #if OBJC_BLOCKS
 - do:aBlock;
-- do:aBlock until:(BOOL*)flag;
+- do:aBlock until:(BOOL *)flag;
 - reverseDo:aBlock;
 #endif /* OBJC_BLOCKS */
 
-
 - find:anObject;
 - findMatching:anObject;
-- (BOOL) includes:anObject;
-- findSTR:(STR )aString;
-- (BOOL) contains:anObject;
-- (unsigned) offsetOf:anObject;
+- (BOOL)includes:anObject;
+- findSTR:(STR)aString;
+- (BOOL)contains:anObject;
+- (unsigned)offsetOf:anObject;
 
 - printOn:(IOD)aFile;
 
@@ -142,4 +138,3 @@ typedef struct objcol
 @end
 
 #endif /* __OBJCLTN_H__ */
- 

@@ -6,7 +6,7 @@
 
 /*
  * This library is free software; you can redistribute it and/or modify it
- * under the terms of the GNU Library General Public License as published 
+ * under the terms of the GNU Library General Public License as published
  * by the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
  *
@@ -32,42 +32,26 @@
 
 @implementation Cltn
 
-- eachElement
+- eachElement { return [self subclassResponsibility:_cmd]; }
+
+- (BOOL)includes:anObject
 {
-  return [self subclassResponsibility:_cmd];
+    [self subclassResponsibility:_cmd];
+    return NO;
 }
 
-- (BOOL) includes:anObject
-{
-  [self subclassResponsibility:_cmd];
-  return NO;
-}
+- add:anObject { return [self subclassResponsibility:_cmd]; }
 
+- remove:anObject { return [self subclassResponsibility:_cmd]; }
 
-- add:anObject
-{
-  return [self subclassResponsibility:_cmd];
-}
+- addYourself { return [self subclassResponsibility:_cmd]; }
 
-- remove:anObject
-{
-  return [self subclassResponsibility:_cmd];
-}
-
-- addYourself
-{
-  return [self subclassResponsibility:_cmd];
-}
-
-- emptyYourself
-{
-  return [self subclassResponsibility:_cmd];
-}
+- emptyYourself { return [self subclassResponsibility:_cmd]; }
 
 - perform:(SEL)aSel with:a with:b with:c
 {
-  /* NeXT Object.h doesn't have this, so add this dummy */
-  return [self subclassResponsibility:_cmd];
+    /* NeXT Object.h doesn't have this, so add this dummy */
+    return [self subclassResponsibility:_cmd];
 }
 
 /*****************************************************************************
@@ -76,49 +60,46 @@
  *
  ****************************************************************************/
 
-+ with:(int)nArgs,...
++ with:(int)nArgs, ...
 {
-  id newObject;
+    id newObject;
 
-  /* use OC macros for porting to SunOS4 */
-  OC_VA_LIST vp;
+    /* use OC macros for porting to SunOS4 */
+    OC_VA_LIST vp;
 
-  newObject = [self new];
+    newObject = [self new];
 
-  /* #if 0 this piece of code if problems with stdarg
-   * typically this means the driver is not configured with
-   * the right -builtintype
-   * or builtinfunction flags (because the macros might expand to these)
-   * 
-   * alternative solution: check the .P output (-retain) and 
-   * do a setenv OBJCOPT -builtinfunction __builtin_foo
-   * (and please let me know)
-   */
+/* #if 0 this piece of code if problems with stdarg
+ * typically this means the driver is not configured with
+ * the right -builtintype
+ * or builtinfunction flags (because the macros might expand to these)
+ *
+ * alternative solution: check the .P output (-retain) and
+ * do a setenv OBJCOPT -builtinfunction __builtin_foo
+ * (and please let me know)
+ */
 
 #ifdef NSTDARG
-  [self notImplemented];
+    [self notImplemented];
 #else
-  OC_VA_START (vp, nArgs);
-  while (nArgs-- > 0)
+    OC_VA_START (vp, nArgs);
+    while (nArgs-- > 0)
     {
-      id anObject = OC_VA_ARG (vp, id);
-      [newObject add:anObject];
+        id anObject = OC_VA_ARG (vp, id);
+        [newObject add:anObject];
     }
-  OC_VA_END (vp);
+    OC_VA_END (vp);
 #endif
 
-  return newObject;
+    return newObject;
 }
 
 + with:firstObject with:nextObject
 {
-  return [[[self new] add:firstObject] add:nextObject];
+    return [[[self new] add:firstObject] add:nextObject];
 }
 
-+ add:firstObject
-{
-  return [[self new] add:firstObject];
-}
++ add:firstObject { return [[self new] add:firstObject]; }
 
 /*****************************************************************************
  *
@@ -126,55 +107,55 @@
  *
  ****************************************************************************/
 
-- (BOOL) includesAllOf:aCltn
+- (BOOL)includesAllOf:aCltn
 {
-  if (self == aCltn)
+    if (self == aCltn)
     {
-      return YES;
+        return YES;
     }
-  else
+    else
     {
-      BOOL res = YES;
-      id e, seq = [aCltn eachElement];
-      while ((e = [seq next]))
-	{
-	  if (![self includes:e])
-	    {
-	      res = NO;
-	      goto done;
-	    }
-	}
+        BOOL res = YES;
+        id e, seq = [aCltn eachElement];
+        while ((e = [seq next]))
+        {
+            if (![self includes:e])
+            {
+                res = NO;
+                goto done;
+            }
+        }
     done:
 #ifndef OBJC_REFCNT
-      [seq free];
+        [seq free];
 #endif
-      return res;
+        return res;
     }
 }
 
-- (BOOL) includesAnyOf:aCltn
+- (BOOL)includesAnyOf:aCltn
 {
-  if (self == aCltn)
+    if (self == aCltn)
     {
-      return YES;
+        return YES;
     }
-  else
+    else
     {
-      BOOL res = NO;
-      id e, seq = [aCltn eachElement];
-      while ((e = [seq next]))
-	{
-	  if ([self includes:e])
-	    {
-	      res = YES;
-	      goto done;
-	    }
-	}
+        BOOL res = NO;
+        id e, seq = [aCltn eachElement];
+        while ((e = [seq next]))
+        {
+            if ([self includes:e])
+            {
+                res = YES;
+                goto done;
+            }
+        }
     done:
 #ifndef OBJC_REFCNT
-      [seq free];
+        [seq free];
 #endif
-      return res;
+        return res;
     }
 }
 
@@ -186,69 +167,57 @@
 
 - addAll:aCltn
 {
-  if (self == aCltn)
+    if (self == aCltn)
     {
-      [self addYourself];
+        [self addYourself];
     }
-  else
+    else
     {
-      id e, seq;
+        id e, seq;
 
-      seq = [aCltn eachElement];
-      while ((e = [seq next]))
-	{
-	  [self add:e];
-	}
+        seq = [aCltn eachElement];
+        while ((e = [seq next]))
+        {
+            [self add:e];
+        }
 #ifndef OBJC_REFCNT
-      seq = [seq free];
+        seq = [seq free];
 #endif
     }
 
-  return self;
+    return self;
 }
 
-- addContentsOf:aCltn
-{
-  return [self addAll:aCltn];
-}
+- addContentsOf:aCltn { return [self addAll:aCltn]; }
 
-- addContentsTo:aCltn
-{
-  return [aCltn addAll:self];
-}
+- addContentsTo:aCltn { return [aCltn addAll:self]; }
 
 - removeAll:aCltn
 {
-  if (self == aCltn)
+    if (self == aCltn)
     {
-      [self emptyYourself];
+        [self emptyYourself];
     }
-  else
+    else
     {
-      id e, seq;
+        id e, seq;
 
-      seq = [aCltn eachElement];
-      while ((e = [seq next]))
-	{
-	  [self remove:e];
-	}
+        seq = [aCltn eachElement];
+        while ((e = [seq next]))
+        {
+            [self remove:e];
+        }
 #ifndef OBJC_REFCNT
-      seq = [seq free];
+        seq = [seq free];
 #endif
     }
 
-  return self;
+    return self;
 }
 
-- removeContentsFrom:aCltn
-{
-  return [aCltn removeAll:self];
-}
+- removeContentsFrom:aCltn { return [aCltn removeAll:self]; }
 
-- removeContentsOf:aCltn
-{
-  return [self removeAll:aCltn];
-}
+- removeContentsOf:aCltn { return [self removeAll:aCltn]; }
 
 /*****************************************************************************
  *
@@ -258,50 +227,50 @@
 
 - intersection:bag
 {
-  if (self == bag)
+    if (self == bag)
     {
-      return [self copy];
+        return [self copy];
     }
-  else
+    else
     {
-      id anElement, elements;
-      id intersection = [isa new];
+        id anElement, elements;
+        id intersection = [isa new];
 
-      elements = [self eachElement];
-      while ((anElement = [elements next]))
-	{
-	  if ([bag find:anElement])
-	    [intersection add:anElement];
-	}
+        elements = [self eachElement];
+        while ((anElement = [elements next]))
+        {
+            if ([bag find:anElement])
+                [intersection add:anElement];
+        }
 #ifndef OBJC_REFCNT
-      elements = [elements free];
+        elements = [elements free];
 #endif
 
-      return intersection;
+        return intersection;
     }
 }
 
 - union:bag
 {
-  if (self == bag)
+    if (self == bag)
     {
-      return [self copy];
+        return [self copy];
     }
-  else
+    else
     {
-      return [[self copy] addAll:bag];
+        return [[self copy] addAll:bag];
     }
 }
 
-- difference:bag
+    - difference : bag
 {
-  if (self == bag)
+    if (self == bag)
     {
-      return [isa new];
+        return [isa new];
     }
-  else
+    else
     {
-      return [[self copy] removeAll:bag];
+        return [[self copy] removeAll:bag];
     }
 }
 
@@ -313,27 +282,27 @@
 
 - asSet
 {
-  /* Stepstone isKindOf takes a id but class returns SHR */
-  if ([self isKindOf:(id) [Set class]])
+    /* Stepstone isKindOf takes a id but class returns SHR */
+    if ([self isKindOf:(id)[Set class]])
     {
-      return self;
+        return self;
     }
-  else
+    else
     {
-      return [[Set new] addAll:self];
+        return [[Set new] addAll:self];
     }
 }
 
 - asOrdCltn
 {
-  /* Stepstone isKindOf takes a id but class returns SHR */
-  if ([self isKindOf:(id) [OrdCltn class]])
+    /* Stepstone isKindOf takes a id but class returns SHR */
+    if ([self isKindOf:(id)[OrdCltn class]])
     {
-      return self;
+        return self;
     }
-  else
+    else
     {
-      return [[OrdCltn new] addAll:self];
+        return [[OrdCltn new] addAll:self];
     }
 }
 
@@ -346,132 +315,132 @@
 #if OBJC_BLOCKS
 - detect:aBlock
 {
-  id e, seq;
+    id e, seq;
 
-  seq = [self eachElement];
+    seq = [self eachElement];
 
-  while ((e = [seq next]))
+    while ((e = [seq next]))
     {
-      if (([aBlock value:e]))
-	{
+        if (([aBlock value:e]))
+        {
 #ifndef OBJC_REFCNT
-	  seq = [seq free];
+            seq = [seq free];
 #endif
-	  return e;
-	}
+            return e;
+        }
     }
 
 #ifndef OBJC_REFCNT
-  seq = [seq free];
+    seq = [seq free];
 #endif
-  return nil;
+    return nil;
 }
 
 - detect:aBlock ifNone:noneBlock
 {
-  id e, seq;
+    id e, seq;
 
-  seq = [self eachElement];
+    seq = [self eachElement];
 
-  while ((e = [seq next]))
+    while ((e = [seq next]))
     {
-      if (([aBlock value:e]))
-	{
+        if (([aBlock value:e]))
+        {
 #ifndef OBJC_REFCNT
-	  seq = [seq free];
+            seq = [seq free];
 #endif
-	  return e;
-	}
+            return e;
+        }
     }
 
 #ifndef OBJC_REFCNT
-  seq = [seq free];
+    seq = [seq free];
 #endif
-  return [noneBlock value];
+    return [noneBlock value];
 }
 
 - select:testBlock
 {
-  id e, seq;
-  id newObject = [isa new];
+    id e, seq;
+    id newObject = [isa new];
 
-  seq = [self eachElement];
+    seq = [self eachElement];
 
-  while ((e = [seq next]))
+    while ((e = [seq next]))
     {
-      if (([testBlock value:e]))
-	{
-	  [newObject add:e];
-	}
+        if (([testBlock value:e]))
+        {
+            [newObject add:e];
+        }
     }
 
 #ifndef OBJC_REFCNT
-  seq = [seq free];
+    seq = [seq free];
 #endif
-  return newObject;
+    return newObject;
 }
 
 - reject:testBlock
 {
-  id e, seq;
-  id newObject = [isa new];
+    id e, seq;
+    id newObject = [isa new];
 
-  seq = [self eachElement];
+    seq = [self eachElement];
 
-  while ((e = [seq next]))
+    while ((e = [seq next]))
     {
-      if (!([testBlock value:e]))
-	{
-	  [newObject add:e];
-	}
+        if (!([testBlock value:e]))
+        {
+            [newObject add:e];
+        }
     }
 
 #ifndef OBJC_REFCNT
-  seq = [seq free];
+    seq = [seq free];
 #endif
-  return newObject;
+    return newObject;
 }
 
 - collect:transformBlock
 {
-  id e, seq;
-  id newObject = [isa new];
+    id e, seq;
+    id newObject = [isa new];
 
-  seq = [self eachElement];
+    seq = [self eachElement];
 
-  while ((e = [seq next]))
+    while ((e = [seq next]))
     {
-      id anImage = [transformBlock value:e];
-      if (anImage)
-	{
-	  [newObject add:anImage];
-	}
+        id anImage = [transformBlock value:e];
+        if (anImage)
+        {
+            [newObject add:anImage];
+        }
     }
 
 #ifndef OBJC_REFCNT
-  seq = [seq free];
+    seq = [seq free];
 #endif
-  return newObject;
+    return newObject;
 }
 
-- (unsigned) count:aBlock
+- (unsigned)count:aBlock
 {
-  id e, seq;
-  unsigned c = 0;
+    id e, seq;
+    unsigned c = 0;
 
-  seq = [self eachElement];
-  while ((e = [seq next]))
+    seq = [self eachElement];
+    while ((e = [seq next]))
     {
-      if ([aBlock value:e])
-	{
-	  c++;
-	}
+        if ([aBlock value:e])
+        {
+            c++;
+        }
     }
 #ifndef OBJC_REFCNT
-  seq = [seq free];
+    seq = [seq free];
 #endif
 
-  return c;
+    return c;
 }
 
 #endif /* OBJC_BLOCKS */
@@ -484,66 +453,66 @@
 
 - elementsPerform:(SEL)aSelector
 {
-  id e, seq;
+    id e, seq;
 
-  seq = [self eachElement];
-  while ((e = [seq next]))
+    seq = [self eachElement];
+    while ((e = [seq next]))
     {
-      [e perform:aSelector];
+        [e perform:aSelector];
     }
 #ifndef OBJC_REFCNT
-  seq = [seq free];
+    seq = [seq free];
 #endif
 
-  return self;
+    return self;
 }
 
 - elementsPerform:(SEL)aSelector with:anObject
 {
-  id e, seq;
+    id e, seq;
 
-  seq = [self eachElement];
-  while ((e = [seq next]))
+    seq = [self eachElement];
+    while ((e = [seq next]))
     {
-      [e perform:aSelector with:anObject];
+        [e perform:aSelector with:anObject];
     }
 #ifndef OBJC_REFCNT
-  seq = [seq free];
+    seq = [seq free];
 #endif
 
-  return self;
+    return self;
 }
 
 - elementsPerform:(SEL)aSelector with:anObject with:otherObject
 {
-  id e, seq;
+    id e, seq;
 
-  seq = [self eachElement];
-  while ((e = [seq next]))
+    seq = [self eachElement];
+    while ((e = [seq next]))
     {
-      [e perform:aSelector with:anObject with:otherObject];
+        [e perform:aSelector with:anObject with:otherObject];
     }
 #ifndef OBJC_REFCNT
-  seq = [seq free];
+    seq = [seq free];
 #endif
 
-  return self;
+    return self;
 }
 
 - elementsPerform:(SEL)aSelector with:anObject with:otherObject with:thirdObj
 {
-  id e, seq;
+    id e, seq;
 
-  seq = [self eachElement];
-  while ((e = [seq next]))
+    seq = [self eachElement];
+    while ((e = [seq next]))
     {
-      [e perform:aSelector with:anObject with:otherObject with:thirdObj];
+        [e perform:aSelector with:anObject with:otherObject with:thirdObj];
     }
 #ifndef OBJC_REFCNT
-  seq = [seq free];
+    seq = [seq free];
 #endif
 
-  return self;
+    return self;
 }
 /*****************************************************************************
  *
@@ -554,39 +523,38 @@
 #if OBJC_BLOCKS
 - do:aBlock
 {
-  id e, seq;
+    id e, seq;
 
-  seq = [self eachElement];
+    seq = [self eachElement];
 
-  while ((e = [seq next]))
+    while ((e = [seq next]))
     {
-      [aBlock value:e];
+        [aBlock value:e];
     }
 
 #ifndef OBJC_REFCNT
-  seq = [seq free];
+    seq = [seq free];
 #endif
-  return self;
+    return self;
 }
-- do:aBlock until:(BOOL*)flag
+- do:aBlock until:(BOOL *)flag
 {
-  id e, seq;
+    id e, seq;
 
-  seq = [self eachElement];
+    seq = [self eachElement];
 
-  while ((e = [seq next]))
+    while ((e = [seq next]))
     {
-      [aBlock value:e];
-      if (*flag)
-	break;
+        [aBlock value:e];
+        if (*flag)
+            break;
     }
 
 #ifndef OBJC_REFCNT
-  seq = [seq free];
+    seq = [seq free];
 #endif
-  return self;
+    return self;
 }
 #endif /* OBJC_BLOCKS */
 
 @end
- 

@@ -3,7 +3,7 @@
  * Copyright (c) 1998 David Stes.
  *
  * This library is free software; you can redistribute it and/or modify it
- * under the terms of the GNU Library General Public License as published 
+ * under the terms of the GNU Library General Public License as published
  * by the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
  *
@@ -19,7 +19,7 @@
  * $Id: options.h,v 1.1.1.1 2000/06/07 21:09:24 stes Exp $
  */
 
-void defoptions(void);
+void defoptions (void);
 
 extern int o_warnings;
 extern int o_gnu;
@@ -46,7 +46,7 @@ extern int o_selptr;
 extern int o_cache;
 extern int o_filer;
 extern int o_selfassign;
-extern char *o_bind;
+extern char * o_bind;
 extern int o_refbind;
 extern int o_inlinecache;
 extern int o_cplus;
@@ -68,15 +68,14 @@ extern int o_warnlocalnst;
 extern int o_warnnotfound;
 extern int o_warnmissingmethods;
 extern int o_postlink;
-extern char *o_infile;
-extern char *o_outfile;
-extern char *o_srcfilename;
-extern char *o_initcall;
-extern char *o_tagformat;
-extern char *o_mainfun;
-extern char *o_pathsep;
+extern char * o_infile;
+extern char * o_outfile;
+extern char * o_srcfilename;
+extern char * o_initcall;
+extern char * o_tagformat;
+extern char * o_mainfun;
+extern char * o_pathsep;
 extern int o_debuginfo;
 extern int o_checkbind;
 extern int o_linemax;
 extern int o_structassign;
- 

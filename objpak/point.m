@@ -6,7 +6,7 @@
 
 /*
  * This library is free software; you can redistribute it and/or modify it
- * under the terms of the GNU Library General Public License as published 
+ * under the terms of the GNU Library General Public License as published
  * by the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
  *
@@ -32,16 +32,9 @@
  *
  ****************************************************************************/
 
++ new { return [self x:0 y:0]; }
 
-+ new
-{
-  return [self x:0 y:0];
-}
-
-+ x:(int)x y:(int)y
-{
-  return [[super new] x:x y:y];
-}
++ x:(int)x y:(int)y { return [[super new] x:x y:y]; }
 
 /*****************************************************************************
  *
@@ -49,35 +42,28 @@
  *
  ****************************************************************************/
 
-
 - x:(int)x y:(int)y
 {
-  xLoc = x;
-  yLoc = y;
-  return self;
+    xLoc = x;
+    yLoc = y;
+    return self;
 }
 
 - x:(int)x
 {
-  xLoc = x;
-  return self;
+    xLoc = x;
+    return self;
 }
 
 - y:(int)y
 {
-  yLoc = y;
-  return self;
+    yLoc = y;
+    return self;
 }
 
-- (int) x
-{
-  return xLoc;
-}
+- (int)x { return xLoc; }
 
-- (int) y
-{
-  return yLoc;
-}
+- (int)y { return yLoc; }
 
 /*****************************************************************************
  *
@@ -85,38 +71,22 @@
  *
  ****************************************************************************/
 
+- (unsigned)hash { return xLoc ^ yLoc; }
 
-- (unsigned) hash
+- (BOOL)isEqual:aPoint
 {
-  return xLoc ^ yLoc;
+    /* Stepstone isKindOf: takes id but isa is SHR */
+    return
+        [aPoint isKindOf:(id)isa] && [aPoint x] == xLoc && [aPoint y] == yLoc;
 }
 
-- (BOOL) isEqual:aPoint
-{
-  /* Stepstone isKindOf: takes id but isa is SHR */
-  return [aPoint isKindOf:(id) isa]
-    && [aPoint x] == xLoc && [aPoint y] == yLoc;
-}
+- (BOOL)isBelow:aPoint { return yLoc > [aPoint y]; }
 
-- (BOOL) isBelow:aPoint
-{
-  return yLoc > [aPoint y];
-}
+- (BOOL)isAbove:aPoint { return yLoc < [aPoint y]; }
 
-- (BOOL) isAbove:aPoint
-{
-  return yLoc < [aPoint y];
-}
+- (BOOL)isLeft:aPoint { return xLoc < [aPoint x]; }
 
-- (BOOL) isLeft:aPoint
-{
-  return xLoc < [aPoint x];
-}
-
-- (BOOL) isRight:aPoint
-{
-  return xLoc > [aPoint x];
-}
+- (BOOL)isRight:aPoint { return xLoc > [aPoint x]; }
 
 /*****************************************************************************
  *
@@ -124,36 +94,29 @@
  *
  ****************************************************************************/
 
-
 - moveBy:aPoint
 {
-  xLoc += [aPoint x];
-  yLoc += [aPoint y];
-  return self;
+    xLoc += [aPoint x];
+    yLoc += [aPoint y];
+    return self;
 }
 
 - moveBy:(int)x:(int)y
 {
-  xLoc += x;
-  yLoc += y;
-  return self;
+    xLoc += x;
+    yLoc += y;
+    return self;
 }
 
 - moveTo:aPoint
 {
-  xLoc = [aPoint x];
-  yLoc = [aPoint y];
-  return self;
+    xLoc = [aPoint x];
+    yLoc = [aPoint y];
+    return self;
 }
 
-- plus:aPoint
-{
-  return [isa x:xLoc + [aPoint x] y:yLoc + [aPoint y]];
-}
-- translateBy:aPoint
-{
-  return [isa x:xLoc + [aPoint x] y:yLoc + [aPoint y]];
-}
+- plus:aPoint { return [isa x:xLoc + [aPoint x] y:yLoc + [aPoint y]]; }
+- translateBy:aPoint { return [isa x:xLoc + [aPoint x] y:yLoc + [aPoint y]]; }
 
 /*****************************************************************************
  *
@@ -163,27 +126,26 @@
 
 - printOn:(IOD)aFile
 {
-  printf ("(%i,%i)", xLoc, yLoc);
-  return self;
+    printf ("(%i,%i)", xLoc, yLoc);
+    return self;
 }
 
 #ifdef __PORTABLE_OBJC__
 - fileOutOn:aFiler
 {
-  [super fileOutOn:aFiler];
-  [aFiler fileOut:&xLoc type:'i'];
-  [aFiler fileOut:&yLoc type:'i'];
-  return self;
+    [super fileOutOn:aFiler];
+    [aFiler fileOut:&xLoc type:'i'];
+    [aFiler fileOut:&yLoc type:'i'];
+    return self;
 }
 
 - fileInFrom:aFiler
 {
-  [super fileInFrom:aFiler];
-  [aFiler fileIn:&xLoc type:'i'];
-  [aFiler fileIn:&yLoc type:'i'];
-  return self;
+    [super fileInFrom:aFiler];
+    [aFiler fileIn:&xLoc type:'i'];
+    [aFiler fileIn:&yLoc type:'i'];
+    return self;
 }
 #endif /* __PORTABLE_OBJC__ */
 
 @end
- 

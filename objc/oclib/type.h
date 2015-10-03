@@ -3,7 +3,7 @@
  * Copyright (c) 1998 David Stes.
  *
  * This library is free software; you can redistribute it and/or modify it
- * under the terms of the GNU Library General Public License as published 
+ * under the terms of the GNU Library General Public License as published
  * by the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
  *
@@ -33,10 +33,10 @@ extern id t_id;
 
 @interface Type : Node
 {
-  id specs, decl;
-  BOOL isstatic;
-  BOOL isextern;
-  BOOL haslistinit;
+    id specs, decl;
+    BOOL isstatic;
+    BOOL isextern;
+    BOOL haslistinit;
 }
 
 + commontypes;
@@ -77,10 +77,9 @@ extern id t_id;
 - ampersand;
 
 - zero;
-- peekAt:(char*)ptr;
-- poke:v at:(char*)ptr;
+- peekAt:(char *)ptr;
+- poke:v at:(char *)ptr;
 
 - (int)bytesize;
 
 @end
- 

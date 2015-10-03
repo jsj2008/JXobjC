@@ -6,7 +6,7 @@
 
 /*
  * This library is free software; you can redistribute it and/or modify it
- * under the terms of the GNU Library General Public License as published 
+ * under the terms of the GNU Library General Public License as published
  * by the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
  *
@@ -38,76 +38,68 @@
  *
  ****************************************************************************/
 
-
-static void 
-setUp (id * associations)
-{
-  *associations = [Set new];
-}
+static void setUp (id * associations) { *associations = [Set new]; }
 
 + new
 {
-  id newObject = [super new];
-  setUp ([newObject associationsRef]);
-  return newObject;
+    id newObject = [super new];
+    setUp ([newObject associationsRef]);
+    return newObject;
 }
 
 - copyAssociations
 {
-  associations = [associations copy];
-  return self;
+    associations = [associations copy];
+    return self;
 }
 
-- copy
-{
-  return [[super copy] copyAssociations];
-}
+- copy { return [[super copy] copyAssociations]; }
 
 - deepCopyAssociations
 {
-  associations = [associations deepCopy];
-  return self;
+    associations = [associations deepCopy];
+    return self;
 }
 
 - deepCopy
 {
-  /* not all Object implementations have |deepCopy| */
-  /* so we send |copy| to super instead             */
+    /* not all Object implementations have |deepCopy| */
+    /* so we send |copy| to super instead             */
 
-  return [[super copy] deepCopyAssociations];
+    return [[super copy] deepCopyAssociations];
 }
 
 - emptyYourself
 {
-  [associations freeContents];
-  return self;
+    [associations freeContents];
+    return self;
 }
 
 - freeContents
 {
-  [associations freeContents];
-  return self;
+    [associations freeContents];
+    return self;
 }
 
 - freeAll
 {
-  [associations freeAll];
-  return self;
+    [associations freeAll];
+    return self;
 }
 
 - free
 {
-  associations = [associations free];
-  return [super free];
+    associations = [associations free];
+    return [super free];
 }
 
 - release
 {
 #ifdef OBJC_REFCNT
-  associations = nil;
-  return [super release];
+    associations = nil;
+    return [super release];
 #else
-  return [self notImplemented:_cmd];
+    return [self notImplemented:_cmd];
 #endif
 }
 
@@ -117,31 +109,15 @@ setUp (id * associations)
  *
  ****************************************************************************/
 
+- associations { return associations; }
 
-- associations
-{
-  return associations;
-}
+- (id *)associationsRef { return &associations; }
 
-- (id *) associationsRef
-{
-  return &associations;
-}
+- (unsigned)size { return [associations size]; }
 
-- (unsigned) size
-{
-  return [associations size];
-}
+- (BOOL)isEmpty { return [associations isEmpty]; }
 
-- (BOOL) isEmpty
-{
-  return [associations isEmpty];
-}
-
-- (BOOL) includesKey:aKey
-{
-  return (BOOL) ([self associationAt:aKey] != nil);
-}
+- (BOOL)includesKey:aKey { return (BOOL) ([self associationAt:aKey] != nil); }
 
 /*****************************************************************************
  *
@@ -149,17 +125,13 @@ setUp (id * associations)
  *
  ****************************************************************************/
 
+- (unsigned)hash { return [associations hash]; }
 
-- (unsigned) hash
+- (BOOL)isEqual:aDic
 {
-  return [associations hash];
-}
-
-- (BOOL) isEqual:aDic
-{
-  if (self == aDic)
-    return YES;
-  return [associations isEqual:[aDic associations]];
+    if (self == aDic)
+        return YES;
+    return [associations isEqual:[aDic associations]];
 }
 
 /*****************************************************************************
@@ -168,49 +140,45 @@ setUp (id * associations)
  *
  ****************************************************************************/
 
-
 - associationAt:aKey
 {
-  /* not obvious that this works : see Assoc -isEqual: impl */
-  return [associations find:aKey];
+    /* not obvious that this works : see Assoc -isEqual: impl */
+    return [associations find:aKey];
 }
 
 - atKey:aKey
 {
-  id association = [self associationAt:aKey];
-  return (association) ? [association value] : nil;
+    id association = [self associationAt:aKey];
+    return (association) ? [association value] : nil;
 }
 
 - atKey:aKey ifAbsent:exceptionBlock
 {
-  id association = [self associationAt:aKey];
-  return (association) ? [association value] : [exceptionBlock value];
+    id association = [self associationAt:aKey];
+    return (association) ? [association value] : [exceptionBlock value];
 }
 
-- atKeySTR:(STR)strKey
-{
-  return [self atKey:[String str:strKey]];
-}
+- atKeySTR:(STR)strKey { return [self atKey:[String str:strKey]]; }
 
 - atKey:aKey put:anObject
 {
-  return [[associations filter:[Association key:aKey]] value:anObject];
+    return [[associations filter:[Association key:aKey]] value:anObject];
 }
 
 - atKeySTR:(STR)strKey put:anObject
 {
-  return [self atKey:[String str:strKey] put:anObject];
+    return [self atKey:[String str:strKey] put:anObject];
 }
 
 - eachKey
 {
-  id aCarrier = [KeySequence over:[associations eachElement]];
-  return [Sequence over:aCarrier];
+    id aCarrier = [KeySequence over:[associations eachElement]];
+    return [Sequence over:aCarrier];
 }
 - eachValue
 {
-  id aCarrier = [ValueSequence over:[associations eachElement]];
-  return [Sequence over:aCarrier];
+    id aCarrier = [ValueSequence over:[associations eachElement]];
+    return [Sequence over:aCarrier];
 }
 /*****************************************************************************
  *
@@ -218,39 +186,38 @@ setUp (id * associations)
  *
  ****************************************************************************/
 
-
 - removeKey:key
 {
-  id assoc, v;
-  if ((assoc = [[self associations] remove:key]))
+    id assoc, v;
+    if ((assoc = [[self associations] remove:key]))
     {
-      v = [assoc value];
+        v = [assoc value];
 #ifndef OBJC_REFCNT
-      assoc = [assoc free];
+        assoc = [assoc free];
 #endif
-      return v;
+        return v;
     }
-  else
+    else
     {
-      [NotFound signal];
-      return nil;
+        [NotFound signal];
+        return nil;
     }
 }
 
 - removeKey:key ifAbsent:aBlock
 {
-  id assoc, v;
-  if ((assoc = [[self associations] remove:key]))
+    id assoc, v;
+    if ((assoc = [[self associations] remove:key]))
     {
-      v = [assoc value];
+        v = [assoc value];
 #ifndef OBJC_REFCNT
-      assoc = [assoc free];
+        assoc = [assoc free];
 #endif
-      return v;
+        return v;
     }
-  else
+    else
     {
-      return [aBlock value];
+        return [aBlock value];
     }
 }
 
@@ -260,20 +227,19 @@ setUp (id * associations)
  *
  ****************************************************************************/
 
-
 #if OBJC_BLOCKS
 - keysDo:aBlock
 {
-  id aKey;
-  id keys = [self eachKey];
+    id aKey;
+    id keys = [self eachKey];
 
-  while ((aKey = [keys next]))
-    [aBlock value:aKey];
+    while ((aKey = [keys next]))
+        [aBlock value:aKey];
 #ifndef OBJC_REFCNT
-  keys = [keys free];
+    keys = [keys free];
 #endif
 
-  return self;
+    return self;
 }
 #endif /* OBJC_BLOCKS */
 
@@ -285,9 +251,8 @@ setUp (id * associations)
 
 - printOn:(IOD)aFile
 {
-  [associations printOn:aFile];
-  return self;
+    [associations printOn:aFile];
+    return self;
 }
 
 @end
- 

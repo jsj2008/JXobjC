@@ -3,7 +3,7 @@
  * Copyright (c) 1998,2000 David Stes.
  *
  * This library is free software; you can redistribute it and/or modify it
- * under the terms of the GNU Library General Public License as published 
+ * under the terms of the GNU Library General Public License as published
  * by the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
  *
@@ -24,7 +24,7 @@
 #include <assert.h>
 #ifndef __OBJECT_INCLUDED__
 #define __OBJECT_INCLUDED__
-#include <stdio.h> /* FILE */
+#include <stdio.h>  /* FILE */
 #include "Object.h" /* Stepstone Object.h assumes #import */
 #endif
 #include "node.h"
@@ -38,48 +38,52 @@
 
 @implementation Dereference
 
-+ new
-{
-  return [[super new] op:"*"];
-}
++ new { return [[super new] op:"*"]; }
 
 - typesynth
 {
-  type = [[expr type] star];
-  return self;
+    type = [[expr type] star];
+    return self;
 }
 
 - go
 {
-  id x = [expr go];
+    id x = [expr go];
 
-  if ([x isKindOf:(id)[ArrayVariable class]]) {
-    return [x at:0];
-  } else {
-    if ([x type] == t_str) {
-      STR s = [x u_str];
-      return [[Scalar new] u_char:*s];
+    if ([x isKindOf:(id)[ArrayVariable class]])
+    {
+        return [x at:0];
     }
-    return [self notImplemented];
-  }
+    else
+    {
+        if ([x type] == t_str)
+        {
+            STR s = [x u_str];
+            return [[Scalar new] u_char:*s];
+        }
+        return [self notImplemented];
+    }
 }
 
 - assignvar:v
 {
-  id x = [expr go];
+    id x = [expr go];
 
-  if ([x isKindOf:(id)[ArrayVariable class]]) {
-    [x at:0 put:v];
-    return v;
-  } else {
-    if ([x type] == t_str) {
-      STR s = [x u_str];
-      *s = [v u_char];
-      return v;
+    if ([x isKindOf:(id)[ArrayVariable class]])
+    {
+        [x at:0 put:v];
+        return v;
     }
-    return [self notImplemented];
-  }
+    else
+    {
+        if ([x type] == t_str)
+        {
+            STR s = [x u_str];
+            *s = [v u_char];
+            return v;
+        }
+        return [self notImplemented];
+    }
 }
 
 @end
- 

@@ -6,7 +6,7 @@
 
 /*
  * This library is free software; you can redistribute it and/or modify it
- * under the terms of the GNU Library General Public License as published 
+ * under the terms of the GNU Library General Public License as published
  * by the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
  *
@@ -28,18 +28,18 @@
 #ifndef __OBJECT_INCLUDED__
 #define __OBJECT_INCLUDED__
 #include <stdio.h>
-#include "Object.h"		/* Stepstone Object.h assumes #import */
+#include "Object.h" /* Stepstone Object.h assumes #import */
 #endif
 
 @interface AsciiFiler : Object
 {
-  FILE *file;
-  BOOL ownFile;
-  BOOL inSecondPass;
-  id toc;
-  void **patchPointers;
-  int patchSize;
-  int patchCapacity;
+    FILE * file;
+    BOOL ownFile;
+    BOOL inSecondPass;
+    id toc;
+    void ** patchPointers;
+    int patchSize;
+    int patchCapacity;
 }
 
 + initialize;
@@ -47,10 +47,10 @@
 + new;
 - free;
 
-- (BOOL) store:anObject on:(STR)aFileName;
+- (BOOL)store:anObject on:(STR)aFileName;
 - readFrom:(STR)aFileName;
 
-- (BOOL) store:anObject onFile:(FILE *)aFile;
+- (BOOL)store:anObject onFile:(FILE *)aFile;
 - fileOut2:(void *)value type:(char)typeDesc;
 - fileOutObject:anObject;
 - fileOut:(void *)value type:(char)typeDesc;
@@ -63,4 +63,3 @@
 #endif /* __ASCIIFILER_H */
 
 #endif /* __PORTABLE_OBJC__ */
- 

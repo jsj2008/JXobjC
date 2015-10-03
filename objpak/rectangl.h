@@ -6,7 +6,7 @@
 
 /*
  * This library is free software; you can redistribute it and/or modify it
- * under the terms of the GNU Library General Public License as published 
+ * under the terms of the GNU Library General Public License as published
  * by the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
  *
@@ -26,13 +26,13 @@
 #ifndef __OBJECT_INCLUDED__
 #define __OBJECT_INCLUDED__
 #include <stdio.h>
-#include "Object.h"		/* Stepstone Object.h assumes #import */
+#include "Object.h" /* Stepstone Object.h assumes #import */
 #endif
 
 @interface Rectangle : Object
 {
-  id origin;
-  id corner;
+    id origin;
+    id corner;
 }
 
 + new;
@@ -53,16 +53,16 @@
 - origin:(int)x1:(int)y1;
 - corner:(int)x1:(int)y1;
 
-- (BOOL) contains:aPoint;
-- (unsigned) hash;
-- (BOOL) isEqual:aRectangle;
+- (BOOL)contains:aPoint;
+- (unsigned)hash;
+- (BOOL)isEqual:aRectangle;
 
-- (int) left;
-- (int) right;
-- (int) top;
-- (int) bottom;
-- (int) width;
-- (int) height;
+- (int)left;
+- (int)right;
+- (int)top;
+- (int)bottom;
+- (int)width;
+- (int)height;
 - origin;
 - topLeft;
 - topRight;
@@ -85,4 +85,3 @@
 @end
 
 #endif /* __OBJRECT_H__ */
- 

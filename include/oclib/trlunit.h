@@ -3,7 +3,7 @@
  * Copyright (c) 1998 David Stes.
  *
  * This library is free software; you can redistribute it and/or modify it
- * under the terms of the GNU Library General Public License as published 
+ * under the terms of the GNU Library General Public License as published
  * by the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
  *
@@ -23,31 +23,31 @@ extern id trlunit;
 
 @interface TranslationUnit : Node
 {
-  int msgcount;
-  int icachecount;
-  int blockcount;
-  int heapvarcount;
-  int retlabelcount;
-  id types, typedic;
-  id globals, globaldic;
-  id builtinfuns, builtintypes;
-  id clsimpl;			/* one per file case */
-  id clsimpls;			/* more than one per file */
-  id seldic, selcltn;
-  id msgdic, fwdcltn;
-  char *modname;
-  char *modversion;
-  char *bindfunname;
-  char *moddescname;
-  id usesentries;
-  id definesentries;
-  id methods;
-  id classdefs;
-  id structdefs;
-  id gentypes;
-  id enumtors;
-  BOOL usingblocks;
-  BOOL usingselfassign;
+    int msgcount;
+    int icachecount;
+    int blockcount;
+    int heapvarcount;
+    int retlabelcount;
+    id types, typedic;
+    id globals, globaldic;
+    id builtinfuns, builtintypes;
+    id clsimpl;  /* one per file case */
+    id clsimpls; /* more than one per file */
+    id seldic, selcltn;
+    id msgdic, fwdcltn;
+    char * modname;
+    char * modversion;
+    char * bindfunname;
+    char * moddescname;
+    id usesentries;
+    id definesentries;
+    id methods;
+    id classdefs;
+    id structdefs;
+    id gentypes;
+    id enumtors;
+    BOOL usingblocks;
+    BOOL usingselfassign;
 }
 
 - (int)msgcount;
@@ -99,4 +99,3 @@ extern id trlunit;
 - (BOOL)isgentype:s;
 
 @end
- 

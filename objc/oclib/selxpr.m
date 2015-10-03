@@ -3,7 +3,7 @@
  * Copyright (c) 1998 David Stes.
  *
  * This library is free software; you can redistribute it and/or modify it
- * under the terms of the GNU Library General Public License as published 
+ * under the terms of the GNU Library General Public License as published
  * by the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
  *
@@ -24,7 +24,7 @@
 #include <assert.h>
 #ifndef __OBJECT_INCLUDED__
 #define __OBJECT_INCLUDED__
-#include <stdio.h> /* FILE */
+#include <stdio.h>  /* FILE */
 #include "Object.h" /* Stepstone Object.h assumes #import */
 #endif
 #include "node.h"
@@ -40,50 +40,44 @@
 
 - selector:aRcvr
 {
-  selector = aRcvr;
-  return self;
+    selector = aRcvr;
+    return self;
 }
 
-- (int)lineno
-{
-  return [selector lineno];
-}
+- (int)lineno { return [selector lineno]; }
 
-- filename
-{
-  return [selector filename];
-}
+- filename { return [selector filename]; }
 
 - typesynth
 {
-  type = t_sel;
-  return self;
+    type = t_sel;
+    return self;
 }
 
 - synth
 {
-  id method = [trlunit lookupmethod:selector];
+    id method = [trlunit lookupmethod:selector];
 
-  if (!method && o_warnundefined) {
-    warn("argument types for '%s' default to 'id'", [selector str]);
-  }
-  return self;
+    if (!method && o_warnundefined)
+    {
+        warn ("argument types for '%s' default to 'id'", [selector str]);
+    }
+    return self;
 }
 
 - gen
 {
-  [selector gen];
-  return self;
+    [selector gen];
+    return self;
 }
 
 - go
 {
 #ifdef __PORTABLE_OBJC__
-  return [[Scalar new] u_str:selUid([selector str])];
+    return [[Scalar new] u_str:selUid ([selector str])];
 #else
-  return nil;
+    return nil;
 #endif
 }
 
 @end
- 

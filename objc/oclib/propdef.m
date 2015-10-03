@@ -3,7 +3,7 @@
  * Copyright (c) 1998 David Stes.
  *
  * This library is free software; you can redistribute it and/or modify it
- * under the terms of the GNU Library General Public License as published 
+ * under the terms of the GNU Library General Public License as published
  * by the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
  *
@@ -24,7 +24,7 @@
 #include <assert.h>
 #ifndef __OBJECT_INCLUDED__
 #define __OBJECT_INCLUDED__
-#include <stdio.h> /* FILE */
+#include <stdio.h>  /* FILE */
 #include "Object.h" /* Stepstone Object.h assumes #import */
 #endif
 #include "Block.h"
@@ -48,7 +48,7 @@
 #include "expr.h"
 #include "msgxpr.h"
 
-@implementation PropertyDef 
+@implementation PropertyDef
 
 - compdec:aDec
 {
@@ -66,7 +66,7 @@
 {
     if (!curclassdef)
     {
-        fatal("property definition outside implementation");
+        fatal ("property definition outside implementation");
     }
     else
     {
@@ -90,19 +90,21 @@
 
                 if (specs)
                 {
-                    [t specs:specs];	/* type filters out storage class */
-                    [t decl:d];		/* type makes a -abstrdecl of it */
+                    [t specs:specs]; /* type filters out storage class */
+                    [t decl:d];      /* type makes a -abstrdecl of it */
                 }
                 else
                 {
-                    [t addspec:s_int];	/* C default */
+                    [t addspec:s_int]; /* C default */
                     [t decl:d];
                 }
                 /*printf("Lol %s %d\n", [var str], [d ispointer]);
                 [specs do:{ :each | printf("SPEC: %s\n", [each str]); }];*/
                 [curclassdef defcomp:var astype:t];
-                [curclassdef addpropmeth:mkpropsetmeth (compdec, t, var, [d ispointer])];
-                [curclassdef addpropmeth:mkpropgetmeth (compdec, t, var, [d ispointer])];
+                [curclassdef
+                    addpropmeth:mkpropsetmeth (compdec, t, var, [d ispointer])];
+                [curclassdef
+                    addpropmeth:mkpropgetmeth (compdec, t, var, [d ispointer])];
             }
         }
 
@@ -116,11 +118,10 @@
 {
     id f, c;
 
-    [classdef gen];		/* in case not yet emitted (must be done before blocks) */
-    [super gen];			/* code for class references and blocks in this impl */
+    [classdef gen]; /* in case not yet emitted (must be done before blocks) */
+    [super gen];    /* code for class references and blocks in this impl */
 
     return self;
 }
 
 @end
- 

@@ -6,7 +6,7 @@
 
 /*
  * This library is free software; you can redistribute it and/or modify it
- * under the terms of the GNU Library General Public License as published 
+ * under the terms of the GNU Library General Public License as published
  * by the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
  *
@@ -35,529 +35,514 @@
 
 - reset
 {
-  laststart = -1;
-  return self;
+    laststart = -1;
+    return self;
 }
 
 - check
 {
-  int i, n;
-  id attrs;
-  unsigned s;
-  unsigned totalsize = 0;
+    int i, n;
+    id attrs;
+    unsigned s;
+    unsigned totalsize = 0;
 
-  assert ([runs capacity] >= [values size]);
+    assert ([runs capacity] >= [values size]);
 
-  for (i = 0, n = [values size]; i < n; i++)
+    for (i = 0, n = [values size]; i < n; i++)
     {
-      attrs = [values at:i];
-      assert ([attrs isKindOf:(id) [OrdCltn class]]);
-      s = [runs intAt:i];
-      assert (s > 0);
-      totalsize += s;
+        attrs = [values at:i];
+        assert ([attrs isKindOf:(id)[OrdCltn class]]);
+        s = [runs intAt:i];
+        assert (s > 0);
+        totalsize += s;
     }
 
-  assert (totalsize == size);
-  return self;
+    assert (totalsize == size);
+    return self;
 }
 
-+ new
-{
-  return [[super new] runs:[IntArray new] values:[OrdCltn new]];
-}
++ new { return [[super new] runs:[IntArray new] values:[OrdCltn new]]; }
 
 - free
 {
-  [values elementsPerform:@selector (freeContents)];
-  [[values freeContents] free];
-  [runs free];
-  return [super free];
+    [values elementsPerform:@selector (freeContents)];
+    [[values freeContents] free];
+    [runs free];
+    return [super free];
 }
 
+- values { return values; }
 
-- values
-{
-  return values;
-}
-
-- runs
-{
-  return runs;
-}
+- runs { return runs; }
 
 - runs:r values:v
 {
-  runs = r;
-  values = v;
-  [self reset];
-  return self;
+    runs = r;
+    values = v;
+    [self reset];
+    return self;
 }
 
 - at:(unsigned)i
 {
-  int j, n;
-  unsigned p;
+    int j, n;
+    unsigned p;
 
-  if (i >= size)
+    if (i >= size)
     {
-      [OutOfBounds signal];
-      return nil;
+        [OutOfBounds signal];
+        return nil;
     }
 
-  /* most common cases */
+    /* most common cases */
 
-  if (laststart != -1)
+    if (laststart != -1)
     {
-      if (laststart <= i && i < lastend)
-	return [values at:lastsegment];
-      if (i == lastend)
-	{
-	  lastsegment++;
-	  laststart = lastend;
-	  lastend = laststart + [runs intAt:lastsegment];
-	  return [values at:lastsegment];
-	}
+        if (laststart <= i && i < lastend)
+            return [values at:lastsegment];
+        if (i == lastend)
+        {
+            lastsegment++;
+            laststart = lastend;
+            lastend = laststart + [runs intAt:lastsegment];
+            return [values at:lastsegment];
+        }
     }
 
-  /* otherwise linear search */
+    /* otherwise linear search */
 
-  for (j = 0, p = 0, n = [values size]; j < n; j++)
+    for (j = 0, p = 0, n = [values size]; j < n; j++)
     {
-      unsigned q = p + [runs intAt:j];
-      if (p <= i && i < q)
-	{
-	  laststart = p;
-	  lastend = q;
-	  lastsegment = j;
-	  return [values at:j];
-	}
-      p = q;
+        unsigned q = p + [runs intAt:j];
+        if (p <= i && i < q)
+        {
+            laststart = p;
+            lastend = q;
+            lastsegment = j;
+            return [values at:j];
+        }
+        p = q;
     }
 
-  [NotFound signal];
-  return nil;
+    [NotFound signal];
+    return nil;
 }
 
-- (unsigned) runLengthAt:(unsigned)i
+- (unsigned)runLengthAt:(unsigned)i
 {
-  int j, n;
-  unsigned p;
+    int j, n;
+    unsigned p;
 
-  if (i >= size)
+    if (i >= size)
     {
-      [OutOfBounds signal];
-      return 0;
+        [OutOfBounds signal];
+        return 0;
     }
 
-  /* most common cases */
+    /* most common cases */
 
-  if (laststart != -1)
+    if (laststart != -1)
     {
-      if (laststart <= i && i < lastend)
-	return lastend - i;
-      if (i == lastend)
-	{
-	  lastsegment++;
-	  laststart = lastend;
-	  lastend = laststart + [runs intAt:lastsegment];
-	  return lastend - i;
-	}
+        if (laststart <= i && i < lastend)
+            return lastend - i;
+        if (i == lastend)
+        {
+            lastsegment++;
+            laststart = lastend;
+            lastend = laststart + [runs intAt:lastsegment];
+            return lastend - i;
+        }
     }
 
-  /* otherwise linear search */
+    /* otherwise linear search */
 
-  for (j = 0, p = 0, n = [values size]; j < n; j++)
+    for (j = 0, p = 0, n = [values size]; j < n; j++)
     {
-      unsigned q = p + [runs intAt:j];
-      if (p <= i && i < q)
-	{
-	  laststart = p;
-	  lastend = q;
-	  lastsegment = j;
-	  return lastend - i;
-	}
-      p = q;
+        unsigned q = p + [runs intAt:j];
+        if (p <= i && i < q)
+        {
+            laststart = p;
+            lastend = q;
+            lastsegment = j;
+            return lastend - i;
+        }
+        p = q;
     }
 
-  [NotFound signal];
-  return 0;
+    [NotFound signal];
+    return 0;
 }
 
-
-- (unsigned) size
-{
-  return size;
-}
+- (unsigned)size { return size; }
 
 - calcsize
 {
-  int i, n;
-  int totalsize = 0;
+    int i, n;
+    int totalsize = 0;
 
-  assert ([runs capacity] >= [values size]);
+    assert ([runs capacity] >= [values size]);
 
-  for (i = 0, n = [values size]; i < n; i++)
+    for (i = 0, n = [values size]; i < n; i++)
     {
-      int s = [runs intAt:i];
+        int s = [runs intAt:i];
 
-      totalsize += s;
+        totalsize += s;
     }
 
-  size = totalsize;
-  return self;
+    size = totalsize;
+    return self;
 }
 
 - setsize:(unsigned)newsize
 {
-  if (size == newsize)
+    if (size == newsize)
+        return self;
+
+    if (size < newsize)
+    {
+        int n = [values size];
+        int m = [runs capacity];
+        if (m < (n + 1))
+            [runs capacity:(2 * m + 1)];
+        [values add:[OrdCltn new]];
+        [runs intAt:n put:(newsize - size)];
+        size = newsize;
+    }
+    else
+    {
+        [self notImplemented:_cmd];
+    }
+
+    assert ([self check]);
     return self;
-
-  if (size < newsize)
-    {
-      int n = [values size];
-      int m = [runs capacity];
-      if (m < (n + 1))
-	[runs capacity:(2 * m + 1)];
-      [values add:[OrdCltn new]];
-      [runs intAt:n put:(newsize - size)];
-      size = newsize;
-    }
-  else
-    {
-      [self notImplemented:_cmd];
-    }
-
-  assert ([self check]);
-  return self;
 }
 
 - addAttribute:attrib to:v
 {
-  int n = [v size];
+    int n = [v size];
 
-  [attrib reset];
-  while (n--)
+    [attrib reset];
+    while (n--)
     {
-      if ([attrib dominates:[v at:n]])
-	{
-	  id atb = [v removeAt:n];
+        if ([attrib dominates:[v at:n]])
+        {
+            id atb = [v removeAt:n];
 #ifndef OBJC_REFCNT
-	  [atb free];
+            [atb free];
 #endif
-	}
+        }
     }
-  if ([attrib set])
+    if ([attrib set])
     {
-      [v add:attrib];
+        [v add:attrib];
 #ifndef OBJC_REFCNT
     }
-  else
+    else
     {
-      [attrib free];
+        [attrib free];
 #endif
     }
-  return self;
+    return self;
 }
 
 - breakat:(int)i
 {
-  int j, k, p, n;
+    int j, k, p, n;
 
-  for (j = 0, p = 0, n = [values size]; j < n; j++)
+    for (j = 0, p = 0, n = [values size]; j < n; j++)
     {
-      unsigned q = p + [runs intAt:j];
+        unsigned q = p + [runs intAt:j];
 
-      if (p == i || q == i)
-	return self;		/* nothing to break; */
-      if (p < i && q > i)
-	{
-	  int m = [runs capacity];
-	  id v = [[values at:j] deepCopy];
+        if (p == i || q == i)
+            return self; /* nothing to break; */
+        if (p < i && q > i)
+        {
+            int m = [runs capacity];
+            id v = [[values at:j] deepCopy];
 
-	  if (m < (n + 1))
-	    [runs capacity:(2 * m + 1)];
-	  [values at:j insert:v];
-	  k = n;
-	  while (--k >= j)
-	    [runs intAt:k + 1 put:[runs intAt:k]];
-	  [runs intAt:j put:i - p];
-	  [runs intAt:j + 1 put:q - i];
-	  return self;
-	}
-      p = q;
+            if (m < (n + 1))
+                [runs capacity:(2 * m + 1)];
+            [values at:j insert:v];
+            k = n;
+            while (--k >= j)
+                [runs intAt:k + 1 put:[runs intAt:k]];
+            [runs intAt:j put:i - p];
+            [runs intAt:j + 1 put:q - i];
+            return self;
+        }
+        p = q;
     }
-  return [self error:"Error in run computation"];
+    return [self error:"Error in run computation"];
 }
 
 - addAttribute:attrib from:(unsigned)p size:(unsigned)s
 {
-  int i;
+    int i;
 
-  if (s == 0)
-    return self;
+    if (s == 0)
+        return self;
 
-  /* common case : append after end (expand) */
+    /* common case : append after end (expand) */
 
-  if (p >= size)
+    if (p >= size)
     {
-      if (p > size)
-	[self setsize:p];	/* possibly a slice without formatting props */
-      [self setsize:p + s];
-      i = [values size];
-      assert ([runs intAt:i - 1] == s);
-      return [self addAttribute:attrib to:[values at:i - 1]];
+        if (p > size)
+            [self setsize:p]; /* possibly a slice without formatting props */
+        [self setsize:p + s];
+        i = [values size];
+        assert ([runs intAt:i - 1] == s);
+        return [self addAttribute:attrib to:[values at:i - 1]];
     }
 
-  /* common case : append at exactly the last run */
+    /* common case : append at exactly the last run */
 
-  i = [values size];
-  if ((i != 0) && (p + s == size) && (s == [runs intAt:i - 1]))
+    i = [values size];
+    if ((i != 0) && (p + s == size) && (s == [runs intAt:i - 1]))
     {
-      return [self addAttribute:attrib to:[values at:i - 1]];
+        return [self addAttribute:attrib to:[values at:i - 1]];
     }
 
-  /* case we're using random offsets into text */
-  /* this doesn't have to be super-fast */
+    /* case we're using random offsets into text */
+    /* this doesn't have to be super-fast */
 
-  if (p + s > size)
+    if (p + s > size)
     {
-      [self setsize:p + s];
-      [self breakat:p];
+        [self setsize:p + s];
+        [self breakat:p];
     }
-  else
+    else
     {
-      [self breakat:p];
-      [self breakat:p + s];
+        [self breakat:p];
+        [self breakat:p + s];
     }
 
-  [self reset];
+    [self reset];
 
-  for (i = 0; i < size; i += [self runLengthAt:i])
+    for (i = 0; i < size; i += [self runLengthAt:i])
     {
-      if (i == p + s)
-	break;
-      if (i > p + s)
-	[self error:"Error in run computation."];
-      if (i >= p)
-	[self addAttribute:[attrib copy] to:[self at:i]];
+        if (i == p + s)
+            break;
+        if (i > p + s)
+            [self error:"Error in run computation."];
+        if (i >= p)
+            [self addAttribute:[attrib copy] to:[self at:i]];
     }
 
 #ifndef OBJC_REFCNT
-  [attrib free];
+    [attrib free];
 #endif
-  return self;
+    return self;
 }
 
 - calcinsertsegment:(int)i
 {
-  int j, n;
-  unsigned p;
+    int j, n;
+    unsigned p;
 
-  if (i >= size)
+    if (i >= size)
     {
-      [OutOfBounds signal];
-      return nil;
+        [OutOfBounds signal];
+        return nil;
     }
 
-  /* most common cases */
+    /* most common cases */
 
-  if (laststart != -1)
+    if (laststart != -1)
     {
-      /* for insertion, don't move to next segment if i == lastend */
-      if (laststart < i && i <= lastend)
-	return self;
+        /* for insertion, don't move to next segment if i == lastend */
+        if (laststart < i && i <= lastend)
+            return self;
     }
 
-  /* otherwise linear search */
+    /* otherwise linear search */
 
-  for (j = 0, p = 0, n = [values size]; j < n; j++)
+    for (j = 0, p = 0, n = [values size]; j < n; j++)
     {
-      unsigned q = p + [runs intAt:j];
-      /* for insertion, don't move to next segment if i == lastend */
-      if (p <= i && i <= q)
-	{
-	  laststart = p;
-	  lastend = q;
-	  lastsegment = j;
-	  return self;
-	}
-      p = q;
+        unsigned q = p + [runs intAt:j];
+        /* for insertion, don't move to next segment if i == lastend */
+        if (p <= i && i <= q)
+        {
+            laststart = p;
+            lastend = q;
+            lastsegment = j;
+            return self;
+        }
+        p = q;
     }
 
-  [NotFound signal];
-  return nil;
+    [NotFound signal];
+    return nil;
 }
 
-- at:(unsigned)anOffset insert:(char*)aString count:(int)n
+- at:(unsigned)anOffset insert:(char *)aString count:(int)n
 {
-  if (anOffset == size)
+    if (anOffset == size)
     {
-      int s = [runs size];
-      if (s)
-	{
-	  [runs intAt:s - 1 put:[runs intAt:s - 1] + n];	/* use same formatting */
-	  size += n;
-	}
-      else
-	{
-	  [self setsize:size + n];	/* slice without formatting */
-	}
+        int s = [runs size];
+        if (s)
+        {
+            [runs intAt:s - 1
+                    put:[runs intAt:s - 1] + n]; /* use same formatting */
+            size += n;
+        }
+        else
+        {
+            [self setsize:size + n]; /* slice without formatting */
+        }
     }
-  else
+    else
     {
-      [self calcinsertsegment:anOffset];	/* compute lastsegment */
-      [runs intAt:lastsegment put:[runs intAt:lastsegment] + n];
-      size += n;
+        [self calcinsertsegment:anOffset]; /* compute lastsegment */
+        [runs intAt:lastsegment put:[runs intAt:lastsegment] + n];
+        size += n;
     }
-  [self reset];
-  assert ([self check]);
-  return self;
+    [self reset];
+    assert ([self check]);
+    return self;
 }
 
 - deleteFrom:(unsigned)p to:(unsigned)q
 {
-  int i, is, j, je, n;
+    int i, is, j, je, n;
 
-  if (p > q)
+    if (p > q)
     {
-      [OutOfBounds signal];
-      return nil;
+        [OutOfBounds signal];
+        return nil;
     }
 
-  assert ([self check]);
+    assert ([self check]);
 
-  n = q - p + 1;
-  [self at:p];			/* compute lastsegment */
-  i = lastsegment;
-  is = laststart;
-  [self at:q];
-  j = lastsegment;
-  je = lastend;
-  [self reset];
+    n = q - p + 1;
+    [self at:p]; /* compute lastsegment */
+    i = lastsegment;
+    is = laststart;
+    [self at:q];
+    j = lastsegment;
+    je = lastend;
+    [self reset];
 
-  if (i == j)
+    if (i == j)
     {
-      int m = [runs intAt:i];
+        int m = [runs intAt:i];
 
-      assert (m >= n);
-      [runs intAt:i put:m - n];
-      if (m == n)
-	{
-	  id atb = [values removeAt:i];
+        assert (m >= n);
+        [runs intAt:i put:m - n];
+        if (m == n)
+        {
+            id atb = [values removeAt:i];
 #ifndef OBJC_REFCNT
-	  [[atb freeContents] free];
+            [[atb freeContents] free];
 #endif
-	}
+        }
     }
-  else
+    else
     {
-      int m, k, r;
+        int m, k, r;
 
-      m = [runs intAt:i];
-      assert (p >= is);
-      [runs intAt:i put:p - is];
-      for (k = i + 1; k < j; k++)
-	[runs intAt:k put:0];
-      m = [runs intAt:j];
-      assert (q < je);
-      [runs intAt:j put:je - q - 1];
+        m = [runs intAt:i];
+        assert (p >= is);
+        [runs intAt:i put:p - is];
+        for (k = i + 1; k < j; k++)
+            [runs intAt:k put:0];
+        m = [runs intAt:j];
+        assert (q < je);
+        [runs intAt:j put:je - q - 1];
 
-      r = i;
-      if (is == p)
-	{
-	  id atb = [values removeAt:r];
+        r = i;
+        if (is == p)
+        {
+            id atb = [values removeAt:r];
 #ifndef OBJC_REFCNT
-	  [[atb freeContents] free];
+            [[atb freeContents] free];
 #endif
-	}
-      else
-	{
-	  r++;
-	}
-      for (k = i + 1; k < j; k++)
-	{
-	  id atb = [values removeAt:r];
+        }
+        else
+        {
+            r++;
+        }
+        for (k = i + 1; k < j; k++)
+        {
+            id atb = [values removeAt:r];
 #ifndef OBJC_REFCNT
-	  [[atb freeContents] free];
+            [[atb freeContents] free];
 #endif
-	}
-      if (je == q + 1)
-	{
-	  id atb = [values removeAt:r];
+        }
+        if (je == q + 1)
+        {
+            id atb = [values removeAt:r];
 #ifndef OBJC_REFCNT
-	  [[atb freeContents] free];
+            [[atb freeContents] free];
 #endif
-	}
+        }
     }
 
-  size -= n;
-  [runs packContents];		/* get rid of zeroes */
+    size -= n;
+    [runs packContents]; /* get rid of zeroes */
 
-  assert ([self check]);
-  return self;
+    assert ([self check]);
+    return self;
 }
 
 - concat:b
 {
-  int i, m, n, k;
-  id v, r = [b runs];
+    int i, m, n, k;
+    id v, r = [b runs];
 
-  k = [values size];
-  n = [[b values] size];
-  for (i = 0; i < n; i++)
-    [runs intAt:k + i put:[r intAt:i]];
+    k = [values size];
+    n = [[b values] size];
+    for (i = 0; i < n; i++)
+        [runs intAt:k + i put:[r intAt:i]];
 
-  v = [[b values] deepCopy];
-  [values addAll:v];
+    v = [[b values] deepCopy];
+    [values addAll:v];
 #ifndef OBJC_REFCNT
-  [v free];
+    [v free];
 #endif
-  m = [runs capacity];
-  if (m < k + n)
-    [runs capacity:(k + n + 4)];
+    m = [runs capacity];
+    if (m < k + n)
+        [runs capacity:(k + n + 4)];
 
-  size += [b size];
-  assert ([self check]);
-  return self;
+    size += [b size];
+    assert ([self check]);
+    return self;
 }
 
 - coalesce
 {
-  int n = [values size];
+    int n = [values size];
 
-  while (n--)
+    while (n--)
     {
-      id v, w;
-      if (n == 0)
-	break;
-      v = [values at:n];
-      w = [values at:n - 1];
-      if ([v isEqual:w])
-	{
-	  id atb;
-	  unsigned p = [runs intAt:n];
-	  unsigned q = [runs intAt:n - 1];
-	  [runs intAt:n - 1 put:p + q];
-	  [runs intAt:n put:0];
-	  atb = [values removeAt:n];
+        id v, w;
+        if (n == 0)
+            break;
+        v = [values at:n];
+        w = [values at:n - 1];
+        if ([v isEqual:w])
+        {
+            id atb;
+            unsigned p = [runs intAt:n];
+            unsigned q = [runs intAt:n - 1];
+            [runs intAt:n - 1 put:p + q];
+            [runs intAt:n put:0];
+            atb = [values removeAt:n];
 #ifndef OBJC_REFCNT
-	  [[atb freeContents] free];
+            [[atb freeContents] free];
 #endif
-	  [runs packContents];
-	}
+            [runs packContents];
+        }
     }
 
-  return self;
+    return self;
 }
-
 
 - printOn:(IOD)aFile
 {
-  fprintf (aFile, "RunArray runs ");
-  [runs printOn:aFile];
-  [values printOn:aFile];
-  return self;
+    fprintf (aFile, "RunArray runs ");
+    [runs printOn:aFile];
+    [values printOn:aFile];
+    return self;
 }
 
 @end
- 

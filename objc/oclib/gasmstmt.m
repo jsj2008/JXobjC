@@ -3,7 +3,7 @@
  * Copyright (c) 1998 David Stes.
  *
  * This library is free software; you can redistribute it and/or modify it
- * under the terms of the GNU Library General Public License as published 
+ * under the terms of the GNU Library General Public License as published
  * by the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
  *
@@ -24,7 +24,7 @@
 #include <assert.h>
 #ifndef __OBJECT_INCLUDED__
 #define __OBJECT_INCLUDED__
-#include <stdio.h> /* FILE */
+#include <stdio.h>  /* FILE */
 #include "Object.h" /* Stepstone Object.h assumes #import */
 #endif
 #include <ordcltn.h>
@@ -36,96 +36,102 @@
 
 - keyw:k
 {
-  keyw = k;
-  return self;
+    keyw = k;
+    return self;
 }
 
 - typequal:k
 {
-  typequal = k;
-  return self;
+    typequal = k;
+    return self;
 }
 
 - expr:e
 {
-  expr = e;
-  return self;
+    expr = e;
+    return self;
 }
 
 - asmop1:op
 {
-  asmop1 = op;
-  return self;
+    asmop1 = op;
+    return self;
 }
 
 - asmop2:op
 {
-  asmop2 = op;
-  return self;
+    asmop2 = op;
+    return self;
 }
 
 - clobbers:c
 {
-  clobbers = c;
-  return self;
+    clobbers = c;
+    return self;
 }
 
 - synth
 {
-  [expr synth];
-  if (asmop1)
-    [asmop1 elementsPerform:_cmd];
-  if (asmop2)
-    [asmop2 elementsPerform:_cmd];
-  return self;
+    [expr synth];
+    if (asmop1)
+        [asmop1 elementsPerform:_cmd];
+    if (asmop2)
+        [asmop2 elementsPerform:_cmd];
+    return self;
 }
 
 - gen
 {
-  [keyw gen];
-  if (typequal)
-    [typequal gen];
-  gc('(');
-  if (expr)
-    [expr gen];
-  if (asmop1 || asmop2 || clobbers) {
-    gc(':');
-  }
-  if (asmop1) {
-    gcommalist(asmop1);
-  }
-  if (asmop2 || clobbers) {
-    gc(':');
-  }
-  if (asmop2) {
-    gcommalist(asmop2);
-  }
-  if (clobbers) {
-    gc(':');
-  }
-  if (clobbers) {
-    int i, n;
-    int comma = 0;
-
-    for (i = 0, n = [clobbers size]; i < n; i++) {
-      if (comma)
-	gc(',');
-      else
-	comma++;
-      [[clobbers at:i] elementsPerform:_cmd];
+    [keyw gen];
+    if (typequal)
+        [typequal gen];
+    gc ('(');
+    if (expr)
+        [expr gen];
+    if (asmop1 || asmop2 || clobbers)
+    {
+        gc (':');
     }
-  }
-  gc(')');
-  gc(';');
-  return self;
+    if (asmop1)
+    {
+        gcommalist (asmop1);
+    }
+    if (asmop2 || clobbers)
+    {
+        gc (':');
+    }
+    if (asmop2)
+    {
+        gcommalist (asmop2);
+    }
+    if (clobbers)
+    {
+        gc (':');
+    }
+    if (clobbers)
+    {
+        int i, n;
+        int comma = 0;
+
+        for (i = 0, n = [clobbers size]; i < n; i++)
+        {
+            if (comma)
+                gc (',');
+            else
+                comma++;
+            [[clobbers at:i] elementsPerform:_cmd];
+        }
+    }
+    gc (')');
+    gc (';');
+    return self;
 }
 
 - st80
 {
-  [expr st80];
-  gs(".\n");
-  return self;
+    [expr st80];
+    gs (".\n");
+    return self;
 }
 
 @end
- 

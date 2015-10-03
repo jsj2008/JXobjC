@@ -3,7 +3,7 @@
  * Copyright (c) 1998 David Stes.
  *
  * This library is free software; you can redistribute it and/or modify it
- * under the terms of the GNU Library General Public License as published 
+ * under the terms of the GNU Library General Public License as published
  * by the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
  *
@@ -23,12 +23,12 @@ extern id curstruct;
 
 @interface StructSpec : Node
 {
-  id keyw, name;
-  id lbrace;
-  id defs;
-  id rbrace;
-  id compdic, compnames, comptypes;
-  id tmplinst;
+    id keyw, name;
+    id lbrace;
+    id defs;
+    id rbrace;
+    id compdic, compnames, comptypes;
+    id tmplinst;
 }
 
 - (int)lineno;
@@ -45,4 +45,3 @@ extern id curstruct;
 - defcomp:sym astype:t;
 
 @end
- 

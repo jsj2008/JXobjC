@@ -3,7 +3,7 @@
  * Copyright (c) 1998,99,2002 David Stes.
  *
  * This library is free software; you can redistribute it and/or modify it
- * under the terms of the GNU Library General Public License as published 
+ * under the terms of the GNU Library General Public License as published
  * by the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
  *
@@ -51,8 +51,8 @@ int o_selptr;
 int o_cache;
 int o_filer;
 int o_selfassign;
-char *o_bind;
-char *o_browsedir;
+char * o_bind;
+char * o_browsedir;
 int o_refbind;
 int o_inlinecache;
 int o_cplus;
@@ -74,14 +74,14 @@ int o_warnlocalnst;
 int o_warnnotfound;
 int o_warnmissingmethods;
 int o_postlink;
-char *o_infile;
-char *o_outfile;
-char *o_srcfilename;
-char *o_initcall;
-char *o_tagformat;
+char * o_infile;
+char * o_outfile;
+char * o_srcfilename;
+char * o_initcall;
+char * o_tagformat;
 int o_linetag;
-char *o_mainfun;
-char *o_pathsep;
+char * o_mainfun;
+char * o_pathsep;
 int o_debuginfo;
 int o_checkbind;
 int o_linemax;
@@ -89,69 +89,67 @@ int o_structassign;
 id o_stepbreak;
 int o_stepnext;
 
-void 
-defoptions(void)
+void defoptions (void)
 {
-  o_tagformat = "#line %d \"%s\"\n";
-  o_quiet = 0;
-  o_outputcode = 1;
-  o_gencode = 1;
-  o_st80 = 0;
-  o_otb = 0;			/* object table (ie double indirection) */
-  o_fwd = 1;			/* use fwdimp() */
-  o_selptr = 1;			/* use selptrfwd optimization of fwdimp() */
-  o_version = 0;
-  o_infile = NULL;		/* stdin */
-  o_outfile = NULL;		/* stdout */
-  o_srcfilename = NULL;
-  o_initcall = NULL;
-  o_mainfun = "main";
-  o_seltranslation = 1;
-  o_inlinecache = 0;
-  o_nolinetags = 0;
-  o_postlink = 0;
-  o_shareddata = 1;
-  o_refbind = 0;		/* force a reference to the BIND() function - Metrowerks */
-  o_browsedir=NULL;
-  o_checkbind = 0;
-  o_warnlex = 0;
-  o_warnfwd = 0;
-  o_warnclasstype = 1;
-  o_warntypeconflict = 1;
-  o_warnundefined = 1;
-  o_warnnotfound = 1;
-  o_warnintvar = 1;
-  o_warnmissingmethods = 1;
-  o_warnlocalnst = 1;
-  o_warnsuggest = 1;
-  o_buffered = 1;
-  o_comments = 0;
-  o_duptypedefs = 0;
-  o_msdos = 0;
-  o_gnu = 0;
-  o_warnings = 1;
-  o_vms = 0;
-  o_hpux = 0;
-  o_refcnt = 0;
-  o_cplus = 0;
-  o_debuginfo = 0;
-  o_ppi = 0;
-  o_ibmvac = 0;
-  o_pathsep = (char *) getenv("OBJCPATHSEP");
-  if (!o_pathsep)
-    o_pathsep = OBJCRT_DEFAULT_PATHSEPC;
-  o_oneperfile = 0;
-  o_cvars = 1;
-  o_enableasm = 1;		/* DEC header defines an asm() function */
-  o_llkeyw = 1;			/* __long_long irix type */
-  o_blocks = 1;
-  o_filer = 1;
-  o_bind = "";			/* can be set to __declspec(export) -- may not be NULL */
-  o_linemax = 0;
-  o_structassign = 1;		/* in case some compiler would not allow this */
-  o_cache = 1;
-  o_nilrcvr = 1;
-  o_selfassign = 1;
-  o_categories = 1;
+    o_tagformat = "#line %d \"%s\"\n";
+    o_quiet = 0;
+    o_outputcode = 1;
+    o_gencode = 1;
+    o_st80 = 0;
+    o_otb = 0;    /* object table (ie double indirection) */
+    o_fwd = 1;    /* use fwdimp() */
+    o_selptr = 1; /* use selptrfwd optimization of fwdimp() */
+    o_version = 0;
+    o_infile = NULL;  /* stdin */
+    o_outfile = NULL; /* stdout */
+    o_srcfilename = NULL;
+    o_initcall = NULL;
+    o_mainfun = "main";
+    o_seltranslation = 1;
+    o_inlinecache = 0;
+    o_nolinetags = 0;
+    o_postlink = 0;
+    o_shareddata = 1;
+    o_refbind = 0; /* force a reference to the BIND() function - Metrowerks */
+    o_browsedir = NULL;
+    o_checkbind = 0;
+    o_warnlex = 0;
+    o_warnfwd = 0;
+    o_warnclasstype = 1;
+    o_warntypeconflict = 1;
+    o_warnundefined = 1;
+    o_warnnotfound = 1;
+    o_warnintvar = 1;
+    o_warnmissingmethods = 1;
+    o_warnlocalnst = 1;
+    o_warnsuggest = 1;
+    o_buffered = 1;
+    o_comments = 0;
+    o_duptypedefs = 0;
+    o_msdos = 0;
+    o_gnu = 0;
+    o_warnings = 1;
+    o_vms = 0;
+    o_hpux = 0;
+    o_refcnt = 0;
+    o_cplus = 0;
+    o_debuginfo = 0;
+    o_ppi = 0;
+    o_ibmvac = 0;
+    o_pathsep = (char *)getenv ("OBJCPATHSEP");
+    if (!o_pathsep)
+        o_pathsep = OBJCRT_DEFAULT_PATHSEPC;
+    o_oneperfile = 0;
+    o_cvars = 1;
+    o_enableasm = 1; /* DEC header defines an asm() function */
+    o_llkeyw = 1;    /* __long_long irix type */
+    o_blocks = 1;
+    o_filer = 1;
+    o_bind = ""; /* can be set to __declspec(export) -- may not be NULL */
+    o_linemax = 0;
+    o_structassign = 1; /* in case some compiler would not allow this */
+    o_cache = 1;
+    o_nilrcvr = 1;
+    o_selfassign = 1;
+    o_categories = 1;
 }
- 

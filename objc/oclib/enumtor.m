@@ -3,7 +3,7 @@
  * Copyright (c) 1998 David Stes.
  *
  * This library is free software; you can redistribute it and/or modify it
- * under the terms of the GNU Library General Public License as published 
+ * under the terms of the GNU Library General Public License as published
  * by the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
  *
@@ -25,7 +25,7 @@
 #include <string.h>
 #ifndef __OBJECT_INCLUDED__
 #define __OBJECT_INCLUDED__
-#include <stdio.h> /* FILE */
+#include <stdio.h>  /* FILE */
 #include "Object.h" /* Stepstone Object.h assumes #import */
 #endif
 #include "node.h"
@@ -34,52 +34,43 @@
 
 @implementation Enumerator
 
-- (BOOL)isenumtor
-{
-  return YES;
-}
+- (BOOL)isenumtor { return YES; }
 
 - name:n
 {
-  name = n;
-  return self;
+    name = n;
+    return self;
 }
 
 - value:v
 {
-  value = v;
-  return self;
+    value = v;
+    return self;
 }
 
-- (STR)str
-{
-  return [name str];
-}
+- (STR)str { return [name str]; }
 
-- (unsigned) hash
-{
-  return [name hash];
-}
+- (unsigned)hash { return [name hash]; }
 
 - (BOOL)isEqual:x
 {
-  return strcmp([name str], [x str]) == 0;	/* works for String subcls. */
+    return strcmp ([name str], [x str]) == 0; /* works for String subcls. */
 }
 
 - synth
 {
-  [trlunit defenumtor:self];
-  return self;
+    [trlunit defenumtor:self];
+    return self;
 }
 
 - gen
 {
-  [name gen];
-  if (value) {
-    gc('=');
-    [value gen];
-  }
-  return self;
+    [name gen];
+    if (value)
+    {
+        gc ('=');
+        [value gen];
+    }
+    return self;
 }
 @end
- 

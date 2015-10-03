@@ -3,7 +3,7 @@
  * Copyright (c) 1998,2000 David Stes.
  *
  * This library is free software; you can redistribute it and/or modify it
- * under the terms of the GNU Library General Public License as published 
+ * under the terms of the GNU Library General Public License as published
  * by the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
  *
@@ -24,7 +24,7 @@
 #include <assert.h>
 #ifndef __OBJECT_INCLUDED__
 #define __OBJECT_INCLUDED__
-#include <stdio.h> /* FILE */
+#include <stdio.h>  /* FILE */
 #include "Object.h" /* Stepstone Object.h assumes #import */
 #endif
 #include "node.h"
@@ -37,84 +37,87 @@
 
 @implementation IndexExpr
 
-- lhs:e  {
-  lhs = e;
-  return self;
+- lhs:e
+{
+    lhs = e;
+    return self;
 }
-- rhs:e  {
-  rhs = e;
-  return self;
+- rhs:e
+{
+    rhs = e;
+    return self;
 }
 
-- (int)lineno
-{
-  return [lhs lineno];
-}
+- (int)lineno { return [lhs lineno]; }
 
-- filename
-{
-  return [lhs filename];
-}
+- filename { return [lhs filename]; }
 
 - synth
 {
-  [lhs synth];
-  [rhs synth];
-  return self;
+    [lhs synth];
+    [rhs synth];
+    return self;
 }
 
 - typesynth
 {
-  type = [[lhs type] star];
-  return self;
+    type = [[lhs type] star];
+    return self;
 }
 
 - gen
 {
-  [lhs gen];
-  gc('[');
-  [rhs gen];
-  gc(']');
-  return self;
+    [lhs gen];
+    gc ('[');
+    [rhs gen];
+    gc (']');
+    return self;
 }
 
 - go
 {
-  id a = [lhs go];
-  id b = [rhs go];
+    id a = [lhs go];
+    id b = [rhs go];
 
-  if ([a isKindOf:(id)[ArrayVariable class]]) {
-    int i = [b u_int];
-    return [a at:i];
-  } else {
-    int i = [b u_int];
-    if ([a type] == t_str) {
-      STR s = [a u_str];
-      return [[Scalar new] u_char:s[i]];
+    if ([a isKindOf:(id)[ArrayVariable class]])
+    {
+        int i = [b u_int];
+        return [a at:i];
     }
-    return [self notImplemented];
-  }
+    else
+    {
+        int i = [b u_int];
+        if ([a type] == t_str)
+        {
+            STR s = [a u_str];
+            return [[Scalar new] u_char:s[i]];
+        }
+        return [self notImplemented];
+    }
 }
 
 - assignvar:v
 {
-  id a = [lhs go];
-  id b = [rhs go];
+    id a = [lhs go];
+    id b = [rhs go];
 
-  if ([a isKindOf:(id)[ArrayVariable class]]) {
-    int i = [b u_int];
-    [a at:i put:v];
-    return v;
-  } else {
-    int i = [b u_int];
-    if ([a type] == t_str) {
-      STR s = [a u_str];
-      s[i] = [v u_char];
-      return v;
+    if ([a isKindOf:(id)[ArrayVariable class]])
+    {
+        int i = [b u_int];
+        [a at:i put:v];
+        return v;
     }
-    return [self notImplemented];
-  }
+    else
+    {
+        int i = [b u_int];
+        if ([a type] == t_str)
+        {
+            STR s = [a u_str];
+            s[i] = [v u_char];
+            return v;
+        }
+        return [self notImplemented];
+    }
 }
 
 @end
- 

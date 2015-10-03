@@ -3,7 +3,7 @@
  * Copyright (c) 1998 David Stes.
  *
  * This library is free software; you can redistribute it and/or modify it
- * under the terms of the GNU Library General Public License as published 
+ * under the terms of the GNU Library General Public License as published
  * by the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
  *
@@ -24,7 +24,7 @@
 #include <assert.h>
 #ifndef __OBJECT_INCLUDED__
 #define __OBJECT_INCLUDED__
-#include <stdio.h> /* FILE */
+#include <stdio.h>  /* FILE */
 #include "Object.h" /* Stepstone Object.h assumes #import */
 #endif
 #include "node.h"
@@ -33,120 +33,116 @@
 
 @implementation ArrayDecl
 
-- decl
-{
-  return decl;
-}
+- decl { return decl; }
 
-- expr
-{
-  return expr;
-}
+- expr { return expr; }
 
 - decl:aRcvr
 {
-  decl = aRcvr;
-  return self;
+    decl = aRcvr;
+    return self;
 }
 
 - star
 {
-  if (decl) {
-    return [[self copy] decl:[decl star]];
-  } else {
-    return nil;
-  }
+    if (decl)
+    {
+        return [[self copy] decl:[decl star]];
+    }
+    else
+    {
+        return nil;
+    }
 }
 
 - abstrdecl
 {
-  if (decl) {
-    id x = [decl abstrdecl];
+    if (decl)
+    {
+        id x = [decl abstrdecl];
 
-    return [[self copy] decl:x];
-  } else {
-    return self;
-  }
+        return [[self copy] decl:x];
+    }
+    else
+    {
+        return self;
+    }
 }
 
 - (unsigned)hash
 {
-  unsigned h = 0;
+    unsigned h = 0;
 
-  if (decl)
-    h ^= [decl hash];
-  if (expr)
-    h ^= [expr hash];
-  return h;
+    if (decl)
+        h ^= [decl hash];
+    if (expr)
+        h ^= [expr hash];
+    return h;
 }
 
 - (BOOL)isEqual:x
 {
-  id a, b;
+    id a, b;
 
-  if (self == x)
+    if (self == x)
+        return YES;
+    a = [x decl];
+    if (decl && a && ![decl isEqual:a])
+        return NO;
+    if ((!decl || !a) && (decl != a))
+        return NO;
+    b = [x expr];
+    if (expr && b && ![expr isEqual:b])
+        return NO;
+    if ((!expr || !b) && (expr != b))
+        return NO;
     return YES;
-  a = [x decl];
-  if (decl && a && ![decl isEqual:a])
-    return NO;
-  if ((!decl || !a) && (decl != a))
-    return NO;
-  b = [x expr];
-  if (expr && b && ![expr isEqual:b])
-    return NO;
-  if ((!expr || !b) && (expr != b))
-    return NO;
-  return YES;
 }
 
-- identifier
-{
-  return (decl) ? [decl identifier] : nil;
-}
+- identifier { return (decl) ? [decl identifier] : nil; }
 
-- (BOOL)isfunproto
-{
-  return (decl) ? [decl isfunproto] : NO;
-}
+- (BOOL)isfunproto { return (decl) ? [decl isfunproto] : NO; }
 
 - expr:aRcvr
 {
-  expr = aRcvr;
-  return self;
+    expr = aRcvr;
+    return self;
 }
 
 - gendef:sym
 {
-  if (decl) {
-    [decl gendef:sym];
-  } else {
-    if (sym)
-      [sym gen];
-  }
-  gc('[');
-  if (expr)
-    [expr gen];
-  gc(']');
-  return self;
+    if (decl)
+    {
+        [decl gendef:sym];
+    }
+    else
+    {
+        if (sym)
+            [sym gen];
+    }
+    gc ('[');
+    if (expr)
+        [expr gen];
+    gc (']');
+    return self;
 }
 
 - gen
 {
-  if (decl)
-    [decl gen];
-  gc('[');
-  if (expr)
-    [expr gen];
-  gc(']');
-  return self;
+    if (decl)
+        [decl gen];
+    gc ('[');
+    if (expr)
+        [expr gen];
+    gc (']');
+    return self;
 }
 
 - st80
 {
-  if (decl)
-    [decl st80];
-  return self;
+    if (decl)
+        [decl st80];
+    return self;
 }
 
 @end
- 

@@ -6,7 +6,7 @@
 
 /*
  * This library is free software; you can redistribute it and/or modify it
- * under the terms of the GNU Library General Public License as published 
+ * under the terms of the GNU Library General Public License as published
  * by the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
  *
@@ -30,80 +30,55 @@
 
 @implementation Paragraph
 
-+ new
-{
-  return [self withText:[Text new]];
-}
++ new { return [self withText:[Text new]]; }
 
-+ withText:aText
-{
-  return [self withText:aText style:[TextStyle default]];
-}
++ withText:aText { return [self withText:aText style:[TextStyle default]]; }
 
 + withText:aText style:aStyle
 {
-  return [[super new] withText:aText style:aStyle];
+    return [[super new] withText:aText style:aStyle];
 }
 
 - withText:r style:v
 {
-  text = r;
-  textStyle = v;
-  return self;
+    text = r;
+    textStyle = v;
+    return self;
 }
 
-- copy
-{
-  return [isa withText:[text copy] style:[textStyle copy]];
-}
+- copy { return [isa withText:[text copy] style:[textStyle copy]]; }
 
 - free
 {
-  text = [text free];
-  textStyle = [textStyle free];
-  return [super free];
+    text = [text free];
+    textStyle = [textStyle free];
+    return [super free];
 }
 
+- text { return text; }
 
-- text
-{
-  return text;
-}
-
-- textStyle
-{
-  return textStyle;
-}
+- textStyle { return textStyle; }
 
 - text:v
 {
-  text = v;
-  return self;
+    text = v;
+    return self;
 }
 
 - textStyle:v
 {
-  textStyle = v;
-  return self;
+    textStyle = v;
+    return self;
 }
 
+- asString { return [text asString]; }
 
-- asString
-{
-  return [text asString];
-}
-
-- asText
-{
-  return [text asText];
-}
-
+- asText { return [text asText]; }
 
 - printOn:(IOD)aFile
 {
-  [text printOn:aFile];
-  return self;
+    [text printOn:aFile];
+    return self;
 }
 
 @end
- 

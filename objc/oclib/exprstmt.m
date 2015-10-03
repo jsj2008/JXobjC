@@ -3,7 +3,7 @@
  * Copyright (c) 1998 David Stes.
  *
  * This library is free software; you can redistribute it and/or modify it
- * under the terms of the GNU Library General Public License as published 
+ * under the terms of the GNU Library General Public License as published
  * by the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
  *
@@ -24,7 +24,7 @@
 #include <assert.h>
 #ifndef __OBJECT_INCLUDED__
 #define __OBJECT_INCLUDED__
-#include <stdio.h> /* FILE */
+#include <stdio.h>  /* FILE */
 #include "Object.h" /* Stepstone Object.h assumes #import */
 #endif
 #include "node.h"
@@ -35,43 +35,43 @@
 
 - expr:anExpr
 {
-  expr = anExpr;
-  return self;
+    expr = anExpr;
+    return self;
 }
 
 - forcenewline:(BOOL)flag
 {
-  forcenewline = flag;
-  return self;
+    forcenewline = flag;
+    return self;
 }
 
 - synth
 {
-  [expr synth];
-  return self;
+    [expr synth];
+    return self;
 }
 
 - gen
 {
-  if (expr)
-    [expr gen];
-  gc(';');
-  if (forcenewline) gc('\n');
-  return self;
+    if (expr)
+        [expr gen];
+    gc (';');
+    if (forcenewline)
+        gc ('\n');
+    return self;
 }
 
 - go
 {
-  [expr go];
-  return self;
+    [expr go];
+    return self;
 }
 
 - st80
 {
-  [expr st80];
-  gs(".\n");
-  return self;
+    [expr st80];
+    gs (".\n");
+    return self;
 }
 
 @end
- 

@@ -6,7 +6,7 @@
 
 /*
  * This library is free software; you can redistribute it and/or modify it
- * under the terms of the GNU Library General Public License as published 
+ * under the terms of the GNU Library General Public License as published
  * by the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
  *
@@ -29,38 +29,28 @@
  * (unused) class for compatibility with Stepstone runtime
  */
 
-+ over:anId
++ over:anId { return [self notImplemented:_cmd]; }
+
+- over:anId unique:(BOOL)flag { return [self notImplemented:_cmd]; }
+
++ over:anId unique:(BOOL)flag { return [self notImplemented:_cmd]; }
+
+- (unsigned)size
 {
-  return [self notImplemented:_cmd];
+    [self notImplemented:_cmd];
+    return 0;
 }
 
-- over:anId unique:(BOOL)flag
+- error:(STR)fmt, ...
 {
-  return [self notImplemented:_cmd];
-}
-
-+ over:anId unique:(BOOL)flag
-{
-  return [self notImplemented:_cmd];
-}
-
-- (unsigned) size
-{
-  [self notImplemented:_cmd];
-  return 0;
-}
-
-- error:(STR)fmt,...
-{
-  [self notImplemented:_cmd];
-  return self;
+    [self notImplemented:_cmd];
+    return self;
 }
 
 - add:anObject
 {
-  [self notImplemented:_cmd];
-  return self;
+    [self notImplemented:_cmd];
+    return self;
 }
 
 @end
- 

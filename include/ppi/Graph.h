@@ -15,11 +15,9 @@
 + over:anId;
 - over:anId unique:(BOOL)flag;
 + over:anId unique:(BOOL)flag;
-- (unsigned) size;
-- error:(STR)fmt,...;
+- (unsigned)size;
+- error:(STR)fmt, ...;
 - add:anObject;
 @end
 
 #endif /* __OBJGRAPH_H__ */
-
-

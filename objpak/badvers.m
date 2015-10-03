@@ -6,7 +6,7 @@
 
 /*
  * This library is free software; you can redistribute it and/or modify it
- * under the terms of the GNU Library General Public License as published 
+ * under the terms of the GNU Library General Public License as published
  * by the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
  *
@@ -27,31 +27,25 @@
 #include "ocstring.h"
 
 @implementation BadVersion
-- (int) goodVersion
-{
-  return goodVersion;
-}
+- (int)goodVersion { return goodVersion; }
 
-- (int) badVersion
-{
-  return badVersion;
-}
+- (int)badVersion { return badVersion; }
 
 - goodVersion:(int)g badVersion:(int)b
 {
-  goodVersion = g;
-  badVersion = b;
-  return self;
+    goodVersion = g;
+    badVersion = b;
+    return self;
 }
 
 - signal
 {
-  if (!messageText)
+    if (!messageText)
     {
-      messageText = [String sprintf:"Expect version %i, got version %i", goodVersion, badVersion];
+        messageText = [String sprintf:"Expect version %i, got version %i",
+                                      goodVersion, badVersion];
     }
-  return [super signal];
+    return [super signal];
 }
 
 @end
- 

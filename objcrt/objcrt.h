@@ -6,7 +6,7 @@
 
 /*
  * This library is free software; you can redistribute it and/or modify it
- * under the terms of the GNU Library General Public License as published 
+ * under the terms of the GNU Library General Public License as published
  * by the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
  *
@@ -27,11 +27,11 @@
 
 #include "config.h"
 
-#include <stdio.h>		/* FILE */
-#include <stddef.h>		/* size_t */
+#include <stdio.h>  /* FILE */
+#include <stddef.h> /* size_t */
 
 #ifndef EXPORT
-#define EXPORT			/* empty */
+#define EXPORT /* empty */
 #endif
 
 #ifndef EXTERNC
@@ -42,7 +42,6 @@
 #endif
 #endif
 
-
 /* The "id" type is assumed to be defined by the compiler
  * (in the case of objc or objcc, by emitting a typedef)
  * This also allows for cross compiles with gcc in ObjC mode
@@ -52,33 +51,33 @@
 /* The traditional Objective C types (see Brad Cox' book)
  */
 
-typedef char *SEL;		/* Uniqued String for Selector */
-typedef char *STR;		/* C, NULL-terminated, String */
-typedef char BOOL;		/* Boolean */
-typedef FILE *IOD;		/* I/O Device */
-typedef id SHR;			/* type of class, for us, it's id */
+typedef char * SEL; /* Uniqued String for Selector */
+typedef char * STR; /* C, NULL-terminated, String */
+typedef char BOOL;  /* Boolean */
+typedef FILE * IOD; /* I/O Device */
+typedef id SHR;     /* type of class, for us, it's id */
 
 #ifdef __cplusplus
-typedef id (*IMP) (...);	/* Method pointer */
+typedef id (*IMP) (...); /* Method pointer */
 #else
-typedef id (*IMP) ();		/* Method pointer */
+typedef id (*IMP) (); /* Method pointer */
 #endif
 
-typedef void (*ARGIMP) (id, SEL, void *);	/* dispatcher */
+typedef void (*ARGIMP) (id, SEL, void *); /* dispatcher */
 
-/* The traditional Objective C defines 
+/* The traditional Objective C defines
  */
 
 #ifndef YES
-#define YES (BOOL)1		/* Boolean TRUE */
+#define YES (BOOL)1 /* Boolean TRUE */
 #endif
 
 #ifndef NO
-#define NO (BOOL)0		/* Boolean FALSE */
+#define NO (BOOL)0 /* Boolean FALSE */
 #endif
 
 #ifndef nil
-#define nil (id)0		/* id of Nil instance */
+#define nil (id)0 /* id of Nil instance */
 #endif
 
 /* varargs for _error error reporting
@@ -87,22 +86,22 @@ typedef void (*ARGIMP) (id, SEL, void *);	/* dispatcher */
 #if OBJCRT_USE_STDARG
 #include <stdarg.h>
 #define OC_VA_LIST va_list
-#define OC_VA_START(ap,larg) va_start(ap,larg)
-#define OC_VA_ARG(ap,type) va_arg(ap,type)
-#define OC_VA_END(ap) va_end(ap)
+#define OC_VA_START(ap, larg) va_start (ap, larg)
+#define OC_VA_ARG(ap, type) va_arg (ap, type)
+#define OC_VA_END(ap) va_end (ap)
 #else
 #include <varargs.h>
 #define OC_VA_LIST va_list
-#define OC_VA_START(ap,larg) va_start(ap)
-#define OC_VA_ARG(ap,type) va_arg(ap,type)
-#define OC_VA_END(ap) va_end(ap)
+#define OC_VA_START(ap, larg) va_start (ap)
+#define OC_VA_ARG(ap, type) va_arg (ap, type)
+#define OC_VA_END(ap) va_end (ap)
 #endif /* OBJCRT_USE_STDARG */
 
 /* Types for Objective C classes.
 
  * These SHOULD MATCH what the compiler is emitting (for struct _PRIVATE
  * and struct _SHARED).
- * 
+ *
  * The compiler emits the types, as to be able to generate code that can
  * work with the Stepstone runtime.
  *
@@ -115,7 +114,7 @@ typedef void (*ARGIMP) (id, SEL, void *);	/* dispatcher */
  */
 
 struct objcrt_private
-  {
+{
     id isa;
 #ifdef OBJC_REFCNT
     unsigned int _refcnt;
@@ -123,40 +122,40 @@ struct objcrt_private
     unsigned short attr;
     unsigned short objID;
 #endif
-  };
+};
 
 struct objcrt_shared
-  {
+{
     id isa;
 #ifdef OBJC_REFCNT
     unsigned int _refcnt;
 #endif
     id clsSuper;
-    char *clsName;
-    char *clsTypes;
+    char * clsName;
+    char * clsTypes;
     short clsSizInstance;
     short clsSizDict;
-    struct objcrt_slt *clsDispTable;
+    struct objcrt_slt * clsDispTable;
     long clsStatus;
-    struct objcrt_modDescriptor *clsMod;
+    struct objcrt_modDescriptor * clsMod;
     unsigned clsVersion;
-    id clsCats;			/* obsolete, will go away */
-    id *clsGlbl;		/* only if CLS_POSING */
-  };
+    id clsCats;   /* obsolete, will go away */
+    id * clsGlbl; /* only if CLS_POSING */
+};
 
-typedef struct objcrt_shared *Cls_t;	/* use only for impl */
+typedef struct objcrt_shared * Cls_t; /* use only for impl */
 
 /* Masks for clsStatus */
 
 #define CLS_FACTORY 0x1L
 #define CLS_META 0x2L
 #define CLS_INITIALIZED 0x4L
-#define CLS_POSING 0x8L		/* unused, but present in, Stepstn. */
+#define CLS_POSING 0x8L /* unused, but present in, Stepstn. */
 #define CLS_MAPPED 0x10L
 /* POC extensions */
-#define CLS_CATS 0x20L		/* obsoleted, will go away */
-#define CLS_CAT 0x40L		/* new category implementation 10/97 */
-#define CLS_REFCNT 0x80L	/* refcnt classes 1/99 */
+#define CLS_CATS 0x20L   /* obsoleted, will go away */
+#define CLS_CAT 0x40L    /* new category implementation 10/97 */
+#define CLS_REFCNT 0x80L /* refcnt classes 1/99 */
 
 /* CLS_POSING isn't actually used it seems for Stepstone
  * (although they define it).  Let's use this flag to check whether
@@ -166,9 +165,9 @@ typedef struct objcrt_shared *Cls_t;	/* use only for impl */
 #define hasposing(aCls) ((aCls)->clsStatus & CLS_POSING)
 
 #ifndef OTBCRT
-#define getcls(x) ((Cls_t)(x))
+#define getcls(x) ((Cls_t) (x))
 #else
-#define getcls(x) ((Cls_t)((x)->ptr))
+#define getcls(x) ((Cls_t) ((x)->ptr))
 #endif
 
 /* Dispatch table entry.
@@ -177,33 +176,32 @@ typedef struct objcrt_shared *Cls_t;	/* use only for impl */
  */
 
 struct objcrt_slt
-  {
+{
     SEL _cmd;
     IMP _imp;
-  };
+};
 
 /* Use Descriptor for automatic initialization (as opposed to postLink).
  * Should match struct useDescriptor emitted by compiler.
  */
 
 struct objcrt_useDescriptor
-  {
+{
     int processed;
-    struct objcrt_useDescriptor *next;
-    struct objcrt_useDescriptor ***uses;
-    struct objcrt_modDescriptor *(*bind) ();
-  };
+    struct objcrt_useDescriptor * next;
+    struct objcrt_useDescriptor *** uses;
+    struct objcrt_modDescriptor * (*bind) ();
+};
 
 /*
  * HashTable Types
  */
 
 typedef struct hashedSelector
-  {
-    struct hashedSelector *next;
+{
+    struct hashedSelector * next;
     STR key;
-  }
-HASH, *PHASH;
+} HASH, *PHASH;
 
 /*
  * Module Types.
@@ -211,55 +209,55 @@ HASH, *PHASH;
  */
 
 typedef struct objcrt_modDescriptor MOD, *PMOD;
-typedef struct objcrt_methodDescriptor METH, *PMETH;	/* for static binding */
+typedef struct objcrt_methodDescriptor METH, *PMETH; /* for static binding */
 
 struct objcrt_modDescriptor
-  {
+{
     STR modName;
     STR modVersion;
     long modStatus;
     SEL modMinSel;
     SEL modMaxSel;
-    id *modClsLst;		/* single or array of class globals */
+    id * modClsLst; /* single or array of class globals */
     short modSelRef;
-    SEL *modSelTbl;
-    PMETH modMapTbl;		/* not used */
-  };
+    SEL * modSelTbl;
+    PMETH modMapTbl; /* not used */
+};
 
 struct objcrt_modEntry
-  {
+{
     PMOD (*modLink) ();
     PMOD modInfo;
-  };
+};
 
-typedef struct objcrt_modEntry *Mentry_t;
+typedef struct objcrt_modEntry * Mentry_t;
 
 struct objcrt_methodDescriptor
-  {				/* for static binding - not used */
-    id *cls;
-    SEL *sel;
+{/* for static binding - not used */
+    id * cls;
+    SEL * sel;
     IMP imp;
-  };
+};
 
 /* Masks for modStatus
  * MOD_MORETHANONE is a stes extension : compiler flags when more
  * than one class per module; in this case modClsLst is '0' terminated.
  */
 
-#define MOD_EARLYBIND	0x1L	/* unused, old Stepstone */
-#define MOD_MAPPED		0x2L	/* marked after selectors mapped */
+#define MOD_EARLYBIND 0x1L /* unused, old Stepstone */
+#define MOD_MAPPED 0x2L    /* marked after selectors mapped */
 #define MOD_MORETHANONE 0x4L
 
 /* C Messenger interface - try to be compatible */
 
 /* msg tracing */
-extern BOOL msgFlag;		/* message tracing */
-extern FILE *msgIOD;		/* device for message tracing */
-extern FILE *dbgIOD;		/* device for dbg() call */
-extern BOOL allocFlag;		/* allocation tracing */
-extern BOOL dbgFlag;		/* verbose dbg() calls */
-extern BOOL noCacheFlag;	/* disable messenger caching */
-extern BOOL noNilRcvr;		/* do not allow msg. to nil */
+extern BOOL msgFlag;     /* message tracing */
+extern FILE * msgIOD;    /* device for message tracing */
+extern FILE * dbgIOD;    /* device for dbg() call */
+extern BOOL allocFlag;   /* allocation tracing */
+extern BOOL dbgFlag;     /* verbose dbg() calls */
+extern BOOL noCacheFlag; /* disable messenger caching */
+extern BOOL noNilRcvr;   /* do not allow msg. to nil */
 
 /* all in the name of backw. compat. */
 #ifndef NAMEOF
@@ -268,10 +266,10 @@ extern BOOL noNilRcvr;		/* do not allow msg. to nil */
 
 SEL EXPORT selUid (STR);
 STR EXPORT selName (SEL);
-void EXPORT dbg (char *fmt,...);
+void EXPORT dbg (char * fmt, ...);
 void EXPORT prnstack (FILE * file);
-void EXPORT loadobjc (void *modPtr);
-void EXPORT unloadobjc (void *modPtr);
+void EXPORT loadobjc (void * modPtr);
+void EXPORT unloadobjc (void * modPtr);
 
 /* the following def does not completely correspond to the objcc all
  * C messenger, since it's typing classes to SHR instead of "id".
@@ -299,16 +297,16 @@ EXTERNC id EXPORT idincref (id obj);
 EXTERNC id EXPORT idassign (id * lhs, id rhs);
 EXTERNC id EXPORT iddecref (id obj);
 
-/* Remapping Vectors. 
+/* Remapping Vectors.
  */
 
-#define _alloc			oc_alloc
-#define _dealloc		oc_dealloc
-#define _copy 			oc_copy
-#define _error			oc_error
-#define _cvtToId		oc_cvtToId
-#define _cvtToSel		oc_cvtToSel
-#define _objcInit		oc_objcInit
+#define _alloc oc_alloc
+#define _dealloc oc_dealloc
+#define _copy oc_copy
+#define _error oc_error
+#define _cvtToId oc_cvtToId
+#define _cvtToSel oc_cvtToSel
+#define _objcInit oc_objcInit
 
 /* Vectors.
  * Can't make those vectors public unless we
@@ -316,13 +314,13 @@ EXTERNC id EXPORT iddecref (id obj);
  * the "extern" def for vectors is important for SGI cc
  */
 
-extern id (*_alloc) (id, unsigned int);		/*allocate a new object */
-extern id (*_dealloc) (id);	/* deallocate an object */
-extern id (*_copy) (id, unsigned int);	/* shallow copy an object */
-extern id (*_error) (id, STR, OC_VA_LIST);	/* error handler */
+extern id (*_alloc) (id, unsigned int);    /*allocate a new object */
+extern id (*_dealloc) (id);                /* deallocate an object */
+extern id (*_copy) (id, unsigned int);     /* shallow copy an object */
+extern id (*_error) (id, STR, OC_VA_LIST); /* error handler */
 
-extern id (*_cvtToId) (STR);	/* convert string name to class id */
-extern SEL (*_cvtToSel) (STR);	/* convert string to selector */
+extern id (*_cvtToId) (STR);   /* convert string name to class id */
+extern SEL (*_cvtToSel) (STR); /* convert string to selector */
 
 extern id (*_fileIn) (FILE *);
 extern BOOL (*_fileOut) (FILE *, id);
@@ -333,11 +331,11 @@ void EXPORT setfileout (BOOL (*f) (FILE *, id));
 
 extern id (*_showOn) (id, unsigned);
 
-void EXPORT *OC_Malloc (size_t);
-void EXPORT *OC_MallocAtomic (size_t);
-void EXPORT *OC_Calloc (size_t);
-void EXPORT *OC_Realloc (void *, size_t);
-void EXPORT *OC_Free (void *data);
+void EXPORT * OC_Malloc (size_t);
+void EXPORT * OC_MallocAtomic (size_t);
+void EXPORT * OC_Calloc (size_t);
+void EXPORT * OC_Realloc (void *, size_t);
+void EXPORT * OC_Free (void * data);
 
 void addSubclassesTo (id c, STR name);
 
@@ -353,4 +351,3 @@ id swapclass (id self, id target);
 #endif /* __objcrt__ */
 
 #endif /* __PORTABLE_OBJC__ */
- 

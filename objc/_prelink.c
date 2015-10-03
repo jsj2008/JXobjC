@@ -9,10 +9,9 @@
  *
  * NOTE:
  *	This only applies to compiling with the -postlink option.
- *	By default, on UNIX K&R C compilers, postlink is not used, 
+ *	By default, on UNIX K&R C compilers, postlink is not used,
  *	and objcrt uses "auto-initialization code", which
  *	determines at run-time what classes are linked into the program.
  */
 
-char *_objcModules = 0;
-
+char * _objcModules = 0;

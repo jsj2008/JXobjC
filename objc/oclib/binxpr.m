@@ -3,7 +3,7 @@
  * Copyright (c) 1998 David Stes.
  *
  * This library is free software; you can redistribute it and/or modify it
- * under the terms of the GNU Library General Public License as published 
+ * under the terms of the GNU Library General Public License as published
  * by the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
  *
@@ -24,7 +24,7 @@
 #include <assert.h>
 #ifndef __OBJECT_INCLUDED__
 #define __OBJECT_INCLUDED__
-#include <stdio.h> /* FILE */
+#include <stdio.h>  /* FILE */
 #include "Object.h" /* Stepstone Object.h assumes #import */
 #endif
 #include "node.h"
@@ -38,86 +38,87 @@
 
 - rhs:aRcvr
 {
-  rhs = aRcvr;
-  return self;
+    rhs = aRcvr;
+    return self;
 }
 
 - op:(STR)anop
 {
-  op = anop;
-  return self;
+    op = anop;
+    return self;
 }
 
 - lhs:aRcvr
 {
-  lhs = aRcvr;
-  return self;
+    lhs = aRcvr;
+    return self;
 }
 
-- (BOOL)isconstexpr
-{
-  return [lhs isconstexpr] && [rhs isconstexpr];
-}
+- (BOOL)isconstexpr { return [lhs isconstexpr] && [rhs isconstexpr]; }
 
-- (int)lineno
-{
-  return [lhs lineno];
-}
+- (int)lineno { return [lhs lineno]; }
 
-- filename
-{
-  return [lhs filename];
-}
+- filename { return [lhs filename]; }
 
 - typesynth
 {
-  type = [[lhs type] max:[rhs type]];
-  return self;
+    type = [[lhs type] max:[rhs type]];
+    return self;
 }
 
 - synth
 {
-  [lhs synth];
-  [rhs synth];
-  return self;
+    [lhs synth];
+    [rhs synth];
+    return self;
 }
 
 - gen
 {
-  [lhs gen];
-  gs(op);
-  [rhs gen];
-  return self;
+    [lhs gen];
+    gs (op);
+    [rhs gen];
+    return self;
 }
 
 - st80
 {
-  [lhs st80];
-  gs(op);
-  [rhs st80];
-  return self;
+    [lhs st80];
+    gs (op);
+    [rhs st80];
+    return self;
 }
 
 - go
 {
-  id a,b,r;
-  int s = 0;
-  a = [lhs go];
-  b = [rhs go];
-  r = [Scalar new];
-  if (strcmp(op,"*") == 0) s = [a u_int] * [b u_int];
-  else if (strcmp(op,"/") == 0) s = [a u_int] / [b u_int];
-  else if (strcmp(op,"%") == 0) s = [a u_int] % [b u_int];
-  else if (strcmp(op,"+") == 0) s = [a u_int] + [b u_int];
-  else if (strcmp(op,"-") == 0) s = [a u_int] - [b u_int];
-  else if (strcmp(op,"|") == 0) s = [a u_int] | [b u_int];
-  else if (strcmp(op,"||") == 0) s = [a u_int] || [b u_int];
-  else if (strcmp(op,"&") == 0) s = [a u_int] || [b u_int];
-  else if (strcmp(op,"&&") == 0) s = [a u_int] || [b u_int];
-  else if (strcmp(op,"^") == 0) s = [a u_int] ^ [b u_int];
-  else [self notImplemented:_cmd];
-  return [r u_int:s];
+    id a, b, r;
+    int s = 0;
+    a = [lhs go];
+    b = [rhs go];
+    r = [Scalar new];
+    if (strcmp (op, "*") == 0)
+        s = [a u_int] * [b u_int];
+    else if (strcmp (op, "/") == 0)
+        s = [a u_int] / [b u_int];
+    else if (strcmp (op, "%") == 0)
+        s = [a u_int] % [b u_int];
+    else if (strcmp (op, "+") == 0)
+        s = [a u_int] + [b u_int];
+    else if (strcmp (op, "-") == 0)
+        s = [a u_int] - [b u_int];
+    else if (strcmp (op, "|") == 0)
+        s = [a u_int] | [b u_int];
+    else if (strcmp (op, "||") == 0)
+        s = [a u_int] || [b u_int];
+    else if (strcmp (op, "&") == 0)
+        s = [a u_int] || [b u_int];
+    else if (strcmp (op, "&&") == 0)
+        s = [a u_int] || [b u_int];
+    else if (strcmp (op, "^") == 0)
+        s = [a u_int] ^ [b u_int];
+    else
+        [self notImplemented:_cmd];
+    return [r u_int:s];
 }
 
 @end
- 

@@ -3,7 +3,7 @@
  * Copyright (c) 1998 David Stes.
  *
  * This library is free software; you can redistribute it and/or modify it
- * under the terms of the GNU Library General Public License as published 
+ * under the terms of the GNU Library General Public License as published
  * by the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
  *
@@ -25,7 +25,7 @@
 #include <string.h>
 #ifndef __OBJECT_INCLUDED__
 #define __OBJECT_INCLUDED__
-#include <stdio.h> /* FILE */
+#include <stdio.h>  /* FILE */
 #include "Object.h" /* Stepstone Object.h assumes #import */
 #endif
 #include <ordcltn.h>
@@ -37,54 +37,55 @@
 #include "type.h"
 #include "def.h"
 
-@implementation ParameterDef 
+@implementation ParameterDef
 
-- specs  {
-  return specs;
-}
+- specs { return specs; }
 
 - specs:aSpec
 {
-  specs = aSpec;
-  return self;
+    specs = aSpec;
+    return self;
 }
 
 - decl:aDecl
 {
-  decl = aDecl;
-  return self;
+    decl = aDecl;
+    return self;
 }
 
 - gen
 {
-  if (specs)
-    [specs elementsPerform:@selector(gen)];
-  if (decl)
-    [decl gen];
-  return self;
+    if (specs)
+        [specs elementsPerform:@selector (gen)];
+    if (decl)
+        [decl gen];
+    return self;
 }
 
 - synth
 {
-  if (curdef) {
-    id v = nil;
+    if (curdef)
+    {
+        id v = nil;
 
-    if (decl)
-      v = [decl identifier];
-    if (!decl || !v) {
-      if (specs && [specs size] == 1 && [[specs at:0] isvoid])
-	return self;
-      warn("missing parameter name in function definition");
-    } else {
-      id t = [Type new];
+        if (decl)
+            v = [decl identifier];
+        if (!decl || !v)
+        {
+            if (specs && [specs size] == 1 && [[specs at:0] isvoid])
+                return self;
+            warn ("missing parameter name in function definition");
+        }
+        else
+        {
+            id t = [Type new];
 
-      [t specs:specs];
-      [t decl:decl];		/* type makes an abstrdecl of it */
-      [curdef defparm:v astype:t];
+            [t specs:specs];
+            [t decl:decl]; /* type makes an abstrdecl of it */
+            [curdef defparm:v astype:t];
+        }
     }
-  }
-  return self;
+    return self;
 }
 
 @end
- 

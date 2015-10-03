@@ -6,7 +6,7 @@
 
 /*
  * This library is free software; you can redistribute it and/or modify it
- * under the terms of the GNU Library General Public License as published 
+ * under the terms of the GNU Library General Public License as published
  * by the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
  *
@@ -26,172 +26,118 @@
 #include "setseq.h"
 
 @implementation SetSequence
-- (objsetseq_t) objsetseqvalue
-{
-  return &value;
-}
+- (objsetseq_t)objsetseqvalue { return &value; }
 
-static void 
-objsetseq_init (objsetseq_t self, id set)
+static void objsetseq_init (objsetseq_t self, id set)
 {
-  self->set = [set objsetvalue];
-  self->offset = 0;
+    self->set = [set objsetvalue];
+    self->offset = 0;
 }
 
 + over:set
 {
-  id newObj = [super new];
-  objsetseq_init ([newObj objsetseqvalue], set);
-  return newObj;
+    id newObj = [super new];
+    objsetseq_init ([newObj objsetseqvalue], set);
+    return newObj;
 }
 
-- copy
+- copy { return [super copy]; }
+
+- free { return [super free]; }
+
+static int size (objset_t self) { return self->count; }
+
+static int objsetseq_size (objsetseq_t self) { return size (self->set); }
+
+static id at (objset_t self, int i)
 {
-  return [super copy];
+    assert (0 <= i && i < self->capacity);
+    return (self->ptr)[i];
 }
 
-- free
+- (unsigned)size { return (unsigned)objsetseq_size ([self objsetseqvalue]); }
+
+static int ptrmatch (id * p, int i, int n)
 {
-  return [super free];
+    while (i < n)
+        if (p[i])
+            return i;
+        else
+            i++;
+    return -1;
 }
 
-static int 
-size (objset_t self)
+static int match (objset_t self, int i)
 {
-  return self->count;
+    return ptrmatch (self->ptr, i, self->capacity);
 }
 
-static int 
-objsetseq_size (objsetseq_t self)
+static id next (objsetseq_t self)
 {
-  return size (self->set);
-}
-
-static id 
-at (objset_t self, int i)
-{
-  assert (0 <= i && i < self->capacity);
-  return (self->ptr) [i];
-}
-
-- (unsigned) size
-{
-  return (unsigned) objsetseq_size ([self objsetseqvalue]);
-}
-
-static int 
-ptrmatch (id * p, int i, int n)
-{
-  while (i < n)
-    if (p [i])
-      return i;
+    int i = match (self->set, self->offset);
+    if (i == -1)
+    {
+        return nil;
+    }
     else
-      i++;
-  return -1;
-}
-
-static int 
-match (objset_t self, int i)
-{
-  return ptrmatch (self->ptr, i, self->capacity);
-}
-
-static id 
-next (objsetseq_t self)
-{
-  int i = match (self->set, self->offset);
-  if (i == -1)
     {
-      return nil;
-    }
-  else
-    {
-      id obj = at (self->set, i);
-      self->offset = i + 1;
-      return obj;
+        id obj = at (self->set, i);
+        self->offset = i + 1;
+        return obj;
     }
 }
 
-- next
-{
-  return next ([self objsetseqvalue]);
-}
+- next { return next ([self objsetseqvalue]); }
 
-static id 
-peek (objsetseq_t self)
+static id peek (objsetseq_t self)
 {
-  int i = match (self->set, self->offset);
-  if (i == -1)
+    int i = match (self->set, self->offset);
+    if (i == -1)
     {
-      return nil;
+        return nil;
     }
-  else
+    else
     {
-      return at (self->set, i);
+        return at (self->set, i);
     }
 }
 
-- peek
+- peek { return peek ([self objsetseqvalue]); }
+
+static int ptrprev (id * p, int i)
 {
-  return peek ([self objsetseqvalue]);
+    while (--i)
+        if (p[i])
+            return i;
+    return -1;
 }
 
-static int 
-ptrprev (id * p, int i)
+static int prev (objset_t self, int i) { return ptrprev (self->ptr, i); }
+
+static id objsetseq_prev (objsetseq_t self)
 {
-  while (--i)
-    if (p [i])
-      return i;
-  return -1;
+    int i = prev (self->set, self->offset);
+    return (i == -1) ? nil : at (self->set, i);
 }
 
-static int 
-prev (objset_t self, int i)
+- previous { return objsetseq_prev ([self objsetseqvalue]); }
+
+static id objsetseq_first (objsetseq_t self)
 {
-  return ptrprev (self->ptr, i);
+    int i = match (self->set, 0);
+    return (i == -1) ? nil : at (self->set, i);
 }
 
-static id 
-objsetseq_prev (objsetseq_t self)
+- first { return objsetseq_first ([self objsetseqvalue]); }
+
+static int last (objset_t self) { return prev (self, self->capacity); }
+
+static id objsetseq_last (objsetseq_t self)
 {
-  int i = prev (self->set, self->offset);
-  return (i == -1) ? nil : at (self->set, i);
+    int i = last (self->set);
+    return (i == -1) ? nil : at (self->set, i);
 }
 
-- previous
-{
-  return objsetseq_prev ([self objsetseqvalue]);
-}
-
-static id 
-objsetseq_first (objsetseq_t self)
-{
-  int i = match (self->set, 0);
-  return (i == -1) ? nil : at (self->set, i);
-}
-
-- first
-{
-  return objsetseq_first ([self objsetseqvalue]);
-}
-
-static int 
-last (objset_t self)
-{
-  return prev (self, self->capacity);
-}
-
-static id 
-objsetseq_last (objsetseq_t self)
-{
-  int i = last (self->set);
-  return (i == -1) ? nil : at (self->set, i);
-}
-
-- last
-{
-  return objsetseq_last ([self objsetseqvalue]);
-}
+- last { return objsetseq_last ([self objsetseqvalue]); }
 
 @end
- 

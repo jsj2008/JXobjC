@@ -6,7 +6,7 @@
 
 /*
  * This library is free software; you can redistribute it and/or modify it
- * under the terms of the GNU Library General Public License as published 
+ * under the terms of the GNU Library General Public License as published
  * by the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
  *
@@ -26,12 +26,12 @@
 #ifndef __OBJECT_INCLUDED__
 #define __OBJECT_INCLUDED__
 #include <stdio.h>
-#include "Object.h"		/* Stepstone Object.h assumes #import */
+#include "Object.h" /* Stepstone Object.h assumes #import */
 #endif
 
 @interface Dictionary : Object
 {
-  id associations;
+    id associations;
 }
 
 + new;
@@ -42,12 +42,12 @@
 - freeAll;
 - free;
 
-- (unsigned) size;
-- (BOOL) isEmpty;
-- (BOOL) includesKey:aKey;
+- (unsigned)size;
+- (BOOL)isEmpty;
+- (BOOL)includesKey:aKey;
 
-- (unsigned) hash;
-- (BOOL) isEqual:aDic;
+- (unsigned)hash;
+- (BOOL)isEqual:aDic;
 
 - atKey:aKey;
 - atKey:aKey ifAbsent:exceptionBlock;
@@ -64,9 +64,7 @@
 - keysDo:aBlock;
 #endif /* OBJC_BLOCKS */
 
-
 - printOn:(IOD)aFile;
 @end
 
 #endif /* __OBJDIC_H__ */
- 

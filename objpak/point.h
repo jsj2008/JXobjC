@@ -6,7 +6,7 @@
 
 /*
  * This library is free software; you can redistribute it and/or modify it
- * under the terms of the GNU Library General Public License as published 
+ * under the terms of the GNU Library General Public License as published
  * by the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
  *
@@ -26,13 +26,13 @@
 #ifndef __OBJECT_INCLUDED__
 #define __OBJECT_INCLUDED__
 #include <stdio.h>
-#include "Object.h"		/* Stepstone Object.h assumes #import */
+#include "Object.h" /* Stepstone Object.h assumes #import */
 #endif
 
 @interface Point : Object
 {
-  int xLoc;
-  int yLoc;
+    int xLoc;
+    int yLoc;
 }
 
 + new;
@@ -41,15 +41,15 @@
 - x:(int)x y:(int)y;
 - x:(int)x;
 - y:(int)y;
-- (int) x;
-- (int) y;
+- (int)x;
+- (int)y;
 
-- (unsigned) hash;
-- (BOOL) isEqual:aPoint;
-- (BOOL) isBelow:aPoint;
-- (BOOL) isAbove:aPoint;
-- (BOOL) isLeft:aPoint;
-- (BOOL) isRight:aPoint;
+- (unsigned)hash;
+- (BOOL)isEqual:aPoint;
+- (BOOL)isBelow:aPoint;
+- (BOOL)isAbove:aPoint;
+- (BOOL)isLeft:aPoint;
+- (BOOL)isRight:aPoint;
 
 - moveBy:aPoint;
 - moveBy:(int)x:(int)y;
@@ -66,4 +66,3 @@
 @end
 
 #endif /* __OBJPOINT_H__ */
- 

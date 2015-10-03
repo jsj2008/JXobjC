@@ -6,7 +6,7 @@
 
 /*
  * This library is free software; you can redistribute it and/or modify it
- * under the terms of the GNU Library General Public License as published 
+ * under the terms of the GNU Library General Public License as published
  * by the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
  *
@@ -27,15 +27,15 @@
 
 @interface TreeSequence : Object
 {
-  objbbt_t top;
-  objbbt_t next;
-  objbbt_t prev;
+    objbbt_t top;
+    objbbt_t next;
+    objbbt_t prev;
 }
 - setUpSort:aSort;
 + over:aSort;
 - copy;
 - free;
-- (unsigned) size;
+- (unsigned)size;
 - next;
 - peek;
 - previous;
@@ -45,4 +45,3 @@
 @end
 
 #endif /* __OBJSORTSEQ_H__ */
- 

@@ -6,7 +6,7 @@
 
 /*
  * This library is free software; you can redistribute it and/or modify it
- * under the terms of the GNU Library General Public License as published 
+ * under the terms of the GNU Library General Public License as published
  * by the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
  *
@@ -26,7 +26,7 @@
 #ifndef __OBJECT_INCLUDED__
 #define __OBJECT_INCLUDED__
 #include <stdio.h>
-#include "Object.h"		/* Stepstone Object.h assumes #import */
+#include "Object.h" /* Stepstone Object.h assumes #import */
 #endif
 
 @interface ObjGraph : Object
@@ -36,10 +36,9 @@
 + over:anId;
 - over:anId unique:(BOOL)flag;
 + over:anId unique:(BOOL)flag;
-- (unsigned) size;
-- error:(STR)fmt,...;
+- (unsigned)size;
+- error:(STR)fmt, ...;
 - add:anObject;
 @end
 
 #endif /* __OBJGRAPH_H__ */
- 

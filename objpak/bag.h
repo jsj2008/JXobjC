@@ -6,7 +6,7 @@
 
 /*
  * This library is free software; you can redistribute it and/or modify it
- * under the terms of the GNU Library General Public License as published 
+ * under the terms of the GNU Library General Public License as published
  * by the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
  *
@@ -26,22 +26,21 @@
 #include "cltn.h"
 
 typedef struct objbag
-  {
-    int count;			/* != size */
+{
+    int count; /* != size */
     int capacity;
-    id *ptr;
-    int *cnts;
-  }
- *objbag_t;
+    id * ptr;
+    int * cnts;
+} * objbag_t;
 
 @interface Bag : Cltn
 {
-  struct objbag value;
+    struct objbag value;
 }
 
 + new;
 + new:(unsigned)n;
-+ with:(int)nArgs,...;
++ with:(int)nArgs, ...;
 + with:firstObject with:nextObject;
 + add:firstObject;
 - copy;
@@ -52,13 +51,13 @@ typedef struct objbag
 - free;
 - release;
 
-- (objbag_t) objbagvalue;
-- (unsigned) size;
-- (BOOL) isEmpty;
+- (objbag_t)objbagvalue;
+- (unsigned)size;
+- (BOOL)isEmpty;
 - eachElement;
 
-- (unsigned) hash;
-- (BOOL) isEqual:bag;
+- (unsigned)hash;
+- (BOOL)isEqual:bag;
 
 - add:anObject;
 - addNTest:anObject;
@@ -72,8 +71,8 @@ typedef struct objbag
 - remove:oldObject;
 - remove:oldObject ifAbsent:exceptionBlock;
 
-- (BOOL) includesAllOf:aCltn;
-- (BOOL) includesAnyOf:aCltn;
+- (BOOL)includesAllOf:aCltn;
+- (BOOL)includesAnyOf:aCltn;
 
 - addAll:aCltn;
 - addContentsOf:aCltn;
@@ -95,9 +94,8 @@ typedef struct objbag
 - select:testBlock;
 - reject:testBlock;
 - collect:transformBlock;
-- (unsigned) count:aBlock;
+- (unsigned)count:aBlock;
 #endif /* OBJC_BLOCKS */
-
 
 - elementsPerform:(SEL)aSelector;
 - elementsPerform:(SEL)aSelector with:anObject;
@@ -106,14 +104,13 @@ typedef struct objbag
 
 #if OBJC_BLOCKS
 - do:aBlock;
-- do:aBlock until:(BOOL*)flag;
+- do:aBlock until:(BOOL *)flag;
 #endif /* OBJC_BLOCKS */
 
-
 - find:anObject;
-- (BOOL) contains:anObject;
-- (BOOL) includes:anObject;
-- (unsigned) occurrencesOf:anObject;
+- (BOOL)contains:anObject;
+- (BOOL)includes:anObject;
+- (unsigned)occurrencesOf:anObject;
 
 - printOn:(IOD)aFile;
 
@@ -126,4 +123,3 @@ typedef struct objbag
 @end
 
 #endif /* __OBJBAG_H__ */
- 

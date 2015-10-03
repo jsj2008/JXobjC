@@ -6,7 +6,7 @@
 
 /*
  * This library is free software; you can redistribute it and/or modify it
- * under the terms of the GNU Library General Public License as published 
+ * under the terms of the GNU Library General Public License as published
  * by the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
  *
@@ -26,7 +26,7 @@
 #ifndef __OBJECT_INCLUDED__
 #define __OBJECT_INCLUDED__
 #include <stdio.h>
-#include "Object.h"		/* Stepstone Object.h assumes #import */
+#include "Object.h" /* Stepstone Object.h assumes #import */
 #endif
 
 /* the name of this class in older versions of Object Pak */
@@ -34,8 +34,8 @@
 
 @interface Assoc : Object
 {
-  id key;
-  id value;
+    id key;
+    id value;
 }
 
 - key:aKey value:aValue;
@@ -43,16 +43,16 @@
 + key:aKey value:aValue;
 
 - key;
-- (STR) str;
+- (STR)str;
 - value;
 - free;
 - freeAll;
 - release;
 
-- (unsigned) hash;
+- (unsigned)hash;
 - self;
-- (BOOL) isEqual:anAssoc;
-- (int) compare:anAssoc;
+- (BOOL)isEqual:anAssoc;
+- (int)compare:anAssoc;
 
 - value:aValue;
 
@@ -60,4 +60,3 @@
 @end
 
 #endif /* __OBJASSOC_H__ */
- 

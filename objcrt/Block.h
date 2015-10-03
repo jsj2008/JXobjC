@@ -6,7 +6,7 @@
 
 /*
  * This library is free software; you can redistribute it and/or modify it
- * under the terms of the GNU Library General Public License as published 
+ * under the terms of the GNU Library General Public License as published
  * by the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
  *
@@ -27,34 +27,34 @@
 
 #ifndef __OBJECT_INCLUDED__
 #define __OBJECT_INCLUDED__
-#include "Object.h"		/* Stepstone Object.h assumes #import */
+#include "Object.h" /* Stepstone Object.h assumes #import */
 #endif
 
 #ifndef EXPORT
-#define EXPORT			/* empty */
+#define EXPORT /* empty */
 #endif
 
-#include "config.h"		/* because Object.h can be from another runtime */
+#include "config.h" /* because Object.h can be from another runtime */
 #include "objcrt.h"
-#include <stdio.h>		/* because Object.h can be from another runtime */
+#include <stdio.h> /* because Object.h can be from another runtime */
 
 /* allows"manual" construction of Blocks, ie. without compiler support */
-extern id EXPORT newBlock (int n, IMP fn, void *data, IMP dtor);
+extern id EXPORT newBlock (int n, IMP fn, void * data, IMP dtor);
 
 @interface Block : Object
 {
-  IMP fn;			/* it's not _really_ an IMP, it's just a func pointer */
-  IMP dtor;			/* idem */
-  int nVars;
-  void **data;
-  id nextBlock;
+    IMP fn;   /* it's not _really_ an IMP, it's just a func pointer */
+    IMP dtor; /* idem */
+    int nVars;
+    void ** data;
+    id nextBlock;
 }
 
-- blkc:(int)n blkfn:(IMP)f blkv:(void**)d blkdtor:(IMP)c;
+- blkc:(int)n blkfn:(IMP)f blkv:(void **)d blkdtor:(IMP)c;
 + new;
 - copy;
 - deepCopy;
-+ blkc:(int)n blkfn:(IMP)f blkv:(void**)d blkdtor:(IMP)c;
++ blkc:(int)n blkfn:(IMP)f blkv:(void **)d blkdtor:(IMP)c;
 - free;
 - release;
 
@@ -71,12 +71,12 @@ extern id EXPORT newBlock (int n, IMP fn, void *data, IMP dtor);
 - errorNumArgs;
 - errorGoodHandler;
 - value;
-- (int) intvalue;
+- (int)intvalue;
 - atExit;
 - value:anObject;
-- (int) intvalue:anObject;
+- (int)intvalue:anObject;
 - value:firstObject value:secondObject;
-- (int) intvalue:firstObject value:secondObject;
+- (int)intvalue:firstObject value:secondObject;
 
 - repeatTimes:(int)n;
 - shouldNotImplement;
@@ -86,4 +86,3 @@ extern id EXPORT newBlock (int n, IMP fn, void *data, IMP dtor);
 #endif /* __PORTABLE_OBJC__ */
 
 #endif /* __BLOCK_H__ */
- 

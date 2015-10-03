@@ -6,7 +6,7 @@
 
 /*
  * This library is free software; you can redistribute it and/or modify it
- * under the terms of the GNU Library General Public License as published 
+ * under the terms of the GNU Library General Public License as published
  * by the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
  *
@@ -31,7 +31,7 @@
 
 @interface TextAttribute : Object
 {
-  unsigned emphasiscode;
+    unsigned emphasiscode;
 }
 
 + normal;
@@ -39,14 +39,14 @@
 + bold;
 + emphasiscode:(unsigned)n;
 
-- (unsigned) emphasiscode;
+- (unsigned)emphasiscode;
 - emphasiscode:(unsigned)c;
 
-- (BOOL) isEqual:attrib;
+- (BOOL)isEqual:attrib;
 
-- (BOOL) dominates:attrib;
+- (BOOL)dominates:attrib;
 - reset;
-- (BOOL) set;
+- (BOOL)set;
 
 - emphasizeScanner:aScanner;
 
@@ -54,4 +54,3 @@
 @end
 
 #endif /* __TEXTATTRIBUT_H__ */
- 

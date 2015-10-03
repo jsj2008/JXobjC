@@ -3,7 +3,7 @@
  * Copyright (c) 1998 David Stes.
  *
  * This library is free software; you can redistribute it and/or modify it
- * under the terms of the GNU Library General Public License as published 
+ * under the terms of the GNU Library General Public License as published
  * by the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
  *
@@ -25,7 +25,7 @@
 #include <string.h>
 #ifndef __OBJECT_INCLUDED__
 #define __OBJECT_INCLUDED__
-#include <stdio.h> /* FILE */
+#include <stdio.h>  /* FILE */
 #include "Object.h" /* Stepstone Object.h assumes #import */
 #endif
 #include <ocstring.h>
@@ -38,58 +38,58 @@
 
 - add:comp
 {
-  [self concatSTR:[comp str]];
-  if (!filename) {
-    lineno = [comp lineno];
-    filename = [comp filename];
-  }
-  return self;
+    [self concatSTR:[comp str]];
+    if (!filename)
+    {
+        lineno = [comp lineno];
+        filename = [comp filename];
+    }
+    return self;
 }
 
-- (int)lineno
-{
-  return lineno;
-}
+- (int)lineno { return lineno; }
 
-- filename
-{
-  return filename;
-}
+- filename { return filename; }
 
 - addcol
 {
-  [self concatSTR:":"];
-  return self;
+    [self concatSTR:":"];
+    return self;
 }
 
 - gen
 {
-  if (!o_seltranslation) {
-    gf("\"%s\"", [self str]);
-  } else {
-    int offset = [trlunit seloffset:self];
+    if (!o_seltranslation)
+    {
+        gf ("\"%s\"", [self str]);
+    }
+    else
+    {
+        int offset = [trlunit seloffset:self];
 
-    if (o_checkbind) {
-      gs("((selTransTbl)?");
+        if (o_checkbind)
+        {
+            gs ("((selTransTbl)?");
+        }
+        gs ("selTransTbl[");
+        if (o_comments)
+        {
+            gf ("/* %s */", [self str]);
+        }
+        gf ("%i]", offset);
+        if (o_checkbind)
+        {
+            gf (":objcrt_bindError(\"%s\"))", [trlunit moddescname]);
+        }
     }
-    gs("selTransTbl[");
-    if (o_comments) {
-      gf("/* %s */", [self str]);
-    }
-    gf("%i]", offset);
-    if (o_checkbind) {
-      gf(":objcrt_bindError(\"%s\"))", [trlunit moddescname]);
-    }
-  }
 
-  return self;
+    return self;
 }
 
 - st80
 {
-  gs([self str]);
-  return self;
+    gs ([self str]);
+    return self;
 }
 
 @end
- 

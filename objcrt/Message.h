@@ -6,7 +6,7 @@
 
 /*
  * This library is free software; you can redistribute it and/or modify it
- * under the terms of the GNU Library General Public License as published 
+ * under the terms of the GNU Library General Public License as published
  * by the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
  *
@@ -27,25 +27,25 @@
 
 #ifndef __OBJECT_INCLUDED__
 #define __OBJECT_INCLUDED__
-#include "Object.h"		/* Stepstone Object.h assumes #import */
+#include "Object.h" /* Stepstone Object.h assumes #import */
 #endif
 
-#include "config.h"		/* because Object.h can be from another runtime */
+#include "config.h" /* because Object.h can be from another runtime */
 #include "objcrt.h"
-#include <stdio.h>		/* because Object.h can be from another runtime */
+#include <stdio.h> /* because Object.h can be from another runtime */
 
 @interface Message : Object
 {
-  SEL selector;
-  ARGIMP dispatch;
-  void *args;
+    SEL selector;
+    ARGIMP dispatch;
+    void * args;
 }
 
-- selector:(SEL)s dispatch:(ARGIMP)d args:(void*)a;
+- selector:(SEL)s dispatch:(ARGIMP)d args:(void *)a;
 + new;
 + selector:(SEL)s dispatch:(ARGIMP)d args:(void *)a;
 
-- (SEL) selector;
+- (SEL)selector;
 - printOn:(IOD)anIod;
 
 - sentTo:receiver;
@@ -54,4 +54,3 @@
 #endif /* __PORTABLE_OBJC__ */
 
 #endif /* __MESSAG_H__ */
- 

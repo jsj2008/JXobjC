@@ -3,7 +3,7 @@
  * Copyright (c) 1998 David Stes.
  *
  * This library is free software; you can redistribute it and/or modify it
- * under the terms of the GNU Library General Public License as published 
+ * under the terms of the GNU Library General Public License as published
  * by the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
  *
@@ -24,7 +24,7 @@
 #include <assert.h>
 #ifndef __OBJECT_INCLUDED__
 #define __OBJECT_INCLUDED__
-#include <stdio.h> /* FILE */
+#include <stdio.h>  /* FILE */
 #include "Object.h" /* Stepstone Object.h assumes #import */
 #endif
 #include <ordcltn.h>
@@ -36,52 +36,52 @@
 
 - lbrace:lb
 {
-  lbrace = lb;
-  return self;
+    lbrace = lb;
+    return self;
 }
 
 - rbrace:rb
 {
-  rbrace = rb;
-  return self;
+    rbrace = rb;
+    return self;
 }
 
 - exprs:aRcvr
 {
-  exprs = aRcvr;
-  return self;
+    exprs = aRcvr;
+    return self;
 }
 
 - synth
 {
-  [exprs elementsPerform:_cmd];
-  return self;
+    [exprs elementsPerform:_cmd];
+    return self;
 }
 
 - (BOOL)isconstexpr
 {
-  int i, n;
+    int i, n;
 
-  for (i = 0, n = [exprs size]; i < n; i++) {
-    if (![[exprs at:i] isconstexpr])
-      return NO;
-  }
-  return YES;
+    for (i = 0, n = [exprs size]; i < n; i++)
+    {
+        if (![[exprs at:i] isconstexpr])
+            return NO;
+    }
+    return YES;
 }
 
 - gen
 {
-  if (lbrace)
-    [lbrace gen];
-  else
-    gc('{');
-  gcommalist(exprs);
-  if (rbrace)
-    [rbrace gen];
-  else
-    gc('}');
-  return self;
+    if (lbrace)
+        [lbrace gen];
+    else
+        gc ('{');
+    gcommalist (exprs);
+    if (rbrace)
+        [rbrace gen];
+    else
+        gc ('}');
+    return self;
 }
 
 @end
- 

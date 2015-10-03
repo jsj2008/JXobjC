@@ -10,10 +10,10 @@
 
 #define Association Assoc
 
-@interface Assoc: Object
+@interface Assoc : Object
 {
-    id	key;
-    id	value;
+    id key;
+    id value;
 }
 
 - setUpKey:aKey value:aValue;
@@ -21,12 +21,12 @@
 + key:aKey value:aValue;
 
 - key;
-- (STR) str;
+- (STR)str;
 - value;
 
-- (unsigned) hash;
-- (BOOL) isEqual:anAssoc;
-- (int) compare:anAssoc;
+- (unsigned)hash;
+- (BOOL)isEqual:anAssoc;
+- (int)compare:anAssoc;
 
 - value:aValue;
 
@@ -40,5 +40,3 @@
 @end
 
 #endif /* __OBJASSOC_H__ */
-
-

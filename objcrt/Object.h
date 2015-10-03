@@ -6,7 +6,7 @@
 
 /*
  * This library is free software; you can redistribute it and/or modify it
- * under the terms of the GNU Library General Public License as published 
+ * under the terms of the GNU Library General Public License as published
  * by the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
  *
@@ -34,17 +34,17 @@
 #define __objcrt_revision__ "3.2.1"
 
 #ifdef _XtIntrinsic_h
-#define Object OCObject		/* remap Object class - cant use Xt Object */
+#define Object OCObject /* remap Object class - cant use Xt Object */
 #endif
 
 @interface Object
 {
-  id isa;
+    id isa;
 #ifdef OBJC_REFCNT
-  unsigned int _refcnt;
+    unsigned int _refcnt;
 #else
-  unsigned short attr;		/* compatibility Stepstone */
-  unsigned short objID;		/* compatibility Stepstone */
+    unsigned short attr;  /* compatibility Stepstone */
+    unsigned short objID; /* compatibility Stepstone */
 #endif
 }
 
@@ -72,27 +72,27 @@
 + superclass;
 + superClass;
 - add:anObject;
-- (STR) name;
-+ (STR) name;
+- (STR)name;
++ (STR)name;
 - findClass:(STR)name;
-- (SEL) findSel:(STR)name;
-- (SEL) selOfSTR:(STR)name;
+- (SEL)findSel:(STR)name;
+- (SEL)selOfSTR:(STR)name;
 - idOfSTR:(STR)aClassName;
 
-- (unsigned) hash;
-- (BOOL) isEqual:anObject;
-- (STR) str;
-- (unsigned) size;
-+ (BOOL) isEqual:anObject;
-- (BOOL) isSame:anObject;
-- (BOOL) notEqual:anObject;
-- (BOOL) notSame:anObject;
-- (int) compare:anObject;
-- (int) invertCompare:anObject;
+- (unsigned)hash;
+- (BOOL)isEqual:anObject;
+- (STR)str;
+- (unsigned)size;
++ (BOOL)isEqual:anObject;
+- (BOOL)isSame:anObject;
+- (BOOL)notEqual:anObject;
+- (BOOL)notSame:anObject;
+- (int)compare:anObject;
+- (int)invertCompare:anObject;
 
-- (BOOL) respondsTo:(SEL)aSelector;
-- (BOOL) isMemberOf:aClass;
-- (BOOL) isKindOf:aClass;
+- (BOOL)respondsTo:(SEL)aSelector;
+- (BOOL)isMemberOf:aClass;
+- (BOOL)isKindOf:aClass;
 
 + someInstance;
 - nextInstance;
@@ -106,8 +106,8 @@
 + subclass:(STR)name:(int)ivars:(int)cvars;
 + load;
 + unload;
-+ (BOOL) inheritsFrom:aClass;
-+ (BOOL) isSubclassOf:aClass;
++ (BOOL)inheritsFrom:aClass;
++ (BOOL)isSubclassOf:aClass;
 
 - subclassResponsibility;
 - subclassResponsibility:(SEL)aSelector;
@@ -117,14 +117,14 @@
 - shouldNotImplement:(SEL)aSelector;
 - shouldNotImplement:(SEL)aSelector from:superClass;
 - vsprintf:(STR)format:(OC_VA_LIST *)ap;
-- error:(STR)format,...;
+- error:(STR)format, ...;
 - halt:message;
 
 - doesNotRecognize:(SEL)aSelector;
 - doesNotUnderstand:aMessage;
 
-- (IMP) methodFor:(SEL)aSelector;
-+ (IMP) instanceMethodFor:(SEL)aSelector;
+- (IMP)methodFor:(SEL)aSelector;
++ (IMP)instanceMethodFor:(SEL)aSelector;
 
 - perform:(SEL)aSelector;
 - perform:(SEL)aSelector with:anObject;
@@ -138,10 +138,10 @@
 - printToFile:(FILE *)aFile;
 - printOn:(IOD)anIOD;
 
-+ (STR) objcrtRevision;
++ (STR)objcrtRevision;
 
 + readFrom:(STR)aFileName;
-- (BOOL) storeOn:(STR)aFileName;
+- (BOOL)storeOn:(STR)aFileName;
 
 - fileOutIdsFor:aFiler;
 - fileInIdsFrom:aFiler;
@@ -160,4 +160,3 @@
 #endif /* __OBJECT_H__ */
 
 #endif /* __PORTABLE_OBJC__ */
- 

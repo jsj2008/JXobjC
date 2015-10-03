@@ -3,7 +3,7 @@
  * Copyright (c) 1998 David Stes.
  *
  * This library is free software; you can redistribute it and/or modify it
- * under the terms of the GNU Library General Public License as published 
+ * under the terms of the GNU Library General Public License as published
  * by the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
  *
@@ -24,7 +24,7 @@
 #include <assert.h>
 #ifndef __OBJECT_INCLUDED__
 #define __OBJECT_INCLUDED__
-#include <stdio.h> /* FILE */
+#include <stdio.h>  /* FILE */
 #include "Object.h" /* Stepstone Object.h assumes #import */
 #endif
 #include "node.h"
@@ -36,119 +36,100 @@
 
 @implementation InitDecl
 
-- (BOOL)isinit
-{
-  return YES;
-}
+- (BOOL)isinit { return YES; }
 
-- (BOOL)islistinit
-{
-  return [initializer isKindOf:(id) [ListExpr class]];
-}
+- (BOOL)islistinit { return [initializer isKindOf:(id)[ListExpr class]]; }
 
-- (BOOL)isfunproto
-{
-  return NO;
-}
+- (BOOL)isfunproto { return NO; }
 
-- decl
-{
-  return decl;
-}
+- decl { return decl; }
 
 - decl:aRcvr
 {
-  decl = aRcvr;
-  return self;
+    decl = aRcvr;
+    return self;
 }
 
-- initializer
-{
-  return initializer;
-}
+- initializer { return initializer; }
 
 - initializer:aDecl
 {
-  initializer = aDecl;
-  return self;
+    initializer = aDecl;
+    return self;
 }
 
 - initnil
 {
-  initnil = YES;
-  initializer = e_nil;
-  return self;
+    initnil = YES;
+    initializer = e_nil;
+    return self;
 }
 
 - incref
 {
-  incref++;
-  return self;
+    incref++;
+    return self;
 }
 
-- abstrdecl
-{
-  return [decl abstrdecl];
-}
+- abstrdecl { return [decl abstrdecl]; }
 
-- identifier
-{
-  return [decl identifier];
-}
+- identifier { return [decl identifier]; }
 
 - synth
 {
-  [decl synth];
-  [initializer synth];
-  return self;
+    [decl synth];
+    [initializer synth];
+    return self;
 }
 
 - synthinits
 {
-  [initializer synth];
-  return self;
+    [initializer synth];
+    return self;
 }
 
 - hide:x rename:y
 {
-  [decl hide:x rename:y];
-  return self;
+    [decl hide:x rename:y];
+    return self;
 }
 
 - gen
 {
-  [decl gen];
-  gc('=');
-  if (initnil) {
-    [initializer sgen];
-  } else {
-    if (incref)
-      gs("idincref(");		/* just like in assignment */
-    [initializer gen];
-    if (incref)
-      gc(')');
-  }
-  return self;
+    [decl gen];
+    gc ('=');
+    if (initnil)
+    {
+        [initializer sgen];
+    }
+    else
+    {
+        if (incref)
+            gs ("idincref("); /* just like in assignment */
+        [initializer gen];
+        if (incref)
+            gc (')');
+    }
+    return self;
 }
 
 - st80
 {
-  [decl st80];
-  return self;
+    [decl st80];
+    return self;
 }
 
 - st80inits
 {
-  [decl st80];
+    [decl st80];
 #ifdef ST80
-  gc('_');
+    gc ('_');
 #else
-  gs(":=");
+    gs (":=");
 #endif
-  [initializer st80];
-  gs(".\n");
-  return self;
+    [initializer st80];
+    gs (".\n");
+    return self;
 }
 
 @end
- 

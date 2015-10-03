@@ -3,7 +3,7 @@
  * Copyright (c) 1998 David Stes.
  *
  * This library is free software; you can redistribute it and/or modify it
- * under the terms of the GNU Library General Public License as published 
+ * under the terms of the GNU Library General Public License as published
  * by the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
  *
@@ -24,7 +24,7 @@
 #include <assert.h>
 #ifndef __OBJECT_INCLUDED__
 #define __OBJECT_INCLUDED__
-#include <stdio.h> /* FILE */
+#include <stdio.h>  /* FILE */
 #include "Object.h" /* Stepstone Object.h assumes #import */
 #endif
 #include <ocstring.h>
@@ -37,155 +37,136 @@
 
 @implementation KeywDecl
 
-- identifier
-{
-  return arg;
-}
+- identifier { return arg; }
 
-- keyw
-{
-  return keyw;
-}
+- keyw { return keyw; }
 
 - keyw:sel
 {
-  keyw = sel;
-  return self;
+    keyw = sel;
+    return self;
 }
 
-- cast
-{
-  return cast;
-}
+- cast { return cast; }
 
 - cast:c
 {
-  cast = c;
-  return self;
+    cast = c;
+    return self;
 }
 
-- (unsigned)typehash
-{
-  return (cast) ? [cast hash] : [t_id hash];
-}
+- (unsigned)typehash { return (cast) ? [cast hash] : [t_id hash]; }
 
 - (BOOL)typeEqual:x
 {
-  id a = cast;
-  id b = [x cast];
+    id a = cast;
+    id b = [x cast];
 
-  if (!a)
-    a = t_id;
-  if (!b)
-    b = t_id;
-  return [a isEqual:b];
+    if (!a)
+        a = t_id;
+    if (!b)
+        b = t_id;
+    return [a isEqual:b];
 }
 
 - hide:x rename:y
 {
-  if ([arg isEqual:x])
-    hide = y;
-  return self;
+    if ([arg isEqual:x])
+        hide = y;
+    return self;
 }
 
 - arg:a
 {
-  arg = a;
-  return self;
+    arg = a;
+    return self;
 }
 
 - selcons:sel
 {
-  if (keyw)
-    [sel add:keyw];
-  [sel addcol];
-  return self;
+    if (keyw)
+        [sel add:keyw];
+    [sel addcol];
+    return self;
 }
 
 - genparm
 {
-  id x = (hide) ? hide : arg;
+    id x = (hide) ? hide : arg;
 
-  if (cast) {
-    [cast gendef:x];
-  } else {
-    [t_id gendef:x];		/* Objective C default */
-  }
-  return self;
+    if (cast)
+    {
+        [cast gendef:x];
+    }
+    else
+    {
+        [t_id gendef:x]; /* Objective C default */
+    }
+    return self;
 }
 
 - gencommaparm
 {
-  gc(',');
-  return [self genparm];
+    gc (',');
+    return [self genparm];
 }
 
-- (BOOL)canforward
-{
-  return (cast) ? [cast canforward] : YES;
-}
+- (BOOL)canforward { return (cast) ? [cast canforward] : YES; }
 
-- (BOOL)isid
-{
-  return (cast) ? [cast isid] : YES;
-}
+- (BOOL)isid { return (cast) ? [cast isid] : YES; }
 
-- (BOOL)isselptr
-{
-  return (cast) ? [cast isselptr] : YES;
-}
+- (BOOL)isselptr { return (cast) ? [cast isselptr] : YES; }
 
 - gendef:sym
 {
-  if (cast) {
-    [cast gendef:sym];
-  } else {
-    gs("id");			/* Objective C default */
-    if (sym)
-      gs([sym str]);
-  }
-  return self;
+    if (cast)
+    {
+        [cast gendef:sym];
+    }
+    else
+    {
+        gs ("id"); /* Objective C default */
+        if (sym)
+            gs ([sym str]);
+    }
+    return self;
 }
 
 - gendisparg
 {
-  gs("args->");
-  [arg gen];
-  return self;
+    gs ("args->");
+    [arg gen];
+    return self;
 }
 
 - gendispargsintostruct
 {
-  gs("args.");
-  [arg gen];
-  gc('=');
-  [arg gen];
-  gc(';');
-  gc('\n');
-  return self;
+    gs ("args.");
+    [arg gen];
+    gc ('=');
+    [arg gen];
+    gc (';');
+    gc ('\n');
+    return self;
 }
 
-- gen
-{
-  return self;
-}
+- gen { return self; }
 
 - synth
 {
-  assert(curdef);
-  assert(arg);
-  [curdef defparm:arg astype:(cast) ? cast : t_id];
-  return self;
+    assert (curdef);
+    assert (arg);
+    [curdef defparm:arg astype:(cast) ? cast : t_id];
+    return self;
 }
 
 - st80
 {
-  if (keyw)
-    [keyw st80];
-  gc(':');
-  [arg st80];
-  return self;
+    if (keyw)
+        [keyw st80];
+    gc (':');
+    [arg st80];
+    return self;
 }
 
 @end
- 

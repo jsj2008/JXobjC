@@ -6,7 +6,7 @@
 
 /*
  * This library is free software; you can redistribute it and/or modify it
- * under the terms of the GNU Library General Public License as published 
+ * under the terms of the GNU Library General Public License as published
  * by the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
  *
@@ -27,20 +27,19 @@
 
 #ifndef __OBJECT_INCLUDED__
 #define __OBJECT_INCLUDED__
-#include "Object.h"		/* Stepstone Object.h assumes #import */
+#include "Object.h" /* Stepstone Object.h assumes #import */
 #endif
 
 @interface Exception : Object
 {
-  id messageText;
-  id tag;
-  id resumeHandler;
+    id messageText;
+    id tag;
+    id resumeHandler;
 }
 :
 {
   id handler;			/* for this class of exceptions */
 }
-
 
 + signal;
 + signal:(STR)message;
@@ -49,7 +48,7 @@
 - signal;
 - signal:(STR)message;
 - messageText;
-- (STR) str;
+- (STR)str;
 - messageText:message;
 - str:(STR)message;
 
@@ -60,4 +59,3 @@
 #endif /* __PORTABLE_OBJC__ */
 
 #endif /* __EXCEPTN_H__ */
- 

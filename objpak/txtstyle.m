@@ -6,7 +6,7 @@
 
 /*
  * This library is free software; you can redistribute it and/or modify it
- * under the terms of the GNU Library General Public License as published 
+ * under the terms of the GNU Library General Public License as published
  * by the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
  *
@@ -28,28 +28,16 @@
 
 @implementation TextStyle
 
-+ default
-{
-  return [self named:"Default"];
-}
++ default { return [self named:"Default"]; }
 
-+ named:(STR)name
-{
-  return [super str:name];
-}
++ named:(STR)name { return [super str:name]; }
 
-
-- (STR) name
-{
-  return [self str];
-}
-
+- (STR)name { return [self str]; }
 
 - printOn:(IOD)aFile
 {
-  fprintf (aFile, "TextStyle %s", [self name]);
-  return self;
+    fprintf (aFile, "TextStyle %s", [self name]);
+    return self;
 }
 
 @end
- 

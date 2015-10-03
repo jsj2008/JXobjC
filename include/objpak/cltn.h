@@ -6,7 +6,7 @@
 
 /*
  * This library is free software; you can redistribute it and/or modify it
- * under the terms of the GNU Library General Public License as published 
+ * under the terms of the GNU Library General Public License as published
  * by the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
  *
@@ -25,19 +25,19 @@
 
 #ifndef __OBJECT_INCLUDED__
 #define __OBJECT_INCLUDED__
-#include <stdio.h>		/* FILE */
-#include "Object.h"		/* Stepstone Object.h assumes #import */
+#include <stdio.h>  /* FILE */
+#include "Object.h" /* Stepstone Object.h assumes #import */
 #endif
 
 @interface Cltn : Object
 {
 }
-+ with:(int)nArgs,...;
++ with:(int)nArgs, ...;
 + with:firstObject with:nextObject;
 + add:firstObject;
 
-- (BOOL) includesAllOf:aCltn;
-- (BOOL) includesAnyOf:aCltn;
+- (BOOL)includesAllOf:aCltn;
+- (BOOL)includesAnyOf:aCltn;
 
 - addAll:aCltn;
 - addContentsOf:aCltn;
@@ -59,9 +59,8 @@
 - select:testBlock;
 - reject:testBlock;
 - collect:transformBlock;
-- (unsigned) count:aBlock;
+- (unsigned)count:aBlock;
 #endif /* OBJC_BLOCKS */
-
 
 - elementsPerform:(SEL)aSelector;
 - elementsPerform:(SEL)aSelector with:anObject;
@@ -70,10 +69,9 @@
 
 #if OBJC_BLOCKS
 - do:aBlock;
-- do:aBlock until:(BOOL*)flag;
+- do:aBlock until:(BOOL *)flag;
 #endif /* OBJC_BLOCKS */
 
 @end
 
 #endif /* __CLTN_H__ */
- 

@@ -6,7 +6,7 @@
 
 /*
  * This library is free software; you can redistribute it and/or modify it
- * under the terms of the GNU Library General Public License as published 
+ * under the terms of the GNU Library General Public License as published
  * by the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
  *
@@ -31,33 +31,33 @@
 
 @interface Text : Object
 {
-  id string;
-  id runs;
+    id string;
+    id runs;
 }
 
 - check;
 + new;
 + new:(unsigned)nChars;
-+ vsprintf:(STR)format:(OC_VA_LIST*)ap;
++ vsprintf:(STR)format:(OC_VA_LIST *)ap;
 + str:(STR)aString;
-+ sprintf:(STR)format,...;
++ sprintf:(STR)format, ...;
 + fromString:aString;
 + string:aString attribute:attrib;
 - string:aString runs:anArray;
 - copy;
 - free;
 
-- (unsigned) hash;
-- (BOOL) isEqual:aStr;
+- (unsigned)hash;
+- (BOOL)isEqual:aStr;
 
 - string;
 - runs;
-- (STR) str;
-- (unsigned) size;
-- (char) charAt:(unsigned)anOffset;
-- (char) charAt:(unsigned)anOffset put:(char)aChar;
+- (STR)str;
+- (unsigned)size;
+- (char)charAt:(unsigned)anOffset;
+- (char)charAt:(unsigned)anOffset put:(char)aChar;
 - at:(unsigned)anOffset insert:aString;
-- at:(unsigned)anOffset insert:(char*)aString count:(int)size;
+- at:(unsigned)anOffset insert:(char *)aString count:(int)size;
 - deleteFrom:(unsigned)p to:(unsigned)q;
 - concat:b;
 - concatSTR:(STR)b;
@@ -67,8 +67,8 @@
 - addAttribute:attribute;
 - addAttribute:attribute from:(unsigned)p to:(unsigned)q;
 - attributesAt:(unsigned)i;
-- (unsigned) runLengthFor:(unsigned)i;
-- (unsigned) fontNumberAt:(unsigned)i;
+- (unsigned)runLengthFor:(unsigned)i;
+- (unsigned)fontNumberAt:(unsigned)i;
 - fontAt:(unsigned)i withStyle:textStyle;
 
 - asString;
@@ -79,4 +79,3 @@
 @end
 
 #endif /* __OBJTXT_H__ */
- 

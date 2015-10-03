@@ -3,7 +3,7 @@
  * Copyright (c) 1998 David Stes.
  *
  * This library is free software; you can redistribute it and/or modify it
- * under the terms of the GNU Library General Public License as published 
+ * under the terms of the GNU Library General Public License as published
  * by the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
  *
@@ -24,7 +24,7 @@
 #include <assert.h>
 #ifndef __OBJECT_INCLUDED__
 #define __OBJECT_INCLUDED__
-#include <stdio.h> /* FILE */
+#include <stdio.h>  /* FILE */
 #include "Object.h" /* Stepstone Object.h assumes #import */
 #endif
 #include "node.h"
@@ -35,57 +35,48 @@
 
 @implementation CaseStmt
 
-- expr
-{
-  return expr;
-}
+- expr { return expr; }
 
 - keyw:aLabel
 {
-  keyw = aLabel;
-  return self;
+    keyw = aLabel;
+    return self;
 }
 
 - expr:aLabel
 {
-  expr = aLabel;
-  return self;
+    expr = aLabel;
+    return self;
 }
 
 - stmt:aStmt
 {
-  stmt = aStmt;
-  if (o_refcnt && ![stmt iscompstmt]) {
-    stmt = mkcompstmt(nil, nil, mklist(nil, stmt), nil, nil);
-  }
-  return self;
+    stmt = aStmt;
+    if (o_refcnt && ![stmt iscompstmt])
+    {
+        stmt = mkcompstmt (nil, nil, mklist (nil, stmt), nil, nil);
+    }
+    return self;
 }
 
 - synth
 {
-  [expr synth];
-  [stmt synth];
-  return self;
+    [expr synth];
+    [stmt synth];
+    return self;
 }
 
 - gen
 {
-  [keyw gen];
-  [expr gen];
-  gc(':');
-  [stmt gen];
-  return self;
+    [keyw gen];
+    [expr gen];
+    gc (':');
+    [stmt gen];
+    return self;
 }
 
-- (BOOL)iscaseOf:e
-{
-  return [e isEqual:[expr go]];
-}
+- (BOOL)iscaseOf:e { return [e isEqual:[expr go]]; }
 
-- go
-{
-  return [stmt go];
-}
+- go { return [stmt go]; }
 
 @end
- 

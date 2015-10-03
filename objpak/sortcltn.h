@@ -6,7 +6,7 @@
 
 /*
  * This library is free software; you can redistribute it and/or modify it
- * under the terms of the GNU Library General Public License as published 
+ * under the terms of the GNU Library General Public License as published
  * by the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
  *
@@ -29,20 +29,19 @@
 #define SortedCollection SortCltn
 
 typedef struct objbbt
-  {
-    struct objbbt *ulink;
-    struct objbbt *rlink;
-    struct objbbt *llink;
+{
+    struct objbbt * ulink;
+    struct objbbt * rlink;
+    struct objbbt * llink;
     int balance;
     id key;
-  }
- *objbbt_t;
+} * objbbt_t;
 
 @interface SortCltn : Cltn
 {
-  struct objbbt value;
-  SEL cmpSel;
-  id cmpBlk;
+    struct objbbt value;
+    SEL cmpSel;
+    id cmpBlk;
 }
 
 + new;
@@ -53,7 +52,7 @@ typedef struct objbbt
 + sortBlock:sortBlock;
 - setupcmpsel:(SEL)aSel;
 + newCmpSel:(SEL)aSel;
-+ with:(int)nArgs,...;
++ with:(int)nArgs, ...;
 + with:firstObject with:nextObject;
 + add:firstObject;
 - copy;
@@ -63,14 +62,14 @@ typedef struct objbbt
 - free;
 - release;
 
-- (objbbt_t) objbbtTop;
-- (SEL) comparisonSelector;
-- (unsigned) size;
-- (BOOL) isEmpty;
+- (objbbt_t)objbbtTop;
+- (SEL)comparisonSelector;
+- (unsigned)size;
+- (BOOL)isEmpty;
 - eachElement;
 
-- (unsigned) hash;
-- (BOOL) isEqual:aSort;
+- (unsigned)hash;
+- (BOOL)isEqual:aSort;
 
 - add:anObject;
 - addNTest:anObject;
@@ -79,8 +78,8 @@ typedef struct objbbt
 
 - remove:oldObject;
 
-- (BOOL) includesAllOf:aCltn;
-- (BOOL) includesAnyOf:aCltn;
+- (BOOL)includesAllOf:aCltn;
+- (BOOL)includesAnyOf:aCltn;
 
 - addAll:aCltn;
 - addContentsOf:aCltn;
@@ -102,9 +101,8 @@ typedef struct objbbt
 - select:testBlock;
 - reject:testBlock;
 - collect:transformBlock;
-- (unsigned) count:aBlock;
+- (unsigned)count:aBlock;
 #endif /* OBJC_BLOCKS */
-
 
 - elementsPerform:(SEL)aSelector;
 - elementsPerform:(SEL)aSelector with:anObject;
@@ -113,12 +111,11 @@ typedef struct objbbt
 
 #if OBJC_BLOCKS
 - do:aBlock;
-- do:aBlock until:(BOOL*)flag;
+- do:aBlock until:(BOOL *)flag;
 #endif /* OBJC_BLOCKS */
 
-
 - find:anObject;
-- (BOOL) contains:anObject;
+- (BOOL)contains:anObject;
 
 - printOn:(IOD)aFile;
 
@@ -127,4 +124,3 @@ typedef struct objbbt
 @end
 
 #endif /* __OBJTREE_H__ */
- 

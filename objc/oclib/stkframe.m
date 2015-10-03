@@ -3,7 +3,7 @@
  * Copyright (c) 1999 David Stes.
  *
  * This library is free software; you can redistribute it and/or modify it
- * under the terms of the GNU Library General Public License as published 
+ * under the terms of the GNU Library General Public License as published
  * by the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
  *
@@ -24,7 +24,7 @@
 #include <assert.h>
 #ifndef __OBJECT_INCLUDED__
 #define __OBJECT_INCLUDED__
-#include <stdio.h> /* FILE */
+#include <stdio.h>  /* FILE */
 #include "Object.h" /* Stepstone Object.h assumes #import */
 #endif
 #include <ocstring.h>
@@ -45,184 +45,178 @@ id topframe;
 
 - next:x
 {
-  next = x;
-  return self;
+    next = x;
+    return self;
 }
 
 - previous:x
 {
-  previous = x;
-  return self;
+    previous = x;
+    return self;
 }
 
-- next
-{
-  return next;
-}
+- next { return next; }
 
-- previous
-{
-  return previous;
-}
+- previous { return previous; }
 
 + push
 {
-  id frame = [super new];
-  if (topframe) {
-    [topframe next:frame];
-    [frame previous:topframe];
-  }
-  topframe = frame;
-  return frame;
+    id frame = [super new];
+    if (topframe)
+    {
+        [topframe next:frame];
+        [frame previous:topframe];
+    }
+    topframe = frame;
+    return frame;
 }
-  
+
 + pop
 {
-  if (topframe) topframe = [topframe previous];
-  return nil;
+    if (topframe)
+        topframe = [topframe previous];
+    return nil;
 }
 
 - compound:x
 {
-  compound = x;
-  return self;
+    compound = x;
+    return self;
 }
 
-- def
-{
-  return def;
-}
+- def { return def; }
 
 - def:m
 {
-  compound = nil;
-  def = m;
-  return self;
+    compound = nil;
+    def = m;
+    return self;
 }
 
-- compound
-{
-  return compound;
-}
+- compound { return compound; }
 
-- lookupself
-{
-  return [self lookupval:s_self];
-}
+- lookupself { return [self lookupval:s_self]; }
 
-- lookuplocal:sym
-{
-  return [compound lookuplocal:sym];
-}
+- lookuplocal:sym { return [compound lookuplocal:sym]; }
 
 - lookupval:sym
 {
-  if ([vals includesKey:sym]) {
-    return [vals atKey:sym]; /* may be nil */
-  }
-  if ([compound lookuplocal:sym]) {
-    [self error:"Variable '%s' was not initialized",[sym str]];
-    return self;
-  } else { 
-    id e = [self enclosing];
-    if (e) {
-      return [e lookupval:sym];
-    } else {
-      [self error:"Can't find variable '%s'",[sym str]];
-      return nil;
+    if ([vals includesKey:sym])
+    {
+        return [vals atKey:sym]; /* may be nil */
     }
-  }
+    if ([compound lookuplocal:sym])
+    {
+        [self error:"Variable '%s' was not initialized", [sym str]];
+        return self;
+    }
+    else
+    {
+        id e = [self enclosing];
+        if (e)
+        {
+            return [e lookupval:sym];
+        }
+        else
+        {
+            [self error:"Can't find variable '%s'", [sym str]];
+            return nil;
+        }
+    }
 }
 
 - defval:sym as:scalar
 {
-  if (!vals) {
-    vals = [Dictionary new];
-  }
-  [vals atKey:sym put:scalar];
-  return self;
+    if (!vals)
+    {
+        vals = [Dictionary new];
+    }
+    [vals atKey:sym put:scalar];
+    return self;
 }
 
 - enclosing
 {
-  id f = [self previous]; 
-  if (f) {
-    if (compound) {
+    id f = [self previous];
+    if (f)
+    {
+        if (compound)
+        {
 #ifndef NDEBUG
-      id t = [compound enclosing];
-      assert(t == [f compound]);
+            id t = [compound enclosing];
+            assert (t == [f compound]);
 #endif
-      return f;
-    } else {
-      return nil;
+            return f;
+        }
+        else
+        {
+            return nil;
+        }
     }
-  } else {
-    return nil;
-  }
+    else
+    {
+        return nil;
+    }
 }
 
 - quitframe:(BOOL)x
 {
-  quitframe=x;breakframe=x;return self;
+    quitframe = x;
+    breakframe = x;
+    return self;
 }
 
-- (BOOL)quitframe
-{
-  return quitframe;
-}
+- (BOOL)quitframe { return quitframe; }
 
 - breakframe:(BOOL)x
 {
-  breakframe=x;return self;
+    breakframe = x;
+    return self;
 }
 
-- (BOOL)breakframe
-{
-  return breakframe;
-}
+- (BOOL)breakframe { return breakframe; }
 
 - contframe:(BOOL)x
 {
-  contframe=x;return self;
+    contframe = x;
+    return self;
 }
 
-- (BOOL)contframe
-{
-  return contframe;
-}
+- (BOOL)contframe { return contframe; }
 
 - exitframe
 {
-  id frm;
-  for(frm=self;frm;frm=[frm previous]) {
-    [frm quitframe:YES];
-  }
-  return self;
+    id frm;
+    for (frm = self; frm; frm = [frm previous])
+    {
+        [frm quitframe:YES];
+    }
+    return self;
 }
 
-- returnval
-{
-  return returnval;
-}
+- returnval { return returnval; }
 
 - returnval:x
 {
-  returnval=x;return self;
+    returnval = x;
+    return self;
 }
 
 - printBtOn:(IOD)d
 {
-  id frm;
-  int c = 0;
-  
-  for(frm=self;frm;frm=[frm previous]) {
-    if ([frm compound] == nil) {
-      fprintf(d,"#%d  ",c++);[[frm def] printBtOn:d];
-    }
-  }
+    id frm;
+    int c = 0;
 
-  return self;
+    for (frm = self; frm; frm = [frm previous])
+    {
+        if ([frm compound] == nil)
+        {
+            fprintf (d, "#%d  ", c++);
+            [[frm def] printBtOn:d];
+        }
+    }
+
+    return self;
 }
-  
+
 @end
- 

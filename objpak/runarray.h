@@ -6,7 +6,7 @@
 
 /*
  * This library is free software; you can redistribute it and/or modify it
- * under the terms of the GNU Library General Public License as published 
+ * under the terms of the GNU Library General Public License as published
  * by the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
  *
@@ -27,12 +27,12 @@
 
 @interface RunArray : Cltn
 {
-  id runs;
-  id values;
-  unsigned size;
-  int laststart;
-  int lastend;
-  int lastsegment;
+    id runs;
+    id values;
+    unsigned size;
+    int laststart;
+    int lastend;
+    int lastsegment;
 }
 
 - reset;
@@ -44,15 +44,15 @@
 - runs;
 - runs:r values:v;
 - at:(unsigned)i;
-- (unsigned) runLengthAt:(unsigned)i;
-- (unsigned) size;
+- (unsigned)runLengthAt:(unsigned)i;
+- (unsigned)size;
 - calcsize;
 - setsize:(unsigned)newsize;
 - addAttribute:attrib to:v;
 - breakat:(int)i;
 - addAttribute:attrib from:(unsigned)p size:(unsigned)s;
 - calcinsertsegment:(int)i;
-- at:(unsigned)anOffset insert:(char*)aString count:(int)n;
+- at:(unsigned)anOffset insert:(char *)aString count:(int)n;
 - deleteFrom:(unsigned)p to:(unsigned)q;
 - concat:b;
 - coalesce;
@@ -61,4 +61,3 @@
 @end
 
 #endif /* __RUNARY_H__ */
- 

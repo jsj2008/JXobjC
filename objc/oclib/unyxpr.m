@@ -3,7 +3,7 @@
  * Copyright (c) 1998,2000 David Stes.
  *
  * This library is free software; you can redistribute it and/or modify it
- * under the terms of the GNU Library General Public License as published 
+ * under the terms of the GNU Library General Public License as published
  * by the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
  *
@@ -24,7 +24,7 @@
 #include <assert.h>
 #ifndef __OBJECT_INCLUDED__
 #define __OBJECT_INCLUDED__
-#include <stdio.h> /* FILE */
+#include <stdio.h>  /* FILE */
 #include "Object.h" /* Stepstone Object.h assumes #import */
 #endif
 #include "node.h"
@@ -38,77 +38,74 @@
 
 - op:(STR)anop
 {
-  op = anop;
-  return self;
+    op = anop;
+    return self;
 }
 
 - expr:aRcvr
 {
-  expr = aRcvr;
-  return self;
+    expr = aRcvr;
+    return self;
 }
 
-- (int)lineno
-{
-  return [expr lineno];
-}
+- (int)lineno { return [expr lineno]; }
 
-- filename
-{
-  return [expr filename];
-}
+- filename { return [expr filename]; }
 
 - typesynth
 {
-  type = [expr type];
-  return self;
+    type = [expr type];
+    return self;
 }
 
 - synth
 {
-  [expr synth];
-  return self;
+    [expr synth];
+    return self;
 }
 
 - gen
 {
-  gc(' ');			/* a+ +b -> a+(+b) not a++  b */
-  gs(op);
-  [expr gen];
-  return self;
+    gc (' '); /* a+ +b -> a+(+b) not a++  b */
+    gs (op);
+    [expr gen];
+    return self;
 }
 
-- (BOOL)isconstexpr
-{
-  return [expr isconstexpr];
-}
+- (BOOL)isconstexpr { return [expr isconstexpr]; }
 
 - st80
 {
-  gc('(');
-  gs(op);
-  [expr st80];
-  gc(')');
-  return self;
+    gc ('(');
+    gs (op);
+    [expr st80];
+    gc (')');
+    return self;
 }
 
 - go
 {
-  id a,r;
-  int s = 0;
-  a = [expr go];
-  if ([a isKindOf:(id)[Scalar class]]) {
-    s = [a u_int];
-  } else {
-    s = (a)?1:0;
-  }
-  r = [Scalar new];
-  if (strcmp(op,"-") == 0) s = -s;
-  else if (strcmp(op,"+") == 0) s = +s;
-  else if (strcmp(op,"!") == 0) s = !s;
-  else [self notImplemented:_cmd];
-  return [r u_int:s];
+    id a, r;
+    int s = 0;
+    a = [expr go];
+    if ([a isKindOf:(id)[Scalar class]])
+    {
+        s = [a u_int];
+    }
+    else
+    {
+        s = (a) ? 1 : 0;
+    }
+    r = [Scalar new];
+    if (strcmp (op, "-") == 0)
+        s = -s;
+    else if (strcmp (op, "+") == 0)
+        s = +s;
+    else if (strcmp (op, "!") == 0)
+        s = !s;
+    else
+        [self notImplemented:_cmd];
+    return [r u_int:s];
 }
 
 @end
- 

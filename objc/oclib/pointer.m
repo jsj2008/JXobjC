@@ -3,7 +3,7 @@
  * Copyright (c) 1998 David Stes.
  *
  * This library is free software; you can redistribute it and/or modify it
- * under the terms of the GNU Library General Public License as published 
+ * under the terms of the GNU Library General Public License as published
  * by the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
  *
@@ -24,7 +24,7 @@
 #include <assert.h>
 #ifndef __OBJECT_INCLUDED__
 #define __OBJECT_INCLUDED__
-#include <stdio.h> /* FILE */
+#include <stdio.h>  /* FILE */
 #include "Object.h" /* Stepstone Object.h assumes #import */
 #endif
 #include <ordcltn.h>
@@ -34,116 +34,88 @@
 
 @implementation Pointer
 
-- pointer
-{
-  return pointer;
-}
+- pointer { return pointer; }
 
 - (int)numpointers
 {
-  id e, p;
-  int h = 1;
+    id e, p;
+    int h = 1;
 
-  for (e = self; (p = [e pointer]); e = p)
-    h++;
-  return h;
+    for (e = self; (p = [e pointer]); e = p)
+        h++;
+    return h;
 }
 
-- abstrdecl
-{
-  return self;
-}
+- abstrdecl { return self; }
 
-- (unsigned)hash
-{
-  return [self numpointers];
-}
+- (unsigned)hash { return [self numpointers]; }
 
-- (BOOL)isEqual:x
-{
-  return [self numpointers] == [x numpointers];
-}
+- (BOOL)isEqual:x { return [self numpointers] == [x numpointers]; }
 
-- (BOOL)ispointer
-{
-  return YES;
-}
+- (BOOL)ispointer { return YES; }
 
-- (BOOL)canforward
-{
-  return YES;
-}
+- (BOOL)canforward { return YES; }
 
-- (BOOL)isscalartype
-{
-  return YES;
-}
+- (BOOL)isscalartype { return YES; }
 
 - specs:aList
 {
-  specs = aList;
-  return self;
+    specs = aList;
+    return self;
 }
 
-- hide:x rename:y
-{
-  return self;
-}
+- hide:x rename:y { return self; }
 
 - pointer:aDecl
 {
-  assert([aDecl isKindOf:(id) isa]);
-  pointer = aDecl;
-  return self;
+    assert ([aDecl isKindOf:(id)isa]);
+    pointer = aDecl;
+    return self;
 }
 
 - star
 {
-  if (pointer) {
-    return [[self copy] pointer:[pointer star]];
-  } else {
-    return nil;
-  }
+    if (pointer)
+    {
+        return [[self copy] pointer:[pointer star]];
+    }
+    else
+    {
+        return nil;
+    }
 }
 
-- identifier
-{
-  return nil;
-}
+- identifier { return nil; }
 
 - gen
 {
-  gc('*');
-  if (specs)
-    [specs elementsPerform:@selector(gen)];
-  if (pointer)
-    [pointer gen];
-  return self;
+    gc ('*');
+    if (specs)
+        [specs elementsPerform:@selector (gen)];
+    if (pointer)
+        [pointer gen];
+    return self;
 }
 
 - gendef:sym
 {
-  gc('*');
-  if (specs)
-    [specs elementsPerform:@selector(gen)];
-  if (pointer) {
-    [pointer gendef:sym];
-  } else {
-    if (sym)
-      [sym gen];
-  }
-  return self;
+    gc ('*');
+    if (specs)
+        [specs elementsPerform:@selector (gen)];
+    if (pointer)
+    {
+        [pointer gendef:sym];
+    }
+    else
+    {
+        if (sym)
+            [sym gen];
+    }
+    return self;
 }
 
-- synth
-{
-  return self;
-}
+- synth { return self; }
 
-- st80
-{
-  return self;
-}
+- st80 { return self; }
 
 @end
- 

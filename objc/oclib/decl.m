@@ -3,7 +3,7 @@
  * Copyright (c) 1998 David Stes.
  *
  * This library is free software; you can redistribute it and/or modify it
- * under the terms of the GNU Library General Public License as published 
+ * under the terms of the GNU Library General Public License as published
  * by the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
  *
@@ -24,7 +24,7 @@
 #include <assert.h>
 #ifndef __OBJECT_INCLUDED__
 #define __OBJECT_INCLUDED__
-#include <stdio.h> /* FILE */
+#include <stdio.h>  /* FILE */
 #include "Object.h" /* Stepstone Object.h assumes #import */
 #endif
 #include "node.h"
@@ -32,95 +32,40 @@
 
 @implementation Decl
 
-- hide:sym rename:x
-{
-  return [self subclassResponsibility:_cmd];
-}
+- hide:sym rename:x { return [self subclassResponsibility:_cmd]; }
 
-- abstrdecl
-{
-  return [self subclassResponsibility:_cmd];
-}
+- abstrdecl { return [self subclassResponsibility:_cmd]; }
 
-- (BOOL)isinit
-{
-  return NO;
-}
+- (BOOL)isinit { return NO; }
 
-- (BOOL)islistinit
-{
-  return NO;
-}
+- (BOOL)islistinit { return NO; }
 
-- (BOOL)isfunproto
-{
-  return NO;
-}
+- (BOOL)isfunproto { return NO; }
 
-- (BOOL)canforward
-{
-  return NO;
-}
+- (BOOL)canforward { return NO; }
 
-- (BOOL)isscalartype
-{
-  return NO;
-}
+- (BOOL)isscalartype { return NO; }
 
-- (BOOL)ispointer
-{
-  return NO;
-}
+- (BOOL)ispointer { return NO; }
 
-- star
-{
-  return nil;
-}
+- star { return nil; }
 
-- dot:sym
-{
-  return nil;
-}
+- dot:sym { return nil; }
 
-- funcall
-{
-  return nil;
-}
+- funcall { return nil; }
 
-- identifier
-{
-  return [self subclassResponsibility:_cmd];
-}
+- identifier { return [self subclassResponsibility:_cmd]; }
 
-- genabstrtype
-{
-  return [self gendef:nil];
-}
+- genabstrtype { return [self gendef:nil]; }
 
-- gendef:sym
-{
-  return [self subclassResponsibility:_cmd];
-}
+- gendef:sym { return [self subclassResponsibility:_cmd]; }
 
-- synth
-{
-  return [self subclassResponsibility:_cmd];
-}
+- synth { return [self subclassResponsibility:_cmd]; }
 
-- synthinits
-{
-  return self;
-}
+- synthinits { return self; }
 
-- st80
-{
-  return [self subclassResponsibility:_cmd];
-}
+- st80 { return [self subclassResponsibility:_cmd]; }
 
-- st80inits
-{
-  return self;
-}
+- st80inits { return self; }
 
 @end
- 

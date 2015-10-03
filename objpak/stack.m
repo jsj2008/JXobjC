@@ -6,7 +6,7 @@
 
 /*
  * This library is free software; you can redistribute it and/or modify it
- * under the terms of the GNU Library General Public License as published 
+ * under the terms of the GNU Library General Public License as published
  * by the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
  *
@@ -39,60 +39,51 @@
  *
  ****************************************************************************/
 
-+ new
-{
-  return [self new:DEFAULT_CAPACITY];
-}
++ new { return [self new:DEFAULT_CAPACITY]; }
 
 - contents:anObject
 {
-  contents = anObject;
-  return self;
+    contents = anObject;
+    return self;
 }
 
-- contents
-{
-  return contents;
-}
+- contents { return contents; }
 
-+ new:(unsigned)n
-{
-  return [[super new] contents:[OrdCltn new:n]];
-}
++ new:(unsigned)n { return [[super new] contents:[OrdCltn new:n]]; }
 
 - copy
 {
-  id aCopy = [super copy];
-  contents = [contents copy];
-  return aCopy;
+    id aCopy = [super copy];
+    contents = [contents copy];
+    return aCopy;
 }
 
 - deepCopy
 {
-  /* not all Object implementations have |deepCopy| */
-  /* so we send |copy| to super instead             */
+    /* not all Object implementations have |deepCopy| */
+    /* so we send |copy| to super instead             */
 
-  id aCopy = [super copy];
-  contents = [contents deepCopy];
-  return aCopy;
+    id aCopy = [super copy];
+    contents = [contents deepCopy];
+    return aCopy;
 }
 
 - emptyYourself
 {
-  [contents emptyYourself];
-  return self;
+    [contents emptyYourself];
+    return self;
 }
 
 - freeContents
 {
-  [contents freeContents];
-  return self;
+    [contents freeContents];
+    return self;
 }
 
 - free
 {
-  contents = [contents free];
-  return [super free];
+    contents = [contents free];
+    return [super free];
 }
 
 /*****************************************************************************
@@ -101,30 +92,15 @@
  *
  ****************************************************************************/
 
-- (unsigned) size
-{
-  return [contents size];
-}
+- (unsigned)size { return [contents size]; }
 
-- (unsigned) depth
-{
-  return [contents size];
-}
+- (unsigned)depth { return [contents size]; }
 
-- (BOOL) isEmpty
-{
-  return [contents isEmpty];
-}
+- (BOOL)isEmpty { return [contents isEmpty]; }
 
-- eachElement
-{
-  return [contents eachElement];
-}
+- eachElement { return [contents eachElement]; }
 
-- topElement
-{
-  return [contents lastElement];
-}
+- topElement { return [contents lastElement]; }
 
 /*****************************************************************************
  *
@@ -134,61 +110,58 @@
 
 - push:anObject
 {
-  [contents add:anObject];
-  return self;
+    [contents add:anObject];
+    return self;
 }
 
 - add:anObject
 {
-  [contents add:anObject];
-  return self;
+    [contents add:anObject];
+    return self;
 }
 
-- pop
-{
-  return [contents removeLast];
-}
+- pop { return [contents removeLast]; }
 
 - swap
 {
-  unsigned n = [contents size];
+    unsigned n = [contents size];
 
-  if (n >= 2)
+    if (n >= 2)
     {
-      id anObject = [contents at:n - 1];
-      [contents at:n - 1 put:[contents at:n - 2]];
-      [contents at:n - 2 put:anObject];
-      return self;
+        id anObject = [contents at:n - 1];
+        [contents at:n - 1 put:[contents at:n - 2]];
+        [contents at:n - 2 put:anObject];
+        return self;
     }
-  else
+    else
     {
-      return [self notImplemented:_cmd];
+        return [self notImplemented:_cmd];
     }
 }
 
-- at:(unsigned )anOffset
+- at:(unsigned)anOffset
 {
-  unsigned n = [contents size];
-  if (anOffset >= n)
+    unsigned n = [contents size];
+    if (anOffset >= n)
     {
-      return [self notImplemented:_cmd];
+        return [self notImplemented:_cmd];
     }
-  else
+    else
     {
-      return [contents at:n - 1 - anOffset];
+        return [contents at:n - 1 - anOffset];
     }
 }
 
-- removeAt:(unsigned )anOffset
+- removeAt:(unsigned)anOffset
 {
-  unsigned n = [contents size];
-  if (anOffset >= n)
+    unsigned n = [contents size];
+    if (anOffset >= n)
     {
-      return [self notImplemented:_cmd];
+        return [self notImplemented:_cmd];
     }
-  else
+    else
     {
-      return [contents removeAt:n - 1 - anOffset];
+        return [contents removeAt:n - 1 - anOffset];
     }
 }
 
@@ -200,9 +173,8 @@
 
 - printOn:(IOD)aFile
 {
-  [[[self eachElement] printOn:aFile] free];
-  return self;
+    [[[self eachElement] printOn:aFile] free];
+    return self;
 }
 
 @end
- 

@@ -3,7 +3,7 @@
  * Copyright (c) 1998,2000 David Stes.
  *
  * This library is free software; you can redistribute it and/or modify it
- * under the terms of the GNU Library General Public License as published 
+ * under the terms of the GNU Library General Public License as published
  * by the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
  *
@@ -24,7 +24,7 @@
 #include <assert.h>
 #ifndef __OBJECT_INCLUDED__
 #define __OBJECT_INCLUDED__
-#include <stdio.h> /* FILE */
+#include <stdio.h>  /* FILE */
 #include "Object.h" /* Stepstone Object.h assumes #import */
 #endif
 #include "node.h"
@@ -35,58 +35,45 @@
 
 - expr:aRcvr
 {
-  expr = aRcvr;
-  return self;
+    expr = aRcvr;
+    return self;
 }
 
-- (int)lineno
-{
-  return [cast lineno];
-}
+- (int)lineno { return [cast lineno]; }
 
-- filename
-{
-  return [cast filename];
-}
+- filename { return [cast filename]; }
 
-- (BOOL)isconstexpr
-{
-  return [expr isconstexpr];
-}
+- (BOOL)isconstexpr { return [expr isconstexpr]; }
 
 - cast:args
 {
-  cast = args;
-  return self;
+    cast = args;
+    return self;
 }
 
 - typesynth
 {
-  [expr typesynth];
-  type = cast;
-  return self;
+    [expr typesynth];
+    type = cast;
+    return self;
 }
 
 - synth
 {
-  [expr synth];
-  return self;
+    [expr synth];
+    return self;
 }
 
 - gen
 {
-  gl([self lineno],[[self filename] str]);
-  gc('(');
-  [cast gen];
-  gc(')');
-  [expr gen];
-  return self;
+    gl ([self lineno], [[self filename] str]);
+    gc ('(');
+    [cast gen];
+    gc (')');
+    [expr gen];
+    return self;
 }
 
-- go
-{
-  return [expr go];
-}
+- go { return [expr go]; }
 
 @end
- 

@@ -6,7 +6,7 @@
 
 /*
  * This library is free software; you can redistribute it and/or modify it
- * under the terms of the GNU Library General Public License as published 
+ * under the terms of the GNU Library General Public License as published
  * by the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
  *
@@ -26,29 +26,28 @@
 #include "array.h"
 
 typedef struct idary
-  {
+{
     int capacity;
-    id *ptr;
-  }
- *idary_t;
+    id * ptr;
+} * idary_t;
 
 @interface IdArray : Array
 {
-  struct idary value;
+    struct idary value;
 }
 
 + new;
 + new:(unsigned)n;
-+ with:(int)nArgs,...;
++ with:(int)nArgs, ...;
 - copy;
 - deepCopy;
 - free;
 
-- (unsigned) size;
+- (unsigned)size;
 - at:(unsigned)anOffset;
 - at:(unsigned)anOffset put:anObject;
 
-- (unsigned) capacity;
+- (unsigned)capacity;
 - capacity:(unsigned)nSlots;
 - packContents;
 
@@ -62,4 +61,3 @@ typedef struct idary
 @end
 
 #endif /* __IDARRAY_H__ */
- 

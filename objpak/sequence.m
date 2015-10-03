@@ -6,7 +6,7 @@
 
 /*
  * This library is free software; you can redistribute it and/or modify it
- * under the terms of the GNU Library General Public License as published 
+ * under the terms of the GNU Library General Public License as published
  * by the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
  *
@@ -35,40 +35,34 @@
 
 - setUpCarrier:aCarrier
 {
-  carrier = aCarrier;
-  return self;
+    carrier = aCarrier;
+    return self;
 }
 
 + over:aCarrier
 {
-  id newObj = [super new];
-  [newObj setUpCarrier:aCarrier];
-  return newObj;
+    id newObj = [super new];
+    [newObj setUpCarrier:aCarrier];
+    return newObj;
 }
 
-- over:aCarrier
-{
-  return [self notImplemented:_cmd];
-}
+- over:aCarrier { return [self notImplemented:_cmd]; }
 
-- copy
-{
-  return [isa over:[carrier copy]];
-}
+- copy { return [isa over:[carrier copy]]; }
 
 - free
 {
-  carrier = [carrier free];
-  return [super free];
+    carrier = [carrier free];
+    return [super free];
 }
 
 - release
 {
 #ifdef OBJC_REFCNT
-  carrier = nil;
-  return [super release];
+    carrier = nil;
+    return [super release];
 #else
-  return [self notImplemented:_cmd];
+    return [self notImplemented:_cmd];
 #endif
 }
 
@@ -78,10 +72,7 @@
  *
  ****************************************************************************/
 
-- (unsigned) size
-{
-  return [carrier size];
-}
+- (unsigned)size { return [carrier size]; }
 
 /*****************************************************************************
  *
@@ -89,30 +80,15 @@
  *
  ****************************************************************************/
 
-- next
-{
-  return [carrier next];
-}
+- next { return [carrier next]; }
 
-- peek
-{
-  return [carrier peek];
-}
+- peek { return [carrier peek]; }
 
-- previous
-{
-  return [carrier previous];
-}
+- previous { return [carrier previous]; }
 
-- first
-{
-  return [carrier first];
-}
+- first { return [carrier first]; }
 
-- last
-{
-  return [carrier last];
-}
+- last { return [carrier last]; }
 
 /*****************************************************************************
  *
@@ -122,13 +98,13 @@
 
 - printOn:(IOD)aFile
 {
-  id aMember;
-  while ((aMember = [self next]))
+    id aMember;
+    while ((aMember = [self next]))
     {
-      [aMember printOn:aFile];
-      fprintf (aFile, "\n");
+        [aMember printOn:aFile];
+        fprintf (aFile, "\n");
     }
-  return self;
+    return self;
 }
 
 /*****************************************************************************
@@ -140,13 +116,11 @@
 #if OBJC_BLOCKS
 - do:aBlock
 {
-  id aMember;
-  while ((aMember = [self next]))
-    [aBlock value:aMember];
-  return self;
+    id aMember;
+    while ((aMember = [self next]))
+        [aBlock value:aMember];
+    return self;
 }
 #endif /* OBJC_BLOCKS */
 
-
 @end
- 
