@@ -1,6 +1,4 @@
-/*
- * Copyright (c) 2015 D Mackay
- */
+/* Copyright (c) 2015 D. Mackay. All rights reserved. */
 
 @interface PropertyDef : Def
 {

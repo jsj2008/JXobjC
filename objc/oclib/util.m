@@ -1,4 +1,3 @@
-
 /*
  * Copyright (c) 1998,1999,2011 David Stes.
  *
@@ -15,9 +14,9 @@
  * You should have received a copy of the GNU Library General Public License
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
- *
- * $Id: util.m,v 1.4 2011/06/13 21:54:16 stes Exp $
  */
+
+/* Copyright (c) 2015 D. Mackay. All rights reserved. */
 
 #include "config.h"
 #include <ctype.h>
@@ -724,15 +723,12 @@ id mkpropsetmeth (id compdec, id type, id name, int ispointer)
         [d keywsel:[OrdCltn
                        add:mkkeywdecl (usel, type, [Symbol str:"valset"])]];
         [d canforward:NO];
-        /*[d restype:type];*/
         [r method:d];
     }
     [r prototype];
     if ((b = [CompoundStmt new]))
     {
-        int i, n;
         id s = [OrdCltn new];
-
         id vartoset = mkarrowexpr (s_self, name);
 
         [s add:mkexprstmtx (mkassignexpr (
@@ -761,13 +757,8 @@ id mkpropgetmeth (id compdec, id type, id name, int ispointer)
     [r prototype];
     if ((b = [CompoundStmt new]))
     {
-        int i, n;
         id s = [OrdCltn new];
-
         id vartoget = mkarrowexpr (s_self, name);
-
-        //[s add:mkexprstmtx(mkassignexpr(vartoset, "=", mkidentexpr([Symbol
-        //str:"valset"])))];
 
         [s add:mkreturnx (vartoget)];
         [b stmts:s];
