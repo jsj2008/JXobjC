@@ -729,11 +729,10 @@ id mkpropsetmeth (id compdec, id type, id name, int ispointer)
     if ((b = [CompoundStmt new]))
     {
         id s = [OrdCltn new];
-        id vartoset = mkarrowexpr (s_self, name);
+        id vartoset = [mkarrowexpr (s_self, name) type:type];
 
         [s add:mkexprstmtx (mkassignexpr (
                    vartoset, "=", mkidentexpr ([Symbol str:"valset"])))];
-
         [s add:mkreturnx (e_self)];
         [b stmts:s];
         [r body:b];
@@ -758,7 +757,7 @@ id mkpropgetmeth (id compdec, id type, id name, int ispointer)
     if ((b = [CompoundStmt new]))
     {
         id s = [OrdCltn new];
-        id vartoget = mkarrowexpr (s_self, name);
+        id vartoget = [mkarrowexpr ([[e_self copy] lhsself:1], name) type:type];
 
         [s add:mkreturnx (vartoget)];
         [b stmts:s];
