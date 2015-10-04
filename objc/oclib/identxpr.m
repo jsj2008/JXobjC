@@ -189,7 +189,6 @@
     {
         BOOL ism = (curdef != nil && [curdef ismethdef]);
         char * msg = "%s variable '%s' used outside method implementation";
-
         if ([curclassdef isivar:identifier])
         {
             if (ism)

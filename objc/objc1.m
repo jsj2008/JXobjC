@@ -45,8 +45,8 @@ void printversion (void)
 
 void printcopyright (void)
 {
-    printf ("Portable Object Compiler++ %s (c) 1997,2014,2015.\n", OBJCVERSION);
-    printf ("Use is under licence terms.\n");
+    printf ("Portable Object Compiler++ %s (c) 1997-2015.\n", OBJCVERSION);
+    printf ("Use is subject to licence terms.\n");
 }
 
 void unknownoption (char * arg)

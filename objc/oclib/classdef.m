@@ -125,6 +125,11 @@ id curclassdef;
     {
         otbtypename = [[String sprintf:"%s_OTB", s] strCopy];
     }
+
+    [trlunit def:[[String str:s] concatSTR:"Id"]
+          astype:[[Type new] addspec:s_id]];
+    gf ("typedef id %sId;\n", s);
+
     return self;
 }
 
