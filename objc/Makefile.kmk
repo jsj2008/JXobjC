@@ -8,7 +8,7 @@ PROGRAMS += objc1 postlink
 objc1_TEMPLATE = OBJC
 objc1_INCS = $(INTERNAL_INCS)
 objc1_LIBS = $(oclib_1_TARGET) $(INTERNAL_LIBS)
-objc1_SOURCES = objc1.m yacc.m flex.m lexfiltr.m
+objc1_SOURCES = objc1.m yacc.m lex.m lexfiltr.m
 objc1_ORDERDEPS = $(PATH_ROOT)/objc/yacc.m $(PATH_ROOT)/objc/lex.m
 objc1_CLEAN = $(PATH_ROOT)/objc/yacc.m $(PATH_ROOT)/objc/lex.m \
 	$(PATH_ROOT)/objc/y.tab.h $(PATH_ROOT)/y.output
