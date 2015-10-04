@@ -1,4 +1,4 @@
-#pragma printLine #include < stdint.h >
+#pragma printLine #include <stdint.h>
 
 #pragma OCbuiltInType int8_t
 #pragma OCbuiltInType int16_t

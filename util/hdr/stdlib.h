@@ -1,4 +1,4 @@
-#pragma printLine #include < stdlib.h >
+#pragma printLine #include <stdlib.h>
 #pragma OCbuiltInFctn atoi
 #pragma OCbuiltInFctn atof
 #pragma OCbuiltInFctn getenv
@@ -9,6 +9,3 @@
 #pragma OCbuiltInFctn memset
 #pragma OCbuiltInFctn abort
 
-#ifndef __dead2
-#define __dead2
-#endif

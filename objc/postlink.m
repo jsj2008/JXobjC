@@ -50,6 +50,8 @@
 #include <string.h> /* strtok */
 #include "objpak.h"
 
+int okblock;
+
 id inFile;
 id outFile;
 id linkFormat;

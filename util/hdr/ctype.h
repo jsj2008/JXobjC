@@ -1,1 +1,2 @@
-#pragma printLine #include < ctype.h >
+#pragma printLine #include <ctype.h>
+#define __dead2

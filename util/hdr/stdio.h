@@ -1,4 +1,4 @@
-#pragma printLine #include < stdio.h >
+#pragma printLine #include <stdio.h>
 #pragma OCbuiltInType FILE
 #pragma OCbuiltInType size_t
 #pragma OCbuiltInVar NULL
