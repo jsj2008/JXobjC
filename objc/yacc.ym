@@ -637,6 +637,13 @@ optbuiltinfunargs : /* empty */
      { $$ = $1; }
   ;
 
+optexprdecl
+    : /* Epsilon */
+    { $$ = nil; }
+    | expr { $$ = $1; }
+    | datadefx { $$ = $1; }
+    ;
+
 optexpr : /* empty */
      { $$ = nil; }
   | expr
@@ -908,7 +915,7 @@ stmtrc : optexpr ';'
      { $$ = mkwhilestmt($1,$3,$5); }
   | dokeyw stmt whilekeyw '(' expr ')' ';'
      { $$ = mkdostmt($1,$2,$3,$5); }
-  | forkeyw '(' optexpr ';' optexpr ';' optexpr ')' stmt
+  | forkeyw '(' optexprdecl ';' optexpr ';' optexpr ')' stmt
      { $$ = mkforstmt($1,$3,$5,$7,$9); }
   | gotokeyw identifier ';'
      { $$ = mkgotostmt($1,$2); }

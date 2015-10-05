@@ -259,7 +259,7 @@
             {
                 id x = [mkidentexpr (v) synth];
 
-                [cltn add:mkexprstmt (mkassignexpr (x, "=", [d initializer]))];
+                [cltn addFirst:mkexprstmt (mkassignexpr (x, "=", [d initializer]))];
                 [decllist at:n
                          put:[d decl]]; /* hence removing the initializer */
             }
