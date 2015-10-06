@@ -62,16 +62,16 @@ id t_id;
     if (!t_unknown)
     {
         t_unknown = [Type new];
-        t_void = [[Type new] addspec:s_void];
-        t_char = [[Type new] addspec:s_char];
-        t_bool = [[Type new] addspec:s_bool];
-        t_int = [[Type new] addspec:s_int];
-        t_uns = [[Type new] addspec:s_uns];
-        t_long = [[Type new] addspec:s_long];
-        t_double = [[Type new] addspec:s_double];
-        t_str = [[Type new] addspec:s_str];
-        t_sel = [[Type new] addspec:s_sel];
-        t_id = [[Type new] addspec:s_id];
+        t_void    = [[Type new] addspec:s_void];
+        t_char    = [[Type new] addspec:s_char];
+        t_bool    = [[Type new] addspec:s_bool];
+        t_int     = [[Type new] addspec:s_int];
+        t_uns     = [[Type new] addspec:s_uns];
+        t_long    = [[Type new] addspec:s_long];
+        t_double  = [[Type new] addspec:s_double];
+        t_str     = [[Type new] addspec:s_str];
+        t_sel     = [[Type new] addspec:s_sel];
+        t_id      = [[Type new] addspec:s_id];
     }
     return self;
 }
@@ -460,7 +460,7 @@ id t_id;
     {
         id s;
         int n = [[decl expr] asInt];
-        s = [Symbol new:n];
+        s     = [Symbol new:n];
         return [[Scalar new] u_str:[s strCopy]];
     }
     if (decl == nil && [specs size] == 1)

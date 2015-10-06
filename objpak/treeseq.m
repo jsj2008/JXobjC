@@ -40,7 +40,7 @@ static objbbt_t last (objbbt_t p)
 
 - setUpSort:aSort
 {
-    top = [aSort objbbtTop];
+    top  = [aSort objbbtTop];
     prev = NULL;
     next = (top) ? first (top) : NULL;
     return self;

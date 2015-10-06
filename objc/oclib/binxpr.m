@@ -93,8 +93,8 @@
 {
     id a, b, r;
     int s = 0;
-    a = [lhs go];
-    b = [rhs go];
+    a     = [lhs go];
+    b     = [rhs go];
     r = [Scalar new];
     if (strcmp (op, "*") == 0)
         s = [a u_int] * [b u_int];

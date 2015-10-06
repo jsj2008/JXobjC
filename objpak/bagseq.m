@@ -30,9 +30,9 @@
 
 static void objbagseq_init (objbagseq_t self, id bag)
 {
-    self->set = [bag objbagvalue];
+    self->set    = [bag objbagvalue];
     self->offset = -1; /* current pos */
-    self->cnt = 0;     /* how many left at current pos */
+    self->cnt    = 0;  /* how many left at current pos */
 }
 
 + over:bag
@@ -109,7 +109,7 @@ static id next (objbagseq_t self)
         }
         else
         {
-            id obj = at (self->set, i);
+            id obj    = at (self->set, i);
             self->cnt = cntat (self->set, i) - 1; /* how many left */
             assert (self->cnt >= 0);
             self->offset = i;

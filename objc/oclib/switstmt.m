@@ -42,7 +42,7 @@
 {
     id r;
     id e = [expr go];
-    r = [stmt switchOn:e];
+    r    = [stmt switchOn:e];
     [topframe breakframe:NO];
     return r;
 }

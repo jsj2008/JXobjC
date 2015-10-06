@@ -134,7 +134,7 @@
             }
             else
             {
-                int no = [m lineno];
+                int no    = [m lineno];
                 char * fn = [[m filename] str];
 
                 warn ("selector '%s' previously declared at %s:%d", [s str], fn,
@@ -172,9 +172,9 @@
         char * fmt;
 
         [self classdef:curclassdef];
-        curdef = self;
+        curdef      = self;
         curcompound = nil;
-        x = [s_self copy];
+        x           = [s_self copy];
         [x lineno:[method lineno]];
         [x filename:[method filename]];
         [self defparm:x astype:[classdef selftype]]; /* it's not t_id */
@@ -185,8 +185,8 @@
         [method synth];
         [curclassdef forceimpl];
         selname = [[method selector] str];
-        fmt = (factory) ? "c_%s_%s" : "i_%s_%s";
-        t = [[Symbol sprintf:fmt, [curclassdef classname], selname] toscores];
+        fmt     = (factory) ? "c_%s_%s" : "i_%s_%s";
+        t       = [[Symbol sprintf:fmt, [curclassdef classname], selname] toscores];
         impname = [t strCopy];
         if (factory)
         {
@@ -261,7 +261,7 @@
 
 - printBtOn:(IOD)d
 {
-    int no = [method lineno];
+    int no    = [method lineno];
     char * fn = [[method filename] str];
     char * cn = [classdef classname];
     char * sn = [[self selector] str];

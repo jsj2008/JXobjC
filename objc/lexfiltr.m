@@ -189,7 +189,7 @@ static void get_token (struct token * token)
     token->filtered = token->original;
 
     /* cache globals associated with current token */
-    token->yylval = yylval;
+    token->yylval  = yylval;
     token->okblock = okblock;
 
 #ifdef PRESERVE_YYTEXT
@@ -205,7 +205,7 @@ static void get_token (struct token * token)
  */
 static void restore_globals (const struct token * token)
 {
-    yylval = token->yylval;
+    yylval  = token->yylval;
     okblock = token->okblock;
 }
 
@@ -218,29 +218,17 @@ static void eval_nesting (struct nesting * n, int token)
 {
     switch (token)
     {
-    case '[':
-        n->braces++;
-        break;
+    case '[': n->braces++; break;
 
-    case ']':
-        n->braces--;
-        break;
+    case ']': n->braces--; break;
 
-    case '{':
-        n->brackets++;
-        break;
+    case '{': n->brackets++; break;
 
-    case '}':
-        n->brackets--;
-        break;
+    case '}': n->brackets--; break;
 
-    case '(':
-        n->parens++;
-        break;
+    case '(': n->parens++; break;
 
-    case ')':
-        n->parens--;
-        break;
+    case ')': n->parens--; break;
     }
 }
 
@@ -307,8 +295,8 @@ int yylex ()
         /* begin a typedef */
         case typedefkeyw:
             typedef_count = 1;
-            lparen_count = 0;
-            typedeflevel = currentlevel;
+            lparen_count  = 0;
+            typedeflevel  = currentlevel;
             /*
              * 'typedef' keywords are treated as 'storageclass' tokens
              * by the YACC code.

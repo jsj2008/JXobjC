@@ -195,11 +195,11 @@ id curloopcompound;
 {
     int i, n;
 
-    enclosing = curcompound;
+    enclosing   = curcompound;
     curcompound = self;
     if (!enclosing)
     {
-        restype = [curdef restype];
+        restype   = [curdef restype];
         parmnames = [curdef parmnames];
         if (o_refcnt)
         {

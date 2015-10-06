@@ -52,9 +52,9 @@ idfill (id * p, id v, int c)
 
 static void init (idary_t self, id v, int c)
 {
-    id * p = (id *)OC_Calloc (c * sizeof (id));
+    id * p         = (id *)OC_Calloc (c * sizeof (id));
     self->capacity = c;
-    self->ptr = p;
+    self->ptr      = p;
 }
 
 + new
@@ -113,7 +113,7 @@ static void idncpy (id * p, id * q, int n)
 
 static void copy (idary_t dst, idary_t src)
 {
-    int n = src->capacity;
+    int n         = src->capacity;
     dst->capacity = n;
     dst->ptr = (id *)OC_Malloc (n * sizeof (id));
     idncpy (dst->ptr, src->ptr, n);
@@ -136,7 +136,7 @@ static void idndeepcpy (id * p, id * q, int n)
 
 static void deepcopy (idary_t dst, idary_t src)
 {
-    int n = src->capacity;
+    int n         = src->capacity;
     dst->capacity = n;
     dst->ptr = (id *)OC_Malloc (n * sizeof (id));
     idndeepcpy (dst->ptr, src->ptr, n);
@@ -198,7 +198,7 @@ static id at (idary_t self, int i)
 
 static id idputid (id * self, id c)
 {
-    id r = *self;
+    id r  = *self;
     *self = c;
     return r;
 }
@@ -233,10 +233,10 @@ static void resize (idary_t self, unsigned c)
 {
     int min, n;
     id * newp = (id *)OC_Realloc (self->ptr, c * sizeof (id));
-    n = self->capacity;
+    n         = self->capacity;
     min = (n < c) ? n : c;
     memset (newp + min, 0, sizeof (id) * (c - min));
-    self->ptr = newp;
+    self->ptr      = newp;
     self->capacity = c;
 }
 

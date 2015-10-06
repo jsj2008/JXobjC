@@ -116,9 +116,9 @@
 {
     id c, t_self;
 
-    c = [curdef compound];
+    c        = [curdef compound];
     classdef = curclassdef;
-    t_self = [classdef selftype];
+    t_self   = [classdef selftype];
     return [self check:s_self type:t_self in:c inblock:[self inblock]];
 }
 
@@ -187,14 +187,14 @@
 
     if (curclassdef)
     {
-        BOOL ism = (curdef != nil && [curdef ismethdef]);
+        BOOL ism   = (curdef != nil && [curdef ismethdef]);
         char * msg = "%s variable '%s' used outside method implementation";
         if ([curclassdef isivar:identifier])
         {
             if (ism)
             {
                 ivar++;
-                classdef = curclassdef;
+                classdef  = curclassdef;
                 infactory = [curdef factory];
                 type = [curclassdef lookupivar:identifier];
                 if (usingblocks)
@@ -211,7 +211,7 @@
             if (ism)
             {
                 cvar++;
-                classdef = curclassdef;
+                classdef  = curclassdef;
                 infactory = [curdef factory];
                 type = [curclassdef lookupcvar:identifier];
                 if (usingblocks)
@@ -279,7 +279,7 @@
 
     if ([maybeheapvarblock isheapvar:x])
     {
-        heapvarblock = maybeheapvarblock;
+        heapvarblock      = maybeheapvarblock;
         maybeheapvarblock = nil;
     }
     else

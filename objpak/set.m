@@ -68,9 +68,9 @@ static int ptrcount (id * p, int c)
 static void init (objset_t self, int n, int c)
 {
     assert (0 <= n && n <= c);
-    self->count = n;
+    self->count    = n;
     self->capacity = c;
-    self->ptr = (id *)OC_Calloc (c * sizeof (id));
+    self->ptr      = (id *)OC_Calloc (c * sizeof (id));
 }
 
 static void initzero (objset_t self, int c) { init (self, 0, c); }
@@ -157,7 +157,7 @@ static void ptrdeepcopy (id * p, id * q, int c)
     while (c--)
     {
         id obj = *q++;
-        *p++ = (obj) ? [obj deepCopy] : nil;
+        *p++   = (obj) ? [obj deepCopy] : nil;
     }
 }
 
@@ -200,7 +200,7 @@ static void ptrclear (id * p, int c)
     while (c--)
     {
         id obj = *p;
-        *p++ = (obj) ? [obj free] : nil;
+        *p++   = (obj) ? [obj free] : nil;
     }
 }
 
@@ -222,7 +222,7 @@ static void ptrclearall (id * p, int c)
     while (c--)
     {
         id obj = *p;
-        *p++ = (obj) ? [obj freeAll] : nil;
+        *p++   = (obj) ? [obj freeAll] : nil;
     }
 }
 
@@ -241,7 +241,7 @@ static void freeall (objset_t self)
 
 static void clear (objset_t self)
 {
-    self->count = 0;
+    self->count    = 0;
     self->capacity = 0;
     OC_Free (self->ptr);
     self->ptr = NULL;
@@ -353,8 +353,8 @@ static id * ptrfind (id * p, id obj, int n)
     id *begin, *now, *end;
 
     begin = p;
-    now = p + (([obj hash]) % n);
-    end = p + n;
+    now   = p + (([obj hash]) % n);
+    end   = p + n;
 
     for (; n--; now++)
     {
@@ -394,7 +394,7 @@ static void ptrrehash (id * newp, int newc, id * old, int oldc)
 {
     while (oldc--)
     {
-        id obj = *old++;
+        id obj      = *old++;
         id * newend = newp + newc;
         if (obj)
         {
@@ -417,8 +417,8 @@ static void rehash (objset_t self)
     int c;
     id *newp, *old;
 
-    c = self->capacity;
-    old = self->ptr;
+    c    = self->capacity;
+    old  = self->ptr;
     newp = (id *)OC_Calloc (c * sizeof (id));
 
     assert (ptrcount (old, c) == self->count);
@@ -435,7 +435,7 @@ static void expand (objset_t self)
     int newc, oldc;
 
     oldc = self->capacity;
-    old = self->ptr;
+    old  = self->ptr;
     newc = 1 + 2 * oldc;
     newp = (id *)OC_Calloc (newc * sizeof (id));
 
@@ -444,7 +444,7 @@ static void expand (objset_t self)
     assert (ptrcount (newp, newc) == self->count);
 
     OC_Free (old);
-    self->ptr = newp;
+    self->ptr      = newp;
     self->capacity = newc;
 }
 
@@ -559,7 +559,7 @@ static id replace (objset_t self, id obj)
     if (*(p = find (self, obj)))
     {
         id tmp = *p;
-        *p = obj;
+        *p     = obj;
         return tmp;
     }
     else
@@ -595,7 +595,7 @@ static id delete (objset_t self, id obj)
     if (*(p = find (self, obj)))
     {
         id tmp = *p;
-        *p = nil;
+        *p     = nil;
         self->count--;
         rehash (self);
         return tmp;
@@ -644,7 +644,7 @@ static id delete (objset_t self, id obj)
     }
     else
     {
-        BOOL res = YES;
+        BOOL res  = YES;
         id e, seq = [aCltn eachElement];
         while ((e = [seq next]))
         {
@@ -670,7 +670,7 @@ static id delete (objset_t self, id obj)
     }
     else
     {
-        BOOL res = NO;
+        BOOL res  = NO;
         id e, seq = [aCltn eachElement];
         while ((e = [seq next]))
         {

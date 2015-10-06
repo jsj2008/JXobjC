@@ -79,7 +79,7 @@
         if ([x type] == t_str)
         {
             STR s = [x u_str];
-            *s = [v u_char];
+            *s    = [v u_char];
             return v;
         }
         return [self notImplemented];

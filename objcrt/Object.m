@@ -237,7 +237,7 @@
 
 - (BOOL)isKindOf:aClass
 {
-    id ncls = isa;
+    id ncls   = isa;
     Cls_t cls = getcls (isa);
 
     for (; ncls; (ncls = cls->clsSuper))
@@ -276,10 +276,10 @@
 - become:other
 {
 #if OTBCRT
-    struct OTB * fake = (struct OTB *)self;
+    struct OTB * fake      = (struct OTB *)self;
     struct _PRIVATE * temp = fake->ptr;
-    fake->ptr = other->ptr;
-    other->ptr = temp;
+    fake->ptr              = other->ptr;
+    other->ptr             = temp;
     return self;
 #else
     return [self shouldNotImplement];

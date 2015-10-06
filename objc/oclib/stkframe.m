@@ -89,7 +89,7 @@ id topframe;
 - def:m
 {
     compound = nil;
-    def = m;
+    def      = m;
     return self;
 }
 
@@ -161,7 +161,7 @@ id topframe;
 
 - quitframe:(BOOL)x
 {
-    quitframe = x;
+    quitframe  = x;
     breakframe = x;
     return self;
 }

@@ -95,7 +95,7 @@
     if (!localdic)
     {
         localdic = [Dictionary new];
-        locals = [OrdCltn new];
+        locals   = [OrdCltn new];
     }
     [localdic atKey:sym put:t];
     [locals add:sym];
@@ -142,7 +142,7 @@
 
 - gendecrefsheapvars
 {
-    int i, n = [heapnames size];
+    int i, n   = [heapnames size];
     char * hvp = heapvarptrname;
 
     for (i = 0; i < n; i++)
@@ -191,11 +191,11 @@
 
     if (!heapvars)
     {
-        heapvars = [Set new];
-        heapnames = [OrdCltn new];
-        heaptypes = [OrdCltn new];
-        i = [trlunit heapvarcount];
-        heapvarptrname = [[String sprintf:"heapvars%i", i] strCopy];
+        heapvars        = [Set new];
+        heapnames       = [OrdCltn new];
+        heaptypes       = [OrdCltn new];
+        i               = [trlunit heapvarcount];
+        heapvarptrname  = [[String sprintf:"heapvars%i", i] strCopy];
         heapvartypename = [[String sprintf:"struct heaptype%i", i] strCopy];
     }
     if ([t isstatic])
@@ -296,8 +296,8 @@
 - switchOn:(BOOL)dosw:e
 {
     int i, n;
-    BOOL quit = NO;
-    BOOL dobrk = NO;
+    BOOL quit   = NO;
+    BOOL dobrk  = NO;
     BOOL docont = NO;
     id frame = [[Stackframe push] compound:self];
     if (datadefs)

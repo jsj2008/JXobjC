@@ -33,7 +33,7 @@
 
 - key:aKey value:aValue
 {
-    key = aKey;
+    key   = aKey;
     value = aValue;
     return self;
 }
@@ -67,7 +67,7 @@
 
 - freeAll
 {
-    key = [key free];
+    key   = [key free];
     value = [value free];
     return [super free];
 }
@@ -75,7 +75,7 @@
 - release
 {
 #ifdef OBJC_REFCNT
-    key = nil;
+    key   = nil;
     value = nil;
     return [super release];
 #else
@@ -114,7 +114,7 @@
 - value:aValue
 {
     id tmp = value;
-    value = aValue;
+    value  = aValue;
     return tmp;
 }
 

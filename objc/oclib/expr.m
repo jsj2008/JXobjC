@@ -47,11 +47,11 @@ id e_ft_id;
 
 + commonexprs
 {
-    e_self = [[IdentifierExpr new] identifier:s_self];
-    e_cmd = [[IdentifierExpr new] identifier:s_cmd];
-    e_super = [[IdentifierExpr new] identifier:s_super];
+    e_self   = [[IdentifierExpr new] identifier:s_self];
+    e_cmd    = [[IdentifierExpr new] identifier:s_cmd];
+    e_super  = [[IdentifierExpr new] identifier:s_super];
     e_aFiler = [[IdentifierExpr new] identifier:s_aFiler];
-    e_ft_id = [[ConstantExpr new] identifier:[Symbol str:"'@'"]];
+    e_ft_id  = [[ConstantExpr new] identifier:[Symbol str:"'@'"]];
     e_nil = [[ConstantExpr new] identifier:[Symbol str:"0"]];
     assert (t_id);
     e_nil = [[[CastExpr new] expr:e_nil] cast:t_id];

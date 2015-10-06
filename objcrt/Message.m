@@ -40,7 +40,7 @@
 - selector:(SEL)s dispatch:(ARGIMP)d args:(void *)a
 {
     selector = s;
-    args = a;
+    args     = a;
     dispatch = d;
     return self;
 }

@@ -56,7 +56,7 @@ id curclassdef;
     char *s1, *s2;
     s1 = [self classname];
     s2 = [b classname];
-    c = strcmp (s1, s2);
+    c  = strcmp (s1, s2);
     return c;
 }
 
@@ -99,27 +99,27 @@ id curclassdef;
 
     assert (classname == nil);
     classname = sym;
-    s = [classname str];
+    s         = [classname str];
     [trlunit def:sym asclass:self];
 
     if (o_oneperfile)
     {
-        privtypename = "_PRIVATE";
+        privtypename   = "_PRIVATE";
         clsdisptblname = "_clsDispatchTbl";
         nstdisptblname = "_nstDispatchTbl";
     }
     else
     {
-        privtypename = [[String sprintf:"%s_PRIVATE", s] strCopy];
+        privtypename   = [[String sprintf:"%s_PRIVATE", s] strCopy];
         clsdisptblname = [[String sprintf:"_%s_clsDispatchTbl", s] strCopy];
         nstdisptblname = [[String sprintf:"_%s_nstDispatchTbl", s] strCopy];
     }
-    globfunname = [[String sprintf:"OBJCCLASS_%s", s] strCopy];
-    _classfunname = [[String sprintf:"OBJCCFUNC_%s", s] strCopy];
-    _superfunname = [[String sprintf:"OBJCCSUPER_%s", s] strCopy];
+    globfunname     = [[String sprintf:"OBJCCLASS_%s", s] strCopy];
+    _classfunname   = [[String sprintf:"OBJCCFUNC_%s", s] strCopy];
+    _superfunname   = [[String sprintf:"OBJCCSUPER_%s", s] strCopy];
     _m_classfunname = [[String sprintf:"OBJCMFUNC_%s", s] strCopy];
     _m_superfunname = [[String sprintf:"OBJCMSUPER_%s", s] strCopy];
-    _classname = [[String sprintf:"_%s", s] strCopy];
+    _classname      = [[String sprintf:"_%s", s] strCopy];
     _m_classname = [[String sprintf:"__%s", s] strCopy];
     if (o_otb)
     {
@@ -301,7 +301,7 @@ id curclassdef;
                  * really is */
                 if (![a isEqual:[names at:i]] || ![b isEqual:[types at:i]])
                 {
-                    int no = [[names at:i] lineno];
+                    int no    = [[names at:i] lineno];
                     char * fn = [[[names at:i] filename] str];
                     char * msg =
                         "%s variable '%s' conflicts with definition at %s:%d";
@@ -336,7 +336,7 @@ id curclassdef;
 {
     if (!clsdisptbl)
     {
-        clsdisptbl = [OrdCltn new];
+        clsdisptbl  = [OrdCltn new];
         clsdispsels = [Set new];
     }
     assert ([method isKindOf:(id)[MethodDef class]]);
@@ -358,7 +358,7 @@ id curclassdef;
 {
     if (!nstdisptbl)
     {
-        nstdisptbl = [OrdCltn new];
+        nstdisptbl  = [OrdCltn new];
         nstdispsels = [Set new];
     }
     assert ([method isKindOf:(id)[MethodDef class]]);
@@ -402,7 +402,7 @@ id curclassdef;
 
 - undefcomps
 {
-    compdic = nil;
+    compdic   = nil;
     compnames = nil;
     comptypes = nil;
     return self;
@@ -410,7 +410,7 @@ id curclassdef;
 
 - defivars
 {
-    ivardic = compdic;
+    ivardic   = compdic;
     ivarnames = compnames;
     ivartypes = comptypes;
     return [self undefcomps];
@@ -418,7 +418,7 @@ id curclassdef;
 
 - defcvars
 {
-    cvardic = compdic;
+    cvardic   = compdic;
     cvarnames = compnames;
     cvartypes = comptypes;
     return [self undefcomps];
@@ -440,7 +440,7 @@ id curclassdef;
         shartypename = [superc shartypename];
     if (cvars)
         shartypename = [[String sprintf:"%s_SHARED", s] strCopy];
-    outerstruct = curstruct;
+    outerstruct      = curstruct;
     curstruct = self;
     if (ivars)
     {
@@ -1033,7 +1033,7 @@ id curclassdef;
 {
     if (!compdic)
     {
-        compdic = [Dictionary new];
+        compdic   = [Dictionary new];
         compnames = [OrdCltn new];
         comptypes = [OrdCltn new];
     }
@@ -1193,7 +1193,7 @@ id curclassdef;
 
     /* define traps for methods so compiled code can message us */
 
-    tab = nstdisptbl;
+    tab  = nstdisptbl;
     shar = (struct _SHARED *)c;
 
     j = 2;
@@ -1202,14 +1202,14 @@ id curclassdef;
         int i, n;
         struct _SLT * disptab;
 
-        n = [tab size];
+        n       = [tab size];
         disptab = OC_Malloc (sizeof (struct _SLT) * (n + 1));
 
         for (i = 0; i < n; i++)
         {
             SEL s;
             id sel, t, m;
-            m = [tab at:i];
+            m   = [tab at:i];
             sel = [m selector];
             if (!(s = [self findSel:[sel str]]))
             {
@@ -1231,16 +1231,16 @@ id curclassdef;
             }
         }
 
-        disptab[n]._cmd = NULL;
-        disptab[n]._imp = NULL;
+        disptab[n]._cmd    = NULL;
+        disptab[n]._imp    = NULL;
 
 #if 0
     shar->clsName = [self classname];
 #endif
-        shar->clsSizDict = n;
+        shar->clsSizDict   = n;
         shar->clsDispTable = disptab;
 
-        tab = clsdisptbl;
+        tab  = clsdisptbl;
         shar = (struct _SHARED *)shar->isa;
     }
 

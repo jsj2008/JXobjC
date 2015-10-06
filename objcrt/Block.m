@@ -82,9 +82,9 @@ static id err_fun (id thisBlock, void ** data, id msg, id rcv)
 - blkc:(int)n blkfn:(IMP)f blkv:(void **)d blkdtor:(IMP)c
 {
     nVars = n;
-    fn = f;
-    data = d;
-    dtor = c;
+    fn    = f;
+    data  = d;
+    dtor  = c;
     return self;
 }
 
@@ -140,7 +140,7 @@ static id defaultHandler;
 
 + errorHandler:aHandler
 {
-    id ret = defaultHandler;
+    id ret         = defaultHandler;
     defaultHandler = [aHandler errorGoodHandler];
     return ret;
 }
@@ -166,7 +166,7 @@ static id defaultHandler;
     {
         errorHandler = [aHandler errorGoodHandler];
     }
-    returnValue = [self value];
+    returnValue  = [self value];
     errorHandler = [errorHandler pop];
     return returnValue;
 }

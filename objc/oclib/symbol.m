@@ -110,34 +110,34 @@ id s_iddecref;
 {
     s_newblock = [Symbol str:"newBlock"];
     assert (o_mainfun != NULL);
-    s_main = [Symbol str:o_mainfun];
-    s_objcmain = [Symbol str:"objcmain"];
-    s_void = [Symbol str:"void"];
-    s_char = [Symbol str:"char"];
-    s_bool = [Symbol str:"BOOL"];
-    s_int = [Symbol str:"int"];
-    s_uns = [Symbol str:"unsigned"];
-    s_long = [Symbol str:"long"];
-    s_double = [Symbol str:"double"];
-    s_str = [Symbol str:"STR"];
-    s_sel = [Symbol str:"SEL"];
-    s_id = [Symbol str:"id"];
-    s_nil = [Symbol str:"(id)0"];
-    s_self = [Symbol str:"self"];
-    s_cmd = [Symbol str:"_cmd"];
-    s_super = [Symbol str:"super"];
-    s_type = [Symbol str:"type"];
-    s_aFiler = [Symbol str:"aFiler"];
-    s_fileIn = [Symbol str:"fileIn"];
-    s_fileOut = [Symbol str:"fileOut"];
+    s_main          = [Symbol str:o_mainfun];
+    s_objcmain      = [Symbol str:"objcmain"];
+    s_void          = [Symbol str:"void"];
+    s_char          = [Symbol str:"char"];
+    s_bool          = [Symbol str:"BOOL"];
+    s_int           = [Symbol str:"int"];
+    s_uns           = [Symbol str:"unsigned"];
+    s_long          = [Symbol str:"long"];
+    s_double        = [Symbol str:"double"];
+    s_str           = [Symbol str:"STR"];
+    s_sel           = [Symbol str:"SEL"];
+    s_id            = [Symbol str:"id"];
+    s_nil           = [Symbol str:"(id)0"];
+    s_self          = [Symbol str:"self"];
+    s_cmd           = [Symbol str:"_cmd"];
+    s_super         = [Symbol str:"super"];
+    s_type          = [Symbol str:"type"];
+    s_aFiler        = [Symbol str:"aFiler"];
+    s_fileIn        = [Symbol str:"fileIn"];
+    s_fileOut       = [Symbol str:"fileOut"];
     s_fileInIdsFrom = [Symbol str:"fileInIdsFrom"];
     s_fileOutIdsFor = [Symbol str:"fileOutIdsFor"];
-    s_returnflag = [Symbol str:"_returnflag"];
-    s_returnval = [Symbol str:"_returnval"];
-    s_increfs = [Symbol str:"increfs"];
-    s_decrefs = [Symbol str:"decrefs"];
-    s_idincref = [Symbol str:"idincref"];
-    s_iddecref = [Symbol str:"iddecref"];
+    s_returnflag    = [Symbol str:"_returnflag"];
+    s_returnval     = [Symbol str:"_returnval"];
+    s_increfs       = [Symbol str:"increfs"];
+    s_decrefs       = [Symbol str:"decrefs"];
+    s_idincref      = [Symbol str:"idincref"];
+    s_iddecref      = [Symbol str:"iddecref"];
 
     return self;
 }
@@ -173,7 +173,7 @@ id s_iddecref;
 
 - lineno:(int)no filename:fn
 {
-    lineno = no;
+    lineno   = no;
     filename = fn;
     return self;
 }
@@ -316,7 +316,7 @@ id s_iddecref;
 - unescape
 {
     char c;
-    int n = 0;
+    int n    = 0;
     char * p = value.ptr;
     char * q = value.ptr;
     while ((c = *p++))
@@ -328,28 +328,23 @@ id s_iddecref;
             c = *p++;
             switch (c)
             {
-            case 'n':
-                c = '\n';
-                break;
-            case 'r':
-                c = '\r';
-                break;
-            default:
-                break;
+            case 'n': c = '\n'; break;
+            case 'r': c = '\r'; break;
+            default: break;
             }
         }
         *q++ = c;
         n++;
     }
     value.count = n;
-    *q++ = '\0';
+    *q++        = '\0';
     return self;
 }
 
 - unescapeChar
 {
     char c;
-    int n = 0;
+    int n    = 0;
     char * p = value.ptr;
     char * q = value.ptr;
     while ((c = *p++))
@@ -361,21 +356,16 @@ id s_iddecref;
             c = *p++;
             switch (c)
             {
-            case 'n':
-                c = '\n';
-                break;
-            case 'r':
-                c = '\r';
-                break;
-            default:
-                break;
+            case 'n': c = '\n'; break;
+            case 'r': c = '\r'; break;
+            default: break;
             }
         }
         *q++ = c;
         n++;
     }
     value.count = n;
-    *q++ = '\0';
+    *q++        = '\0';
     return self;
 }
 

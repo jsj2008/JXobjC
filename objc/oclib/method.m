@@ -54,14 +54,14 @@
 - canforward:(BOOL)f
 {
     havecanforward = YES;
-    canforward = f;
+    canforward     = f;
     return self;
 }
 
 - calccanforward
 {
     havecanforward = YES;
-    canforward = YES;
+    canforward     = YES;
 
     if (varargs)
     {
@@ -99,7 +99,7 @@
 - calcisselptr
 {
     haveisselptr = YES;
-    isselptr = YES;
+    isselptr     = YES;
 
     if ([self needscast] == NO)
     {

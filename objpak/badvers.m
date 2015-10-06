@@ -34,7 +34,7 @@
 - goodVersion:(int)g badVersion:(int)b
 {
     goodVersion = g;
-    badVersion = b;
+    badVersion  = b;
     return self;
 }
 

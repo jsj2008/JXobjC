@@ -41,7 +41,7 @@
     [self concatSTR:[comp str]];
     if (!filename)
     {
-        lineno = [comp lineno];
+        lineno   = [comp lineno];
         filename = [comp filename];
     }
     return self;

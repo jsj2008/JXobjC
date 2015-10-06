@@ -1,7 +1,12 @@
 AccessModifierOffset: -2
 AlignTrailingComments: true
+AlignConsecutiveAssignments: true
+# use this when we move to Clang 3.8
+# AlignConsecutiveDeclarations: true
+AlignOperands: true
 AllowAllParametersOfDeclarationOnNextLine: true
 AllowShortBlocksOnASingleLine: true
+AllowShortCaseLabelsOnASingleLine: true
 AllowShortFunctionsOnASingleLine: true
 BreakBeforeBraces: Allman
 ColumnLimit: 80

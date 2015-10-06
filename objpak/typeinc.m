@@ -33,7 +33,7 @@
 
 - got:(char)c wanted:(char)w
 {
-    gotChar = c;
+    gotChar  = c;
     wantChar = w;
     return self;
 }

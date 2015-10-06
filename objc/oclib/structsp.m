@@ -152,7 +152,7 @@ id curstruct;
 {
     if (!compdic)
     {
-        compdic = [Dictionary new];
+        compdic   = [Dictionary new];
         compnames = [OrdCltn new];
         comptypes = [OrdCltn new];
     }

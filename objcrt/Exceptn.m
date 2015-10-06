@@ -87,7 +87,7 @@
     if (handler)
     {
         resumeHandler = handler;
-        handler = [handler pop];
+        handler       = [handler pop];
         return [resumeHandler value:self];
     }
     else

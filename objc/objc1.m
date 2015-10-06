@@ -51,7 +51,7 @@ void printcopyright (void)
 
 void unknownoption (char * arg)
 {
-    STR msg = "%s: unknown option %s\n";
+    STR msg  = "%s: unknown option %s\n";
     STR name = (o_cplus) ? "objcpls1" : "objc1";
     fprintf (stderr, msg, name, arg);
     exit (1);
@@ -59,7 +59,7 @@ void unknownoption (char * arg)
 
 void badarg (id option, id arg)
 {
-    STR msg = "%s: illegal argument %s for %s\n";
+    STR msg  = "%s: illegal argument %s for %s\n";
     STR name = (o_cplus) ? "objcpls1" : "objc1";
     fprintf (stderr, msg, name, [arg str], [option str]);
     exit (1);
@@ -71,7 +71,7 @@ id optionstok (id aCltn, char * s)
 {
     char * p;
     char * delims = " \t\n\r";
-    id buffer = [String str:s];
+    id buffer     = [String str:s];
 
     p = strtok ([buffer str], delims);
 
@@ -142,7 +142,7 @@ id cmdlineopts (int argc, char * argv[])
 
 int setfilename (id option, id args)
 {
-    id arg = [args next];
+    id arg   = [args next];
     char * t = [arg str];
 
     if (isoption (t))
@@ -154,7 +154,7 @@ int setfilename (id option, id args)
 
 int setinitcall (id option, id args)
 {
-    id arg = [args next];
+    id arg   = [args next];
     char * t = [arg str];
 
     if (isoption (t))
@@ -166,7 +166,7 @@ int setinitcall (id option, id args)
 
 int setbrowsedir (id option, id args)
 {
-    id arg = [args next];
+    id arg   = [args next];
     char * t = [arg str];
 
     if (isoption (t))
@@ -249,7 +249,7 @@ int addbuiltinfun (id option, id args)
 void setoptions (id aCltn)
 {
     id args, s;
-    int filecount = 0;      /* optional inFile and outFile */
+    int filecount    = 0;   /* optional inFile and outFile */
     BOOL checkoption = YES; /* YES if filename can't begin with a dash */
 
     args = [aCltn eachElement];
@@ -691,7 +691,7 @@ int main (int argc, char * argv[])
 {
     /* define early since setoptions() modifies this object */
     o_mainfun = "main";
-    trlunit = [TranslationUnit new];
+    trlunit   = [TranslationUnit new];
 
     defoptions ();
     setoptions (cmdlineopts (argc, argv));

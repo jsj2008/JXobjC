@@ -76,9 +76,9 @@ static void init (objstr_t self, char * s, int n, int c)
 {
     assert (0 <= n && n + 1 <= c);
 
-    self->count = n;
+    self->count    = n;
     self->capacity = c;
-    self->ptr = (char *)OC_MallocAtomic (c);
+    self->ptr      = (char *)OC_MallocAtomic (c);
 
     str_ncpy (self->ptr, s, n);
     self->ptr[n] = '\0';
@@ -103,7 +103,7 @@ static void initstr (objstr_t self, char * s, int n)
     if (aString)
     {
         id newObj = [super new];
-        int n = str_len (aString);
+        int n     = str_len (aString);
 #if OTBCRT
         /* works always, also for -otb */
         initstr ([newObj objstrvalue], aString, n);
@@ -174,7 +174,7 @@ static void copy (objstr_t dst, objstr_t src)
 
     assert (n == str_len (src->ptr) && 0 <= n && n < src->capacity);
 
-    dst->count = n;
+    dst->count    = n;
     dst->capacity = n + 1;
     dst->ptr = (char *)OC_MallocAtomic (n + 1);
     str_cpy (dst->ptr, src->ptr);
@@ -340,7 +340,7 @@ static char charat (objstr_t self, int i)
 static char strputchar (char * self, char c)
 {
     char r = *self;
-    *self = c;
+    *self  = c;
     return r;
 }
 
@@ -377,7 +377,7 @@ static void expand (objstr_t self)
 {
     assert (self->count + 1 <= self->capacity);
     self->capacity = 1 + self->capacity * 2;
-    self->ptr = (char *)OC_Realloc (self->ptr, self->capacity);
+    self->ptr      = (char *)OC_Realloc (self->ptr, self->capacity);
 }
 
 static void concat (objstr_t self, char * s, int n)

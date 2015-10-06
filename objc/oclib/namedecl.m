@@ -47,7 +47,7 @@
 - (BOOL)isEqual:x
 {
     BOOL ok = YES;
-    id y = [x identifier];
+    id y    = [x identifier];
 
     if (identifier && y && ![identifier isEqual:y])
         ok = NO;

@@ -48,7 +48,7 @@ static void fill (int * p, int v, int n)
 
 static void init (intary_t self, int v, int c)
 {
-    int * p = (int *)OC_MallocAtomic (c * sizeof (int));
+    int * p        = (int *)OC_MallocAtomic (c * sizeof (int));
     self->capacity = c;
     self->ptr = p;
     fill (p, v, c);
@@ -113,7 +113,7 @@ static void copy (intary_t dst, intary_t src)
     int n = src->capacity;
 
     dst->capacity = n + 1;
-    dst->ptr = (int *)OC_MallocAtomic (dst->capacity * sizeof (int));
+    dst->ptr      = (int *)OC_MallocAtomic (dst->capacity * sizeof (int));
 
     intncpy (dst->ptr, src->ptr, n);
 }
@@ -199,10 +199,10 @@ static void resize (intary_t self, unsigned c)
 {
     int min, n;
     int * newp = (int *)OC_Realloc (self->ptr, c * sizeof (int));
-    n = self->capacity;
+    n          = self->capacity;
     min = (n < c) ? n : c;
     fill (newp + min, 0, c - min);
-    self->ptr = newp;
+    self->ptr      = newp;
     self->capacity = c;
 }
 

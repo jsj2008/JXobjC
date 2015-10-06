@@ -30,7 +30,7 @@
 
 static void objsetseq_init (objsetseq_t self, id set)
 {
-    self->set = [set objsetvalue];
+    self->set    = [set objsetvalue];
     self->offset = 0;
 }
 
@@ -81,7 +81,7 @@ static id next (objsetseq_t self)
     }
     else
     {
-        id obj = at (self->set, i);
+        id obj       = at (self->set, i);
         self->offset = i + 1;
         return obj;
     }

@@ -163,7 +163,7 @@
         fatalat (lbrace,
                  "block expression outside method or function definition");
     }
-    enclosing = curcompound;
+    enclosing   = curcompound;
     curcompound = self; /* BlockExpr responds to messages of CompoundStmt */
 #if 0
   enclosingdef = curdef;
@@ -178,10 +178,10 @@
         [stmts elementsPerform:_cmd];
     if (expr)
         [expr synth];
-    numparms = (parms) ? [parms size] : 0;
+    numparms    = (parms) ? [parms size] : 0;
     blkconsname = [[String sprintf:"newblk%i", blockcount] strCopy];
     blkdtorname = [[String sprintf:"clearblk%i", blockcount] strCopy];
-    blkfunname = [[String sprintf:"blkfun%i", blockcount] strCopy];
+    blkfunname  = [[String sprintf:"blkfun%i", blockcount] strCopy];
     blkdataname = [[String sprintf:"blkdata%i", blockcount] strCopy];
     blktypename = [[String sprintf:"struct blktype%i", blockcount] strCopy];
     restype = (expr) ? [expr type] : t_id;
@@ -234,7 +234,7 @@
         gf ("%s {\n", blktypename);
         for (i = 0; i < numheapvarblocks; i++)
         {
-            id c = [heapvarblocks at:i];
+            id c       = [heapvarblocks at:i];
             char * hvt = [c heapvartypename];
             char * hvp = [c heapvarptrname];
 
@@ -251,7 +251,7 @@
 
     for (i = 0; i < numheapvarblocks; i++)
     {
-        id c = [heapvarblocks at:i];
+        id c       = [heapvarblocks at:i];
         char * hvp = [c heapvarptrname];
 
         gf ("%s->%s=%s;\n", blkdataname, hvp, hvp);
@@ -266,7 +266,7 @@
 
     for (i = 0; i < numheapvarblocks; i++)
     {
-        id c = [heapvarblocks at:i];
+        id c       = [heapvarblocks at:i];
         char * hvt = [c heapvartypename];
         char * hvp = [c heapvarptrname];
 
@@ -290,7 +290,7 @@
 
         for (i = 0; i < numheapvarblocks; i++)
         {
-            id c = [heapvarblocks at:i];
+            id c       = [heapvarblocks at:i];
             char * hvt = [c heapvartypename];
             char * hvp = [c heapvarptrname];
 

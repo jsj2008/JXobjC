@@ -239,8 +239,8 @@
         id d, v;
         BOOL isheapvar;
 
-        d = [decllist at:n];
-        v = [d identifier];
+        d         = [decllist at:n];
+        v         = [d identifier];
         isheapvar = [set contains:v];
         if ([d isinit])
         {
@@ -259,7 +259,8 @@
             {
                 id x = [mkidentexpr (v) synth];
 
-                [cltn addFirst:mkexprstmt (mkassignexpr (x, "=", [d initializer]))];
+                [cltn addFirst:mkexprstmt (
+                                   mkassignexpr (x, "=", [d initializer]))];
                 [decllist at:n
                          put:[d decl]]; /* hence removing the initializer */
             }

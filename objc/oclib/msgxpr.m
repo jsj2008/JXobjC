@@ -197,7 +197,7 @@ id msgwraps; /* VICI */
         /* in a function 'super' is ordinary */
         if (inm && [rcvr isidentexpr])
         {
-            supermsg = !strcmp ([rcvr str], "super");
+            supermsg  = !strcmp ([rcvr str], "super");
             infactory = [curdef factory];
             classdef = curclassdef;
             if (supermsg)
@@ -312,7 +312,7 @@ id msgwraps; /* VICI */
 - geninlinecall:(BOOL)tosuper
 {
     char * fmt;
-    char * tvar = [tmpvar str];
+    char * tvar  = [tmpvar str];
     char * cache = [icache str];
 
     gf ("(%s)?(", tvar);
@@ -501,7 +501,7 @@ id msgwraps; /* VICI */
 - gendispfun
 {
     assert (method);
-    rcvr = e_self;
+    rcvr   = e_self;
     tmpvar = e_self;
     indispatchfun++;
     return [self xgendispfun];

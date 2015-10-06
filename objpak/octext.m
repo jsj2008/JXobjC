@@ -94,7 +94,7 @@
 - string:aString runs:anArray
 {
     string = aString;
-    runs = anArray;
+    runs   = anArray;
     return self;
 }
 
@@ -103,7 +103,7 @@
 - free
 {
     string = [string free];
-    runs = [runs free];
+    runs   = [runs free];
     return [super free];
 }
 

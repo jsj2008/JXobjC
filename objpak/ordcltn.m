@@ -60,14 +60,14 @@ static void ptrinit (id * p, id q, int c)
 static void init (objcol_t self, int n, int c)
 {
     assert (0 <= n && n <= c);
-    self->count = n;
+    self->count    = n;
     self->capacity = c;
-    self->ptr = (id *)OC_Calloc (c * sizeof (id));
+    self->ptr      = (id *)OC_Calloc (c * sizeof (id));
 }
 
 + new
 {
-    int n = DEFAULT_CAPACITY;
+    int n        = DEFAULT_CAPACITY;
     id newObject = [super new];
 #if OTBCRT
     /* this is always ok, not just for -otb */
@@ -159,7 +159,7 @@ static void ptrdeepcopy (id * p, id * q, int c)
     while (c--)
     {
         id obj = *q++;
-        *p++ = (obj) ? [obj deepCopy] : nil;
+        *p++   = (obj) ? [obj deepCopy] : nil;
     }
 }
 
@@ -196,7 +196,7 @@ static void ptrclear (id * p, int c)
     while (c--)
     {
         id obj = *p;
-        *p++ = (obj) ? [obj free] : nil;
+        *p++   = (obj) ? [obj free] : nil;
     }
 }
 
@@ -217,7 +217,7 @@ static void ptrclearall (id * p, int c)
     while (c--)
     {
         id obj = *p;
-        *p++ = (obj) ? [obj freeAll] : nil;
+        *p++   = (obj) ? [obj freeAll] : nil;
     }
 }
 
@@ -235,7 +235,7 @@ static void freeall (objcol_t self)
 
 static void clear (objcol_t self)
 {
-    self->count = 0;
+    self->count    = 0;
     self->capacity = 0;
     OC_Free (self->ptr);
     self->ptr = NULL;
@@ -402,8 +402,8 @@ static int ptraddfirst (id * p, id obj, int n)
     while (m--)
     {
         id * q = p - 1;
-        *p = *q;
-        p = q;
+        *p     = *q;
+        p      = q;
     }
     *p = obj;
     return n + 1;
@@ -627,8 +627,8 @@ static id ptrremovefirst (id * p, int n)
     while (n--)
     {
         id * q = p + 1;
-        *p = *q;
-        p = q;
+        *p     = *q;
+        p      = q;
     }
     *p = nil;
     return obj;
@@ -653,7 +653,7 @@ static id removefirst (objcol_t self)
 static id ptrremove (id * p)
 {
     id obj = *p;
-    *p = nil;
+    *p     = nil;
     return obj;
 }
 
@@ -749,7 +749,7 @@ static id removeat (objcol_t self, int i)
     }
     else
     {
-        BOOL res = YES;
+        BOOL res  = YES;
         id e, seq = [aCltn eachElement];
         while ((e = [seq next]))
         {
@@ -775,7 +775,7 @@ static id removeat (objcol_t self, int i)
     }
     else
     {
-        BOOL res = NO;
+        BOOL res  = NO;
         id e, seq = [aCltn eachElement];
         while ((e = [seq next]))
         {

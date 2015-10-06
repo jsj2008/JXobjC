@@ -202,7 +202,7 @@ void gl (int no, char * fn)
             if (outlineno)
                 fputc ('\n', gfile); /* next char (#) must be 1st col */
             fprintf (gfile, o_tagformat, no, fn);
-            outlineno = no;
+            outlineno   = no;
             outfilename = fn;
         }
     }
@@ -222,7 +222,7 @@ void warnat (id sym, char * s, ...)
     if (o_warnings)
     {
         OC_VA_LIST ap;
-        int no = [sym lineno];
+        int no    = [sym lineno];
         char * fn = [[sym filename] str];
 
         OC_VA_START (ap, s);
@@ -269,7 +269,7 @@ void fatal (char * s, ...)
 void fatalat (id sym, char * s, ...)
 {
     OC_VA_LIST ap;
-    int no = [sym lineno];
+    int no    = [sym lineno];
     char * fn = [[sym filename] str];
 
     OC_VA_START (ap, s);

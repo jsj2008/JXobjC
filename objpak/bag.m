@@ -55,9 +55,9 @@ static void ptrzero (id * p, int * m, int c)
 static void init (objbag_t self, int n, int c)
 {
     assert (0 <= n && n <= c);
-    self->count = n; /* count != size, count = num diff. Objects */
+    self->count    = n; /* count != size, count = num diff. Objects */
     self->capacity = c;
-    self->ptr = (id *)OC_Calloc (c * sizeof (id));
+    self->ptr      = (id *)OC_Calloc (c * sizeof (id));
     self->cnts = (int *)OC_MallocAtomic (c * sizeof (int));
     memset (self->cnts, 0, sizeof (int) * c);
 }
@@ -124,7 +124,7 @@ static void ptrcopy (id * p, int * mp, id * q, int * mq, int c)
 {
     while (c--)
     {
-        *p++ = *q++;
+        *p++  = *q++;
         *mp++ = *mq++;
     }
 }
@@ -147,8 +147,8 @@ static void ptrdeepcopy (id * p, int * mp, id * q, int * mq, int c)
     while (c--)
     {
         id obj = *q++;
-        *p++ = (obj) ? [obj deepCopy] : nil;
-        *mp++ = *mq++;
+        *p++   = (obj) ? [obj deepCopy] : nil;
+        *mp++  = *mq++;
     }
 }
 
@@ -203,8 +203,8 @@ static void ptrclear (id * p, int * m, int c)
     while (c--)
     {
         id obj = *p;
-        *p++ = (obj) ? [obj free] : nil;
-        *m++ = 0;
+        *p++   = (obj) ? [obj free] : nil;
+        *m++   = 0;
     }
 }
 
@@ -222,7 +222,7 @@ static void freecontents (objbag_t self)
 
 static void clear (objbag_t self)
 {
-    self->count = 0;
+    self->count    = 0;
     self->capacity = 0;
     OC_Free (self->ptr);
     self->ptr = NULL;
@@ -325,8 +325,8 @@ static unsigned ptrfind (id * p, id obj, int n)
     id *begin, *now, *end;
 
     begin = p;
-    now = p + (([obj hash]) % n);
-    end = p + n;
+    now   = p + (([obj hash]) % n);
+    end   = p + n;
 
     for (; n--; now++)
     {
@@ -343,7 +343,7 @@ static unsigned ptrfind (id * p, id obj, int n)
 static id * find (objbag_t self, id obj, int ** m)
 {
     unsigned of = ptrfind (self->ptr, obj, self->capacity);
-    *m = self->cnts + of;
+    *m          = self->cnts + of;
     return self->ptr + of;
 }
 
@@ -364,8 +364,8 @@ static void ptrrehash (id * newp, int * nm, int newc, id * old, int * om,
 {
     while (oldc--)
     {
-        id obj = *old++;
-        int cnt = *om++;
+        id obj      = *old++;
+        int cnt     = *om++;
         id * newend = newp + newc;
         if (obj)
         {
@@ -376,7 +376,7 @@ static void ptrrehash (id * newp, int * nm, int newc, id * old, int * om,
                 if (pos == newend)
                     pos = newp;
             }
-            *pos = obj;
+            *pos           = obj;
             nm[pos - newp] = cnt;
         }
     }
@@ -388,10 +388,10 @@ static void rehash (objbag_t self)
     int *nm, *om;
     id *newp, *old;
 
-    c = self->capacity;
-    old = self->ptr;
+    c    = self->capacity;
+    old  = self->ptr;
     newp = (id *)OC_Calloc (c * sizeof (id));
-    om = self->cnts;
+    om   = self->cnts;
     nm = (int *)OC_MallocAtomic (c * sizeof (int));
     memset (nm, 0, sizeof (int) * c);
 
@@ -399,7 +399,7 @@ static void rehash (objbag_t self)
 
     OC_Free (old);
     OC_Free (om);
-    self->ptr = newp;
+    self->ptr  = newp;
     self->cnts = nm;
 }
 
@@ -410,8 +410,8 @@ static void expand (objbag_t self)
     int newc, oldc;
 
     oldc = self->capacity;
-    old = self->ptr;
-    om = self->cnts;
+    old  = self->ptr;
+    om   = self->cnts;
     newc = 1 + 2 * oldc;
     newp = (id *)OC_Calloc (newc * sizeof (id));
     nm = (int *)OC_MallocAtomic (newc * sizeof (int));
@@ -421,8 +421,8 @@ static void expand (objbag_t self)
 
     OC_Free (old);
     OC_Free (om);
-    self->ptr = newp;
-    self->cnts = nm;
+    self->ptr      = newp;
+    self->cnts     = nm;
     self->capacity = newc;
 }
 
@@ -442,7 +442,7 @@ static id add (objbag_t self, id obj)
     else
     {
         self->count++;
-        *m = 1;
+        *m         = 1;
         return * p = obj;
     }
 }
@@ -538,7 +538,7 @@ static id replace (objbag_t self, id obj)
     if (*(p = find (self, obj, &m)))
     {
         id tmp = *p;
-        *p = obj;
+        *p     = obj;
         return tmp;
     }
     else
@@ -627,7 +627,7 @@ static id delete (objbag_t self, id obj)
     }
     else
     {
-        BOOL res = YES;
+        BOOL res  = YES;
         id e, seq = [aCltn eachElement];
         while ((e = [seq next]))
         {
@@ -653,7 +653,7 @@ static id delete (objbag_t self, id obj)
     }
     else
     {
-        BOOL res = NO;
+        BOOL res  = NO;
         id e, seq = [aCltn eachElement];
         while ((e = [seq next]))
         {
@@ -1120,7 +1120,7 @@ static void ptrfileout (id aFiler, id * a, int * m, int n)
 {
     while (n--)
     {
-        id obj = *a++;
+        id obj  = *a++;
         int cnt = *m++;
         if (cnt)
         {

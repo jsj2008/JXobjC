@@ -156,8 +156,8 @@ static modnode_t modnodelist;
 static modnode_t newmodnode (Mentry_t me, modnode_t next)
 {
     modnode_t r;
-    r = (modnode_t)OC_Malloc (sizeof (struct modnode));
-    r->next = next;
+    r              = (modnode_t)OC_Malloc (sizeof (struct modnode));
+    r->next        = next;
     r->objcmodules = me;
     return r;
 }
@@ -189,7 +189,7 @@ void EXPORT * OC_Malloc (size_t nBytes)
 #if OBJCRT_BOEHM
     data = GC_malloc (nBytes);
 #else
-    data = malloc (nBytes);
+    data               = malloc (nBytes);
 #endif
 
     /* signal the OutOfMemory exception */
@@ -210,7 +210,7 @@ void EXPORT * OC_MallocAtomic (size_t nBytes)
 #if OBJCRT_BOEHM
     data = GC_malloc_atomic (nBytes);
 #else
-    data = malloc (nBytes);
+    data               = malloc (nBytes);
 #endif
 
     /* signal the OutOfMemory exception */
@@ -362,7 +362,7 @@ static id nstalloc (id aClass, unsigned int nBytes)
 #ifndef OTBCRT
     anObject = (id)OC_Calloc (aSize);
 #else
-    anObject = (id)OC_Malloc (sizeof (struct OTB));
+    anObject      = (id)OC_Malloc (sizeof (struct OTB));
     anObject->ptr = (struct _PRIVATE *)OC_Calloc (aSize);
     linkotb (aClass, anObject, aClass->nextinst);
 #endif
@@ -381,12 +381,12 @@ static id nstcopy (id anObject, unsigned int nBytes)
 
 #ifndef OTBCRT
     newObject = (id)OC_Malloc (aSize);
-    p = (char *)newObject;
-    q = (char *)anObject;
+    p         = (char *)newObject;
+    q         = (char *)anObject;
 #else
-    newObject = (id)OC_Malloc (sizeof (struct OTB));
+    newObject      = (id)OC_Malloc (sizeof (struct OTB));
     newObject->ptr = (struct _PRIVATE *)OC_Malloc (aSize);
-    p = (char *)newObject->ptr;
+    p              = (char *)newObject->ptr;
     q = (char *)anObject->ptr;
     linkotb (aClass, newObject, aClass->nextinst);
 #endif
@@ -509,9 +509,9 @@ void EXPORT prnstack (FILE * firstArg)
     fprintf (firstArg, "(Use a debugger to see a stack backtrace).\n");
     fflush (firstArg);
 #else
-    FILE * stream = firstArg;
+    FILE * stream  = firstArg;
     msgframe pf, f = getframe (firstArg);
-    int nsels = 0;
+    int nsels      = 0;
     SEL sels[PRNSTKMAX];
 
     fprintf (stream, "Message backtrace:\n");
@@ -700,9 +700,9 @@ static PHASH hashNew (STR key, PHASH link)
     int n;
     PHASH obj;
     assert (key != NULL);
-    obj = (PHASH)OC_Malloc (sizeof (HASH));
+    obj       = (PHASH)OC_Malloc (sizeof (HASH));
     obj->next = link;
-    n = strlen (key);
+    n         = strlen (key);
     obj->key = (STR)OC_Malloc (n + 1);
     strcpy (obj->key, key);
     return obj;
@@ -712,13 +712,13 @@ static PHASH search (STR key, int * slot, PHASH * prev)
 {
     PHASH target;
 
-    *slot = strHash (key) % nHashLists;
-    *prev = 0;
+    *slot  = strHash (key) % nHashLists;
+    *prev  = 0;
     target = hashList[*slot];
 
     while (target && (strCmp (key, target->key) != 0))
     {
-        *prev = target;
+        *prev  = target;
         target = target->next;
     }
 
@@ -741,7 +741,7 @@ static PHASH hashEnter (STR key, int slot)
         maxsel = key;
     }
     if (slot < 0)
-        slot = strHash (key) % nHashLists;
+        slot       = strHash (key) % nHashLists;
     hashList[slot] = hashNew (key, hashList[slot]);
     return hashList[slot];
 }
@@ -881,7 +881,7 @@ static BOOL objcinitflag; /* YES after initialization */
  */
 
 static struct objcrt_useDescriptor * modlist = 0;
-static int bindcnt = 0; /* _BIND entries found so far */
+static int bindcnt                           = 0; /* _BIND entries found so far */
 
 #ifndef OBJCRT_NOSHARED
 extern struct objcrt_useDescriptor * OCU_main; /* entry point for the program */
@@ -914,7 +914,7 @@ static void traverse (struct objcrt_useDescriptor * desc)
     if (desc->bind)
     {
         desc->next = modlist;
-        modlist = desc;
+        modlist    = desc;
         bindcnt++;
     }
 }
@@ -929,7 +929,7 @@ static Mentry_t findmods (struct objcrt_useDescriptor * desc)
     if (desc && !(desc->processed))
         traverse (desc);
 
-    aSize = (bindcnt + 1) * sizeof (struct objcrt_modEntry);
+    aSize      = (bindcnt + 1) * sizeof (struct objcrt_modEntry);
     theModules = (Mentry_t)OC_Malloc (aSize);
 
     /*
@@ -1322,17 +1322,17 @@ static id newMeta (STR name, id superClass, int esize)
     m = newShared (sizeof (struct objcrt_shared));
     n = getcls (m);
 
-    n->isa = getcls (superClass)->isa; /* isa of meta is root class */
-    n->clsSuper = superClass;
-    n->clsName = name; /* strdup ? */
-    n->clsTypes = getcls (superClass)->clsTypes;
+    n->isa            = getcls (superClass)->isa; /* isa of meta is root class */
+    n->clsSuper       = superClass;
+    n->clsName        = name; /* strdup ? */
+    n->clsTypes       = getcls (superClass)->clsTypes;
     n->clsSizInstance = getcls (superClass)->clsSizInstance + esize;
-    n->clsSizDict = 0;
-    n->clsDispTable = NULL;
-    n->clsStatus = 0;
-    n->clsMod = NULL; /* unused anyhow */
-    n->clsVersion = getcls (superClass)->clsVersion;
-    n->clsGlbl = NULL;
+    n->clsSizDict     = 0;
+    n->clsDispTable   = NULL;
+    n->clsStatus      = 0;
+    n->clsMod         = NULL; /* unused anyhow */
+    n->clsVersion     = getcls (superClass)->clsVersion;
+    n->clsGlbl        = NULL;
 
     return m;
 }
@@ -1343,21 +1343,21 @@ static id newClass (STR name, id superClass, int eisize, int ecsize)
     Cls_t n, c;
 
     meta = newMeta (name, getcls (superClass)->isa, ecsize);
-    m = newShared (getcls (meta)->clsSizInstance); /* includes cvars */
-    n = getcls (m);
-    c = getcls (superClass);
+    m    = newShared (getcls (meta)->clsSizInstance); /* includes cvars */
+    n    = getcls (m);
+    c    = getcls (superClass);
 
-    n->isa = meta;
-    n->clsSuper = superClass;
-    n->clsName = name; /* strdup ? */
-    n->clsTypes = c->clsTypes;
+    n->isa            = meta;
+    n->clsSuper       = superClass;
+    n->clsName        = name; /* strdup ? */
+    n->clsTypes       = c->clsTypes;
     n->clsSizInstance = c->clsSizInstance + eisize;
-    n->clsSizDict = 0;
-    n->clsDispTable = NULL;
-    n->clsStatus = 0;
-    n->clsMod = NULL; /* unused anyhow */
-    n->clsVersion = c->clsVersion;
-    n->clsGlbl = NULL; /* could set this to clsLst */
+    n->clsSizDict     = 0;
+    n->clsDispTable   = NULL;
+    n->clsStatus      = 0;
+    n->clsMod         = NULL; /* unused anyhow */
+    n->clsVersion     = c->clsVersion;
+    n->clsGlbl        = NULL; /* could set this to clsLst */
 
     return m;
 }
@@ -1389,15 +1389,15 @@ static void addModEntry (id aCls)
     Mentry_t entry, sentin;
     entry = (Mentry_t)OC_Malloc (2 * sizeof (struct objcrt_modEntry));
 
-    clsLst = OC_Malloc (sizeof (id));
+    clsLst  = OC_Malloc (sizeof (id));
     *clsLst = aCls;
-    dynMod = newModDesc (clsLst);
+    dynMod  = newModDesc (clsLst);
 
     entry->modLink = dynBIND;
     entry->modInfo = NULL;
 
     /* initsels depends on sentinel */
-    sentin = entry + 1;
+    sentin          = entry + 1;
     sentin->modLink = NULL;
     sentin->modInfo = NULL;
 
@@ -1478,8 +1478,8 @@ static void prnframe (FILE * f, id obj, SEL sel, BOOL isSuper)
     if (obj)
     {
         Cls_t cls = getcls (getisa (obj));
-        nam = cls->clsName;
-        fac = (ismeta (cls)) ? "+" : "-";
+        nam       = cls->clsName;
+        fac       = (ismeta (cls)) ? "+" : "-";
     }
     else
     {
@@ -1550,10 +1550,10 @@ static void flushCache (void)
 }
 
 FILE * msgIOD;
-BOOL msgFlag = NO;
+BOOL msgFlag     = NO;
 BOOL noCacheFlag = NO;
-BOOL dbgFlag = NO;
-BOOL allocFlag = NO;
+BOOL dbgFlag     = NO;
+BOOL allocFlag   = NO;
 FILE * dbgIOD;
 
 #define CACHE_LOCK pthread_mutex_lock (&cLock);
@@ -1580,7 +1580,7 @@ static IMP _getImp (id cls, SEL sel, int index, IMP fwd)
         struct objcrt_slt * smt;
 
         wCls = getcls (ncls);
-        smt = wCls->clsDispTable;
+        smt  = wCls->clsDispTable;
 
         for (n = 0; n < wCls->clsSizDict; n++, smt++)
         {
@@ -1839,9 +1839,9 @@ void addMethods (id isrc, id idst)
 id swapclass (id self, id other)
 {
 #if OTBCRT
-    struct OTB * fake = (struct OTB *)self;
+    struct OTB * fake      = (struct OTB *)self;
     struct _PRIVATE * temp = fake->ptr;
-    fake->ptr = other->ptr;
+    fake->ptr              = other->ptr;
     other->ptr = temp;
     flushCache (); /* important for classes */
 #endif

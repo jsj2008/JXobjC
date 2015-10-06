@@ -100,7 +100,7 @@
             if (![[decllist at:i] isKindOf:(id)[BitfieldDecl class]])
             {
                 char * what = "class definition";
-                char * ms = "missing name in component of %s";
+                char * ms   = "missing name in component of %s";
 
                 if ([curstruct isKindOf:(id)[StructSpec class]])
                     what = "struct or union";

@@ -81,7 +81,7 @@ id appendFiles;
 
 static int watcomGrepLine (id set, char * buf)
 {
-    int c = strlen (BINDPREFIX);
+    int c            = strlen (BINDPREFIX);
     char *p, *delims = " .|\t"; /* fixed tab for metrowerks */
 
     while (*buf != 0)
@@ -125,7 +125,7 @@ static int unixGrepLine (id set, char * buf)
 {
     char * p;
     char * delims = " .|\t"; /* fixed tab for metrowerks */
-    int c = strlen (BINDPREFIX);
+    int c         = strlen (BINDPREFIX);
 
     while (*buf != 0)
     {
@@ -322,7 +322,7 @@ static int setOutFile (id option, int i, char * argv[])
 static void setOptions (int argc, char * argv[])
 {
     int i;
-    int fileCount = 0;      /* optional inFile and outFile */
+    int fileCount    = 0;   /* optional inFile and outFile */
     BOOL checkOption = YES; /* YES if filename can't begin with a dash */
 
     for (i = 1; i < argc; i++)
@@ -388,9 +388,9 @@ static void setOptions (int argc, char * argv[])
 
 int main (int argc, char * argv[])
 {
-    FILE * inIOD = NULL;
+    FILE * inIOD  = NULL;
     FILE * outIOD = NULL;
-    id functions = [Set new];
+    id functions  = [Set new];
 
     setOptions (argc, argv);
 

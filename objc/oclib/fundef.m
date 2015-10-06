@@ -110,7 +110,7 @@
 {
     id v;
 
-    curdef = self;
+    curdef      = self;
     curcompound = nil;
     /* definition of type is already done in declarefun() */
     /* we send a -synth again to 'decl' for getting name&type of ANSI parms */
@@ -226,7 +226,7 @@
     BOOL ismain;
 
     assert (decl != nil && body != nil);
-    s = [[decl identifier] str];
+    s      = [[decl identifier] str];
     ismain = !strcmp (s, o_mainfun);
     [super gen]; /* code for class references and blocks in this impl */
     if (datadefspecs)
@@ -267,7 +267,7 @@
     id n;
     int lo;
     char * fn;
-    n = [decl identifier];
+    n  = [decl identifier];
     fn = [[n filename] str];
     lo = [n lineno];
     fprintf (d, "%s () at %s:%d\n", [n str], fn, lo);

@@ -65,7 +65,7 @@ id curdef;
 {
     if (!parmdic)
     {
-        parmdic = [Dictionary new];
+        parmdic   = [Dictionary new];
         parmnames = [OrdCltn new];
     }
     [parmdic atKey:sym put:aType];

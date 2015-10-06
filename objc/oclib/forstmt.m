@@ -58,8 +58,8 @@
 - begin:a cond:b step:c
 {
     begin = a;
-    cond = b;
-    step = c;
+    cond  = b;
+    step  = c;
     return self;
 }
 

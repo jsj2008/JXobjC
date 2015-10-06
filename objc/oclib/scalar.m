@@ -79,21 +79,21 @@
 
 - u_int:(int)x
 {
-    type = t_int;
+    type     = t_int;
     u.un_int = x;
     return self;
 }
 
 - u_uns:(unsigned)x
 {
-    type = t_uns;
+    type     = t_uns;
     u.un_uns = x;
     return self;
 }
 
 - u_long:(long)x
 {
-    type = t_long;
+    type      = t_long;
     u.un_long = x;
     return self;
 }
@@ -110,7 +110,7 @@
 
 - u_char:(char)x
 {
-    type = t_char;
+    type      = t_char;
     u.un_char = x;
     return self;
 }
@@ -127,7 +127,7 @@
 
 - u_float:(float)x
 {
-    type = t_double;
+    type       = t_double;
     u.un_float = x;
     return self;
 }
@@ -144,7 +144,7 @@
 
 - u_double:(double)x
 {
-    type = t_double;
+    type        = t_double;
     u.un_double = x;
     return self;
 }
@@ -163,7 +163,7 @@
 {
     if (!t_str)
         [self error:"type not initialized"];
-    type = t_str;
+    type     = t_str;
     u.un_str = x;
     return self;
 }
@@ -184,7 +184,7 @@
 
 - u_voidstar:(void *)x
 {
-    type = t_str;
+    type          = t_str;
     u.un_voidstar = x;
     return self;
 }
@@ -201,7 +201,7 @@
 
 - u_fp:(FILE *)x
 {
-    type = t_str;
+    type    = t_str;
     u.un_fp = x;
     return self;
 }

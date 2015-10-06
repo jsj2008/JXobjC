@@ -38,9 +38,9 @@
     }
     else
     {
-        id ivars = [curclassdef ivars];
+        id ivars    = [curclassdef ivars];
         id decllist = [compdec decllist];
-        id specs = [compdec specs];
+        id specs    = [compdec specs];
         int i, n;
 
         [ivars add:compdec];

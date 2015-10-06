@@ -115,7 +115,7 @@
     }
     else
     {
-        BOOL res = YES;
+        BOOL res  = YES;
         id e, seq = [aCltn eachElement];
         while ((e = [seq next]))
         {
@@ -141,7 +141,7 @@
     }
     else
     {
-        BOOL res = NO;
+        BOOL res  = NO;
         id e, seq = [aCltn eachElement];
         while ((e = [seq next]))
         {

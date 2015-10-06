@@ -44,7 +44,7 @@ static BOOL asciiFileOut (FILE * f, id anObject)
 {
     BOOL r;
     id aFiler = [AsciiFiler new];
-    r = [aFiler store:anObject onFile:f];
+    r         = [aFiler store:anObject onFile:f];
 #ifndef OBJC_REFCNT
     [aFiler free];
 #endif
@@ -55,7 +55,7 @@ static id asciiFileIn (FILE * f)
 {
     id r;
     id aFiler = [AsciiFiler new];
-    r = [aFiler readFromFile:f];
+    r         = [aFiler readFromFile:f];
 #ifndef OBJC_REFCNT
     [aFiler free];
 #endif
@@ -170,7 +170,7 @@ static BOOL isClass (id anObject)
 
     /* first pass - build TOC */
     inSecondPass = NO;
-    toc = [OrdCltn new];
+    toc          = [OrdCltn new];
     [self fileOutObject:anObject];
 
     /* second pass - write data to file */
@@ -293,36 +293,16 @@ static void outSTR (FILE * file, void * value)
 {
     switch (typeDesc)
     {
-    case '#':
-        outClass (file, value);
-        break;
-    case '@':
-        outObject (self, file, toc, value);
-        break;
-    case 'c':
-        outChar (file, value);
-        break;
-    case 'i':
-        outInt (file, value);
-        break;
-    case 's':
-        outShort (file, value);
-        break;
-    case 'S':
-        outUShort (file, value);
-        break;
-    case 'f':
-        outfloat (file, value);
-        break;
-    case 'd':
-        outdouble (file, value);
-        break;
-    case '*':
-        outSTR (file, value);
-        break;
-    case DOLLARASCII:
-        fprintf (file, "%c0 ", DOLLARASCII);
-        break;
+    case '#': outClass (file, value); break;
+    case '@': outObject (self, file, toc, value); break;
+    case 'c': outChar (file, value); break;
+    case 'i': outInt (file, value); break;
+    case 's': outShort (file, value); break;
+    case 'S': outUShort (file, value); break;
+    case 'f': outfloat (file, value); break;
+    case 'd': outdouble (file, value); break;
+    case '*': outSTR (file, value); break;
+    case DOLLARASCII: fprintf (file, "%c0 ", DOLLARASCII); break;
     default:
     {
         [[[UnknownType new] typeDesc:typeDesc] signal];
@@ -395,11 +375,10 @@ static int lex (id self, FILE * file, int expected, char * buffer)
         int c;
         while ((c = getc (file)) != ' ')
             *q++ = c;
-        *q = 0;
+        *q       = 0;
         break;
     }
-    default:
-        break;
+    default: break;
     }
 
     if (code == DOLLARASCII)
@@ -449,7 +428,7 @@ static int skipIX (FILE * file)
 static STR lexSTR (id self, FILE * file)
 {
     int expected = '*';
-    int code = nextCode (file);
+    int code     = nextCode (file);
 
     if (code == DOLLARASCII)
     {
@@ -472,13 +451,13 @@ static STR lexSTR (id self, FILE * file)
         q = buffer;
         while ((c = getc (file)) != '\"')
             *q++ = c;
-        *q = 0;
-        len = a_to_i (buffer);
-        s = OC_Malloc (len + 1);
+        *q       = 0;
+        len      = a_to_i (buffer);
+        s        = OC_Malloc (len + 1);
         q = s;
         while (len--)
             *q++ = getc (file);
-        *q++ = 0;
+        *q++     = 0;
 
 #if DEBUGLEX
         fprintf (stderr, "lex: '%c' '%s'\n", code, s);
@@ -568,8 +547,8 @@ static void skipNL (id self, FILE * file) { lex (self, file, '\n', NULL); }
 
     skipNL (self, file);
 
-    toc = [OrdCltn new];
-    patchSize = 0;
+    toc           = [OrdCltn new];
+    patchSize     = 0;
     patchCapacity = 64;
     patchPointers = (void **)OC_Malloc (sizeof (void *) * patchCapacity);
 

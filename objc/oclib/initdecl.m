@@ -60,7 +60,7 @@
 
 - initnil
 {
-    initnil = YES;
+    initnil     = YES;
     initializer = e_nil;
     return self;
 }

@@ -90,7 +90,7 @@
     if (enumtors)
     {
         int comma = 0;
-        int i, n = [enumtors size];
+        int i, n  = [enumtors size];
 
         if (lbrace)
             [lbrace gen];

@@ -162,12 +162,12 @@ static char * mystrrchr (const char * s, int c)
     modname = p;
 
     /* name bind function */
-    s = [String sprintf:"_OBJCBIND_%s", p];
+    s           = [String sprintf:"_OBJCBIND_%s", p];
     bindfunname = [s strCopy];
 
 /* name moddesc (because of bizar c++ problem, this used to be static) */
 #ifndef MODDESCSTATIC
-    s = [String sprintf:"%s_modDesc", p];
+    s           = [String sprintf:"%s_modDesc", p];
     moddescname = [s strCopy];
 #else
     moddescname = "_modDesc";
@@ -349,7 +349,7 @@ static char * mystrrchr (const char * s, int c)
     if (!selcltn)
     {
         selcltn = [OrdCltn new];
-        seldic = [Dictionary new];
+        seldic  = [Dictionary new];
     }
     n = [selcltn size];
     if ((val = [seldic atKey:selname]))
@@ -372,7 +372,7 @@ static char * mystrrchr (const char * s, int c)
     if (!fwdcltn)
     {
         fwdcltn = [OrdCltn new];
-        msgdic = [Dictionary new];
+        msgdic  = [Dictionary new];
     }
     n = [fwdcltn size];
     /* try to find another selector with same argument types */
@@ -501,7 +501,7 @@ static char * mystrrchr (const char * s, int c)
 
 - genmoddesc
 {
-    int selsize = (selcltn) ? [selcltn size] : 0;
+    int selsize    = (selcltn) ? [selcltn size] : 0;
     long modstatus = (clsimpls) ? MOD_MORETHANONE : 0;
 
 #ifdef MODDESCSTATIC
@@ -812,7 +812,7 @@ static char * mystrrchr (const char * s, int c)
     if (!typedic)
     {
         typedic = [Dictionary new];
-        types = [Set new];
+        types   = [Set new];
     }
     if (o_debuginfo)
     {
@@ -872,7 +872,7 @@ static char * mystrrchr (const char * s, int c)
     if (!globaldic)
     {
         globaldic = [Dictionary new];
-        globals = [Set new];
+        globals   = [Set new];
     }
     [globals add:node];
     assert ([aType isKindOf:(id)[Type class]]);
@@ -941,7 +941,7 @@ static char * mystrrchr (const char * s, int c)
     FILE * f;
     id sorted;
     id c, classes;
-    sorted = [SortCltn new];
+    sorted  = [SortCltn new];
     classes = [classdefs eachValue];
     while ((c = [classes next]))
     {
@@ -969,7 +969,7 @@ static char * mystrrchr (const char * s, int c)
 {
     id sorted;
     id c, classes;
-    sorted = [SortCltn new];
+    sorted  = [SortCltn new];
     classes = [classdefs eachValue];
     while ((c = [classes next]))
     {
@@ -994,14 +994,14 @@ static char * mystrrchr (const char * s, int c)
 
     printf ("menu=%s\n", title);
 
-    classes = [c eachElement];
+    classes    = [c eachElement];
     subclasses = [OrdCltn new];
     while ((d = [classes next]))
     {
         [subclasses add:[self findsubclasses:d]];
     }
 
-    i = 0;
+    i       = 0;
     classes = [c eachElement];
     while ((d = [classes next]))
     {
@@ -1022,7 +1022,7 @@ static char * mystrrchr (const char * s, int c)
     [self inspectbutton];
     fclose (f);
 
-    i = 0;
+    i       = 0;
     classes = [c eachElement];
     while ((d = [classes next]))
     {

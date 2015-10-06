@@ -53,10 +53,10 @@ static objbbt_t alloc ()
 
 static objbbt_t init (objbbt_t self, id key)
 {
-    self->ulink = NULL;
-    self->llink = NULL;
-    self->rlink = NULL;
-    self->key = key;
+    self->ulink   = NULL;
+    self->llink   = NULL;
+    self->rlink   = NULL;
+    self->key     = key;
     self->balance = 0;
     return self;
 }
@@ -436,7 +436,7 @@ static int adjust (objbbt_t b, objbbt_t newp)
             break;
         assert (ulink->balance == 0);
         ulink->balance = sign;
-        newp = ulink;
+        newp           = ulink;
     }
 
     return sign;
@@ -525,7 +525,7 @@ static void rebalance (objbbt_t top, objbbt_t newp)
     int sign;
     objbbt_t b;
 
-    b = bnode (top, newp);
+    b    = bnode (top, newp);
     sign = adjust (b, newp);
 
     if (b->balance == 0)
@@ -659,7 +659,7 @@ static id replace (objbbt_t top, id key, SEL selCmp, id cmpBlk)
     int c = cmpne (top, key, selCmp, cmpBlk, &offset);
     if (c == 0)
     {
-        id tmp = offset->key;
+        id tmp      = offset->key;
         offset->key = key;
         return tmp;
     }
@@ -722,7 +722,7 @@ static id replace (objbbt_t top, id key, SEL selCmp, id cmpBlk)
     }
     else
     {
-        BOOL res = YES;
+        BOOL res  = YES;
         id e, seq = [aCltn eachElement];
         while ((e = [seq next]))
         {
@@ -748,7 +748,7 @@ static id replace (objbbt_t top, id key, SEL selCmp, id cmpBlk)
     }
     else
     {
-        BOOL res = NO;
+        BOOL res  = NO;
         id e, seq = [aCltn eachElement];
         while ((e = [seq next]))
         {

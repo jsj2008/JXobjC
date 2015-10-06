@@ -41,7 +41,7 @@
 
 - withText:r style:v
 {
-    text = r;
+    text      = r;
     textStyle = v;
     return self;
 }
@@ -50,7 +50,7 @@
 
 - free
 {
-    text = [text free];
+    text      = [text free];
     textStyle = [textStyle free];
     return [super free];
 }

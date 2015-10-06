@@ -135,7 +135,7 @@ void finclassdef (void)
         }
         if ([curclassdef propmeths])
             [[curclassdef propmeths] do:
-                                     { :each | [[each synth] gen];
+                                     { : each |[[each synth] gen];
                                      }];
         if (o_warnmissingmethods && [curclassdef isimpl])
         {
@@ -281,7 +281,7 @@ static BOOL isline (char * s)
 static BOOL ispragma (char * s)
 {
     char * t;
-    id x = [String str:s];
+    id x       = [String str:s];
     char * sep = " #/\t\n\r";
 
     t = strtok ([x str], sep);
@@ -728,7 +728,7 @@ id mkpropsetmeth (id compdec, id type, id name, int ispointer)
     [r prototype];
     if ((b = [CompoundStmt new]))
     {
-        id s = [OrdCltn new];
+        id s        = [OrdCltn new];
         id vartoset = [mkarrowexpr (s_self, name) type:type];
 
         [s add:mkexprstmtx (mkassignexpr (
@@ -756,7 +756,7 @@ id mkpropgetmeth (id compdec, id type, id name, int ispointer)
     [r prototype];
     if ((b = [CompoundStmt new]))
     {
-        id s = [OrdCltn new];
+        id s        = [OrdCltn new];
         id vartoget = [mkarrowexpr ([[e_self copy] lhsself:1], name) type:type];
 
         [s add:mkreturnx (vartoget)];

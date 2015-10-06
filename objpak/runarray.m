@@ -77,7 +77,7 @@
 
 - runs:r values:v
 {
-    runs = r;
+    runs   = r;
     values = v;
     [self reset];
     return self;
@@ -104,7 +104,7 @@
         {
             lastsegment++;
             laststart = lastend;
-            lastend = laststart + [runs intAt:lastsegment];
+            lastend   = laststart + [runs intAt:lastsegment];
             return [values at:lastsegment];
         }
     }
@@ -116,8 +116,8 @@
         unsigned q = p + [runs intAt:j];
         if (p <= i && i < q)
         {
-            laststart = p;
-            lastend = q;
+            laststart   = p;
+            lastend     = q;
             lastsegment = j;
             return [values at:j];
         }
@@ -149,7 +149,7 @@
         {
             lastsegment++;
             laststart = lastend;
-            lastend = laststart + [runs intAt:lastsegment];
+            lastend   = laststart + [runs intAt:lastsegment];
             return lastend - i;
         }
     }
@@ -161,8 +161,8 @@
         unsigned q = p + [runs intAt:j];
         if (p <= i && i < q)
         {
-            laststart = p;
-            lastend = q;
+            laststart   = p;
+            lastend     = q;
             lastsegment = j;
             return lastend - i;
         }
@@ -258,7 +258,7 @@
         if (p < i && q > i)
         {
             int m = [runs capacity];
-            id v = [[values at:j] deepCopy];
+            id v  = [[values at:j] deepCopy];
 
             if (m < (n + 1))
                 [runs capacity:(2 * m + 1)];
@@ -362,8 +362,8 @@
         /* for insertion, don't move to next segment if i == lastend */
         if (p <= i && i <= q)
         {
-            laststart = p;
-            lastend = q;
+            laststart   = p;
+            lastend     = q;
             lastsegment = j;
             return self;
         }
@@ -415,10 +415,10 @@
 
     n = q - p + 1;
     [self at:p]; /* compute lastsegment */
-    i = lastsegment;
+    i  = lastsegment;
     is = laststart;
     [self at:q];
-    j = lastsegment;
+    j  = lastsegment;
     je = lastend;
     [self reset];
 
