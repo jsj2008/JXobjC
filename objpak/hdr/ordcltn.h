@@ -135,6 +135,17 @@ typedef struct objcol
 - fileInFrom:aFiler;
 #endif /* __PORTABLE_OBJC__ */
 
+/* private */
+- freeAll;
+- release;
+
+- (objcol_t)objcolvalue;
+- (unsigned)hash;
+
+- addYourself;
+
+- couldntfind;
+
 @end
 
 #endif /* __OBJCLTN_H__ */

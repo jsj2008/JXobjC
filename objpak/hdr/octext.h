@@ -35,10 +35,9 @@
     id runs;
 }
 
-- check;
 + new;
 + new:(unsigned)nChars;
-+ vsprintf:(STR)format:(OC_VA_LIST *)ap;
++ vsprintf:(STR)format:(va_list *)ap;
 + str:(STR)aString;
 + sprintf:(STR)format, ...;
 + fromString:aString;
@@ -68,14 +67,18 @@
 - addAttribute:attribute from:(unsigned)p to:(unsigned)q;
 - attributesAt:(unsigned)i;
 - (unsigned)runLengthFor:(unsigned)i;
-- (unsigned)fontNumberAt:(unsigned)i;
-- fontAt:(unsigned)i withStyle:textStyle;
 
 - asString;
 - asText;
 - asParagraph;
 
 - printOn:(IOD)aFile;
+
+/* private */
+- check;
+
+- (unsigned)fontNumberAt:(unsigned)i;
+- fontAt:(unsigned)i withStyle:textStyle;
 @end
 
 #endif /* __OBJTXT_H__ */

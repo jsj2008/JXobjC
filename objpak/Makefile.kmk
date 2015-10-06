@@ -1,6 +1,7 @@
 SUB_DEPTH = ..
 include $(KBUILD_PATH)/subheader.kmk
 
+INSTALLS += objpakhdr
 LIBRARIES += objpak
 
 objpak_TEMPLATE = OBJC
@@ -10,12 +11,10 @@ objpak_SOURCES = badvers.m notfound.m octext.m rectangl.m sortcltn.m \
     treeseq.m valueseq.m ascfiler.m cltn.m intarray.m paragrph.m \
     set.m txtattr.m assoc.m cltnseq.m keyseq.m ocstring.m point.m \
     setseq.m txtstyle.m PCNumber.m
+objpak_INCS = $(PATH_SUB_CURRENT)/hdr
 
 objpakhdr_INST = include/objpak/
 objpakhdr_IFFLAGS = -m 644
 objpakhdr_SOURCES = $(wildcard $(PATH_ROOT)/objpak/hdr/*.h)
-
-INSTALLS += objpakhdr
-
 
 include $(FILE_KBUILD_SUB_FOOTER)

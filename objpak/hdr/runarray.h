@@ -1,7 +1,7 @@
 
 /*
- * Portable Object Compiler (c) 1998,2003.  All Rights Reserved.
- * $Id: idarray.h,v 1.3 2009/10/23 19:36:43 stes Exp $
+ * Portable Object Compiler (c) 1997,98,99,03.  All Rights Reserved.
+ * $Id: runarray.h,v 1.3 2009/10/23 19:36:44 stes Exp $
  */
 
 /*
@@ -20,45 +20,46 @@
  * Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
  */
 
-#ifndef __IDARRAY_H__
-#define __IDARRAY_H__
+#ifndef __RUNARY_H__
+#define __RUNARY_H__
 
-#include "array.h"
+#include "cltn.h"
 
-typedef struct idary
+@interface RunArray : Cltn
 {
-    int capacity;
-    id * ptr;
-} * idary_t;
-
-@interface IdArray : Array
-{
-    struct idary value;
+    id runs;
+    id values;
+    unsigned size;
+    int laststart;
+    int lastend;
+    int lastsegment;
 }
 
+- reset;
+- check;
 + new;
-+ new:(unsigned)n;
-+ with:(int)nArgs, ...;
-- copy;
-- deepCopy;
 - free;
 
-- (idary_t)idaryvalue;
+- values;
+- runs;
+- at:(unsigned)i;
+- (unsigned)runLengthAt:(unsigned)i;
 - (unsigned)size;
-- at:(unsigned)anOffset;
-- at:(unsigned)anOffset put:anObject;
-
-- (unsigned)capacity;
-- capacity:(unsigned)nSlots;
-- packContents;
+- addAttribute:attrib from:(unsigned)p size:(unsigned)s;
+- at:(unsigned)anOffset insert:(char *)aString count:(int)n;
+- deleteFrom:(unsigned)p to:(unsigned)q;
+- concat:b;
+- coalesce;
 
 - printOn:(IOD)aFile;
 
-#ifdef __PORTABLE_OBJC__
-- fileOutOn:aFiler;
-- fileInFrom:aFiler;
-#endif /* __PORTABLE_OBJC__ */
-
+/* private */
+- runs:r values:v;
+- calcsize;
+- setsize:(unsigned)newsize;
+- addAttribute:attrib to:v;
+- breakat:(int)i;
+- calcinsertsegment:(int)i;
 @end
 
-#endif /* __IDARRAY_H__ */
+#endif /* __RUNARY_H__ */

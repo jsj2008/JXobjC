@@ -1,7 +1,7 @@
 
 /*
- * Portable Object Compiler (c) 2003.  All Rights Reserved.
- * $Id: outofbnd.h,v 1.3 2009/10/23 19:36:43 stes Exp $
+ * Portable Object Compiler (c) 1998,2003.  All Rights Reserved.
+ * $Id: idarray.h,v 1.3 2009/10/23 19:36:43 stes Exp $
  */
 
 /*
@@ -20,20 +20,46 @@
  * Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
  */
 
-#ifndef __OUTOFBND_H__
-#define __OUTOFBND_H__
+#ifndef __IDARRAY_H__
+#define __IDARRAY_H__
 
-#include "Exceptn.h"
+#include "array.h"
 
-@interface OutOfBounds : Exception
+typedef struct idary
 {
-    unsigned size;
-    unsigned offset;
+    int capacity;
+    id * ptr;
+} * idary_t;
+
+@interface IdArray : Array
+{
+    struct idary value;
 }
-- (unsigned)size;
-- at:(unsigned)n;
+
++ new;
 + new:(unsigned)n;
-- new:(unsigned)n;
++ with:(int)nArgs, ...;
+- copy;
+- deepCopy;
+- free;
+
+- (unsigned)size;
+- at:(unsigned)anOffset;
+- at:(unsigned)anOffset put:anObject;
+
+- (unsigned)capacity;
+- capacity:(unsigned)nSlots;
+- packContents;
+
+- printOn:(IOD)aFile;
+
+#ifdef __PORTABLE_OBJC__
+- fileOutOn:aFiler;
+- fileInFrom:aFiler;
+#endif /* __PORTABLE_OBJC__ */
+
+/* private */
+- (idary_t)idaryvalue;
 @end
 
-#endif /* __OUTOFBND_H__ */
+#endif /* __IDARRAY_H__ */

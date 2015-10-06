@@ -1,7 +1,7 @@
 
 /*
- * Portable Object Compiler (c) 1997,98.  All Rights Reserved.
- * $Id: array.h,v 1.1.1.1 2000/06/07 21:09:24 stes Exp $
+ * Portable Object Compiler (c) 1998.  All Rights Reserved.
+ * $Id: intarray.h,v 1.3 2009/10/23 19:36:43 stes Exp $
  */
 
 /*
@@ -20,19 +20,46 @@
  * Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
  */
 
-#ifndef __ARRAY_H__
-#define __ARRAY_H__
+#ifndef __INTARRAY_H__
+#define __INTARRAY_H__
 
-#ifndef __OBJECT_INCLUDED__
-#define __OBJECT_INCLUDED__
-#include <stdio.h>
-#include "Object.h" /* Stepstone Object.h assumes #import */
-#endif
+#include "array.h"
 
-@interface Array : Object
+typedef struct intary
 {
-    unsigned capacity; /* for compatibility, some Array subclasses use this */
+    int capacity;
+    int * ptr;
+} * intary_t;
+
+@interface IntArray : Array
+{
+    struct intary value;
 }
+
++ new;
++ new:(unsigned)n;
++ with:(int)nArgs, ...;
+- copy;
+- deepCopy;
+- free;
+
+- (unsigned)size;
+- (int)intAt:(unsigned)anOffset;
+- (int)intAt:(unsigned)anOffset put:(int)anInt;
+
+- (unsigned)capacity;
+- capacity:(unsigned)nSlots;
+- packContents;
+
+- printOn:(IOD)aFile;
+
+#ifdef __PORTABLE_OBJC__
+- fileOutOn:aFiler;
+- fileInFrom:aFiler;
+#endif /* __PORTABLE_OBJC__ */
+
+/* private */
+- (intary_t)intaryvalue;
 @end
 
-#endif /* __ARRAY_H__ */
+#endif /* __INTARRAY_H__ */

@@ -1,7 +1,7 @@
 
 /*
  * Portable Object Compiler (c) 1997,98.  All Rights Reserved.
- * $Id: paragrph.h,v 1.1.1.1 2000/06/07 21:09:25 stes Exp $
+ * $Id: dictnary.h,v 1.4 2009/10/23 19:36:43 stes Exp $
  */
 
 /*
@@ -20,38 +20,61 @@
  * Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
  */
 
-#ifndef __PARAGRPH_H__
-#define __PARAGRPH_H__
+#ifndef __OBJDIC_H__
+#define __OBJDIC_H__
 
 #ifndef __OBJECT_INCLUDED__
 #define __OBJECT_INCLUDED__
 #include <stdio.h>
-#include <Object.h>
+#include "Object.h" /* Stepstone Object.h assumes #import */
 #endif
 
-@interface Paragraph : Object
+@interface Dictionary : Object
 {
-    id text;
-    id textStyle;
-    id offset;
+    id associations;
 }
 
 + new;
-+ withText:aText;
-+ withText:aText style:aStyle;
-- withText:r style:v;
 - copy;
+- deepCopy;
+- emptyYourself;
+- freeContents;
+- freeAll;
 - free;
 
-- text;
-- textStyle;
-- text:v;
-- textStyle:v;
+- (unsigned)size;
+- (BOOL)isEmpty;
+- (BOOL)includesKey:aKey;
 
-- asString;
-- asText;
+- (unsigned)hash;
+- (BOOL)isEqual:aDic;
+
+- atKey:aKey;
+- atKey:aKey ifAbsent:exceptionBlock;
+- atKeySTR:(STR)strKey;
+- atKey:aKey put:anObject;
+- atKeySTR:(STR)strKey put:anObject;
+- eachKey;
+- eachValue;
+
+- removeKey:key;
+- removeKey:key ifAbsent:aBlock;
+
+#if OBJC_BLOCKS
+- keysDo:aBlock;
+#endif /* OBJC_BLOCKS */
 
 - printOn:(IOD)aFile;
+
+/* private */
+- copyAssociations;
+- deepCopyAssociations;
+- release;
+
+- associations;
+- (id *)associationsRef;
+
+- associationAt:aKey;
 @end
 
-#endif /* __PARAGRPH_H__ */
+#endif /* __OBJDIC_H__ */

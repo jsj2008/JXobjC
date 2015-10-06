@@ -1,7 +1,7 @@
 
 /*
- * Portable Object Compiler (c) 1997,98.  All Rights Reserved.
- * $Id: dictnary.h,v 1.4 2009/10/23 19:36:43 stes Exp $
+ * Portable Object Compiler (c) 1997,2000,03,04.  All Rights Reserved.
+ * $Id: ascfiler.h,v 1.4 2009/10/23 19:36:43 stes Exp $
  */
 
 /*
@@ -20,8 +20,10 @@
  * Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
  */
 
-#ifndef __OBJDIC_H__
-#define __OBJDIC_H__
+#ifdef __PORTABLE_OBJC__
+
+#ifndef __ASCIIFILER_H__
+#define __ASCIIFILER_H__
 
 #ifndef __OBJECT_INCLUDED__
 #define __OBJECT_INCLUDED__
@@ -29,48 +31,37 @@
 #include "Object.h" /* Stepstone Object.h assumes #import */
 #endif
 
-@interface Dictionary : Object
+@interface AsciiFiler : Object
 {
-    id associations;
+    FILE * file;
+    BOOL ownFile;
+    BOOL inSecondPass;
+    id toc;
+    void ** patchPointers;
+    int patchSize;
+    int patchCapacity;
 }
 
++ initialize;
+
 + new;
-- copyAssociations;
-- copy;
-- deepCopyAssociations;
-- deepCopy;
-- emptyYourself;
-- freeContents;
-- freeAll;
 - free;
-- release;
 
-- associations;
-- (id *)associationsRef;
-- (unsigned)size;
-- (BOOL)isEmpty;
-- (BOOL)includesKey:aKey;
+- (BOOL)store:anObject on:(STR)aFileName;
+- readFrom:(STR)aFileName;
 
-- (unsigned)hash;
-- (BOOL)isEqual:aDic;
+- fileOut:(void *)value type:(char)typeDesc;
 
-- associationAt:aKey;
-- atKey:aKey;
-- atKey:aKey ifAbsent:exceptionBlock;
-- atKeySTR:(STR)strKey;
-- atKey:aKey put:anObject;
-- atKeySTR:(STR)strKey put:anObject;
-- eachKey;
-- eachValue;
+- fileIn:(void *)value type:(char)typeDesc;
 
-- removeKey:key;
-- removeKey:key ifAbsent:aBlock;
+/* private */
+- (BOOL)store:anObject onFile:(FILE *)aFile;
+- readFromFile:(FILE *)aFile;
+- fileOut2:(void *)value type:(char)typeDesc;
+- fileOutObject:anObject;
 
-#if OBJC_BLOCKS
-- keysDo:aBlock;
-#endif /* OBJC_BLOCKS */
-
-- printOn:(IOD)aFile;
 @end
 
-#endif /* __OBJDIC_H__ */
+#endif /* __ASCIIFILER_H */
+
+#endif /* __PORTABLE_OBJC__ */

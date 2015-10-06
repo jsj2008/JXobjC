@@ -23,11 +23,14 @@
 #ifndef __OBJSTR_H__
 #define __OBJSTR_H__
 
+#include <stdarg.h>
 #include "array.h"
 
 #ifdef _XtIntrinsic_h
 #define String OCString /* remap String class - cant use Xt String */
 #endif
+
+#define PCString String
 
 typedef struct objstr
 {
@@ -45,7 +48,7 @@ typedef struct objstr
 + new:(unsigned)nChars;
 + str:(STR)aString;
 + chars:(STR)aString count:(int)n;
-+ vsprintf:(STR)format:(OC_VA_LIST *)ap;
++ vsprintf:(STR)format:(va_list *)ap;
 + sprintf:(STR)format, ...;
 - copy;
 - deepCopy;

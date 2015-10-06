@@ -34,6 +34,8 @@
 - at:(unsigned)n;
 + new:(unsigned)n;
 - new:(unsigned)n;
+
+/* private */
 - signal;
 @end
 

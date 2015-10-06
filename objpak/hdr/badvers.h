@@ -1,7 +1,7 @@
 
 /*
- * Portable Object Compiler (c) 1997,98,99,03.  All Rights Reserved.
- * $Id: runarray.h,v 1.3 2009/10/23 19:36:43 stes Exp $
+ * Portable Object Compiler (c) 2003.  All Rights Reserved.
+ * $Id: badvers.h,v 1.2 2004/07/24 18:50:39 stes Exp $
  */
 
 /*
@@ -20,36 +20,22 @@
  * Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
  */
 
-#ifndef __RUNARY_H__
-#define __RUNARY_H__
+#ifndef __BADVERSION_H__
+#define __BADVERSION_H__
 
-#include "cltn.h"
+#include "Exceptn.h"
 
-@interface RunArray : Cltn
+@interface BadVersion : Exception
 {
-    id runs;
-    id values;
-    unsigned size;
-    int laststart;
-    int lastend;
-    int lastsegment;
+    int badVersion;
+    int goodVersion;
 }
+- (int)goodVersion;
+- (int)badVersion;
+- goodVersion:(int)g badVersion:(int)b;
 
-+ new;
-- free;
-
-- values;
-- runs;
-- at:(unsigned)i;
-- (unsigned)runLengthAt:(unsigned)i;
-- (unsigned)size;
-- addAttribute:attrib from:(unsigned)p size:(unsigned)s;
-- at:(unsigned)anOffset insert:(char *)aString count:(int)n;
-- deleteFrom:(unsigned)p to:(unsigned)q;
-- concat:b;
-- coalesce;
-
-- printOn:(IOD)aFile;
+/* private */
+- signal;
 @end
 
-#endif /* __RUNARY_H__ */
+#endif /* __BADVERSION_H__ */

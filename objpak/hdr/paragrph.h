@@ -1,7 +1,7 @@
 
 /*
- * Portable Object Compiler (c) 1997,98,99.  All Rights Reserved.
- * $Id: point.h,v 1.1.1.1 2000/06/07 21:09:24 stes Exp $
+ * Portable Object Compiler (c) 1997,98.  All Rights Reserved.
+ * $Id: paragrph.h,v 1.1.1.1 2000/06/07 21:09:25 stes Exp $
  */
 
 /*
@@ -20,49 +20,40 @@
  * Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
  */
 
-#ifndef __OBJPOINT_H__
-#define __OBJPOINT_H__
+#ifndef __PARAGRPH_H__
+#define __PARAGRPH_H__
 
 #ifndef __OBJECT_INCLUDED__
 #define __OBJECT_INCLUDED__
 #include <stdio.h>
-#include "Object.h" /* Stepstone Object.h assumes #import */
+#include <Object.h>
 #endif
 
-@interface Point : Object
+@interface Paragraph : Object
 {
-    int xLoc;
-    int yLoc;
+    id text;
+    id textStyle;
+    id offset;
 }
 
 + new;
-+ x:(int)x y:(int)y;
++ withText:aText;
++ withText:aText style:aStyle;
+- copy;
+- free;
 
-- x:(int)x y:(int)y;
-- x:(int)x;
-- y:(int)y;
-- (int)x;
-- (int)y;
+- text;
+- textStyle;
+- text:v;
+- textStyle:v;
 
-- (unsigned)hash;
-- (BOOL)isEqual:aPoint;
-- (BOOL)isBelow:aPoint;
-- (BOOL)isAbove:aPoint;
-- (BOOL)isLeft:aPoint;
-- (BOOL)isRight:aPoint;
-
-- moveBy:aPoint;
-- moveBy:(int)x:(int)y;
-- moveTo:aPoint;
-- plus:aPoint;
-- translateBy:aPoint;
+- asString;
+- asText;
 
 - printOn:(IOD)aFile;
-#ifdef __PORTABLE_OBJC__
-- fileOutOn:aFiler;
-- fileInFrom:aFiler;
-#endif /* __PORTABLE_OBJC__ */
 
+/* private */
+- withText:r style:v;
 @end
 
-#endif /* __OBJPOINT_H__ */
+#endif /* __PARAGRPH_H__ */
