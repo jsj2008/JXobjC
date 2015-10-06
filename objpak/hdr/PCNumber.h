@@ -54,7 +54,7 @@ typedef enum pcnumber_type_e
 
 #define NumFrom(typ, nam)                                                      \
     +from##nam : (typ)val;                                                     \
-    -set##nam : (typ)val;
+    -set##nam : (typ)val
 NumFrom (char, Char);
 NumFrom (unsigned char, UChar);
 NumFrom (short, Short);

@@ -24,17 +24,18 @@ NumSet (long long, LongLong, ll, PCNUMBER_LONGLONG);
 NumSet (unsigned long long, ULongLong, ull, PCNUMBER_ULONGLONG);
 #undef NumFrom
 
-#define NumVal(typ, nam) -(typ)nam##Value
-NumVal (char, char);
-NumVal (unsigned char, uChar);
-NumVal (short, short);
-NumVal (unsigned short, uShort);
-NumVal (int, int);
-NumVal (unsigned int, uInt);
-NumVal (long, long);
-NumVal (unsigned long, uLong);
-NumVal (long long, longLong);
-NumVal (unsigned long long, uLongLong);
+#define NumVal(typ, nam, ch)                                                   \
+    -(typ)nam##Value { return value.ch; }
+NumVal (char, char, c);
+NumVal (unsigned char, uChar, uc);
+NumVal (short, short, s);
+NumVal (unsigned short, uShort, us);
+NumVal (int, int, i);
+NumVal (unsigned int, uInt, ui);
+NumVal (long, long, l);
+NumVal (unsigned long, uLong, ul);
+NumVal (long long, longLong, ll);
+NumVal (unsigned long long, uLongLong, ull);
 #undef NumVal
 
 @end
