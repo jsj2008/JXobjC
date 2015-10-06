@@ -41,7 +41,6 @@
         id ivars = [curclassdef ivars];
         id decllist = [compdec decllist];
         id specs = [compdec specs];
-        id meths = [OrdCltn new];
         int i, n;
 
         [ivars add:compdec];
@@ -74,6 +73,7 @@
             }
         }
 
+        [curclassdef synth];
         curdef = nil;
     }
 

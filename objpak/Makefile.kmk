@@ -11,5 +11,11 @@ objpak_SOURCES = badvers.m notfound.m octext.m rectangl.m sortcltn.m \
     set.m txtattr.m assoc.m cltnseq.m keyseq.m ocstring.m point.m \
     setseq.m txtstyle.m
 
+objpakhdr_INST = include/objpak/
+objpakhdr_IFFLAGS = -m 644
+objpakhdr_SOURCES = $(wildcard $(PATH_ROOT)/objpak/hdr/*.h)
+
+INSTALLS += objpakhdr
+
 
 include $(FILE_KBUILD_SUB_FOOTER)

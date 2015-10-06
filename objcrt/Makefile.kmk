@@ -6,4 +6,9 @@ LIBRARIES += objcrt
 objcrt_TEMPLATE = OBJC
 objcrt_SOURCES = Block.m Exceptn.m Message.m Object.m OutOfMem.m crt.m
 
+objcrtr_EXTENDS = objcrt
+objcrtr_EXTENDS_BY = appending
+objcrtr_OBJCFLAGS = -refcnt
+objcrtr_DEFS = OBJC_REFCNT
+
 include $(FILE_KBUILD_SUB_FOOTER)

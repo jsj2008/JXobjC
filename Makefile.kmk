@@ -8,18 +8,18 @@ include $(PATH_CURRENT)/objpak/Makefile.kmk
 
 include $(PATH_CURRENT)/objc/Makefile.kmk
 
-CRTHDR_INST = include/objcrt/
-CRTHDR_IFFLAGS = -m 644
-CRTHDR_SOURCES = $(wildcard include/objcrt/*.h)
+CRTHDRS_INST = include/objcrt/
+CRTHDRS_IFFLAGS = -m 644
+CRTHDRS_SOURCES = $(wildcard include/objcrt/*.h)
 
-OBJPAKHDR_INST = include/objpak/
-OBJPAKHDR_IFFLAGS = -m 644
-OBJPAKHDR_SOURCES = $(wildcard include/objpak/*.h)
+OBJPAKHDRS_INST = include/objpak/
+OBJPAKHDRS_IFFLAGS = -m 644
+OBJPAKHDRS_SOURCES = $(wildcard include/objpak/*.h)
 
-OCLIBHDR_INST = include/oclib/
-OCLIBHDR_IFFLAGS = -m 644
-OCLIBHDR_SOURCES = $(wildcard include/oclib/*.h)
+OCLIBHDRS_INST = include/oclib/
+OCLIBHDRS_IFFLAGS = -m 644
+OCLIBHDRS_SOURCES = $(wildcard include/oclib/*.h)
 
-INSTALLS += CRTHDR OBJPAKHDR OCLIBHDR
+INSTALLS += CRTHDRS OBJPAKHDRS OCLIBHDRS
 
 include $(FILE_KBUILD_SUB_FOOTER)

@@ -96,7 +96,7 @@ define TOOL_PCPP_COMPILE_OBJC_CMDS
 	$(QUIET)$(TOOL_PCPP_OBJC) -c\
 		$(flags) $(addprefix -I, $(incs)) $(addprefix -D, $(defs))\
 		-Wp,-Wp,-MD,$(dep) -Wp,-MT,$(obj) \
-		-ggdb -o $(obj)\
+		-o $(obj)\
 		$(abspath $(source))
 	$(QUIET)$(APPEND) -n "$(dep)" "" "$(source):" ""
 endef
@@ -119,7 +119,7 @@ TOOL_PCPP_COMPILE_C_OUTPUT =
 TOOL_PCPP_COMPILE_C_DEPEND =
 TOOL_PCPP_COMPILE_C_DEPORD =
 define TOOL_PCPP_COMPILE_C_CMDS
-	$(QUIET)$(TOOL_PCPP_CC) -c\
+	$(TOOL_PCPP_CC) -c\
 		$(flags) $(addprefix -I, $(incs)) $(addprefix -D, $(defs))\
 		-Wp,-MD,$(dep) -Wp,-MT,$(obj) \
 		-o $(obj)\

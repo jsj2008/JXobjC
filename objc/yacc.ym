@@ -70,13 +70,16 @@ int yylex() ;
 %token atdefs atselector atinterface atend atencode atrequires atproperty
 %token blockbegin
 
+/* property specifiers
+%token propreadonly
+
 /* C++ */
 %token namespace usingkeyw
 
-/* compiler specific */
+/* Compiler specific */
 %token gnuextension attributekeyw
 
-/* precedence (lowest to highest) */
+/* Precedence (lowest to highest) */
 %left ','  /* a,b,c -> (a,b),c */
 %right '=' /* a=b=c -> a=(b=c) */
 %right ifkeyw elsekeyw
@@ -1028,11 +1031,12 @@ unaryselector : identifier | reservedword | typeword | builtinfun
 
  /* Objective-C 2.0 */
 
+propspec
+    : propreadonly
+    ;
+
 propdecl
-    : atproperty componentdefx ';'
-    {
-        $$ = mkpropdef($2);
-    }
+    : atproperty componentdefx ';' { $$ = mkpropdef($2); }
     ;
 
  /* C++ */
