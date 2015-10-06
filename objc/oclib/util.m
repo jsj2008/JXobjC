@@ -134,9 +134,7 @@ void finclassdef (void)
             }
         }
         if ([curclassdef propmeths])
-            [[curclassdef propmeths] do:
-                                     { : each |[[each synth] gen];
-                                     }];
+            [curclassdef synthpropmethods];
         if (o_warnmissingmethods && [curclassdef isimpl])
         {
             [curclassdef warnimplnotfound];

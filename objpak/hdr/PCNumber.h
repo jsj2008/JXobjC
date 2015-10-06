@@ -52,7 +52,9 @@ typedef enum pcnumber_type_e
 
 @property pcnumber_type_t type;
 
-#define NumFrom(typ, nam) +from##nam : (typ)val
+#define NumFrom(typ, nam)                                                      \
+    +from##nam : (typ)val;                                                     \
+    -set##nam : (typ)val;
 NumFrom (char, Char);
 NumFrom (unsigned char, UChar);
 NumFrom (short, Short);
@@ -64,5 +66,18 @@ NumFrom (unsigned long, ULong);
 NumFrom (long long, LongLong);
 NumFrom (unsigned long long, ULongLong);
 #undef NumFrom
+
+#define NumVal(typ, nam) -(typ)nam##Value
+NumVal (char, char);
+NumVal (unsigned char, uChar);
+NumVal (short, short);
+NumVal (unsigned short, uShort);
+NumVal (int, int);
+NumVal (unsigned int, uInt);
+NumVal (long, long);
+NumVal (unsigned long, uLong);
+NumVal (long long, longLong);
+NumVal (unsigned long long, uLongLong);
+#undef NumVal
 
 @end

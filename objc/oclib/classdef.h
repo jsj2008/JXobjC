@@ -102,6 +102,7 @@ extern id curstruct;
 - (int)numidivars;
 - synthfilermethods;
 - synthrefcntmethods;
+- synthpropmethods;
 
 - gen;
 - genivars;

@@ -27,6 +27,7 @@
 #include <stdio.h>  /* FILE */
 #include "Object.h" /* Stepstone Object.h assumes #import */
 #endif
+#include "Block.h"
 #include <ocstring.h>
 #include <ordcltn.h>
 #include <set.h>
@@ -250,6 +251,17 @@ id curclassdef;
             fileoutmethod = mkfileoutmeth (curclassdef, ivarnames, ivartypes);
             [fileoutmethod synth];
         }
+    }
+    return self;
+}
+
+- synthpropmethods
+{
+    if (isimpl)
+    {
+        [propmeths do:
+                   { : each |[each synth];
+                   }];
     }
     return self;
 }
@@ -1019,6 +1031,10 @@ id curclassdef;
             [increfsmethod gen];
             gc ('\n');
         }
+        if (propmeths)
+            [propmeths do:
+                       { : each |[each gen];
+                       }];
         [self genclsdisptbl];
         [self gennstdisptbl];
         [self genclassglobal];

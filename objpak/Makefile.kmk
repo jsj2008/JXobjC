@@ -9,7 +9,7 @@ objpak_SOURCES = badvers.m notfound.m octext.m rectangl.m sortcltn.m \
     unknownt.m array.m bagseq.m idarray.m outofbnd.m sequence.m \
     treeseq.m valueseq.m ascfiler.m cltn.m intarray.m paragrph.m \
     set.m txtattr.m assoc.m cltnseq.m keyseq.m ocstring.m point.m \
-    setseq.m txtstyle.m
+    setseq.m txtstyle.m PCNumber.m
 
 objpakhdr_INST = include/objpak/
 objpakhdr_IFFLAGS = -m 644
