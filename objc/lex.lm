@@ -291,6 +291,10 @@ __declspec\([^)]*\)	{ return watcomkeyw(typequal); }
   if (yylval) { inlineno++;return cppdirect; }
 }
 
+"@"\"{CCHAR}*\" {
+  return tkeyw(pcstringlit,t_str);
+}
+
 \"{CCHAR}*\" {
   return tkeyw(stringcomp,t_str);
 }

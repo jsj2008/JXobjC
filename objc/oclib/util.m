@@ -1392,3 +1392,13 @@ id mkdecrefsmeth (id classdef, id ivarnames, id ivartypes)
 {
     return mkrefmeth (classdef, ivarnames, ivartypes, s_decrefs, s_iddecref);
 }
+
+id mkpcstringlit (id string)
+{
+    id arg = mkkeywarg ([IdentifierExpr str:@selector (str)],
+                        [string deleteFrom:0 to:0]);
+    id args = mklist (nil, arg);
+    id msg  = mkmethproto (nil, nil, args, NO);
+
+    return mkmesgexpr ([IdentifierExpr str:"String"], msg);
+};

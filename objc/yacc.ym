@@ -69,8 +69,7 @@ int yylex() ;
 
 %token atdefs atselector atinterface atend atencode atrequires atproperty
 %token blockbegin
-
-/* property specifiers
+%token pcstringlit
 %token propreadonly
 
 /* C++ */
@@ -749,6 +748,8 @@ primaryexpr : identifier
      { $$ = $1; }
   | encodeexpr
      { $$ = $1; }
+  | pcstringlit
+    { $$ = mkpcstringlit($1); }
   ;
 
 parmdeflist : parmdef
