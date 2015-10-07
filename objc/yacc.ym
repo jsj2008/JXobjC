@@ -314,6 +314,8 @@ datadeflist : datadef
 
 datadefspecs : storageclass
      { $$ = mklist(nil,$1); }
+  | storageclass gnuattribdecl storageclass
+     { $$ = mklist(nil, $1);$$=mklist($$, $2);$$=mklist($$, $3); }
   | datadefspecs storageclass 
      { $$ = mklist($1,$2); }
   | typespec
