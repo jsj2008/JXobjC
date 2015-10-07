@@ -1,7 +1,5 @@
-
 /*
  * Portable Object Compiler (c) 1998.  All Rights Reserved.
- * $Id: stack.h,v 1.1.1.1 2000/06/07 21:09:24 stes Exp $
  */
 
 /*
@@ -50,6 +48,14 @@
 - removeAt:(unsigned)anOffset;
 
 - printOn:(IOD)aFile;
+
+/* private */
+- contents:anObject;
+- contents;
+
+- (unsigned)size;
+
+- add:anObject;
 @end
 
 #endif /* __OBJSTACK_H__ */

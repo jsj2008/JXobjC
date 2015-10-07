@@ -1,7 +1,5 @@
-
 /*
- * Portable Object Compiler (c) 1998.  All Rights Reserved.
- * $Id: stack.h,v 1.1.1.1 2000/06/07 21:09:25 stes Exp $
+ * Portable Object Compiler (c) 2003.  All Rights Reserved.
  */
 
 /*
@@ -20,40 +18,22 @@
  * Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
  */
 
-#ifndef __OBJSTACK_H__
-#define __OBJSTACK_H__
+#ifndef __TYPEINCONSISTENCY_H__
+#define __TYPEINCONSISTENCY_H__
 
-#include "cltn.h"
+#include "Exceptn.h"
 
-@interface Stack : Cltn
+@interface TypeInconsistency : Exception
 {
-    id contents;
+    char gotChar;
+    char wantChar;
 }
+- (char)gotChar;
+- (char)wantChar;
+- got:(char)c wanted:(char)w;
 
-+ new;
-- contents:anObject;
-- contents;
-+ new:(unsigned)n;
-- copy;
-- deepCopy;
-- emptyYourself;
-- freeContents;
-- free;
-
-- (unsigned)size;
-- (unsigned)depth;
-- (BOOL)isEmpty;
-- eachElement;
-- topElement;
-
-- push:anObject;
-- add:anObject;
-- pop;
-- swap;
-- at:(unsigned)anOffset;
-- removeAt:(unsigned)anOffset;
-
-- printOn:(IOD)aFile;
+/* private */
+- signal;
 @end
 
-#endif /* __OBJSTACK_H__ */
+#endif /* __UNKNOWNTYPE_H__ */

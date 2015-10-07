@@ -1,7 +1,7 @@
 
 /*
  * Portable Object Compiler (c) 1997,98,2003.  All Rights Reserved.
- * $Id: set.h,v 1.4 2009/10/23 19:36:43 stes Exp $
+ * $Id: set.h,v 1.4 2009/10/23 19:36:44 stes Exp $
  */
 
 /*
@@ -115,6 +115,13 @@ typedef struct objset
 - awakeFrom:aFiler;
 #endif /* __PORTABLE_OBJC__ */
 
+/* private */
+- (objset_t)objsetvalue;
+- addYourself;
+- freeAll;
+- release;
+
+- (unsigned)hash;
 @end
 
 #endif /* __OBJSET_H__ */

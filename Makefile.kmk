@@ -12,14 +12,10 @@ CRTHDRS_INST = include/objcrt/
 CRTHDRS_IFFLAGS = -m 644
 CRTHDRS_SOURCES = $(wildcard include/objcrt/*.h)
 
-OBJPAKHDRS_INST = include/objpak/
-OBJPAKHDRS_IFFLAGS = -m 644
-OBJPAKHDRS_SOURCES = $(wildcard include/objpak/*.h)
-
 OCLIBHDRS_INST = include/oclib/
 OCLIBHDRS_IFFLAGS = -m 644
 OCLIBHDRS_SOURCES = $(wildcard include/oclib/*.h)
 
-INSTALLS += CRTHDRS OBJPAKHDRS OCLIBHDRS
+INSTALLS += CRTHDRS OCLIBHDRS
 
 include $(FILE_KBUILD_SUB_FOOTER)

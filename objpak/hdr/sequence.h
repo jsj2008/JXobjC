@@ -1,7 +1,5 @@
-
 /*
- * Portable Object Compiler (c) 2003.  All Rights Reserved.
- * $Id: typeinc.h,v 1.2 2004/07/24 18:50:39 stes Exp $
+ * Portable Object Compiler (c) 1997,98.  All Rights Reserved.
  */
 
 /*
@@ -20,20 +18,42 @@
  * Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
  */
 
-#ifndef __TYPEINCONSISTENCY_H__
-#define __TYPEINCONSISTENCY_H__
+#ifndef __OBJSEQ_H__
+#define __OBJSEQ_H__
 
-#include "Exceptn.h"
+#include <stdio.h>
+#include "Object.h" /* Stepstone Object.h assumes #import */
 
-@interface TypeInconsistency : Exception
+/* the name of this class in ICpak101 is IPSequence */
+#define IPSequence Sequence
+
+@interface Sequence : Object
 {
-    char gotChar;
-    char wantChar;
+    id carrier;
 }
-- (char)gotChar;
-- (char)wantChar;
-- got:(char)c wanted:(char)w;
-- signal;
+
+- copy;
+- free;
+
+- (unsigned)size;
+
+- next;
+- peek;
+- previous;
+- first;
+- last;
+
+- printOn:(IOD)aFile;
+
+#if OBJC_BLOCKS
+- do:aBlock;
+#endif /* OBJC_BLOCKS */
+
+/* private */
+- setUpCarrier:aCarrier;
++ over:aCarrier;
+- over:aCarrier;
+- release;
 @end
 
-#endif /* __UNKNOWNTYPE_H__ */
+#endif /* __OBJSEQ_H__ */

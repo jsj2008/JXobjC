@@ -1,7 +1,7 @@
 
 /*
  * Portable Object Compiler (c) 1997,98,2003.  All Rights Reserved.
- * $Id: sortcltn.h,v 1.5 2009/10/23 19:36:43 stes Exp $
+ * $Id: sortcltn.h,v 1.5 2009/10/23 19:36:44 stes Exp $
  */
 
 /*
@@ -116,6 +116,14 @@ typedef struct objbbt
 
 - fileOutOn:aFiler;
 - fileInFrom:aFiler;
+
+/* private */
+- setupcmpblock:sortBlock;
+- setupcmpsel:(SEL)aSel;
+- release;
+
+- (objbbt_t)objbbtTop;
+- (SEL)comparisonSelector;
 @end
 
 #endif /* __OBJTREE_H__ */
