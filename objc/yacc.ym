@@ -250,17 +250,19 @@ castexpr : unaryexpr
   ;
 
 classdef : atbegin identifier ivardef
-     { $$ = mkclassdef($1,$2,nil,$3,nil); }
+     { $$ = mkclassdef($1,$2,nil,$3,nil,0); }
   | atbegin identifier ivardef ':' ivardef
-     { $$ = mkclassdef($1,$2,nil,$3,$5); }
+     { $$ = mkclassdef($1,$2,nil,$3,$5,0); }
   | atbegin identifier
-     { $$ = mkclassdef($1,$2,nil,nil,nil); }
+     { $$ = mkclassdef($1,$2,nil,nil,nil,0); }
   | atbegin identifier ':' identifier 
-     { $$ = mkclassdef($1,$2,$4,nil,nil); }
+     { $$ = mkclassdef($1,$2,$4,nil,nil,0); }
   | atbegin identifier ':' identifier ivardef 
-     { $$ = mkclassdef($1,$2,$4,$5,nil); }
+     { $$ = mkclassdef($1,$2,$4,$5,nil,0); }
   | atbegin identifier ':' identifier ivardef  ':' ivardef
-     { $$ = mkclassdef($1,$2,$4,$5,$7); }
+     { $$ = mkclassdef($1,$2,$4,$5,$7,0); }
+  | atbegin identifier '(' identifier ')'
+     { $$ = mkclassdef($1, $4, $2, nil, nil, 1); }
   ;
 
 compoundstmt : '{' '}'

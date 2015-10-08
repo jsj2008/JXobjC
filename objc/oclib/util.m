@@ -951,12 +951,17 @@ id mkblockexpr (id lb, id parms, id datadefs, id stmts, id expr, id rb)
     return r;
 }
 
-id mkclassdef (id keyw, id name, id sname, id ivars, id cvars)
+id mkclassdef (id keyw, id name, id sname, id ivars, id cvars, BOOL iscategory)
 {
     id r;
     BOOL intfkeyw = (keyw != nil && strstr ([keyw str], "interface") != NULL);
     BOOL implkeyw =
         (keyw != nil && strstr ([keyw str], "implementation") != NULL);
+
+    if (iscategory)
+    {
+        [name at:0 insert:sname];
+    }
 
     if ((r = [trlunit lookupclass:name]))
     {
@@ -977,6 +982,7 @@ id mkclassdef (id keyw, id name, id sname, id ivars, id cvars)
     else
     {
         r = [ClassDef new];
+        [r iscategory:iscategory];
         [r classname:name];
         [r supername:sname];
         [r ivars:ivars];
