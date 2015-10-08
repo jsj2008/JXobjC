@@ -1,6 +1,6 @@
 #!/usr/bin/env ksh93
 
-OBJCOPT="-C -traditional -traditional-cpp -noFwd -noFiler -postlink"
+OBJCOPT="-C -noFwd -noFiler -postlink"
 OBJCOPT="${OBJCOPT} -init oc_objcInit -nostdinc -I../util/hdr -I./"
 export OBJCOPT="${OBJCOPT} -I../../util/hdr -D__dead2="
 
@@ -38,7 +38,7 @@ flex -o lex.m ../../objc/lex.lm
 ${OBJC} -I../../objc/oclib ${OBJC_SRCS}
 
 cd ../plink
-${OBJC} -I../../objc/oclib ${PLINK_SRCS}
+${OBJC} -I../../objc/oclib -I../../objpak/hdr -I../../objpak ${PLINK_SRCS}
 cd ../
 
 cp ../util/_objc1.c ./objc

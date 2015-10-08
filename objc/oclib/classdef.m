@@ -936,6 +936,12 @@ id curclassdef;
     }
 }
 
+- iscategory:(BOOL)isit
+{
+    iscategory = isit;
+    return self;
+}
+
 - genintf
 {
     if (emitintf)

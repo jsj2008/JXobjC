@@ -67,6 +67,7 @@ extern id curstruct;
 - selftype;
 - forceimpl;
 - (BOOL)isimpl;
+- iscategory:(BOOL)isit;
 - warnpending;
 - (char *)classname;
 - (char *)shartypename;
