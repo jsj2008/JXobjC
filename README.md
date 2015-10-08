@@ -9,9 +9,9 @@ It provides a compiler for *Objective-C*, which includes support for novel
 functionality like *Blocks* (which are an implementation of closures or lambda
 expressions).
 
-An implementation of *ICpak 101* is included; this is called **ObjPak**. This
-provides a powerful set of container classes which work similarly to those
-provided in the *SmallTalk-80* standard library.
+A standard library based on *ICpak 101* is included; this is called
+**ObjPak++**. This provides a powerful set of container classes which work
+similarly to those provided in the *SmallTalk-80* standard library.
 
 A variety of other libraries are also available; one of these is **CAkit**, the
 *Computer Algebra Kit*, which provides classes allowing multiple precision

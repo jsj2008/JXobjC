@@ -5,13 +5,13 @@
 @implementation PCNumber
 
 #define NumSet(typ, nam, ch, te)                                               \
-    -set##nam : (typ)val                                                       \
+    -initWith##nam : (typ)val                                                  \
     {                                                                          \
         value.ch = val;                                                        \
         type     = te;                                                         \
         return self;                                                           \
     }                                                                          \
-    +from##nam : (typ)val { return [[super new] set##nam:val]; }
+    +numberWith##nam : (typ)val { return [[super new] initWith##nam:val]; }
 NumSet (char, Char, c, PCNUMBER_CHAR);
 NumSet (unsigned char, UChar, uc, PCNUMBER_UCHAR);
 NumSet (short, Short, s, PCNUMBER_SHORT);
