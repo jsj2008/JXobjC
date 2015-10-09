@@ -880,6 +880,16 @@ static char * mystrrchr (const char * s, int c)
     return self;
 }
 
+- def:sym asprotocol:protodef
+{
+    if (!protocols)
+        protocols = [Dictionary new];
+    [protocols atKey:sym put:protodef];
+    return self;
+}
+
+- lookupprotocol:sym { return [protocols atKey:sym]; }
+
 - def:sym asclass:classdef
 {
     if (!classdefs)

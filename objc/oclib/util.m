@@ -108,6 +108,7 @@
 #include "gattrib.h"
 #include "gatrdecl.h"
 #include "propdef.h"
+#include "protodef.h"
 
 void procextdef (id def)
 {
@@ -120,7 +121,7 @@ void procextdef (id def)
 
 void finclassdef (void)
 {
-    if (curclassdef)
+    if (curclassdef && [curclassdef isKindOf:ClassDef])
     {
         if ([curclassdef numidivars])
         {
@@ -141,9 +142,13 @@ void finclassdef (void)
         }
         curclassdef = nil;
     }
+    else if (curclassdef && [curclassdef isKindOf:ProtoDef])
+    {
+        curclassdef = nil;
+    }
     else
     {
-        fatal ("illegal end of class definition.");
+        fatal ("illegal end of class or protocol definition.");
     }
 }
 
@@ -766,9 +771,9 @@ id mkpropgetmeth (id compdec, id type, id name, int ispointer)
 
 id mkprotodef (id name)
 {
-    id r = [ClassDef new];
+    id r = [ProtoDef new];
 
-    [r protocolname:name];
+    [r setProtoname:name];
 
     if (curclassdef)
     {
@@ -778,6 +783,8 @@ id mkprotodef (id name)
     }
     else
         curclassdef = r;
+
+    [trlunit def:name asprotocol:r];
 
     return r;
 }

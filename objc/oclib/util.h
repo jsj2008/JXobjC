@@ -64,6 +64,7 @@ id mkmethdef (BOOL factory, id decl, id body);
 id mkpropdef (id compdec);
 id mkpropgetmeth (id compdec, id type, id name, int ispointer);
 id mkpropsetmeth (id compdec, id type, id name, int ispointer);
+id mkprotodef (id name);
 id mkmesgexpr (id receiver, id args);
 id mkdecl (id ident);
 id mkprecdecl (id tquals, id decl);

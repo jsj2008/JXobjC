@@ -52,6 +52,8 @@
     assert ([method isKindOf:(id)[Selector class]]);
     return self;
 }
+
+- synth { return self; }
 - gen { return self; }
 
 @end

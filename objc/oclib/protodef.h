@@ -14,6 +14,7 @@
 - addclssel:method;
 - addnstsel:method;
 
+- synth;
 - gen;
 
 @end

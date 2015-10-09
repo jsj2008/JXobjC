@@ -1040,7 +1040,7 @@ unaryselector : identifier | reservedword | typeword | builtinfun
 
 protodef
     : atprotocol identifier
-    { $$ = mkclassdef($1, $4, $2, nil, nil, 1); }
+    { $$ = mkprotodef($2); }
 
  /* Objective-C 2.0 */
 
