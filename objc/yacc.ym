@@ -66,8 +66,8 @@ int yylex() ;
 %token assignop equalop relop shift plusplus logand logor arrow
 
 /* Objective C */
-
 %token atdefs atselector atinterface atend atencode atrequires atproperty
+%token atprotocol
 %token blockbegin
 %token pcstringlit
 %token propreadonly
@@ -442,6 +442,8 @@ extdef
     | datadef
     { $$ = $1; }
     | classdef
+    { $$ = $1; }
+    | protodef
     { $$ = $1; }
     | methoddef
     { $$ = $1; }
@@ -1033,6 +1035,12 @@ unaryexpr : primaryexpr
 
 unaryselector : identifier | reservedword | typeword | builtinfun
   ;
+
+ /* Objective-C NeXT/1.0 */
+
+protodef
+    : atprotocol identifier
+    { $$ = mkclassdef($1, $4, $2, nil, nil, 1); }
 
  /* Objective-C 2.0 */
 

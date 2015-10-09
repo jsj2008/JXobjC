@@ -764,6 +764,24 @@ id mkpropgetmeth (id compdec, id type, id name, int ispointer)
     return r;
 }
 
+id mkprotodef (id name)
+{
+    id r = [ClassDef new];
+
+    [r protocolname:name];
+
+    if (curclassdef)
+    {
+        warn ("definition of %s not properly ended before %s begun.",
+              [curclassdef classname], [name str]);
+        curclassdef = r;
+    }
+    else
+        curclassdef = r;
+
+    return r;
+}
+
 id mkmesgexpr (id receiver, id args)
 {
     id r = [MesgExpr new];
