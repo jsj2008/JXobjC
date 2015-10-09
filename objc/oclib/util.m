@@ -976,7 +976,8 @@ id mkblockexpr (id lb, id parms, id datadefs, id stmts, id expr, id rb)
     return r;
 }
 
-id mkclassdef (id keyw, id name, id sname, id ivars, id cvars, BOOL iscategory)
+id mkclassdef (id keyw, id name, id sname, id protocols, id ivars, id cvars,
+               BOOL iscategory)
 {
     id r;
     BOOL intfkeyw = (keyw != nil && strstr ([keyw str], "interface") != NULL);
@@ -1016,6 +1017,16 @@ id mkclassdef (id keyw, id name, id sname, id ivars, id cvars, BOOL iscategory)
 
     if (implkeyw)
         [r forceimpl];
+
+    [protocols do:
+               { :each | id prot = [trlunit lookupprotocol:each];
+                   [[prot clssels] do:
+                                   { :each | [r addclssel: each];
+                                   }];
+                   [[prot nstsels] do:
+                                   { :each | [r addnstsel: each];
+                                   }];
+               }];
 
     if (curclassdef)
     {

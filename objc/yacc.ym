@@ -249,20 +249,30 @@ castexpr : unaryexpr
      { $$ = mkcastexpr($2,mklistexpr($4,$5,$7)); }
   ;
 
-classdef : atbegin identifier ivardef
-     { $$ = mkclassdef($1,$2,nil,$3,nil,0); }
-  | atbegin identifier ivardef ':' ivardef
-     { $$ = mkclassdef($1,$2,nil,$3,$5,0); }
-  | atbegin identifier
-     { $$ = mkclassdef($1,$2,nil,nil,nil,0); }
-  | atbegin identifier ':' identifier 
-     { $$ = mkclassdef($1,$2,$4,nil,nil,0); }
-  | atbegin identifier ':' identifier ivardef 
-     { $$ = mkclassdef($1,$2,$4,$5,nil,0); }
-  | atbegin identifier ':' identifier ivardef  ':' ivardef
-     { $$ = mkclassdef($1,$2,$4,$5,$7,0); }
-  | atbegin identifier '(' identifier ')'
-     { $$ = mkclassdef($1, $4, $2, nil, nil, 1); }
+protolist
+    : identifier { $$ = mklist(nil, $1); }
+    | protolist ',' identifier { $$ = mklist($1, $3); }
+    ;
+
+optprotoreflist
+    : relop protolist relop { $$ = $2; }
+    | { $$ = nil; }
+    ;
+
+classdef : atbegin identifier optprotoreflist ivardef
+     { $$ = mkclassdef($1,$2,nil,$3,$4,nil,0); }
+  | atbegin identifier optprotoreflist ivardef ':' ivardef
+     { $$ = mkclassdef($1,$2,nil,$3,$4,$6,0); }
+  | atbegin identifier optprotoreflist
+     { $$ = mkclassdef($1,$2,nil,$3,nil,nil,0); }
+  | atbegin identifier  ':' identifier optprotoreflist
+     { $$ = mkclassdef($1,$2,$4,$5,nil,nil,0); }
+  | atbegin identifier ':' identifier optprotoreflist ivardef
+     { $$ = mkclassdef($1,$2,$4,$5,$6,nil,0); }
+  | atbegin identifier ':' identifier optprotoreflist ivardef  ':' ivardef
+     { $$ = mkclassdef($1,$2,$4,$5,$6,$8,0); }
+  | atbegin identifier '(' identifier ')' optprotoreflist
+     { $$ = mkclassdef($1, $4, $2, $6, nil, nil, 1); }
   ;
 
 compoundstmt : '{' '}'

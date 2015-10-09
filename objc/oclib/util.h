@@ -82,7 +82,8 @@ id mklist (id c, id s);
 id mklist2 (id c, id s, id t);
 id atdefsaddall (id c, id n);
 id mkblockexpr (id lb, id parms, id datadefs, id stmts, id expr, id rb);
-id mkclassdef (id keyw, id name, id sname, id ivars, id cvars, BOOL iscategory);
+id mkclassdef (id keyw, id name, id sname, id protocols, id ivars, id cvars,
+               BOOL iscategory);
 id mkdatadef (id datadef, id specs, id decl, id initializer);
 id mkencodeexpr (id name);
 id mkenumspec (id keyw, id name, id lb, id list, id rb);

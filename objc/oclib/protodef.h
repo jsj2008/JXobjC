@@ -14,6 +14,9 @@
 - addclssel:method;
 - addnstsel:method;
 
+- clssels;
+- nstsels;
+
 - synth;
 - gen;
 

@@ -53,6 +53,10 @@
     return self;
 }
 
+- clssels { return clssels; }
+
+- nstsels { return nstsels; }
+
 - synth { return self; }
 - gen { return self; }
 
