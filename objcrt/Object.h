@@ -54,6 +54,8 @@
 - str:(STR)s;
 + new;
 - new;
++ alloc;
+- init;
 - increfs;
 - copy;
 - deepCopy;

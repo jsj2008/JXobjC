@@ -117,7 +117,7 @@ typedef struct objbag
 #endif /* __PORTABLE_OBJC__ */
 
 /* private */
-- addyourself;
+- addYourself;
 - release;
 
 - (objbag_t)objbagvalue;

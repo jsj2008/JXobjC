@@ -50,11 +50,15 @@
 
 - str:(STR)s { return [self shouldNotImplement]; /* dummy def. Stepstn */ }
 
-+ new
++ new { return [[self alloc] init]; }
+
++ alloc
 {
     id newObject = (*_alloc) (self, 0);
     return newObject;
 }
+
+- init { return self; }
 
 - new { return [self shouldNotImplement]; }
 

@@ -344,9 +344,6 @@
 
 - go
 {
-    id v;
-    id c;
-
     /* is it a global variable or function name ? */
 
     if (isglobal)

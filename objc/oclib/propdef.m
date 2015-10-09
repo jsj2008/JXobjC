@@ -82,8 +82,6 @@
 
 - gen
 {
-    id f, c;
-
     [classdef gen]; /* in case not yet emitted (must be done before blocks) */
     [super gen];    /* code for class references and blocks in this impl */
 

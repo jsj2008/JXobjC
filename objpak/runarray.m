@@ -438,14 +438,12 @@
     }
     else
     {
-        int m, k, r;
+        int k, r;
 
-        m = [runs intAt:i];
         assert (p >= is);
         [runs intAt:i put:p - is];
         for (k = i + 1; k < j; k++)
             [runs intAt:k put:0];
-        m = [runs intAt:j];
         assert (q < je);
         [runs intAt:j put:je - q - 1];
 

@@ -111,7 +111,6 @@
 - str:(STR)message
 {
     static id MsgClass;
-    id aMessage;
     if (!MsgClass)
         MsgClass = [self findClass:"String"];
     return [self messageText:[MsgClass str:message]];
