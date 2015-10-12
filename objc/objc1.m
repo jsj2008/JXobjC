@@ -647,6 +647,11 @@ void setfirstlinetag (void)
         definebuiltinfun ("__builtin_bswap32");
         definebuiltinfun ("__builtin_bswap64");
 
+	/* MinGW port */
+	definebuiltinfun ("__builtin_llabs");
+        definebuiltinvar ("gnu_scanf");
+        definebuiltinvar ("gnu_printf");
+
         /* the following are not really gnu, they're SUN headers */
         definebuiltinvar ("__builtin_va_alist");
         definebuiltinfun ("__builtin_va_arg_incr");

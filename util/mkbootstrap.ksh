@@ -1,7 +1,7 @@
-#!/usr/bin/env ksh93
+#!/usr/bin/env sh
 
-OBJCOPT="-C -noFwd -noFiler -postlink"
-OBJCOPT="${OBJCOPT} -init oc_objcInit -nostdinc -I../util/hdr -I./"
+OBJCOPT="-C -noFwd -noFiler -postlink -noI"
+OBJCOPT="${OBJCOPT} -init oc_objcInit -nostdinc -I../util/hdr -I./ -I."
 export OBJCOPT="${OBJCOPT} -I../../util/hdr -D__dead2="
 
 OBJC="objc ${OBJCOPT}"
@@ -21,25 +21,25 @@ OCLIB_SRCS="../objc/oclib/addrof.m ../objc/oclib/classdef.m ../objc/oclib/def.m 
 ../objc/oclib/btincall.m ../objc/oclib/dasmstmt.m ../objc/oclib/exprstmt.m ../objc/oclib/gotostmt.m ../objc/oclib/msgxpr.m ../objc/oclib/propdef.m ../objc/oclib/stmt.m
 ../objc/oclib/casestmt.m ../objc/oclib/datadef.m ../objc/oclib/forstmt.m ../objc/oclib/identxpr.m ../objc/oclib/namedecl.m ../objc/oclib/relxpr.m ../objc/oclib/structsp.m
 ../objc/oclib/castxpr.m ../objc/oclib/decl.m ../objc/oclib/funbody.m ../objc/oclib/ifstmt.m ../objc/oclib/node.m ../objc/oclib/rtrnstmt.m ../objc/oclib/switstmt.m
-../objc/oclib/propdef.m"
+../objc/oclib/propdef.m ../objc/oclib/protodef.m"
 OBJC_SRCS="../../objc/objc1.m ../../objc/lexfiltr.m yacc.m lex.m"
 PLINK_SRCS="../../objc/postlink.m"
 
 mkdir objc
 mkdir plink
 
-${OBJC} ../objcrt/*.m
-${OBJC} ../objpak/*.m
-${OBJC} ${OCLIB_SRCS}
+${OBJC} -I../objcrt ../objcrt/*.m
+${OBJC} -I../include/objcrt -I../objpak -I../objpak/hdr ../objpak/*.m
+${OBJC} -I../include/objcrt -I../objpak/hdr -I../objc/oclib ${OCLIB_SRCS}
 
 cd objc
 
 byacc -dtv -o yacc.m ../../objc/yacc.ym
 flex -o lex.m ../../objc/lex.lm
-${OBJC} -I../../objc/oclib ${OBJC_SRCS}
+${OBJC} -I../../objc/oclib -I../../objcrt -I../../objpak/hdr ${OBJC_SRCS}
 
 cd ../plink
-${OBJC} -I../../objc/oclib -I../../objpak/hdr -I../../objpak ${PLINK_SRCS}
+${OBJC} -I../../objc/oclib -I../../objpak/hdr -I../../objpak -I../../objcrt ${PLINK_SRCS}
 cd ../
 
 cp ../util/_objc1.c ./objc
@@ -48,12 +48,14 @@ cp ../util/_plink.c ./plink
 cat <<'EOF' > build.sh
 #!/bin/sh
 
-cc -c *.i
-cd objc && cc -c *.i *.c && cd ../plink
-cc -c *.i *.c && cd ../
+CC="gcc -x c"
 
-cc *.o objc/*.o -o objc1
-cc *.o plink/*.o -o postlink
+${CC} -c *.i
+cd objc && ${CC} -c *.i *.c && cd ../plink
+${CC} -c *.i *.c && cd ../
+
+gcc *.o objc/*.o -o objc1
+gcc *.o plink/*.o -o postlink
 
 EOF
 

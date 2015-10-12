@@ -330,8 +330,10 @@ datadefspecs : storageclass
      { $$ = mklist(nil, $1);$$=mklist($$, $2);$$=mklist($$, $3); }
   | datadefspecs storageclass 
      { $$ = mklist($1,$2); }
-  | storageclass gnuattribdecl typespec /* MSys */
-    { $$ = mklist(nil, $1);$$=mklist($$, $2);$$=mklist($$, $3); }
+  | storageclass gnuattribdecl typespec /* MSys/Cygwin */
+     { $$ = mklist(nil, $1);$$=mklist($$, $2);$$=mklist($$, $3); }
+  | storageclass gnuattribdecl gnuattribdecl typespec gnuattribdecl /* MinGW */
+     { $$=mklist(nil,$1);$$ = mklist($$, $2);$$=mklist($$, $2);$$=mklist($$, $3);$$=mklist($$, $4); }
   | typespec
      { $$ = mklist(nil,$1); }
   | gnuattribdecl storageclass
@@ -342,6 +344,8 @@ datadefspecs : storageclass
      { $$ = mklist($1,$2); }
   | datadefspecs gnuattribdecl typespec
      { $$ = mklist($1,$2);$$ = mklist($$,$3); }
+  | gnuattribdecl gnuattribdecl typespec gnuattribdecl /* MinGW */
+     { $$ = mklist(nil,$1);$$ = mklist($$, $2); $$ = mklist($$,$3); $$ = mklist($$,$4); }
   | datadefspecs gnuattribdecl gnuattribdecl typespec
      { $$ = mklist($1,$2);$$ = mklist($$,$3); $$ = mklist($$,$4); /* ubuntu */ }
   | datadefspecs gnuattribdecl gnuattribdecl gnuattribdecl typespec
@@ -352,7 +356,7 @@ datadefspecs : storageclass
      { $$ = mklist($1,$2);$$ = mklist($$,$3); $$ = mklist($$,$4); $$ = mklist($$,$5); $$ = mklist($$,$6); $$ = mklist($$,$7); }
   | externlang
      { $$ = mklist(nil,$1); /* o_cplus case */ }
-  |  templdecl
+  | templdecl
   ;
 
 datadefx : datadefspecs decl
