@@ -330,6 +330,8 @@ datadefspecs : storageclass
      { $$ = mklist(nil, $1);$$=mklist($$, $2);$$=mklist($$, $3); }
   | datadefspecs storageclass 
      { $$ = mklist($1,$2); }
+  | storageclass gnuattribdecl typespec /* MSys */
+    { $$ = mklist(nil, $1);$$=mklist($$, $2);$$=mklist($$, $3); }
   | typespec
      { $$ = mklist(nil,$1); }
   | gnuattribdecl storageclass
