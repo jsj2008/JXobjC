@@ -1,6 +1,6 @@
 #!/usr/bin/env sh
 
-OBJCOPT="-C -noFwd -noFiler -postlink -noI"
+OBJCOPT="-C -noFwd -noFiler -postlink -noI -noTags"
 OBJCOPT="${OBJCOPT} -init oc_objcInit -nostdinc -I../util/hdr -I./ -I."
 export OBJCOPT="${OBJCOPT} -I../../util/hdr -D__dead2="
 

@@ -41,9 +41,7 @@
 - gen
 {
     /* the '#' of a line directive must be in first column */
-    /* so force a newline (and linetag) if needed */
-    if (outlineno == [self lineno])
-        gc ('\n');
+    gc ('\n');
     return [super gen];
 }
 
