@@ -1,7 +1,5 @@
-
 /*
  * Portable Object Compiler (c) 1997,98,99,2000,01,04,14.  All Rights Reserved.
- * $Id: objcrt.m,v 1.9 2014/03/04 09:02:08 stes Exp $
  */
 
 /*
