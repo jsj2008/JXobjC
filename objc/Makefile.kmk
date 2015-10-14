@@ -3,7 +3,25 @@ include $(KBUILD_PATH)/subheader.kmk
 
 include $(PATH_SUB_CURRENT)/oclib/Makefile.kmk
 
-PROGRAMS += objc1 postlink
+PROGRAMS += jxobjc wjxobjc objc1 postlink fixwcpp
+
+jxobjc_TEMPLATE = OBJC
+jxobjc_INCS = $(INTERNAL_INCS)
+jxobjc_LIBS = $(INTERNAL_LIBS)
+jxobjc_SOURCES = drv/objc.m
+jxobjc_DEFS = DRVUNIX
+
+wjxobjc_TEMPLATE = OBJC
+wjxobjc_INCS = $(INTERNAL_INCS)
+wjxobjc_LIBS = $(INTERNAL_LIBS)
+wjxobjc_SOURCES = drv/objc.m
+wjxobjc_DEFS = DRVWATCOM
+wjxobjc_DEPS = $(jxobjc_1_TARGET)
+
+fixwcpp_TEMPLATE = OBJC
+fixwcpp_INCS = $(INTERNAL_INCS)
+fixwcpp_LIBS = $(INTERNAL_LIBS)
+fixwcpp_SOURCES = drv/fixwcpp.m
 
 objc1_TEMPLATE = OBJC
 objc1_INCS = $(INTERNAL_INCS)
@@ -38,11 +56,12 @@ $(PATH_SUB_CURRENT)/lex.m: $(PATH_SUB_CURRENT)/lex.lm $(PATH_SUB_CURRENT)/yacc.m
 
 OBJC_INST = bin/
 OBJC_IFFLAGS = -m 755
-OBJC_SOURCES = objc
+OBJC_SOURCES = drv/objc
 
 LINKFILES_INST = lib/
 LINKFILES_IFFLAGS = -m 644
-LINKFILES_SOURCES = objcdlso.ld $(PATH_OUT)/_prelink.o $(PATH_OUT)/_predll.o
+LINKFILES_SOURCES = ld/objcdlso.ld ld/objcdlnt.wat $(PATH_OUT)/_prelink.o \
+    $(PATH_OUT)/_predll.o
 
 INSTALLS += LINKFILES OBJC
 

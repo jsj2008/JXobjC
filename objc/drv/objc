@@ -22,14 +22,14 @@ set - $OBJCOPT "$@"
 # Can be set as an environment variable (or with -B)
 #
 
-exprbin=${EXPR-"gexpr"}
+exprbin=${EXPR-"expr"}
 objcdir=${OBJCDIR-/usr/local}
 gcprefix=/usr/local
 
 ld=${LD-"ld"}
 cxx=${CCPLUS-"c++"}
 cpp=${CPP-"gcc -E"}
-cppwantsdotc=0
+cppwantsdotc=1
 cxxpp="$cxx -E"
 cpargs="-D__PORTABLE_OBJC__ "
 ocargs="-gnu -shortTags"
