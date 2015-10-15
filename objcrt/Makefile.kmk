@@ -1,15 +1,14 @@
 SUB_DEPTH = ..
 include $(KBUILD_PATH)/subheader.kmk
 
-LIBRARIES += objcrt objcrtr
+LIBRARIES += objcrt objcrt_s
 
 objcrt_TEMPLATE = OBJC
 objcrt_SOURCES = Block.m Exceptn.m Message.m Object.m OutOfMem.m crt.m
 
-objcrtr_EXTENDS = objcrt
-objcrtr_EXTENDS_BY = appending
-objcrtr_OBJCFLAGS = -refcnt
-objcrtr_DEFS = OBJC_REFCNT
-objcrtr_DEPS = $(objcrt_1_TARGET)
+objcrt_s_EXTENDS = objcrt
+objcrt_s_EXTENDS_BY = appending
+objcrt_s_OBJCFLAGS = -dl -pic
+objcrt_s_DEPS = $(objcrt_1_TARGET)
 
 include $(FILE_KBUILD_SUB_FOOTER)

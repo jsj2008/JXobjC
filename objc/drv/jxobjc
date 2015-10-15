@@ -1,6 +1,6 @@
 #! /bin/sh
 # Portable Object Compiler (c) 1997,98,2004.  All Rights Reserved.
-# Portable Object Compiler++ (c) 2015. All Rights Reserved.
+# JX Objective-C (c) 2015. All Rights Reserved.
 # Compiler Driver Script
 
 #
@@ -26,7 +26,7 @@ exprbin=${EXPR-"expr"}
 objcdir=${OBJCDIR-/usr/local}
 gcprefix=/usr/local
 
-ld=${LD-"ld"}
+ld=${LD-"gcc"}
 cxx=${CCPLUS-"c++"}
 cpp=${CPP-"gcc -E"}
 cppwantsdotc=1
@@ -35,7 +35,7 @@ cpargs="-D__PORTABLE_OBJC__ "
 ocargs="-gnu -shortTags"
 ccargs=""
 ldargs=""
-dlargs="-Bshareable"
+dlargs="-shared"
 dlfile="objcdlso.ld"
 plldargs=""
 dlxccargs=""
@@ -97,8 +97,8 @@ actioncc="cc"
 uselflag=1
 sosuffix=".so.2.1"
 
-vermsg="Portable Object Compiler++"
-cpymsg="Distributed under the terms of the GNU LGPL."
+vermsg="JX Objective-C Compile and Link Utility"
+cpymsg="Use is subject to licence terms."
 
 case $# in
 0) $pager "$objcdir/lib/objchelp.txt"; exit 0;;
@@ -156,7 +156,6 @@ do
     -noSelfAssign)   ocargs="$ocargs $arg" ;;
     -noNilRcvr)	     ocargs="$ocargs $arg" ;;
     -noCache)        ocargs="$ocargs $arg" ;;
-    -st80)	     ocargs="$ocargs $arg";;
     -browse)	     browse=y;compile=n;link=n
                      browsedir=$2;shift
                      if [ ! -d $browsedir ]; then mkdir $browsedir; fi
@@ -190,11 +189,6 @@ do
     -builtinType)    shift ; ocargs="$ocargs -builtintype $1" ;;
     -builtinfunction) shift ; ocargs="$ocargs -builtinfunction $1" ;;
     -builtinFunction) shift ; ocargs="$ocargs -builtinfunction $1" ;;
-    -ppi)            ocargs="$ocargs -ppi -oneperfile -noFwd -noBlocks";
-                     ccargs="$ccargs $ccdollarflag"; # dont assume gcc
-                     cpargs="$cpargs $cppimportflag"; # dont assume gnu cpp
-		     ppi=1;
-		     ;;
     -retain)         retain=y ; retaincpp=y ;;
     -retaincpp)      retaincpp=y ;;
     -xstr)           runxstr=y; shift; xstrdb="$1" ;;
@@ -204,7 +198,6 @@ do
     -sym)            shift;ccargs="$ccargs -sym $1";; # mwc
     -xm)             shift;ccargs="$ccargs -xm $1";; # mwc
     -oneperfile)     ocargs="$ocargs $arg";;
-    -cthreads)       objcrt=objcrtth;; 
     -pthreads)       objcrt=objcrtth;finlibs="$finlibs -lpthread";;
     -otb)            cpargs="$cpargs -DOTBCRT=1";
                      ocargs="$ocargs $arg";
@@ -552,7 +545,7 @@ for input in $inputs
 if [ $link = y -a $linkdl = n ]; then
 
 	if [ $uselibs = y ]; then
-	for G in $cakit $objpak $objcrt
+	for G in $objpak $objcrt
 	do
 	    L="${libdir}/${G}"
 	    H="${libdir}/lib${G}${sosuffix}"
@@ -683,6 +676,7 @@ if [ $link = y -a $linkdl = y ]; then
 
     rmf $output
     $cc $stopflag $picflag $ccargs _postlnk.c
+    libs="${libs} ${libdir}/objcrt_s.a"
     $ld $dlargs $ldargs $objfiles _postlnk.o $libs -o $output
     rmf $junk
 fi 

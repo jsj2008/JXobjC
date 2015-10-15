@@ -17,8 +17,8 @@
  * Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
  */
 
-#define OBJCVERSION "3.2.12"
-#define OBJC1VERSION "objc3.2.12"
+#define OBJCVERSION "0.9a"
+#define OBJC1VERSION "ObjC4.5"
 
 #include <string.h> /* strtok */
 #include <stdlib.h> /* getenv */
@@ -45,7 +45,9 @@ void printversion (void)
 
 void printcopyright (void)
 {
-    printf ("Portable Object Compiler++ %s (c) 1997-2015.\n", OBJCVERSION);
+    printf ("JX Objective-C Object Compiler Version %s\n", OBJCVERSION);
+	printf ("Copyright (c) 2015 D. Mackay. All Rights Reserved.\n");
+	printf ("Portions Copyright (c) 1997-2014 D. Stes. All Rights Reserved.\n");
     printf ("Use is subject to licence terms.\n");
 }
 
