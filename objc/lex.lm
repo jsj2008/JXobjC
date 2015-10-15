@@ -200,6 +200,8 @@ DBLSUFFIX ([fFlL]{1,3})
 "__based"		{ return msdoskeyw(typequal); }
 "__declspec"		{ return msdoskeyw(typequal); }
 "__fastcall"		{ return msdoskeyw(typequal); }
+"__w64"				{ return msdoskeyw(typequal); }
+__declspec\([^)]*\([^)]*\)\)	{ return msdoskeyw(typequal); }
 
 "__long_long" {
     /* SGI IRIX */

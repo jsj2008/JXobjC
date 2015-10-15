@@ -3,20 +3,7 @@ include $(KBUILD_PATH)/subheader.kmk
 
 include $(PATH_SUB_CURRENT)/oclib/Makefile.kmk
 
-PROGRAMS += jxobjc wjxobjc objc1 postlink fixwcpp
-
-jxobjc_TEMPLATE = OBJC
-jxobjc_INCS = $(INTERNAL_INCS)
-jxobjc_LIBS = $(INTERNAL_LIBS)
-jxobjc_SOURCES = drv/objc.m
-jxobjc_DEFS = DRVUNIX
-
-wjxobjc_TEMPLATE = OBJC
-wjxobjc_INCS = $(INTERNAL_INCS)
-wjxobjc_LIBS = $(INTERNAL_LIBS)
-wjxobjc_SOURCES = drv/objc.m
-wjxobjc_DEFS = DRVWATCOM
-wjxobjc_DEPS = $(jxobjc_1_TARGET)
+PROGRAMS += objc1 postlink fixwcpp
 
 fixwcpp_TEMPLATE = OBJC
 fixwcpp_INCS = $(INTERNAL_INCS)
