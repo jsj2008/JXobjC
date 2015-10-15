@@ -1,10 +1,9 @@
-
-Usage: objc [ options ] infile -o outfile
+Usage: jxobjc [ options ] infile -o outfile
 
 Options:
 @filename        # use options listed in "filename"
 @envname         # use options set in env.variable
--appl            # add flags for linking a MacOS app
+-appl            # add flags for linking a Mac OS Classic app
 -browse dir      # update Objective-C browser files in dir
 -Bdir            # set OBJCDIR to dir
 -C               # same as -Fi, unless used with -E to preserve comments
@@ -20,15 +19,11 @@ Options:
 -Wletter:option  # pass option to tool (p cpp, c cc, o objc1, l ld)
 -Wall            # turn on all warnings
 -c               # do not link and produce a .o file (-Fo)
--check           # (objc.exe only) print commands without executing
 -dl              # combine objects into a dynamic module (shared library)
 -dollars         # allow $ in identifiers (if supported by C compiler)
 -dynamic         # mark symbols in program as exportable to dynamic modules
 -export spec     # emit 'spec' for class globals and bind functions
 -g               # add debug information
--i               # do not link and produce a .j tdf file (tcc -Fj)
--jfoo            # add TDF library foo.tl
--Jdir            # add dir to search path for TDF libraries
 -lfoo            # add library libfoo.a
 -Ldir            # add dir to search path for libraries
 -gc              # use garbage collecting memory allocation
@@ -36,7 +31,6 @@ Options:
 -inlineCache     # generate code for inline cache messenger
 -main fun        # use fun as main function (default is main())
 -mpwtool         # add flags for linking an MPW tool
--noBlocks        # turn off compiler support for Objective-C blocks
 -noCache         # turn off global messenger cache (differs from inlineCache)
 -noFiler         # do not generate filer code; do not link AsciiFiler
 -noFwd           # use the C messenger without support for forwarding msgs
@@ -44,16 +38,12 @@ Options:
 -noLibs          # do not link against standard objc libraries
 -noPostLink      # generate code for automatic objcrt initialization
 -noSelfAssign    # do not allow self as left-hand-side in assignments
--noCategories    # do not allow categories (and use +addMethodsTo: instead)
 -noTags          # do not generate line tags
 -noNilRcvr       # do not allow nil to be receiver of messages
 -nostdinc        # do not search standard system headers
 -opt arg         # MPW optimization options
 -pic             # position independent code for shlibs or dynamic modules
--ppi             # Stepstone/PPI compatibility mode
 -postLink        # generate code for postlink objcrt initialization
--prod            # combine .j tdf files into a .ta tdf archive
--q               # suppress copyright
 -s               # (WATCOM) Remove stack overflow checks
 -retain          # do not remove intermediate files
 -refcnt          # generate code for reference counts
@@ -67,7 +57,6 @@ Options:
 -version         # print compiler version
 -w               # turn off all warnings
 -xm arg          # MPW linker options
--Yenv            # (tcc) -Yansi for ansi environment, -Yposix, -Yunix95 etc.
 -3r              # (WATCOM) 386 register calling conventions
 -3s              # (WATCOM) 386 stack calling conventions
 

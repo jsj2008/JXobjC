@@ -6,36 +6,37 @@
 
 #import <Object.h>
 
-typedef enum pcnumber_type_e
+typedef enum jxnumber_type_e
 {
-    PCNUMBER_CHAR,
-    PCNUMBER_UCHAR,
-    PCNUMBER_SHORT,
-    PCNUMBER_USHORT,
-    PCNUMBER_INT,
-    PCNUMBER_UINT,
-    PCNUMBER_LONG,
-    PCNUMBER_ULONG,
-    PCNUMBER_LONGLONG,
-    PCNUMBER_ULONGLONG,
-    PCNUMBER_SIZE PCNUMBER_INT8,
-    PCNUMBER_UINT8,
-    PCNUMBER_INT16,
-    PCNUMBER_UINT16,
-    PCNUMBER_INT32,
-    PCNUMBER_UINT32,
-    PCNUMBER_INT64,
-    PCNUMBER_UINT64,
-    PCNUMBER_FLOAT,
-    PCNUMBER_DOUBLE,
-    PCNUMBER_INTPTR,
-    PCNUMBER_UINTPTR,
-    PCNUMBER_PTRDIFF,
-} pcnumber_type_t;
+    JXNUMBER_CHAR,
+    JXNUMBER_UCHAR,
+    JXNUMBER_SHORT,
+    JXNUMBER_USHORT,
+    JXNUMBER_INT,
+    JXNUMBER_UINT,
+    JXNUMBER_LONG,
+    JXNUMBER_ULONG,
+    JXNUMBER_LONGLONG,
+    JXNUMBER_ULONGLONG,
+    JXNUMBER_SIZE,
+	JXNUMBER_INT8,
+    JXNUMBER_UINT8,
+    JXNUMBER_INT16,
+    JXNUMBER_UINT16,
+    JXNUMBER_INT32,
+    JXNUMBER_UINT32,
+    JXNUMBER_INT64,
+    JXNUMBER_UINT64,
+    JXNUMBER_FLOAT,
+    JXNUMBER_DOUBLE,
+    JXNUMBER_INTPTR,
+    JXNUMBER_UINTPTR,
+    JXNUMBER_PTRDIFF,
+} jxnumber_type_t;
 
-@interface PCNumber : Object
+@interface JXNumber : Object
 {
-    union pcnumber_value_u
+    union jxnumber_value_u
     {
         char c;
         unsigned char uc;
@@ -50,7 +51,7 @@ typedef enum pcnumber_type_e
     } value;
 }
 
-@property pcnumber_type_t type;
+@property jxnumber_type_t type;
 
 #define NumFrom(typ, nam)                                                      \
     +numberWith##nam : (typ)val;                                               \

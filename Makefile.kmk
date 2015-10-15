@@ -18,4 +18,11 @@ OCLIBHDRS_SOURCES = $(wildcard include/oclib/*.h)
 
 INSTALLS += CRTHDRS OCLIBHDRS
 
+PKGNAME = JXObjC-$(KBUILD_TARGET)_$(KBUILD_TARGET_ARCH).tar.gz
+PKGDIRS = lib bin include
+
+package:
+	tar -C $(PATH_INS) -cvzf $(PKGNAME) $(PKGDIRS)
+
+
 include $(FILE_KBUILD_SUB_FOOTER)

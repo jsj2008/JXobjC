@@ -1,8 +1,8 @@
 /* Copyright (c) 2015 D. Mackay. All rights reserved. */
 
-#import <PCNumber.h>
+#import <JXNumber.h>
 
-@implementation PCNumber
+@implementation JXNumber
 
 #define NumSet(typ, nam, ch, te)                                               \
     -initWith##nam : (typ)val                                                  \
@@ -12,16 +12,16 @@
         return self;                                                           \
     }                                                                          \
     +numberWith##nam : (typ)val { return [[super new] initWith##nam:val]; }
-NumSet (char, Char, c, PCNUMBER_CHAR);
-NumSet (unsigned char, UChar, uc, PCNUMBER_UCHAR);
-NumSet (short, Short, s, PCNUMBER_SHORT);
-NumSet (unsigned short, UShort, us, PCNUMBER_USHORT);
-NumSet (int, Int, i, PCNUMBER_INT);
-NumSet (unsigned int, UInt, ui, PCNUMBER_UINT);
-NumSet (long, Long, l, PCNUMBER_LONG);
-NumSet (unsigned long, ULong, ul, PCNUMBER_ULONG);
-NumSet (long long, LongLong, ll, PCNUMBER_LONGLONG);
-NumSet (unsigned long long, ULongLong, ull, PCNUMBER_ULONGLONG);
+NumSet (char, Char, c, JXNUMBER_CHAR);
+NumSet (unsigned char, UChar, uc, JXNUMBER_UCHAR);
+NumSet (short, Short, s, JXNUMBER_SHORT);
+NumSet (unsigned short, UShort, us, JXNUMBER_USHORT);
+NumSet (int, Int, i, JXNUMBER_INT);
+NumSet (unsigned int, UInt, ui, JXNUMBER_UINT);
+NumSet (long, Long, l, JXNUMBER_LONG);
+NumSet (unsigned long, ULong, ul, JXNUMBER_ULONG);
+NumSet (long long, LongLong, ll, JXNUMBER_LONGLONG);
+NumSet (unsigned long long, ULongLong, ull, JXNUMBER_ULONGLONG);
 #undef NumFrom
 
 #define NumVal(typ, nam, ch)                                                   \
