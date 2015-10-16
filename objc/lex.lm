@@ -225,6 +225,7 @@ __declspec\([^)]*\([^)]*\)\)	{ return msdoskeyw(typequal); }
 "__far16"		{ return watcomkeyw(typequal); }
 "_Seg16"		{ return watcomkeyw(typequal); }
 __based\([^)]*\)	{ return watcomkeyw(typequal); }
+__pragma\([^)]*\([^)]*\)\)       { return watcomkeyw(cppdirect); } /* msvc */
 __pragma\([^)]*\)	{ return watcomkeyw(typequal); }
 __declspec\([^)]*\)	{ return watcomkeyw(typequal); }
 

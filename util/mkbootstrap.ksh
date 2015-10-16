@@ -60,5 +60,6 @@ gcc *.o plink/*.o -o postlink
 EOF
 
 chmod +x build.sh
+cp ../objc/drv/jxobjc .
 
 cd ../
