@@ -525,10 +525,7 @@ id curclassdef;
     /* keep this compatible with objcc's struct _SHARED */
     gf ("struct %s {\n", shartypename);
     gs ("  id isa;\n");
-    if (o_refcnt)
-    {
-        gs ("  unsigned int _refcnt;\n");
-    }
+    gs ("  unsigned int _refcnt;\n");
     gs ("  id clsSuper;\n");
     gs ("  char *clsName;\n");
     gs ("  char *clsTypes;\n");
@@ -645,11 +642,9 @@ id curclassdef;
     gf ("  (id)&%s,", _m_classname);
     gcom ("/* isa */");
 
-    if (o_refcnt)
-    {
-        gs ("  1,");
-        gcom ("/* _refcnt */");
-    }
+    gs ("  1,");
+    gcom ("/* _refcnt */");
+
     /* if no shareddata (DLL's), then this field is set at runtime */
     if (superc != nil && o_shareddata)
     {
@@ -734,11 +729,9 @@ id curclassdef;
         gcom ("/* isa */"); /* field set in BIND() */
     }
 
-    if (o_refcnt)
-    {
-        gs ("  1,");
-        gcom ("/* _refcnt */");
-    }
+    gs ("  1,");
+    gcom ("/* _refcnt */");
+
     if (o_shareddata)
     {
         if (superc)

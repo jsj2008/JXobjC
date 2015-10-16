@@ -390,9 +390,7 @@ static id nstcopy (id anObject, unsigned int nBytes)
 #endif
 
     memcpy (p, q, aSize);
-#ifdef OBJC_REFCNT
     _REFCNT (newObject) = 0;
-#endif
 
     assert (getisa (newObject) == aClass);
     return newObject;

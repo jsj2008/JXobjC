@@ -116,20 +116,13 @@ typedef void (*ARGIMP) (id, SEL, void *); /* dispatcher */
 struct objcrt_private
 {
     id isa;
-#ifdef OBJC_REFCNT
     unsigned int _refcnt;
-#else
-    unsigned short attr;
-    unsigned short objID;
-#endif
 };
 
 struct objcrt_shared
 {
     id isa;
-#ifdef OBJC_REFCNT
     unsigned int _refcnt;
-#endif
     id clsSuper;
     char * clsName;
     char * clsTypes;

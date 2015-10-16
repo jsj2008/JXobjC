@@ -40,12 +40,7 @@
 @interface Object
 {
     id isa;
-#ifdef OBJC_REFCNT
     unsigned int _refcnt;
-#else
-    unsigned short attr;  /* compatibility Stepstone */
-    unsigned short objID; /* compatibility Stepstone */
-#endif
 }
 
 + initialize;

@@ -1,10 +1,6 @@
-
 /*
  * Portable Object Compiler (c) 1997,98,99,2000,03,14.  All Rights Reserved.
- * $Id: Object.h,v 1.6 2014/03/04 09:02:08 stes Exp $
- */
-
-/*
+ *
  * This library is free software; you can redistribute it and/or modify it
  * under the terms of the GNU Library General Public License as published
  * by the Free Software Foundation; either version 2 of the License, or
@@ -31,7 +27,7 @@
 #include "objcrt.h"
 #include <string.h>
 
-#define __objcrt_revision__ "3.2.1"
+#define __objcrt_revision__ "4.5"
 
 #ifdef _XtIntrinsic_h
 #define Object OCObject /* remap Object class - cant use Xt Object */
@@ -40,12 +36,7 @@
 @interface Object
 {
     id isa;
-#ifdef OBJC_REFCNT
     unsigned int _refcnt;
-#else
-    unsigned short attr;  /* compatibility Stepstone */
-    unsigned short objID; /* compatibility Stepstone */
-#endif
 }
 
 + initialize;

@@ -208,15 +208,8 @@ static char * mystrrchr (const char * s, int c)
     }
     else
     {
-        if (!o_refcnt)
-        {
-            gs ("struct _PRIVATE { struct _PRIVATE *isa; };\n");
-        }
-        else
-        {
-            gs ("struct _PRIVATE { struct _PRIVATE *isa;unsigned int _refcnt; "
+        gs ("struct _PRIVATE { struct _PRIVATE *isa;unsigned int _refcnt; "
                 "};\n");
-        }
         gs ("typedef struct _PRIVATE *id;\n");
     }
 
