@@ -56,7 +56,7 @@ extern id EXPORT newBlock (int n, IMP fn, void * data, IMP dtor);
 - deepCopy;
 + blkc:(int)n blkfn:(IMP)f blkv:(void **)d blkdtor:(IMP)c;
 - free;
-- release;
+- ARC_dealloc;
 
 + errorHandler;
 + errorHandler:aHandler;

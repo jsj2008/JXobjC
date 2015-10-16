@@ -69,7 +69,7 @@
 /* private */
 - copyAssociations;
 - deepCopyAssociations;
-- release;
+- ARC_dealloc;
 
 - associations;
 - (id *)associationsRef;

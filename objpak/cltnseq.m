@@ -46,11 +46,11 @@
 
 - free { return [super free]; }
 
-- release
+- ARC_dealloc
 {
 #ifdef OBJC_REFCNT
     collection = nil;
-    return [super release];
+    return [super ARC_dealloc];
 #else
     return [self notImplemented:_cmd];
 #endif

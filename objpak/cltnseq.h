@@ -38,7 +38,7 @@
 + over:aCol;
 - copy;
 - free;
-- release;
+- ARC_dealloc;
 - (unsigned)size;
 - next;
 - peek;

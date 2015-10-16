@@ -119,7 +119,7 @@ typedef struct objset
 - (objset_t)objsetvalue;
 - addYourself;
 - freeAll;
-- release;
+- ARC_dealloc;
 
 - (unsigned)hash;
 @end

@@ -249,11 +249,11 @@ static objbbt_t destroy (objbbt_t self)
     return [super free];
 }
 
-- release
+- ARC_dealloc
 {
 #ifdef OBJC_REFCNT
     [self emptyYourself];
-    return [super release];
+    return [super ARC_dealloc];
 #else
     return [self notImplemented:_cmd];
 #endif

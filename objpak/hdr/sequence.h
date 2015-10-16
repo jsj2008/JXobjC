@@ -53,7 +53,7 @@
 - setUpCarrier:aCarrier;
 + over:aCarrier;
 - over:aCarrier;
-- release;
+- ARC_dealloc;
 @end
 
 #endif /* __OBJSEQ_H__ */

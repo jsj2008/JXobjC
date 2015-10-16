@@ -93,11 +93,11 @@ static void setUp (id * associations) { *associations = [Set new]; }
     return [super free];
 }
 
-- release
+- ARC_dealloc
 {
 #ifdef OBJC_REFCNT
     associations = nil;
-    return [super release];
+    return [super ARC_dealloc];
 #else
     return [self notImplemented:_cmd];
 #endif

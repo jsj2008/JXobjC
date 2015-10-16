@@ -52,9 +52,9 @@
 - deepCopy;
 - free;
 - decrefs;
-- release;
+- ARC_dealloc;
 + free;
-+ release;
++ ARC_dealloc;
 
 - self;
 - yourself;

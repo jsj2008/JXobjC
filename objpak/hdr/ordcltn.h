@@ -137,7 +137,7 @@ typedef struct objcol
 
 /* private */
 - freeAll;
-- release;
+- ARC_dealloc;
 
 - (objcol_t)objcolvalue;
 - (unsigned)hash;

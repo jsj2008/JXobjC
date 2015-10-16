@@ -106,11 +106,11 @@ static id err_fun (id thisBlock, void ** data, id msg, id rcv)
     return [super free];
 }
 
-- release
+- ARC_dealloc
 {
     if (data)
         (*((void (*)(void **))dtor)) (data);
-    return [super release];
+    return [super ARC_dealloc];
 }
 
 /*****************************************************************************

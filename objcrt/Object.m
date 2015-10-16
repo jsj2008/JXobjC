@@ -90,7 +90,7 @@
 
 - decrefs { return nil; }
 
-- release
+- ARC_dealloc
 {
 #ifndef OBJC_REFCNT
     return [self shouldNotImplement]; /* mixing the two models is a pain */
@@ -102,7 +102,7 @@
 
 + free { return nil; }
 
-+ release { return nil; }
++ ARC_dealloc { return nil; }
 
 /*****************************************************************************
  *

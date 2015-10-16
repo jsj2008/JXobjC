@@ -47,7 +47,7 @@
 - value;
 - free;
 - freeAll;
-- release;
+- ARC_dealloc;
 
 - (unsigned)hash;
 - self;

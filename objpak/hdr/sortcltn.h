@@ -120,7 +120,7 @@ typedef struct objbbt
 /* private */
 - setupcmpblock:sortBlock;
 - setupcmpsel:(SEL)aSel;
-- release;
+- ARC_dealloc;
 
 - (objbbt_t)objbbtTop;
 - (SEL)comparisonSelector;

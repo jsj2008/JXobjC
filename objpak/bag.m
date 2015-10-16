@@ -236,12 +236,12 @@ static void clear (objbag_t self)
     return [super free];
 }
 
-- release
+- ARC_dealloc
 {
 #ifdef OBJC_REFCNT
     empty ((&value));
     clear ((&value));
-    return [super release];
+    return [super ARC_dealloc];
 #else
     return [self notImplemented:_cmd];
 #endif

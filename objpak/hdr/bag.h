@@ -118,7 +118,7 @@ typedef struct objbag
 
 /* private */
 - addYourself;
-- release;
+- ARC_dealloc;
 
 - (objbag_t)objbagvalue;
 

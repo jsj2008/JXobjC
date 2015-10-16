@@ -49,7 +49,7 @@
 - copy;
 - deepCopy;
 - free;
-- release;
+- ARC_dealloc;
 
 - self;
 - yourself;

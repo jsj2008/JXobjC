@@ -307,7 +307,7 @@ id EXPORT idassign (id * lhs, id rhs)
         if (_REFCNT (e))
             _REFCNT (e)--;
         else
-            [e release];
+            [e ARC_dealloc];
     }
     if (rhs)
     {
@@ -344,7 +344,7 @@ id EXPORT iddecref (id e)
         if (_REFCNT (e))
             _REFCNT (e)--;
         else
-            [e release];
+            [e ARC_dealloc];
     }
 #endif
     return nil;
