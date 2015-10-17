@@ -1,10 +1,6 @@
-
 /*
  * Portable Object Compiler (c) 1997,98,99,2003.  All Rights Reserved.
- * $Id: octext.m,v 1.3 2009/10/23 19:36:44 stes Exp $
- */
-
-/*
+ *
  * This library is free software; you can redistribute it and/or modify it
  * under the terms of the GNU Library General Public License as published
  * by the Free Software Foundation; either version 2 of the License, or
@@ -31,7 +27,7 @@
 #include "txtattr.h"
 #include "paragrph.h"
 
-#define SPRINTF_BUFSIZE (2048)
+#define SPRINTF_BUFSIZE (4096)
 
 @implementation Text
 
@@ -50,15 +46,11 @@
 {
     char aBuffer[SPRINTF_BUFSIZE];
 
-#if OBJCRT_USE_SNPRINTF
     if (vsnprintf (aBuffer, SPRINTF_BUFSIZE, format, *ap) >= SPRINTF_BUFSIZE)
     {
         [OutOfBounds signal];
         return nil;
     }
-#else
-    vsprintf (aBuffer, format, *ap);
-#endif
 
     return [self str:aBuffer];
 }

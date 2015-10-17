@@ -1,10 +1,6 @@
-
 /*
  * Portable Object Compiler (c) 1997,98,99,2000,01,04,14.  All Rights Reserved.
- * $Id: objcrt.h,v 1.10 2014/03/04 09:02:08 stes Exp $
- */
-
-/*
+ *
  * This library is free software; you can redistribute it and/or modify it
  * under the terms of the GNU Library General Public License as published
  * by the Free Software Foundation; either version 2 of the License, or
@@ -101,12 +97,6 @@ typedef void (*ARGIMP) (id, SEL, void *); /* dispatcher */
 
  * These SHOULD MATCH what the compiler is emitting (for struct _PRIVATE
  * and struct _SHARED).
- *
- * The compiler emits the types, as to be able to generate code that can
- * work with the Stepstone runtime.
- *
- * NOTE: The Stepstone compiler emits struct _PRIVATE and struct _SHARED,
- * only for a file containing a class definition.
  *
  * All of this is sort of ugly, and error prone (since the types need to
  * be kept in sync), but needed for cross-compiles (different runtimes
@@ -252,11 +242,6 @@ extern BOOL dbgFlag;     /* verbose dbg() calls */
 extern BOOL noCacheFlag; /* disable messenger caching */
 extern BOOL noNilRcvr;   /* do not allow msg. to nil */
 
-/* all in the name of backw. compat. */
-#ifndef NAMEOF
-#define NAMEOF(myObject) ([myObject name])
-#endif
-
 SEL EXPORT selUid (STR);
 STR EXPORT selName (SEL);
 void EXPORT dbg (char * fmt, ...);
@@ -264,20 +249,13 @@ void EXPORT prnstack (FILE * file);
 void EXPORT loadobjc (void * modPtr);
 void EXPORT unloadobjc (void * modPtr);
 
-/* the following def does not completely correspond to the objcc all
- * C messenger, since it's typing classes to SHR instead of "id".
- * To avoid a clash, allow to not prototype them (minor problem
- * as the compiler emitted sources will prototype them anyhow)
- *
- * note: also, we can not emit this in a public header for C++
+/* We can not emit this in a public header for C++
  * (which is picky about the conflict between the prototype the compiler
  * emits vs. the one in the header)
  */
 
-#if OBJCRT_PROTOTYPE_MESSENGER
 EXTERNC IMP EXPORT _imp (id, SEL);
 EXTERNC IMP EXPORT _impSuper (id, SEL);
-#endif
 
 /* our own (new) forwarding C messenger */
 EXTERNC IMP EXPORT fwdimp (id, SEL, IMP);

@@ -1,7 +1,5 @@
-
 /*
- * Portable Object Compiler (c) 1997,98.  All Rights Reserved.
- * $Id: objc.h,v 1.1.1.1 2000/06/07 21:09:25 stes Exp $
+ * Portable Object Compiler (c) 1997,98,2003.  All Rights Reserved.
  */
 
 #ifndef __objch__
@@ -14,5 +12,7 @@
 #endif
 #include "Block.h"
 #include "Message.h"
+#include "Exceptn.h"
+#include "OutOfMem.h"
 
 #endif /* __objch__ */
