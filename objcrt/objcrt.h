@@ -78,20 +78,12 @@ typedef void (*ARGIMP) (id, SEL, void *); /* dispatcher */
 
 /* varargs for _error error reporting
  */
-
-#if OBJCRT_USE_STDARG
+ 
 #include <stdarg.h>
 #define OC_VA_LIST va_list
 #define OC_VA_START(ap, larg) va_start (ap, larg)
 #define OC_VA_ARG(ap, type) va_arg (ap, type)
 #define OC_VA_END(ap) va_end (ap)
-#else
-#include <varargs.h>
-#define OC_VA_LIST va_list
-#define OC_VA_START(ap, larg) va_start (ap)
-#define OC_VA_ARG(ap, type) va_arg (ap, type)
-#define OC_VA_END(ap) va_end (ap)
-#endif /* OBJCRT_USE_STDARG */
 
 /* Types for Objective C classes.
 

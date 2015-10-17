@@ -2,6 +2,7 @@ SUB_DEPTH = ..
 include $(KBUILD_PATH)/subheader.kmk
 
 LIBRARIES += objcrt objcrt_s objcrtr
+INSTALLS += objcrthdr
 
 objcrt_TEMPLATE = OBJC
 objcrt_SOURCES = Block.m Exceptn.m Message.m Object.m OutOfMem.m crt.m
@@ -15,5 +16,9 @@ objcrtr_EXTENDS = objcrt
 objcrtr_EXTENDS_BY = appending
 objcrtr_OBJCFLAGS = -refcnt -DOBJC_REFCNT=1
 objcrtr_DEPS = $(objcrt_s_1_TARGET)
+
+objcrthdr_INST = include/objcrt/
+objcrthdr_IFFLAGS = -m 644
+objcrthdr_SOURCES = $(wildcard $(PATH_ROOT)/objcrt/hdr/*.h)
 
 include $(FILE_KBUILD_SUB_FOOTER)

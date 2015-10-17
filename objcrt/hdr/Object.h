@@ -1,10 +1,6 @@
-
 /*
  * Portable Object Compiler (c) 1997,98,99,2000,03,14.  All Rights Reserved.
- * $Id: Object.h,v 1.6 2014/03/04 09:15:17 stes Exp $
- */
-
-/*
+ *
  * This library is free software; you can redistribute it and/or modify it
  * under the terms of the GNU Library General Public License as published
  * by the Free Software Foundation; either version 2 of the License, or
@@ -29,9 +25,10 @@
 #define __OBJECT_H__
 
 #include "objcrt.h"
+#include <stdarg.h>
 #include <string.h>
 
-#define __objcrt_revision__ "3.2.1"
+#define __objcrt_revision__ "4.5"
 
 #ifdef _XtIntrinsic_h
 #define Object OCObject /* remap Object class - cant use Xt Object */
@@ -46,10 +43,13 @@
 + initialize;
 
 + new;
++ alloc;
+- init;
 - copy;
 - deepCopy;
 - free;
-- ARC_dealloc;
+- increfs;
+- decrefs;
 
 - self;
 - yourself;
@@ -134,6 +134,24 @@
 - fileIn:(void *)value type:(char)typeDesc;
 - awake;
 - awakeFrom:aFiler;
+
+/* private */
+/* 'incorrect' */
+- new;
+- initialize;
++ free;
++ ARC_dealloc;
+
++ become:other;
+- vsprintf:(STR)format:(OC_VA_LIST *)ap;
+- str:(STR)s;
+- ARC_dealloc;
+- add:anObject;
+- printToFile:(FILE *)aFile;
+- fileOutIdsFor:aFiler;
+- fileInIdsFrom:aFiler;
+- fileOutIdsFor;
+- fileInIdsFrom;
 
 @end
 
