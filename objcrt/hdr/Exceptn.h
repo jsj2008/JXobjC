@@ -1,10 +1,6 @@
-
 /*
  * Portable Object Compiler (c) 2003.  All Rights Reserved.
- * $Id: OutOfMem.h,v 1.2 2009/10/23 19:36:43 stes Exp $
- */
-
-/*
+ *
  * This library is free software; you can redistribute it and/or modify it
  * under the terms of the GNU Library General Public License as published
  * by the Free Software Foundation; either version 2 of the License, or
@@ -20,14 +16,43 @@
  * Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
  */
 
-#ifndef __OUTOFMEM_H__
-#define __OUTOFMEM_H__
+#ifndef __EXCEPTN_H__
+#define __EXCEPTN_H__
 
-#include "Exceptn.h"
+#include <stdio.h>
+#include "objcrt.h"
+#include "Object.h"
 
-@interface OutOfMemory : Exception
+@interface Exception : Object
 {
+    id messageText;
+    id tag;
+    id resumeHandler;
 }
+:
+{
+  id handler;
+}
+
++ signal;
++ signal:(STR)message;
+- free;
+
+- signal;
+- signal:(STR)message;
+- messageText;
+- (STR)str;
+- messageText:message;
+- str:(STR)message;
+
+- resignalAs:replacementException;
+- resume;
+
+/* private */
+
++ install:aHandler;
+- defaultAction;
+
 @end
 
-#endif /* __OUTOFMEM_H__ */
+#endif /* __EXCEPTN_H__ */
