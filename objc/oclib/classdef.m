@@ -116,6 +116,7 @@ id curclassdef;
         nstdisptblname = [[String sprintf:"_%s_nstDispatchTbl", s] strCopy];
     }
     globfunname     = [[String sprintf:"OBJCCLASS_%s", s] strCopy];
+	c_classname		= [[String sprintf:"clsImpl_%s", s] strCopy];
     _classfunname   = [[String sprintf:"OBJCCFUNC_%s", s] strCopy];
     _superfunname   = [[String sprintf:"OBJCCSUPER_%s", s] strCopy];
     _m_classfunname = [[String sprintf:"OBJCMFUNC_%s", s] strCopy];
@@ -165,6 +166,8 @@ id curclassdef;
 - (char *)classname { return [classname str]; }
 
 - (char *)globfunname { return globfunname; }
+
+- (char *)c_classname { return c_classname; }
 
 - (char *)_classname { return _classname; }
 
@@ -675,7 +678,7 @@ id curclassdef;
     gcom ("/* clsVersion */");
     gs ("  (id)0,");
     gcom ("/* OBSOLETE - clsCats */");
-    gf ("  &%s,", [self classname]);
+    gf ("  &%s,", [self c_classname]);
     gcom ("/* clsGlbl */");
     gs ("};\n");
 
@@ -798,7 +801,7 @@ id curclassdef;
 
 - genclassglobal
 {
-    char * s = [self classname];
+    char * s = [self c_classname];
 
     if (!o_shareddata)
         gs ("static");
@@ -816,7 +819,7 @@ id curclassdef;
     }
     else
     {
-        gs ([self classname]);
+        gs ([self c_classname]);
     }
     return self;
 }
@@ -947,7 +950,7 @@ id curclassdef;
         [self genlineno];
         if (o_shareddata)
         {
-            gf ("extern id %s %s;\n", o_bind, [self classname]);
+            gf ("extern id %s %s;\n", o_bind, c_classname);
         }
         else
         {

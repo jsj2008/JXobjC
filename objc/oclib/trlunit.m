@@ -399,7 +399,7 @@ static char * mystrrchr (const char * s, int c)
     gs ("static id _modClsLst[] ={\n");
     for (i = 0, n = [clsimpls size]; i < n; i++)
     {
-        STR s = [[clsimpls at:i] classname];
+        STR s = [[clsimpls at:i] c_classname];
 
         /* &_Foo is the value of "id Foo := (id)&_Foo" */
         gf ("(id)&_%s,\n", s);
@@ -511,7 +511,7 @@ static char * mystrrchr (const char * s, int c)
     if (clsimpl)
     {
         /* this is the "one class per file" case */
-        char * cname = [clsimpl classname];
+        char * cname = [clsimpl c_classname];
 
         gf ("  &%s,\n", cname);
     }
