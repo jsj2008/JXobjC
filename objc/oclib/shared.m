@@ -127,12 +127,12 @@
     return self;
 }
 
-- freeheapvarptr
+- freeheapvarptr:(BOOL)decRefs
 {
     char * p = heapvarptrname;
 
     gf ("if (%s->heaprefcnt-- == 0) {\n", p);
-    if (o_refcnt)
+    if (o_refcnt && decRefs)
         [self gendecrefsheapvars];
     gf ("OC_Free(%s);\n", p);
     gs ("}\n");

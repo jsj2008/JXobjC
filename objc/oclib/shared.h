@@ -39,7 +39,7 @@
 - (char *)heapvarptrname;
 - (char *)heapvartypename;
 - genheapvarptr;
-- freeheapvarptr;
+- freeheapvarptr:(BOOL)decRefs;
 - genheapvartype;
 - gendecrefsheapvars;
 

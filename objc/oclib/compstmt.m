@@ -280,14 +280,17 @@ id curloopcompound;
         gs ([returnlabel str]);
         gs (":\n");
     }
-    if (heapvars)
-    {
-        [self freeheapvarptr];
-    }
     if (o_refcnt)
     {
         if (decrefs)
             [self gendecrefs];
+	}
+    if (heapvars)
+    {
+        [self freeheapvarptr:NO];
+    }
+    if (o_refcnt)
+    {
         if (checkreturnflag)
         {
             gf ("if (_returnflag) goto %s;\n",

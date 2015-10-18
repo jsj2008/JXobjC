@@ -8,17 +8,10 @@ include $(PATH_CURRENT)/objpak/Makefile.kmk
 
 include $(PATH_CURRENT)/objc/Makefile.kmk
 
-CRTHDRS_INST = include/objcrt/
-CRTHDRS_IFFLAGS = -m 644
-CRTHDRS_SOURCES = $(wildcard include/objcrt/*.h)
-
-INSTALLS += CRTHDRS
-
 PKGNAME = JXObjC-$(KBUILD_TARGET)_$(KBUILD_TARGET_ARCH).tar.gz
 PKGDIRS = lib bin include
 
 package:
 	tar -C $(PATH_INS) -cvzf $(PKGNAME) $(PKGDIRS)
-
 
 include $(FILE_KBUILD_SUB_FOOTER)

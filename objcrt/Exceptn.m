@@ -1,10 +1,6 @@
-
 /*
  * Portable Object Compiler (c) 2003.  All Rights Reserved.
- * $Id: Exceptn.m,v 1.3 2003/09/30 20:20:27 stes Exp $
- */
-
-/*
+ *
  * This library is free software; you can redistribute it and/or modify it
  * under the terms of the GNU Library General Public License as published
  * by the Free Software Foundation; either version 2 of the License, or
@@ -20,13 +16,7 @@
  * Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
  */
 
-#ifdef __PORTABLE_OBJC__
-
-#ifndef __OBJECT_INCLUDED__
-#define __OBJECT_INCLUDED__
-#include "Object.h" /* Stepstone Object.h assumes #import */
-#endif
-
+#include "Object.h"
 #include "Exceptn.h"
 #include "Block.h"
 
@@ -130,5 +120,3 @@
     return self;
 }
 @end
-
-#endif /* __PORTABLE_OBJC__ */

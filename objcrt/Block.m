@@ -1,10 +1,6 @@
-
 /*
  * Portable Object Compiler (c) 1997,98,2000,03,14.  All Rights Reserved.
- * $Id: Block.m,v 1.6 2014/03/04 09:02:08 stes Exp $
- */
-
-/*
+ *
  * This library is free software; you can redistribute it and/or modify it
  * under the terms of the GNU Library General Public License as published
  * by the Free Software Foundation; either version 2 of the License, or
@@ -20,12 +16,12 @@
  * Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
  */
 
-#ifdef __PORTABLE_OBJC__
-
-#ifndef __OBJECT_INCLUDED__
-#define __OBJECT_INCLUDED__
+#include <setjmp.h>
+#include <stdlib.h>
+#include <string.h>
+#include <stdio.h>
+ 
 #include "Object.h" /* Stepstone Object.h assumes #import */
-#endif
 
 #ifndef EXPORT
 #define EXPORT /* empty */
@@ -33,10 +29,6 @@
 
 #include "Block.h"
 #include "Exceptn.h"
-#include <setjmp.h>
-#include <stdlib.h>
-#include <string.h>
-#include <stdio.h>
 
 @implementation Block
 
@@ -325,5 +317,3 @@ valueAtExit (void)
 }
 
 @end
-
-#endif /* __PORTABLE_OBJC__ */

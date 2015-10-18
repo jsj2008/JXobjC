@@ -21,8 +21,6 @@
 #ifndef __objcrt__
 #define __objcrt__
 
-#include "config.h"
-
 #include <stdio.h>  /* FILE */
 #include <stddef.h> /* size_t */
 
@@ -260,39 +258,28 @@ EXTERNC id EXPORT idincref (id obj);
 EXTERNC id EXPORT idassign (id * lhs, id rhs);
 EXTERNC id EXPORT iddecref (id obj);
 
-/* Remapping Vectors.
- */
-
-#define _alloc oc_alloc
-#define _dealloc oc_dealloc
-#define _copy oc_copy
-#define _error oc_error
-#define _cvtToId oc_cvtToId
-#define _cvtToSel oc_cvtToSel
-#define _objcInit oc_objcInit
-
 /* Vectors.
  * Can't make those vectors public unless we
  * make OBJCRT_USE_PREFIXED_NAMES public
  * the "extern" def for vectors is important for SGI cc
  */
 
-extern id (*_alloc) (id, unsigned int);    /*allocate a new object */
-extern id (*_dealloc) (id);                /* deallocate an object */
-extern id (*_copy) (id, unsigned int);     /* shallow copy an object */
-extern id (*_error) (id, STR, OC_VA_LIST); /* error handler */
+extern id (*JX_alloc) (id, unsigned int);    /*allocate a new object */
+extern id (*JX_dealloc) (id);                /* deallocate an object */
+extern id (*JX_copy) (id, unsigned int);     /* shallow copy an object */
+extern id (*JX_error) (id, STR, OC_VA_LIST); /* error handler */
 
-extern id (*_cvtToId) (STR);   /* convert string name to class id */
-extern SEL (*_cvtToSel) (STR); /* convert string to selector */
+extern id (*JX_cvtToId) (STR);   /* convert string name to class id */
+extern SEL (*JX_cvtToSel) (STR); /* convert string to selector */
 
-extern id (*_fileIn) (FILE *);
-extern BOOL (*_fileOut) (FILE *, id);
-extern BOOL (*_storeOn) (STR, id);
-extern id (*_readFrom) (STR);
+extern id (*JX_fileIn) (FILE *);
+extern BOOL (*JX_fileOut) (FILE *, id);
+extern BOOL (*JX_storeOn) (STR, id);
+extern id (*JX_readFrom) (STR);
 void EXPORT setfilein (id (*f) (FILE *));
 void EXPORT setfileout (BOOL (*f) (FILE *, id));
 
-extern id (*_showOn) (id, unsigned);
+extern id (*JX_showOn) (id, unsigned);
 
 void EXPORT * OC_Malloc (size_t);
 void EXPORT * OC_MallocAtomic (size_t);

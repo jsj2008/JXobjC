@@ -309,6 +309,7 @@ static int size (objbag_t self)
         }
     }
 #ifndef OBJC_REFCNT
+#warning I am not refcounted!
     [aSequence free];
 #endif
     return YES;

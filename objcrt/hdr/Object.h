@@ -17,8 +17,7 @@
  */
 
 #ifndef __PORTABLE_OBJC__
-/* if this file is included by a different compiler, it's by mistake */
-#error Portable Object Compiler Object.h must not be in include path.
+#error Portable Object Compiler Object.h should not be used with another compiler.
 #else
 
 #ifndef __OBJECT_H__

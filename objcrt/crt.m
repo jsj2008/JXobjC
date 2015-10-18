@@ -1,8 +1,6 @@
 /*
  * Portable Object Compiler (c) 1997,98,99,2000,01,04,14.  All Rights Reserved.
- */
-
-/*
+ *
  * This library is free software; you can redistribute it and/or modify it
  * under the terms of the GNU Library General Public License as published
  * by the Free Software Foundation; either version 2 of the License, or
@@ -18,20 +16,16 @@
  * Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
  */
 
-#ifdef __PORTABLE_OBJC__
-
-#ifndef __OBJECT_INCLUDED__
-#define __OBJECT_INCLUDED__
+#include <assert.h>
+#include <stdlib.h>
+#include <string.h> /* memset */
+ 
 #include "Object.h" /* Stepstone Object.h assumes #import */
-#endif
 
 #include "Block.h"    /* blockRaise */
 #include "Exceptn.h"  /* signal exceptions */
 #include "OutOfMem.h" /* signal exceptions */
 #include "Message.h"  /* selector:args: */
-#include <assert.h>
-#include <stdlib.h>
-#include <string.h> /* memset */
 
 #include <pthread.h> /* POSIX 1003.1c thread-safe messenger */
 static pthread_mutex_t cLock;
@@ -411,15 +405,15 @@ static id nstdealloc (id anObject)
     return nil;
 }
 
-id (*_alloc) (id, unsigned int) = nstalloc;
-id (*_copy) (id, unsigned int) = nstcopy;
+id (*JX_alloc) (id, unsigned int) = nstalloc;
+id (*JX_copy) (id, unsigned int) = nstcopy;
 #if OBJCRT_BOEHM
-id (*_dealloc) (id); /* NULL, nothing to call */
+id (*JX_dealloc) (id); /* NULL, nothing to call */
 #else
-id (*_dealloc) (id) = nstdealloc;
+id (*JX_dealloc) (id) = nstdealloc;
 #endif
 #if 0
-id (*_realloc) (id, unsigned int);	/* clash IRIX 6.2 and not used */
+id (*JX_realloc) (id, unsigned int);	/* clash IRIX 6.2 and not used */
 #endif
 
 /*****************************************************************************
@@ -555,7 +549,7 @@ static id report (id self, STR fmt, ...)
     return self;
 }
 
-id (*_error) (id self, STR fmt, OC_VA_LIST ap) = reportv;
+id (*JX_error) (id self, STR fmt, OC_VA_LIST ap) = reportv;
 
 /*****************************************************************************
  *
@@ -576,7 +570,7 @@ static id readfilein (STR aFileName)
     id r = nil;
     if ((f = fopen (aFileName, "r")))
     {
-        r = (*_fileIn) (f);
+        r = (*JX_fileIn) (f);
         fclose (f);
     }
     return r;
@@ -588,7 +582,7 @@ static BOOL storefileout (STR aFileName, id anObject)
     BOOL r = NO;
     if ((f = fopen (aFileName, "w")))
     {
-        r = (*_fileOut) (f, anObject);
+        r = (*JX_fileOut) (f, anObject);
         fclose (f);
     }
     return r;
@@ -605,15 +599,15 @@ static BOOL nofileout (FILE * f, id anObject)
     return NO;
 }
 
-id (*_fileIn) (FILE *) = nofilein;
-id (*_readFrom) (STR) = readfilein;
-BOOL (*_fileOut) (FILE *, id) = nofileout;
-BOOL (*_storeOn) (STR, id) = storefileout;
+id (*JX_fileIn) (FILE *) = nofilein;
+id (*JX_readFrom) (STR) = readfilein;
+BOOL (*JX_fileOut) (FILE *, id) = nofileout;
+BOOL (*JX_storeOn) (STR, id) = storefileout;
 
 /* functions are necessary to do this on Windows (with DLLs) */
 
-void EXPORT setfilein (id (*f) (FILE *)) { _fileIn = f; }
-void EXPORT setfileout (BOOL (*f) (FILE *, id)) { _fileOut = f; }
+void EXPORT setfilein (id (*f) (FILE *)) { JX_fileIn = f; }
+void EXPORT setfileout (BOOL (*f) (FILE *, id)) { JX_fileOut = f; }
 
 /* function scoped extern since it can be useful from within debugger
  * in particular if it's not easy to send the |show| message from the debugger
@@ -621,11 +615,11 @@ void EXPORT setfileout (BOOL (*f) (FILE *, id)) { _fileOut = f; }
 
 id EXPORT __showOn (id self, unsigned level /* unused */)
 {
-    (*_fileOut) (stderr, self);
+    (*JX_fileOut) (stderr, self);
     return nil;
 }
 
-id (*_showOn) (id, unsigned) = __showOn;
+id (*JX_showOn) (id, unsigned) = __showOn;
 
 /*****************************************************************************
  *
@@ -1102,7 +1096,7 @@ static void msgiods (void)
     pthread_mutex_init (&cLock, NULL);
 }
 
-int EXPORT _objcInitNoShared (Mentry_t _objcModules,
+int EXPORT JX_objcInitNoShared (Mentry_t _objcModules,
                               struct objcrt_useDescriptor * OCU_main)
 {
     modnode_t m;
@@ -1160,7 +1154,7 @@ int EXPORT _objcInitNoShared (Mentry_t _objcModules,
 #ifndef OBJCRT_NOSHARED
 int EXPORT oc_objcInit (int debug, BOOL traceInit)
 {
-    return _objcInitNoShared (_objcModules, OCU_main);
+    return JX_objcInitNoShared (_objcModules, OCU_main);
 }
 #endif
 
@@ -1243,8 +1237,8 @@ static id cvtToId (STR aClassName)
 }
 
 /* for cplusplus the (STR) cannot be () */
-id (*_cvtToId) (STR) = cvtToId;
-SEL (*_cvtToSel) (STR) = cvtToSel;
+id (*JX_cvtToId) (STR) = cvtToId;
+SEL (*JX_cvtToSel) (STR) = cvtToSel;
 
 /*****************************************************************************
  *
@@ -2012,5 +2006,3 @@ void EXPORT unloadobjc (void * p)
 
     [Object error:"unloadobjc() for module that is not loaded."];
 }
-
-#endif /* __PORTABLE_OBJC__ */

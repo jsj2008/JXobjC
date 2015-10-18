@@ -339,7 +339,7 @@
     [self unpackblockdata];
     for (i = 0; i < numheapvarblocks; i++)
     {
-        [[heapvarblocks at:i] freeheapvarptr];
+        [[heapvarblocks at:i] freeheapvarptr:YES];
     }
     gf ("OC_Free(%s);\n", blkdataname);
     gs ("}\n");
@@ -417,7 +417,7 @@
     }
     if (heapvars)
     {
-        [self freeheapvarptr];
+        [self freeheapvarptr:YES];
     }
     if (expr)
     {

@@ -1,10 +1,6 @@
-
 /*
  * Portable Object Compiler (c) 1997,98,99,2000,03,14.  All Rights Reserved.
- * $Id: Object.m,v 1.6 2014/03/04 09:02:08 stes Exp $
- */
-
-/*
+ *
  * This library is free software; you can redistribute it and/or modify it
  * under the terms of the GNU Library General Public License as published
  * by the Free Software Foundation; either version 2 of the License, or
@@ -19,15 +15,8 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
  */
-
-#ifndef __PORTABLE_OBJC__
-#else
-
-#ifndef __OBJECT_INCLUDED__
-#define __OBJECT_INCLUDED__
-#include "Object.h" /* Stepstone Object.h assumes #import */
-#endif
-
+ 
+#include "Object.h"
 #include "Block.h"   /* ifError: stuff */
 #include "Message.h" /* doesNotUnderstand: stuff */
 
@@ -54,7 +43,7 @@
 
 + alloc
 {
-    id newObject = (*_alloc) (self, 0);
+    id newObject = (*JX_alloc) (self, 0);
     return newObject;
 }
 
@@ -66,14 +55,14 @@
 
 - copy
 {
-    id newObject = (*_copy) (self, 0);
+    id newObject = (*JX_copy) (self, 0);
     [newObject increfs];
     return newObject;
 }
 
 - deepCopy
 {
-    id newObject = (*_copy) (self, 0);
+    id newObject = (*JX_copy) (self, 0);
     [newObject increfs];
     return newObject;
 }
@@ -84,7 +73,7 @@
     return [self shouldNotImplement]; /* mixing the two models is a pain */
 #else
     isa = nil;
-    return (_dealloc) ? (*_dealloc) (self) : nil;
+    return (JX_dealloc) ? (*JX_dealloc) (self) : nil;
 #endif
 }
 
@@ -96,7 +85,7 @@
     return [self shouldNotImplement]; /* mixing the two models is a pain */
 #else
     [self decrefs];
-    return (*_dealloc) (self);
+    return (*JX_dealloc) (self);
 #endif
 }
 
@@ -138,9 +127,9 @@
 
 + (STR)name { return getcls (self)->clsName; }
 
-- findClass:(STR)name { return (*_cvtToId) (name); }
+- findClass:(STR)name { return (*JX_cvtToId) (name); }
 
-- (SEL)findSel:(STR)name { return (*_cvtToSel) (name); }
+- (SEL)findSel:(STR)name { return (*JX_cvtToSel) (name); }
 
 - (SEL)selOfSTR:(STR)name
 {
@@ -414,7 +403,7 @@ static BOOL inherits (Cls_t aCls, STR name)
     }
     else
     {
-        (*_error) (self, format, ap);
+        (*JX_error) (self, format, ap);
     }
     OC_VA_END (ap);
 
@@ -506,7 +495,7 @@ static BOOL inherits (Cls_t aCls, STR name)
 
 - show
 {
-    (*_showOn) (self, 0);
+    (*JX_showOn) (self, 0);
     return self;
 }
 
@@ -540,8 +529,8 @@ static BOOL inherits (Cls_t aCls, STR name)
  *
  ****************************************************************************/
 
-+ readFrom:(STR)aFileName { return (*_readFrom) (aFileName); }
-- (BOOL)storeOn:(STR)aFileName { return (*_storeOn) (aFileName, self); }
++ readFrom:(STR)aFileName { return (*JX_readFrom) (aFileName); }
+- (BOOL)storeOn:(STR)aFileName { return (*JX_storeOn) (aFileName, self); }
 /*****************************************************************************
  *
  * AsciiFiler Methods for Object Class
@@ -563,7 +552,7 @@ static BOOL inherits (Cls_t aCls, STR name)
 }
 + fileInFrom:aFiler
 {
-    id newObject = (*_alloc) (self, 0);
+    id newObject = (*JX_alloc) (self, 0);
     return [newObject fileInFrom:aFiler];
 }
 
@@ -583,5 +572,3 @@ static BOOL inherits (Cls_t aCls, STR name)
 - awakeFrom:aFiler { return [self awake]; }
 
 @end
-
-#endif /* __PORTABLE_OBJC__ */
