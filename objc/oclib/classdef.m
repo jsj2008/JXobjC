@@ -131,14 +131,14 @@ id curclassdef;
 
     gf ("typedef struct %s %s;\n", privtypename, s);
 
-	if ([trlunit lookupstruct:[Symbol sprintf:"struct %s",privtypename]] == nil)
+	if ([trlunit lookupstruct:[Symbol sprintf:"%s",privtypename]] == nil)
 	{
 		id r = [StructSpec new];
 
 		[r keyw:[Symbol sprintf:"struct"]];
 		[r name:[Symbol sprintf:"%s",privtypename]];
 		[trlunit defstruct:r];
-		[trlunit def:[String str:s] astype:[[Type new] addspec:r]];
+		[trlunit def:[String str:s] astype:[[[Type new] addspec:r] setIsobject:YES]];
 	}
 
     return self;

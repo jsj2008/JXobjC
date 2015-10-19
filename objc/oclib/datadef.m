@@ -200,7 +200,7 @@
 
                 /* for assignments to work in the refcnt case, locals must be
                  * nil'ed */
-                if (o_refcnt && [t isid])
+                if (o_refcnt && ([t isid] || [t isrefcounted]))
                 {
                     if ([d isinit])
                     {

@@ -39,6 +39,8 @@ extern id t_id;
     BOOL haslistinit;
 }
 
+@property BOOL isobject;
+
 + commontypes;
 - specs;
 - specs:aList;

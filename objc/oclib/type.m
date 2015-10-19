@@ -264,7 +264,7 @@ id t_id;
 
 - (BOOL)isid
 {
-    if (self == t_id)
+    if (self == t_id || isobject)
         return YES;
     return decl == nil && [specs size] == 1 && [[specs at:0] isid];
 }
@@ -272,13 +272,14 @@ id t_id;
 - (BOOL)isrefcounted
 {
     int n;
-    if (self == t_id)
+    if (self == t_id || (isobject && [decl ispointer]) || ([specs size] == 1 && [[specs at:0] isid] && [decl ispointer]))
     {
         return YES;
     }
     if (decl == nil && (n = [specs size]) > 0)
     {
         int i;
+
         for (i = 0; i < n; i++)
         {
             if ([[specs at:i] isvolatile])
