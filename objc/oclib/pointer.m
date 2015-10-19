@@ -70,9 +70,6 @@
 {
     if(![aDecl isKindOf:(id)isa])
 	{
-		/*void * f = 0;
-		f = 54;
-		while (1) ;*/
 		fprintf(stderr, "pointer.m! aDecl != a pointer\n");
 	}
     pointer = aDecl;

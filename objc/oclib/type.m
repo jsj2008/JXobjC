@@ -28,6 +28,7 @@
 #include <stdio.h>  /* FILE */
 #include "Object.h" /* Stepstone Object.h assumes #import */
 #endif
+#include "Block.h"
 #include <ocstring.h>
 #include <ordcltn.h>
 #include "node.h"
@@ -42,6 +43,7 @@
 #include "enumsp.h"
 #include "var.h"
 #include "scalar.h"
+#include "trlunit.h"
 
 id t_unknown;
 id t_void;
@@ -264,22 +266,30 @@ id t_id;
 
 - (BOOL)isid
 {
-    if (self == t_id || isobject)
+    if (self == t_id)
         return YES;
     return decl == nil && [specs size] == 1 && [[specs at:0] isid];
 }
 
 - (BOOL)isrefcounted
 {
+	BOOL isobj = NO;
     int n;
-    if (self == t_id || (isobject && [decl ispointer]) || ([specs size] == 1 && [[specs at:0] isid] && [decl ispointer]))
+
+    if (self == t_id)
     {
         return YES;
     }
+
+	[specs do:{ : each |
+		if ([trlunit lookupclass:[String str:[each str]]])
+			isobj = YES;
+		}];
+	if (isobj && decl && [decl isKindOf:Pointer] && ![decl pointer]) return YES;
+
     if (decl == nil && (n = [specs size]) > 0)
     {
         int i;
-
         for (i = 0; i < n; i++)
         {
             if ([[specs at:i] isvolatile])
@@ -287,6 +297,7 @@ id t_id;
         }
         return [[specs at:n - 1] isrefcounted];
     }
+
     return NO;
 }
 
