@@ -86,22 +86,11 @@
     if (isidassign)
     {
         gl ([lhs lineno], [[lhs filename] str]);
-        if (!isselfassign)
-        {
-            gs ("idassign(&");
+            gs ("idassign((id*)(&(");
             [lhs gen];
-            gc (',');
+            gs (")),(id)(");
             [rhs gen];
-            gc (')');
-        }
-        else
-        {
-            gs ("idassign((id*)(&");
-            [lhs gen];
-            gs ("),");
-            [rhs gen];
-            gc (')');
-        }
+            gs ("))");
         return self;
     }
     if (isselfassign)

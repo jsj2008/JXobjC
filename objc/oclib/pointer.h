@@ -25,6 +25,7 @@
 }
 
 - specs:aList;
+- pointer;
 - pointer:aPointer;
 - gen;
 
