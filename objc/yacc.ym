@@ -580,15 +580,15 @@ keywarglist : keywarg
      { $$ = mklist($1,$2); }
   ;
 
-exprorclassname
+exprorclass
 	: expr
 	| classname
 	  { $$ = mkidentexpr($1); }
 	;
 
-keywarg : unaryselector ':' {okblock=1;} exprorclassname
+keywarg : unaryselector ':' {okblock=1;} exprorclass
     { okblock=0;$$ = mkkeywarg($1,$4); }
-  | ':' {okblock=1;} exprorclassname
+  | ':' {okblock=1;} exprorclass
     { okblock=0;$$ = mkkeywarg(nil,$3); }
   ;
 
@@ -655,10 +655,8 @@ msgargs : unaryselector
   ;
 
 msgexpr
-	: '[' {okblock=1;} expr {okblock=0;} msgargs ']'
+	: '[' {okblock=1;} exprorclass {okblock=0;} msgargs ']'
 		{ $$ = mkmesgexpr($3,$5); }
-	| '[' {okblock=1;} classname {okblock=0;} msgargs ']'
-		{ $$ = mkmesgexpr(mkidentexpr($3),$5); }
   ;
 
 mixeddatastmtlist : datadeflist
