@@ -128,9 +128,9 @@ id curclassdef;
         otbtypename = [[String sprintf:"%s_OTB", s] strCopy];
     }
 
-    [trlunit def:[[String str:s] concatSTR:"Id"]
-          astype:[[Type new] addspec:s_id]];
-    gf ("typedef id %sId;\n", s);
+    [trlunit def:[String str:s]
+          astype:[[Type new] addspec:[Symbol sprintf:"struct %s",privtypename]]];
+    gf ("typedef struct %s %s;\n", privtypename, s);
 
     return self;
 }

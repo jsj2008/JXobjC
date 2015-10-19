@@ -37,6 +37,7 @@
 #include "options.h"
 #include "stmt.h"
 #include "dasmstmt.h"
+#include "trlunit.h"
 
 #define YY_NEVER_INTERACTIVE 1
 #define YY_DECL int yylex_raw()
@@ -376,6 +377,7 @@ int identif(void)
   yylval = [Symbol str:yytext lineno:inlineno filename:infilename];
   if (!o_duptypedefs) {
     if (isbuiltinfun(yylval)) return builtinfun;
+	if ([trlunit lookupclass: yylval]) return classname;
     if (istypeword(yylval)) return typeword;
   }
   return identifier;

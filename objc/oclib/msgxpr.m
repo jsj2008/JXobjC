@@ -195,7 +195,7 @@ id msgwraps; /* VICI */
         BOOL inm = (curdef && [curdef ismethdef]);
 
         /* in a function 'super' is ordinary */
-        if (inm && [rcvr isidentexpr])
+        if (inm && [rcvr isKindOf:Expr] && [rcvr isidentexpr])
         {
             supermsg  = !strcmp ([rcvr str], "super");
             infactory = [curdef factory];

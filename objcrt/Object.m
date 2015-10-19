@@ -425,7 +425,7 @@ static BOOL inherits (Cls_t aCls, STR name)
 - doesNotRecognize:(SEL)aSelector
 {
     return
-        [self error:"(%s): Message not recognized by this class.", aSelector];
+        [self error:"(%s): Message not recognized by this class (%s).", aSelector, [self str]];
 }
 - doesNotUnderstand:aMessage
 {

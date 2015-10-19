@@ -49,7 +49,7 @@ int yylex() ;
 
 %start translunit
 
-%token identifier constant stringcomp builtinfun typeword
+%token identifier constant stringcomp builtinfun typeword classname
 %token storageclass typedefkeyw typequal externlang
 
 %token cppdirect 
@@ -259,19 +259,24 @@ optprotoreflist
     | { $$ = nil; }
     ;
 
-classdef : atbegin identifier optprotoreflist ivardef
+identorclass
+	: identifier
+	| classname
+	;
+
+classdef : atbegin identorclass optprotoreflist ivardef
      { $$ = mkclassdef($1,$2,nil,$3,$4,nil,0); }
-  | atbegin identifier optprotoreflist ivardef ':' ivardef
+  | atbegin identorclass optprotoreflist ivardef ':' ivardef
      { $$ = mkclassdef($1,$2,nil,$3,$4,$6,0); }
-  | atbegin identifier optprotoreflist
+  | atbegin identorclass optprotoreflist
      { $$ = mkclassdef($1,$2,nil,$3,nil,nil,0); }
-  | atbegin identifier  ':' identifier optprotoreflist
+  | atbegin identifier  ':' classname optprotoreflist
      { $$ = mkclassdef($1,$2,$4,$5,nil,nil,0); }
-  | atbegin identifier ':' identifier optprotoreflist ivardef
+  | atbegin identifier ':' classname optprotoreflist ivardef
      { $$ = mkclassdef($1,$2,$4,$5,$6,nil,0); }
-  | atbegin identifier ':' identifier optprotoreflist ivardef  ':' ivardef
+  | atbegin identifier ':' classname optprotoreflist ivardef  ':' ivardef
      { $$ = mkclassdef($1,$2,$4,$5,$6,$8,0); }
-  | atbegin identifier '(' identifier ')' optprotoreflist
+  | atbegin identorclass '(' identifier ')' optprotoreflist
      { $$ = mkclassdef($1, $4, $2, $6, nil, nil, 1); }
   ;
 
@@ -575,9 +580,15 @@ keywarglist : keywarg
      { $$ = mklist($1,$2); }
   ;
 
-keywarg : unaryselector ':' {okblock=1;} expr
+exprorclassname
+	: expr
+	| classname
+	  { $$ = mkidentexpr($1); }
+	;
+
+keywarg : unaryselector ':' {okblock=1;} exprorclassname
     { okblock=0;$$ = mkkeywarg($1,$4); }
-  | ':' {okblock=1;} expr
+  | ':' {okblock=1;} exprorclassname
     { okblock=0;$$ = mkkeywarg(nil,$3); }
   ;
 
@@ -643,8 +654,11 @@ msgargs : unaryselector
      { $$ = mkmethproto(nil,nil,$1,NO); }
   ;
 
-msgexpr : '[' {okblock=1;} expr {okblock=0;} msgargs ']'
-     { $$ = mkmesgexpr($3,$5); }
+msgexpr
+	: '[' {okblock=1;} expr {okblock=0;} msgargs ']'
+		{ $$ = mkmesgexpr($3,$5); }
+	| '[' {okblock=1;} classname {okblock=0;} msgargs ']'
+		{ $$ = mkmesgexpr(mkidentexpr($3),$5); }
   ;
 
 mixeddatastmtlist : datadeflist
@@ -866,9 +880,9 @@ componentdeflist : componentdef
      { $$ = mklist(nil,$1); }
   | componentdeflist componentdef
      { $$ = mklist($1,$2); }
-  | atdefs '(' identifier ')'
+  | atdefs '(' classname ')'
      { $$ = atdefsaddall(nil,$3); }
-  | componentdeflist atdefs '(' identifier ')'
+  | componentdeflist atdefs '(' classname ')'
      { $$ = atdefsaddall($1,$4); }
   ;
 
@@ -997,6 +1011,8 @@ typename : typespeclist /* unsigned char */
 
 typespec : typeword
      { $$ = $1; }
+  | classname
+	{ $$ = $1; }
   | typequal
      { $$ = $1; }
   | structspec
