@@ -46,6 +46,7 @@
 #include "util.h"
 #include "expr.h"
 #include "msgxpr.h"
+#include "structsp.h"
 
 id curclassdef;
 
@@ -128,9 +129,17 @@ id curclassdef;
         otbtypename = [[String sprintf:"%s_OTB", s] strCopy];
     }
 
-    [trlunit def:[String str:s]
-          astype:[[Type new] addspec:[Symbol sprintf:"struct %s",privtypename]]];
     gf ("typedef struct %s %s;\n", privtypename, s);
+
+	if ([trlunit lookupstruct:[Symbol sprintf:"struct %s",privtypename]] == nil)
+	{
+		id r = [StructSpec new];
+
+		[r keyw:[Symbol sprintf:"struct"]];
+		[r name:[Symbol sprintf:"%s",privtypename]];
+		[trlunit defstruct:r];
+		[trlunit def:[String str:s] astype:[[Type new] addspec:r]];
+	}
 
     return self;
 }
@@ -497,6 +506,7 @@ id curclassdef;
 
 - genprivtype
 {
+	int i, n;
     id s = [String str:privtypename];
 
     if ([trlunit isgentype:s])
@@ -507,6 +517,7 @@ id curclassdef;
     gf ("struct %s {\n", privtypename);
     [self genivars];
     gs ("};\n");
+
     if (o_otb)
     {
         gf ("struct %s {\n", otbtypename);
@@ -514,6 +525,12 @@ id curclassdef;
         g_otbvars ();
         gs ("};\n");
     }
+
+	if (ivars)
+        for (i = 0, n = [ivars size]; i < n; i++)
+        {
+            [[[trlunit lookupstruct:[Symbol sprintf:"%s",privtypename]] defcomp:[ivarnames at:i] astype:[ivartypes at:i]] synth];
+        }
     return self;
 }
 

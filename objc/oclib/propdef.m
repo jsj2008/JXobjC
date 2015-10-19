@@ -67,6 +67,7 @@
                     [t addspec:s_int]; /* C default */
                     [t decl:d];
                 }
+
                 [curclassdef defcomp:var astype:t];
                 [curclassdef
                     addpropmeth:mkpropsetmeth (compdec, t, var, [d ispointer])];
