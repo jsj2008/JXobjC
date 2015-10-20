@@ -11,12 +11,12 @@ fixwcpp_LIBS = $(INTERNAL_LIBS)
 fixwcpp_SOURCES = drv/fixwcpp.m
 
 objc1_TEMPLATE = OBJC
-objc1_INCS = $(INTERNAL_INCS)
+objc1_INCS = $(INTERNAL_INCS) $(PATH_OBJ)
 objc1_LIBS = $(oclib_1_TARGET) $(INTERNAL_LIBS)
-objc1_SOURCES = objc1.m yacc.m lex.m lexfiltr.m
-objc1_ORDERDEPS = $(PATH_ROOT)/objc/yacc.m $(PATH_ROOT)/objc/lex.m
-objc1_CLEAN = $(PATH_ROOT)/objc/yacc.m $(PATH_ROOT)/objc/lex.m \
-	$(PATH_ROOT)/objc/y.tab.h $(PATH_ROOT)/y.output
+objc1_SOURCES = $(PATH_OBJ)/yacc.m $(PATH_OBJ)/lex.m objc1.m lexfiltr.m
+objc1_ORDERDEPS = $(PATH_OBJ)/yacc.m $(PATH_OBJ)/lex.m
+objc1_CLEAN = $(PATH_OBJ)/yacc.m $(PATH_OBJ)/lex.m \
+	$(PATH_OBJ)/y.tab.h $(PATH_ROOT)/y.output
 
 postlink_TEMPLATE = OBJC
 postlink_INCS = $(INTERNAL_INCS)
@@ -32,12 +32,12 @@ $(PATH_OUT)/_predll.o: $(PATH_ROOT)/objc/_predll.c
 	$(TOOL_PCPP_OBJC) -c $<
 	kmk_mv _predll.o $@
 
-$(PATH_SUB_CURRENT)/yacc.m: $(PATH_SUB_CURRENT)/yacc.ym
+$(PATH_OBJ)/yacc.m: $(PATH_SUB_CURRENT)/yacc.ym
 	@printf " B-YaCC \t$(@)\n"
 	@byacc -dtv -o $@ $<
-	@kmk_mv y.tab.h objc/
+	@kmk_mv y.tab.h $(PATH_OBJ)
 
-$(PATH_SUB_CURRENT)/lex.m: $(PATH_SUB_CURRENT)/lex.lm $(PATH_SUB_CURRENT)/yacc.m
+$(PATH_OBJ)/lex.m: $(PATH_SUB_CURRENT)/lex.lm $(PATH_OBJ)/yacc.m
 	@printf " Lex \t$(@)\n"
 	@flex -o $@ $<
 

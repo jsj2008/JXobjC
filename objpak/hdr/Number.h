@@ -6,37 +6,37 @@
 
 #import <Object.h>
 
-typedef enum jxnumber_type_e
+typedef enum number_type_e
 {
-    JXNUMBER_CHAR,
-    JXNUMBER_UCHAR,
-    JXNUMBER_SHORT,
-    JXNUMBER_USHORT,
-    JXNUMBER_INT,
-    JXNUMBER_UINT,
-    JXNUMBER_LONG,
-    JXNUMBER_ULONG,
-    JXNUMBER_LONGLONG,
-    JXNUMBER_ULONGLONG,
-    JXNUMBER_SIZE,
-	JXNUMBER_INT8,
-    JXNUMBER_UINT8,
-    JXNUMBER_INT16,
-    JXNUMBER_UINT16,
-    JXNUMBER_INT32,
-    JXNUMBER_UINT32,
-    JXNUMBER_INT64,
-    JXNUMBER_UINT64,
-    JXNUMBER_FLOAT,
-    JXNUMBER_DOUBLE,
-    JXNUMBER_INTPTR,
-    JXNUMBER_UINTPTR,
-    JXNUMBER_PTRDIFF,
-} jxnumber_type_t;
+    NUMBER_CHAR,
+    NUMBER_UCHAR,
+    NUMBER_SHORT,
+    NUMBER_USHORT,
+    NUMBER_INT,
+    NUMBER_UINT,
+    NUMBER_LONG,
+    NUMBER_ULONG,
+    NUMBER_LONGLONG,
+    NUMBER_ULONGLONG,
+    NUMBER_SIZE,
+	NUMBER_INT8,
+    NUMBER_UINT8,
+    NUMBER_INT16,
+    NUMBER_UINT16,
+    NUMBER_INT32,
+    NUMBER_UINT32,
+    NUMBER_INT64,
+    NUMBER_UINT64,
+    NUMBER_FLOAT,
+    NUMBER_DOUBLE,
+    NUMBER_INTPTR,
+    NUMBER_UINTPTR,
+    NUMBER_PTRDIFF,
+} number_type_t;
 
-@interface JXNumber : Object
+@interface Number : Object
 {
-    union jxnumber_value_u
+    union number_value_u
     {
         char c;
         unsigned char uc;
@@ -51,7 +51,7 @@ typedef enum jxnumber_type_e
     } value;
 }
 
-@property jxnumber_type_t type;
+@property number_type_t type;
 
 #define NumFrom(typ, nam)                                                      \
     +numberWith##nam : (typ)val;                                               \
