@@ -1,4 +1,3 @@
-
 /*
  * Copyright (c) 1998,99 David Stes.
  *
@@ -15,19 +14,13 @@
  * You should have received a copy of the GNU Library General Public License
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
- *
- * $Id: compstmt.m,v 1.3 2003/09/29 16:52:05 stes Exp $
  */
 
-#include "config.h"
 #include <stdlib.h>
 #include <assert.h>
 #include <string.h>
-#ifndef __OBJECT_INCLUDED__
-#define __OBJECT_INCLUDED__
 #include <stdio.h>  /* FILE */
-#include "Object.h" /* Stepstone Object.h assumes #import */
-#endif
+#include "Object.h"
 #include <ocstring.h>
 #include <ordcltn.h>
 #include <set.h>

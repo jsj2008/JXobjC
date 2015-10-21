@@ -1,4 +1,3 @@
-
 /*
  * Copyright (c) 1997,98,99,2000,2001,2002,2014 David Stes.
  *
@@ -15,19 +14,14 @@
  * You should have received a copy of the GNU Library General Public License
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
- *
- * $Id: lex.lm,v 1.11 2014/02/26 16:22:44 stes Exp $
  */
 
 %{
-#include "config.h"
 #include <assert.h>
-#ifndef __OBJECT_INCLUDED__
-#define __OBJECT_INCLUDED__
 #include <stdio.h> /* FILE */
 #include "Object.h" /* Stepstone Object.h assumes #import */
-#endif
-#include <ocstring.h>
+#include "ocstring.h"
+
 #include "symbol.h"
 #include "node.h"
 #include "stclass.h"
