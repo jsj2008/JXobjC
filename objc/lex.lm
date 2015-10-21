@@ -131,6 +131,7 @@ DBLSUFFIX ([fFlL]{1,3})
 "signed"			{ return keyw(typeword); }
 "volatile"			{ return keyw(typequal); }
 
+"@blkreturn"		{ return keyw(atblkreturn); }
 "@defs"				{ return keyw(atdefs); }
 "@selector"			{ return keyw(atselector); }
 "@interface"			{ return keyw(atinterface); }
