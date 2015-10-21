@@ -46,8 +46,8 @@ void printversion (void)
 void printcopyright (void)
 {
     printf ("JX Objective-C Object Compiler Version %s\n", OBJCVERSION);
-	printf ("Copyright (c) 2015 D. Mackay. All Rights Reserved.\n");
-	printf ("Portions Copyright (c) 1997-2014 D. Stes. All Rights Reserved.\n");
+    printf ("Copyright (c) 2015 D. Mackay. All Rights Reserved.\n");
+    printf ("Portions Copyright (c) 1997-2014 D. Stes. All Rights Reserved.\n");
     printf ("Use is subject to licence terms.\n");
 }
 
@@ -649,8 +649,8 @@ void setfirstlinetag (void)
         definebuiltinfun ("__builtin_bswap32");
         definebuiltinfun ("__builtin_bswap64");
 
-	/* MinGW port */
-	definebuiltinfun ("__builtin_llabs");
+        /* MinGW port */
+        definebuiltinfun ("__builtin_llabs");
         definebuiltinvar ("gnu_scanf");
         definebuiltinvar ("gnu_printf");
 

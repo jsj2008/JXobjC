@@ -6,7 +6,7 @@
 
 /*
  * This library is free software; you can redistribute it and/or modify it
- * under the terms of the GNU Library General Public License as published 
+ * under the terms of the GNU Library General Public License as published
  * by the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
  *
@@ -22,9 +22,9 @@
 
 /*
  *
- * Input  : .P file, WATCOM wcc -pl output 
- * Output : .P file without line continuation (\) characters 
- * to be used as input for objc1. 
+ * Input  : .P file, WATCOM wcc -pl output
+ * Output : .P file without line continuation (\) characters
+ * to be used as input for objc1.
  *
  * This is to deal on WATCOM 11.0 with multiline pragmas (such as malloc.h)
  * #pragma ... \
@@ -41,19 +41,33 @@
 
 /* translate line continuation sequences (trailing \ + nl/cr) */
 
-void fixEm(FILE *inIOD,FILE *outIOD)
+void fixEm (FILE * inIOD, FILE * outIOD)
 {
     int c;
     BOOL backslashed = NO;
 
-    while ((c = fgetc(inIOD)) && !feof(inIOD)) {
-	if (backslashed && (c=='\n'||c=='\r')) {backslashed=NO;continue;}
-        if (backslashed) {fputc('\\',outIOD);backslashed=NO;}
-	if (c=='\\') {backslashed=YES;continue;}
-        fputc(c,outIOD);
+    while ((c = fgetc (inIOD)) && !feof (inIOD))
+    {
+        if (backslashed && (c == '\n' || c == '\r'))
+        {
+            backslashed = NO;
+            continue;
+        }
+        if (backslashed)
+        {
+            fputc ('\\', outIOD);
+            backslashed = NO;
+        }
+        if (c == '\\')
+        {
+            backslashed = YES;
+            continue;
+        }
+        fputc (c, outIOD);
     }
 
-    if (backslashed) fputc('\\',outIOD);
+    if (backslashed)
+        fputc ('\\', outIOD);
 }
 
 id inFile;
@@ -63,63 +77,89 @@ id outFile;
  * Options
  */
 
-static BOOL isOption(id s)
+static BOOL isOption (id s) { return [s size] && [s charAt:0] == '-'; }
+
+static void usage (void)
 {
-	return [s size] && [s charAt:0] == '-';
+    fprintf (stderr, "usage: fixwcpp [options] [-] [infile [outfile]]\n");
+    exit (1);
 }
 
-static void usage(void)
+static void unknownOption (id option)
 {
-	fprintf(stderr,"usage: fixwcpp [options] [-] [infile [outfile]]\n");
-	exit(1);
+    fprintf (stderr, "fixwcpp: Illegal option %s\n", [option str]);
+    exit (1);
 }
 
-static void unknownOption(id option)
+static void setOptions (int argc, char * argv[])
 {
-	fprintf(stderr,"fixwcpp: Illegal option %s\n",[option str]);
-	exit(1);
+    int i;
+    int fileCount    = 0;   /* optional inFile and outFile */
+    BOOL checkOption = YES; /* YES if filename can't begin with a dash */
+
+    for (i = 1; i < argc; i++)
+    {
+        id s = [String str:argv[i]];
+        if ([s isEqualSTR:"-help"])
+        {
+            usage ();
+        }
+        else if ([s isEqualSTR:"-"])
+        {
+            checkOption = NO;
+        }
+        else if (checkOption && isOption (s))
+        {
+            unknownOption (s);
+        }
+        else if (fileCount == 0)
+        {
+            inFile = s;
+            fileCount++;
+        }
+        else if (fileCount == 1)
+        {
+            outFile = s;
+            fileCount++;
+        }
+        else
+        {
+            unknownOption (s);
+        }
+    }
 }
 
-static void setOptions(int argc, char *argv[])
+int main (int argc, char * argv[])
 {
-	int i;
-	int fileCount = 0; /* optional inFile and outFile */
-	BOOL checkOption = YES; /* YES if filename can't begin with a dash */
+    FILE * inIOD  = NULL;
+    FILE * outIOD = NULL;
 
-	for(i=1;i<argc;i++) {
-		id s = [String str:argv[i]];
-		if([s isEqualSTR:"-help"]) {usage();}
-		else if([s isEqualSTR:"-"]) { checkOption = NO; }
-		else if(checkOption && isOption(s)) {unknownOption(s);}
-		else if(fileCount==0) {inFile=s;fileCount++;}
-		else if(fileCount==1) {outFile=s;fileCount++;}
-		else {unknownOption(s);}
-	}
+    setOptions (argc, argv);
+
+    if (inFile)
+    {
+        inIOD = fopen ([inFile str], "r");
+        if (!inIOD)
+            fprintf (stderr, "fixwcpp: can't open %s", [inFile str]);
+    }
+
+    if (outFile)
+    {
+        outIOD = fopen ([outFile str], "w");
+        if (!outIOD)
+            fprintf (stderr, "fixwcpp: can't open %s", [outFile str]);
+    }
+
+    fixEm ((inIOD) ? inIOD : stdin, (outIOD) ? outIOD : stdout);
+
+    if (inIOD)
+    {
+        fclose (inIOD);
+    }
+    if (outIOD)
+    {
+        fclose (outIOD);
+    }
+
+    return 0;
 }
-
-int main(int argc,char *argv[])
-{
-	FILE *inIOD = NULL;
-	FILE *outIOD = NULL;
-
-	setOptions(argc,argv);
-	
-	if (inFile) {
-	inIOD = fopen([inFile str],"r");
-	if(!inIOD)fprintf(stderr,"fixwcpp: can't open %s",[inFile str]);
-	}
-	
-	if (outFile) {
-	outIOD = fopen([outFile str],"w");
-	if(!outIOD)fprintf(stderr,"fixwcpp: can't open %s",[outFile str]);
-	}
-	
-	fixEm((inIOD)?inIOD:stdin,(outIOD)?outIOD:stdout);
-	
-	if (inIOD) { fclose(inIOD); }
-	if (outIOD) { fclose(outIOD); }
-	
-	return 0;
-}
-
-

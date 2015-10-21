@@ -19,7 +19,7 @@ typedef enum number_type_e
     NUMBER_LONGLONG,
     NUMBER_ULONGLONG,
     NUMBER_SIZE,
-	NUMBER_INT8,
+    NUMBER_INT8,
     NUMBER_UINT8,
     NUMBER_INT16,
     NUMBER_UINT16,

@@ -19,7 +19,7 @@
 #include <assert.h>
 #include <stdlib.h>
 #include <string.h> /* memset */
- 
+
 #include "Object.h" /* Stepstone Object.h assumes #import */
 
 #include "Block.h"    /* blockRaise */
@@ -35,17 +35,17 @@ static pthread_mutexattr_t recursiveAttr;
 #include <gc.h> /* _alloc vectors to use Hans-J. Boehm gc */
 #endif
 
-static pthread_mutex_t allocmtx ()
+static pthread_mutex_t allocMtx ()
 {
-	pthread_mutex_t * mutx = malloc(sizeof (pthread_mutex_t));
+    pthread_mutex_t * mutx = malloc (sizeof (pthread_mutex_t));
 
-	pthread_mutexattr_settype (&recursiveAttr, PTHREAD_MUTEX_RECURSIVE);
+    pthread_mutexattr_settype (&recursiveAttr, PTHREAD_MUTEX_RECURSIVE);
 #if 0
 	pthread_mutexattr_setrobust (&recursiveAttr, PTHREAD_MUTEX_ROBUST);
 #endif
-	pthread_mutex_init (mutx, &recursiveAttr);
+    pthread_mutex_init (mutx, &recursiveAttr);
 
-	return mutx;
+    return mutx;
 }
 
 #ifdef OBJC_REFCNT
@@ -297,8 +297,10 @@ static void unlinkotb (id a)
 
 #ifndef OTBCRT
 #define _REFCNT(x) (x)->_refcnt
+#define _LOCK(x) (x)->_lock
 #else
 #define _REFCNT(x) (x)->ptr->_refcnt
+#define _LOCK(x) (x)->ptr->_lock
 #endif
 
 id EXPORT idassign (id * lhs, id rhs)
@@ -362,9 +364,11 @@ static id nstalloc (id aClass, unsigned int nBytes)
 {
     id anObject;
     unsigned aSize;
+
     if (!aClass)
         [Object error:"alloc: nil class"];
     aSize = nstsize (aClass) + nBytes;
+
 #ifndef OTBCRT
     anObject = (id)OC_Calloc (aSize);
 #else
@@ -372,7 +376,10 @@ static id nstalloc (id aClass, unsigned int nBytes)
     anObject->ptr = (struct _PRIVATE *)OC_Calloc (aSize);
     linkotb (aClass, anObject, aClass->nextinst);
 #endif
+
     setisa (anObject, aClass);
+    _LOCK (anObject) = allocMtx ();
+
     return anObject;
 }
 
@@ -399,6 +406,7 @@ static id nstcopy (id anObject, unsigned int nBytes)
 
     memcpy (p, q, aSize);
     _REFCNT (newObject) = 0;
+    _LOCK (newObject) = allocMtx ();
 
     assert (getisa (newObject) == aClass);
     return newObject;
@@ -407,6 +415,7 @@ static id nstcopy (id anObject, unsigned int nBytes)
 static id nstdealloc (id anObject)
 {
     setisa (anObject, nil);
+    pthread_mutex_destroy (_LOCK (anObject));
 
 #ifndef OTBCRT
     OC_Free (anObject);
@@ -1111,7 +1120,7 @@ static void msgiods (void)
 }
 
 int EXPORT JX_objcInitNoShared (Mentry_t _objcModules,
-                              struct objcrt_useDescriptor * OCU_main)
+                                struct objcrt_useDescriptor * OCU_main)
 {
     modnode_t m;
 

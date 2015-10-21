@@ -21,8 +21,8 @@
 #ifndef __objcrt__
 #define __objcrt__
 
-#include <stdio.h>  /* FILE */
-#include <stddef.h> /* size_t */
+#include <stdio.h>   /* FILE */
+#include <stddef.h>  /* size_t */
 #include <pthread.h> /* mutex */
 
 #ifndef EXPORT
@@ -77,7 +77,7 @@ typedef void (*ARGIMP) (id, SEL, void *); /* dispatcher */
 
 /* varargs for _error error reporting
  */
- 
+
 #include <stdarg.h>
 #define OC_VA_LIST va_list
 #define OC_VA_START(ap, larg) va_start (ap, larg)
@@ -98,6 +98,7 @@ struct objcrt_private
 {
     id isa;
     unsigned int _refcnt;
+    void * _lock;
 };
 
 struct objcrt_shared

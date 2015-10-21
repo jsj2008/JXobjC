@@ -19,7 +19,7 @@
 #include <stdlib.h>
 #include <assert.h>
 #include <string.h>
-#include <stdio.h>  /* FILE */
+#include <stdio.h> /* FILE */
 #include "Object.h"
 #include <ocstring.h>
 #include <ordcltn.h>
@@ -277,7 +277,7 @@ id curloopcompound;
     {
         if (decrefs)
             [self gendecrefs];
-	}
+    }
     if (heapvars)
     {
         [self freeheapvarptr:NO];

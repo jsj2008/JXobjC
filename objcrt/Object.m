@@ -15,7 +15,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
  */
- 
+
 #include "Object.h"
 #include "Block.h"   /* ifError: stuff */
 #include "Message.h" /* doesNotUnderstand: stuff */
@@ -424,8 +424,8 @@ static BOOL inherits (Cls_t aCls, STR name)
 
 - doesNotRecognize:(SEL)aSelector
 {
-    return
-        [self error:"(%s): Message not recognized by this class (%s).", aSelector, [self str]];
+    return [self error:"(%s): Message not recognized by this class (%s).",
+                       aSelector, [self str]];
 }
 - doesNotUnderstand:aMessage
 {

@@ -199,6 +199,8 @@ static char * mystrrchr (const char * s, int c)
     {
         gs ("struct _PRIVATE {\n");
         gs ("  struct OTB *isa;\n");
+        gs ("  unsigned int _refcnt;\n");
+        gs ("  void *_lock;\n");
         gs ("};\n");
         gs ("struct OTB {\n");
         gs ("  struct _PRIVATE *ptr;\n");
@@ -208,8 +210,11 @@ static char * mystrrchr (const char * s, int c)
     }
     else
     {
-        gs ("struct _PRIVATE { struct _PRIVATE *isa;unsigned int _refcnt; "
-                "};\n");
+        gs ("struct _PRIVATE {\n");
+        gs ("  struct _PRIVATE *isa;\n");
+        gs ("  unsigned int _refcnt;\n");
+        gs ("  void *_lock;\n");
+        gs ("};\n");
         gs ("typedef struct _PRIVATE *id;\n");
     }
 

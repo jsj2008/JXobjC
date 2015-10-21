@@ -33,7 +33,7 @@ extern id curstruct;
     char * clsdisptblname;
     char * nstdisptblname;
     char * globfunname;
-	char * c_classname;
+    char * c_classname;
     char * _classname;
     char * _classfunname;
     char * _superfunname;

@@ -20,7 +20,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include <stdio.h>
- 
+
 #include "Object.h" /* Stepstone Object.h assumes #import */
 
 #ifndef EXPORT
@@ -102,7 +102,7 @@ static id err_fun (id thisBlock, void ** data, id msg, id rcv)
 {
     if (data)
         (*((void (*)(void **))dtor)) (data);
-	data = 0;
+    data = 0;
     return [super ARC_dealloc];
 }
 

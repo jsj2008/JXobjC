@@ -37,6 +37,7 @@
 {
     id isa;
     unsigned int _refcnt;
+    void * _lock;
 }
 
 + initialize;

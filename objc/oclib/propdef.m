@@ -43,7 +43,8 @@
         id specs    = [compdec specs];
         int i, n;
 
-		if (!ivars) ivars = [OrdCltn new];
+        if (!ivars)
+            ivars = [OrdCltn new];
 
         [ivars add:compdec];
         [curclassdef ivars:ivars];

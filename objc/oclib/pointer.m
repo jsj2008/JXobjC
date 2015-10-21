@@ -68,10 +68,10 @@
 
 - pointer:aDecl
 {
-    if(![aDecl isKindOf:(id)isa])
-	{
-		fprintf(stderr, "pointer.m! aDecl != a pointer\n");
-	}
+    if (![aDecl isKindOf:(id)isa])
+    {
+        fprintf (stderr, "pointer.m! aDecl != a pointer\n");
+    }
     pointer = aDecl;
     return self;
 }

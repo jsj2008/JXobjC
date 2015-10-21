@@ -273,7 +273,7 @@ id t_id;
 
 - (BOOL)isrefcounted
 {
-	BOOL isobj = NO;
+    BOOL isobj = NO;
     int n;
 
     if (self == t_id)
@@ -281,11 +281,13 @@ id t_id;
         return YES;
     }
 
-	[specs do:{ : each |
+    [specs do:
+           { : each |
 		if ([trlunit lookupclass:[String str:[each str]]])
 			isobj = YES;
-		}];
-	if (isobj && decl && [decl isKindOf:Pointer] && ![decl pointer]) return YES;
+           }];
+    if (isobj && decl && [decl isKindOf:Pointer] && ![decl pointer])
+        return YES;
 
     if (decl == nil && (n = [specs size]) > 0)
     {

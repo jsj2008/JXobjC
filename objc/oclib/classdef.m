@@ -117,7 +117,7 @@ id curclassdef;
         nstdisptblname = [[String sprintf:"_%s_nstDispatchTbl", s] strCopy];
     }
     globfunname     = [[String sprintf:"OBJCCLASS_%s", s] strCopy];
-	c_classname		= [[String sprintf:"clsImpl_%s", s] strCopy];
+    c_classname     = [[String sprintf:"clsImpl_%s", s] strCopy];
     _classfunname   = [[String sprintf:"OBJCCFUNC_%s", s] strCopy];
     _superfunname   = [[String sprintf:"OBJCCSUPER_%s", s] strCopy];
     _m_classfunname = [[String sprintf:"OBJCMFUNC_%s", s] strCopy];
@@ -131,15 +131,16 @@ id curclassdef;
 
     gf ("typedef struct %s %s;\n", privtypename, s);
 
-	if ([trlunit lookupstruct:[Symbol sprintf:"%s",privtypename]] == nil)
-	{
-		id r = [StructSpec new];
+    if ([trlunit lookupstruct:[Symbol sprintf:"%s", privtypename]] == nil)
+    {
+        id r = [StructSpec new];
 
-		[r keyw:[Symbol sprintf:"struct"]];
-		[r name:[Symbol sprintf:"%s",privtypename]];
-		[trlunit defstruct:r];
-		[trlunit def:[String str:s] astype:[[[Type new] addspec:r] setIsobject:YES]];
-	}
+        [r keyw:[Symbol sprintf:"struct"]];
+        [r name:[Symbol sprintf:"%s", privtypename]];
+        [trlunit defstruct:r];
+        [trlunit def:[String str:s]
+              astype:[[[Type new] addspec:r] setIsobject:YES]];
+    }
 
     return self;
 }
@@ -506,7 +507,7 @@ id curclassdef;
 
 - genprivtype
 {
-	int i, n;
+    int i, n;
     id s = [String str:privtypename];
 
     if ([trlunit isgentype:s])
@@ -526,10 +527,12 @@ id curclassdef;
         gs ("};\n");
     }
 
-	if (ivars)
+    if (ivars)
         for (i = 0, n = [ivars size]; i < n; i++)
         {
-            [[[trlunit lookupstruct:[Symbol sprintf:"%s",privtypename]] defcomp:[ivarnames at:i] astype:[ivartypes at:i]] synth];
+            [[[trlunit lookupstruct:[Symbol sprintf:"%s", privtypename]]
+                defcomp:[ivarnames at:i]
+                 astype:[ivartypes at:i]] synth];
         }
     return self;
 }
