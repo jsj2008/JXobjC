@@ -29,10 +29,24 @@
 
 #include <pthread.h> /* POSIX 1003.1c thread-safe messenger */
 static pthread_mutex_t cLock;
+static pthread_mutexattr_t recursiveAttr;
 
 #if OBJCRT_BOEHM
 #include <gc.h> /* _alloc vectors to use Hans-J. Boehm gc */
 #endif
+
+static pthread_mutex_t allocmtx ()
+{
+	pthread_mutex_t * mutx = malloc(sizeof (pthread_mutex_t));
+
+	pthread_mutexattr_settype (&recursiveAttr, PTHREAD_MUTEX_RECURSIVE);
+#if 0
+	pthread_mutexattr_setrobust (&recursiveAttr, PTHREAD_MUTEX_ROBUST);
+#endif
+	pthread_mutex_init (mutx, &recursiveAttr);
+
+	return mutx;
+}
 
 #ifdef OBJC_REFCNT
 #pragma OCRefCnt 0 /* if compiled with -refcnt, turn of refcnt now */
