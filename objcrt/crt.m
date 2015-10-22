@@ -1053,7 +1053,10 @@ static void initcls (id cls)
     markinitlzd (aCls);
 
     if (iscatgry (aCls))
+    {
         addMethods (cls, aCls->clsSuper);
+        printf ("category initalised.\n");
+    }
     [cls initialize];
 }
 

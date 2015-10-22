@@ -1,6 +1,6 @@
 DBGFLAGS = -ggdb
-WARNFLAGS = -Wall -Wno-unused-function -Wno-format -Wno-switch
-ALLFLAGS = $(DBGFLAGS) $(WARNFLAGS)
+WARNFLAGS = -Wall -Wno-unused-function -Wno-format -Wno-switch -Wno-import
+ALLFLAGS = $(DBGFLAGS) $(WARNFLAGS) -Wno-deprecated
 PKGCONF ?= pkg-config
 
 INTERNAL_INCS = $(PATH_ROOT)/objcrt $(PATH_ROOT)/objpak \
