@@ -58,7 +58,7 @@ int yylex() ;
 
 /* Objective C */
 %token atdefs atselector atinterface atend atencode atrequires atproperty
-%token atprotocol atblkreturn
+%token atprotocol atblkreturn atsynchronised
 %token blockbegin
 %token pcstringlit
 %token propreadonly
@@ -973,6 +973,8 @@ stmtrc : optexpr ';'
      { $$ = $1; }
   | cppdirect
      { $$ = $1; }
+  | syncstmt
+	 { $$ = $1; }
   ;
 
 stmtlist : stmt
@@ -1083,6 +1085,13 @@ propspec
 propdecl
     : atproperty componentdefx ';' { $$ = mkpropdef($2); }
     ;
+
+syncstmt
+	: atsynchronised '(' identifier ')' compoundstmt
+	{
+		$$ = $5;
+	}
+	;
 
  /* C++ */
 

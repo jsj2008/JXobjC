@@ -37,7 +37,7 @@ static pthread_mutexattr_t recursiveAttr;
 
 static pthread_mutex_t allocMtx ()
 {
-    pthread_mutex_t * mutx = malloc (sizeof (pthread_mutex_t));
+    pthread_mutex_t * mutx = OC_Malloc (sizeof (pthread_mutex_t));
 
     pthread_mutexattr_settype (&recursiveAttr, PTHREAD_MUTEX_RECURSIVE);
 #if 0
@@ -416,6 +416,7 @@ static id nstdealloc (id anObject)
 {
     setisa (anObject, nil);
     pthread_mutex_destroy (_LOCK (anObject));
+    OC_Free (_LOCK (anObject));
 
 #ifndef OTBCRT
     OC_Free (anObject);

@@ -134,21 +134,22 @@ DBLSUFFIX ([fFlL]{1,3})
 "@blkreturn"		{ return keyw(atblkreturn); }
 "@defs"				{ return keyw(atdefs); }
 "@selector"			{ return keyw(atselector); }
-"@interface"			{ return keyw(atinterface); }
-"@implementation"		{ return keyw(atinterface); }
+"@interface"		{ return keyw(atinterface); }
+"@implementation"	{ return keyw(atinterface); }
 "@end"				{ return keyw(atend); }
 "@encode"			{ return keyw(atencode); }
 "id"				{ return keyw(typeword); }
 "@requires"			{ return keyw(atrequires); }
 "@public"			{ warn("ignoring @public."); }
-"@property"                     { return keyw(atproperty); }
-"@protected"			{ warn("ignoring @protected."); }
-"@protocol"                     { return keyw(atprotocol); }
+"@property"         { return keyw(atproperty); }
+"@protected"		{ warn("ignoring @protected."); }
+"@protocol"         { return keyw(atprotocol); }
 "@private"			{ warn("ignoring @private."); }
+"@synchronized"		{ return keyw(atsynchronised); }
 
 "inline"			{ return keyw(storageclass); }
 
-"asm"				{ return (o_enableasm)?keyw(asmkeyw):identif(); }
+"asm"						{ return (o_enableasm)?keyw(asmkeyw):identif(); }
 "__asm"[ \t]*"{"[^}]*"}"	{ yylval=[DosAsmStmt str:yytext];return dosasmstmt; }
 
 "__asm"{BLANK}+{LETTER}{ALPHNUM}+{BLANK}+{NONBLANKORCOMMA}+{BLANK}*","{BLANK}*{NONBLANK}+		{yylval=[DosAsmStmt str:yytext];return dosasmstmt; }
