@@ -24,7 +24,7 @@
 #include "ocstring.h"
 #include "outofbnd.h"
 #include "ascfiler.h"
-#include "set.h"
+#include "ordcltn.h"
 
 #define DEFAULT_CAPACITY (16)
 #define SPRINTF_BUFSIZE (4096)
@@ -370,7 +370,7 @@ static char putcharat (objstr_t self, int i, char c)
 - componentsSeparatedByString:separator
 {
     size_t i, si, sepsize = [separator size];
-    id rset               = [Set new];
+    id rset               = [OrdCltn new];
 
     for (i = 0, si = 0; i < value.count - sepsize; i++)
     {
@@ -382,7 +382,7 @@ static char putcharat (objstr_t self, int i, char c)
         }
     }
 
-    [rset add:[self substringWithRange:MakeRange (si, i - si)]];
+    [rset add:[self substringWithRange:MakeRange (si, (i - si) + 1)]];
 
     return rset;
 }
