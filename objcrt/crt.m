@@ -28,6 +28,7 @@
 #include "Message.h"  /* selector:args: */
 
 #include <pthread.h> /* POSIX 1003.1c thread-safe messenger */
+static pthread_spinlock_t rcLock;
 static pthread_mutex_t cLock;
 static pthread_mutexattr_t recursiveAttr;
 
@@ -303,6 +304,25 @@ static void unlinkotb (id a)
 #define _LOCK(x) (x)->ptr->_lock
 #endif
 
+void decrefordealloc (id e)
+{
+    pthread_spin_lock (&rcLock);
+    if (!e)
+        pthread_spin_unlock (&rcLock);
+    else if (_REFCNT (e))
+    {
+        _REFCNT (e)--;
+        pthread_spin_unlock (&rcLock);
+    }
+    else
+    {
+        pthread_spin_unlock (&rcLock);
+        [e ARC_dealloc];
+    }
+
+    return;
+}
+
 id EXPORT idassign (id * lhs, id rhs)
 {
 #ifdef OBJC_REFCNT
@@ -313,15 +333,12 @@ id EXPORT idassign (id * lhs, id rhs)
              (rhs) ? _REFCNT (rhs) : 0);
     }
     if (e)
-    {
-        if (_REFCNT (e))
-            _REFCNT (e)--;
-        else
-            [e ARC_dealloc];
-    }
+        decrefordealloc (e);
     if (rhs)
     {
+        pthread_spin_lock (&rcLock);
         _REFCNT (rhs)++;
+        pthread_spin_unlock (&rcLock);
     }
 #endif
     return (*lhs = rhs);
@@ -336,7 +353,9 @@ id EXPORT idincref (id rhs)
     }
     if (rhs)
     {
+        pthread_spin_lock (&rcLock);
         _REFCNT (rhs)++;
+        pthread_spin_unlock (&rcLock);
     }
 #endif
     return rhs;
@@ -350,12 +369,7 @@ id EXPORT iddecref (id e)
         dbg ("%p --%i\n", e, (e) ? _REFCNT (e) : 0);
     }
     if (e)
-    {
-        if (_REFCNT (e))
-            _REFCNT (e)--;
-        else
-            [e ARC_dealloc];
-    }
+        decrefordealloc (e);
 #endif
     return nil;
 }
@@ -1118,6 +1132,7 @@ static void msgiods (void)
     }
 
     pthread_mutex_init (&cLock, NULL);
+    pthread_spin_init (&rcLock, PTHREAD_PROCESS_SHARED);
 }
 
 int EXPORT JX_objcInitNoShared (Mentry_t _objcModules,
