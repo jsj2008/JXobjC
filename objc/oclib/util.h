@@ -43,6 +43,11 @@ id mkgotostmt (id keyw, id label);
 id mkcontinuestmt (id keyw);
 id mkbreakstmt (id keyw);
 id mkreturnstmt (id keyw, id expr);
+
+id mksyncstmt (id rcvr, id compstmt);
+id mklockmesg (id rcvr);
+id mkunlockmesg (id rcvr);
+
 id mkcastexpr (id a, id b);
 id mkcondexpr (id a, id b, id c);
 id mkunaryexpr (STR op, id a);

@@ -208,6 +208,11 @@ id curloopcompound;
             }
         }
     }
+    if (lockingOn)
+    {
+        lock   = [mklockmesg (lockingOn) synth];
+        unlock = [mkunlockmesg (lockingOn) synth];
+    }
     if (datadefs)
         [datadefs elementsPerform:_cmd];
     if (stmts)
@@ -224,6 +229,7 @@ id curloopcompound;
                 [self adddecref:x]; /* works since all locals are nil'ed */
             }
         }
+
     curcompound = enclosing;
     return self;
 }
@@ -257,6 +263,8 @@ id curloopcompound;
         gvarlist (tmpvars, "id", (o_refcnt) ? "=(id)0" : "");
     if (icaches)
         gvarlist (icaches, "static struct objcrt_inlineCache", "");
+    if (lock)
+        [lock gen];
     if (datadefs)
         [datadefs elementsPerform:_cmd];
     if (increfs)
@@ -273,6 +281,8 @@ id curloopcompound;
         gs ([returnlabel str]);
         gs (":\n");
     }
+    if (unlock)
+        [unlock gen];
     if (o_refcnt)
     {
         if (decrefs)

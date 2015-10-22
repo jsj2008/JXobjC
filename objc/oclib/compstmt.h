@@ -46,10 +46,13 @@ extern id curloopcompound;
     id heapvarblocks;
     id restype;
     id increfs, decrefs;
+    id lock, unlock;
     BOOL bracedgroup;
     BOOL needreturnflag;
     BOOL checkreturnflag;
 }
+
+@property id lockingOn;
 
 - (BOOL)isbracedgroup;
 - setbracedgroup:(BOOL)flag;

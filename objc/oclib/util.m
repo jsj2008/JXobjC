@@ -535,6 +535,20 @@ id mkreturnstmt (id keyw, id expr)
 
 id mkreturnx (id x) { return [[ReturnStmt new] expr:x]; }
 
+id mksyncstmt (id rcvr, id compstmt) { return [compstmt setLockingOn:rcvr]; }
+
+id mklockmesg (id rcvr)
+{
+    return mkexprstmtx (mkmesgexpr (
+        rcvr, mkmethproto (nil, [IdentifierExpr str:"_lock"], nil, NO)));
+}
+
+id mkunlockmesg (id rcvr)
+{
+    return mkexprstmtx (mkmesgexpr (
+        rcvr, mkmethproto (nil, [IdentifierExpr str:"_unlock"], nil, NO)));
+}
+
 id mkcastexpr (id a, id b)
 {
     id r = [CastExpr new];

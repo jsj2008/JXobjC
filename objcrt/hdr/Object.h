@@ -142,6 +142,9 @@
 + free;
 + ARC_dealloc;
 
+- _lock;
+- _unlock;
+
 + become:other;
 - vsprintf:(STR)format:(OC_VA_LIST *)ap;
 - str:(STR)s;
