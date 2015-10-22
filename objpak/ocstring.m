@@ -20,9 +20,11 @@
 #include <assert.h>
 #include <ctype.h>
 #include <stdlib.h>
+#include "array.h"
 #include "ocstring.h"
 #include "outofbnd.h"
 #include "ascfiler.h"
+#include "set.h"
 
 #define DEFAULT_CAPACITY (16)
 #define SPRINTF_BUFSIZE (4096)
@@ -180,6 +182,18 @@ static void copy (objstr_t dst, objstr_t src)
 }
 
 - deepCopy { return [self copy]; }
+
+- substringWithRange:(Range)range
+{
+    id substr = nil;
+
+    if (range.location + range.length > value.count)
+        [Exception str:"Range outwith string boundaries"];
+    else
+        substr = [String chars:(value.ptr + range.location) count:range.length];
+
+    return substr;
+}
 
 static void clear (objstr_t self)
 {
@@ -351,6 +365,26 @@ static char putcharat (objstr_t self, int i, char c)
 - (char)charAt:(unsigned)anOffset put:(char)aChar
 {
     return putcharat ((&value), anOffset, aChar);
+}
+
+- componentsSeparatedByString:separator
+{
+    size_t i, si, sepsize = [separator size];
+    id rset               = [Set new];
+
+    for (i = 0, si = 0; i < value.count - sepsize; i++)
+    {
+        if (!strncmp ((value.ptr + i), [separator str], sepsize))
+        {
+            [rset add:[self substringWithRange:MakeRange (si, i - si)]];
+            i += sepsize - 1;
+            si = i + 1;
+        }
+    }
+
+    [rset add:[self substringWithRange:MakeRange (si, i - si)]];
+
+    return rset;
 }
 
 /*****************************************************************************

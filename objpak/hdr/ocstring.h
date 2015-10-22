@@ -55,6 +55,8 @@ typedef struct objstr
 - free;
 - ARC_dealloc;
 
+- substringWithRange:(Range)range;
+
 - (int)compare:aStr;
 - (int)compareSTR:(STR)aString;
 - (unsigned)hash;
@@ -66,6 +68,7 @@ typedef struct objstr
 - (unsigned)size;
 - (char)charAt:(unsigned)anOffset;
 - (char)charAt:(unsigned)anOffset put:(char)aChar;
+- componentsSeparatedByString:separator;
 
 - (STR)strcat:(STR)aBuffer;
 - concat:aString;

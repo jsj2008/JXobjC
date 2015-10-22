@@ -75,6 +75,17 @@ typedef void (*ARGIMP) (id, SEL, void *); /* dispatcher */
 #define nil (id)0 /* id of Nil instance */
 #endif
 
+typedef struct _Range
+{
+    size_t location, length;
+} Range;
+
+static inline Range MakeRange (size_t location, size_t length)
+{
+    Range range = {location, length};
+    return range;
+}
+
 /* varargs for _error error reporting
  */
 
