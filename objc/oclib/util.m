@@ -1052,6 +1052,12 @@ id mkclassdef (id keyw, id name, id sname, id protocols, id ivars, id cvars,
         curclassdef = r;
     }
 
+    if (iscategory)
+    {
+        [curclassdef use]; /* ensure it is added to its superclass */
+        [trlunit defcat:curclassdef];
+    }
+
     return r;
 }
 

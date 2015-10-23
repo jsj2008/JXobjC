@@ -37,6 +37,7 @@ extern id trlunit;
     id seldic, selcltn;
     id msgdic, fwdcltn;
     id protocols;
+    id cats;
     char * modname;
     char * modversion;
     char * bindfunname;
@@ -85,6 +86,7 @@ extern id trlunit;
 
 - (BOOL)istypeword:node;
 - (BOOL)isbuiltinfun:node;
+- defcat:cat;
 - defbuiltinfun:node;
 - defbuiltintype:node;
 - def:sym astype:aType;

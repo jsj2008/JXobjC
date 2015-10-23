@@ -958,6 +958,20 @@ id curclassdef;
     return self;
 }
 
+- forcegenintf
+{
+    if (o_shareddata)
+    {
+        gf ("extern id %s %s;\n", o_bind, c_classname);
+    }
+    else
+    {
+        /* with windows DLL's cant use global, must use function */
+        gf ("extern id %s *%s(void);\n", o_bind, globfunname);
+    }
+    return self;
+}
+
 - genintf
 {
     if (emitintf)
@@ -968,16 +982,7 @@ id curclassdef;
     {
         emitintf = YES;
         [self genlineno];
-        if (o_shareddata)
-        {
-            gf ("extern id %s %s;\n", o_bind, c_classname);
-        }
-        else
-        {
-            /* with windows DLL's cant use global, must use function */
-            gf ("extern id %s *%s(void);\n", o_bind, globfunname);
-        }
-        return self;
+        return [self forcegenintf];
     }
 }
 

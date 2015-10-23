@@ -268,7 +268,10 @@ id t_id;
 {
     if (self == t_id)
         return YES;
-    return decl == nil && [specs size] == 1 && [[specs at:0] isid];
+    else if ([self isrefcounted])
+        return YES;
+    else
+        return decl == nil && [specs size] == 1 && [[specs at:0] isid];
 }
 
 - (BOOL)isrefcounted

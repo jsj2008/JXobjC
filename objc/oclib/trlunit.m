@@ -25,11 +25,9 @@
 #include <assert.h>
 #include <ctype.h>
 #include <string.h>
-#ifndef __OBJECT_INCLUDED__
-#define __OBJECT_INCLUDED__
-#include <stdio.h>  /* FILE */
-#include "Object.h" /* Stepstone Object.h assumes #import */
-#endif
+#include <stdio.h> /* FILE */
+#include "Object.h"
+#include "Block.h"
 #include <ocstring.h>
 #include "symbol.h"
 #include <set.h>
@@ -185,6 +183,17 @@ static char * mystrrchr (const char * s, int c)
 - checkbindprologue
 {
     gs ("\nextern char *objcrt_bindError(char *);\n");
+    return self;
+}
+
+- defcat:cat
+{
+    if (!cats)
+    {
+        cats = [OrdCltn new];
+    }
+    if (![cats includes:cat])
+        [cats add:cat];
     return self;
 }
 
@@ -763,6 +772,18 @@ static char * mystrrchr (const char * s, int c)
     else
     {
         [self genocu];
+    }
+
+    if (cats)
+    {
+        gs ("static void __force_Refs(void) {\n");
+        [cats do:
+              { :each | [each forcegenintf];
+                  gf ("void * %s_f = &%s; %s_f = %s_f;\n", [each c_classname],
+                      [each c_classname], [each c_classname],
+                      [each c_classname]);
+              }];
+        gs ("}\n");
     }
 
     if (o_otb)
