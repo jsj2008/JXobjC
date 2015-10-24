@@ -1,4 +1,3 @@
-
 /*
  * Copyright (c) 1998 David Stes.
  *
@@ -16,7 +15,6 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
  *
- * $Id: assign.m,v 1.4 2001/01/25 19:54:41 stes Exp $
  */
 
 #include "config.h"
@@ -111,6 +109,20 @@
         gc (')');
         return self;
     }
+    // this does not work, due to expr.m:82 (type == nil is sometimes true)
+    /*else
+    {
+    [lhs gen];
+    gs (op);
+    if ([[lhs type] isid] && [[rhs type] isid])
+    {
+        gc ('(');
+        [[lhs type] genabstrtype];
+        gc (')');
+    }
+    [rhs gen];
+    return self;
+    }*/
     return [super gen];
 }
 
