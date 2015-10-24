@@ -6,16 +6,18 @@
 
 @interface Notification : Object
 {
-	String * name;
-	volatile id object;
-	id userInfo;
+    String * name;
+    volatile id object;
+    id userInfo;
 }
-+ (Notification *)notificationWithName:(String*)name object:object;
-+ (Notification *)notificationWithName:(String*)aName
-  object:anObject userInfo:(Dictionary*)userInfo;
++ (Notification *)notificationWithName:(String *)name object:object;
++ (Notification *)notificationWithName:(String *)aName
+                                object:anObject
+                              userInfo:(Dictionary *)userInfo;
 
-- (id)initWithName:(String *)aName object:anObject 
-  userInfo:(Dictionary *)anUserInfo;
+- (id)initWithName:(String *)aName
+            object:anObject
+          userInfo:(Dictionary *)anUserInfo;
 - (String *)notificationName;
 - notificationObject;
 - object;

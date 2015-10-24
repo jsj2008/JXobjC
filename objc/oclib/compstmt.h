@@ -64,6 +64,7 @@ extern id curloopcompound;
 - subblock:subblock;
 - lbrace:lb;
 - rbrace:rb;
+- restype;
 - gen;
 - synth;
 - lookupparm:sym;

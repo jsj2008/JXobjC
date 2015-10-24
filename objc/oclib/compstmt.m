@@ -90,6 +90,8 @@ id curloopcompound;
     return self;
 }
 
+- restype { return restype; }
+
 - (BOOL)iscompstmt { return YES; }
 
 - (int)lineno

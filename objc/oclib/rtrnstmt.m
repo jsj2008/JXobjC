@@ -105,9 +105,15 @@
         gs ("if (_returnflag==0) {_returnflag++;");
         if (expr)
         {
-            gs ("_returnval=");
+            gs ("_returnval=(");
+            if ([compound restype] && [[compound restype] isid])
+            {
+                gc ('(');
+                [[compound restype] genabstrtype];
+                gc (')');
+            }
             [expr gen];
-            gc (';');
+            gs (");");
         }
         if (incretval)
         {

@@ -4,46 +4,37 @@
 
 @implementation Notification
 
-- initWithName:(String *)aName object:anObject 
-  userInfo:(Dictionary *)anUserInfo
+- initWithName:(String *)aName object:anObject userInfo:(Dictionary *)anUserInfo
 {
-    name = [aName copy];
+    name     = [aName copy];
     userInfo = [anUserInfo copy];
-    object = anObject;
+    object   = anObject;
     return self;
 }
 
 - ARC_dealloc
 {
-	name = nil;
-	object = nil;
-	userInfo = nil;
+    name     = nil;
+    object   = nil;
+    userInfo = nil;
     return [super ARC_dealloc];
 }
 
-- (String *)notificationName
-{
-    return name;
-}
+- (String *)notificationName { return name; }
 
 - (STR)name { return [name str]; }
 
-- notificationObject
-{
-    return object;
-}
+- notificationObject { return object; }
 
 - object { return object; }
 
-- (Dictionary *)userInfo
-{
-    return userInfo;
-}
+- (Dictionary *)userInfo { return userInfo; }
 
 - deepCopy
 {
-	return [[[self class] alloc]
-	    initWithName:name object:object userInfo:userInfo];
+    return [[[self class] alloc] initWithName:name
+                                       object:object
+                                     userInfo:userInfo];
 }
 
 @end

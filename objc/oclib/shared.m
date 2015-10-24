@@ -81,7 +81,7 @@
         if (rbrace)
             gl ([rbrace lineno], [[rbrace filename] str]);
         gf ("%s=", s);
-		gf ("iddecref((id)%s);\n", s);
+        gf ("iddecref((id)%s);\n", s);
     }
     gc ('\n');
     return self;
@@ -154,8 +154,8 @@
         {
             char * s = [x str];
             gf ("%s->%s=(", hvp, s);
-			[t genabstrtype];
-			gf (")iddecref((id)%s->%s);\n", hvp, s);
+            [t genabstrtype];
+            gf (")iddecref((id)%s->%s);\n", hvp, s);
         }
     }
     return self;

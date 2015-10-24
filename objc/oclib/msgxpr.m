@@ -229,7 +229,7 @@ id msgwraps; /* VICI */
 {
     id t = [self tmpvar];
 
-    gf ("%s=", [t str]);
+    gf ("%s=(id)", [t str]);
     [rcvr gen];
     return self;
 }
@@ -238,7 +238,7 @@ id msgwraps; /* VICI */
 {
     id t = [self tmpvar];
 
-    gf ("%s=", [t str]);
+    gf ("%s=(id)", [t str]);
     assert (classdef != nil);
     return (infactory) ? [classdef genmetasuper] : [classdef gensuper];
 }

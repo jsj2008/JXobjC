@@ -10,12 +10,12 @@ objcrt_SOURCES = Block.m Exceptn.m Message.m Object.m OutOfMem.m crt.m
 objcrt_s_EXTENDS = objcrt
 objcrt_s_EXTENDS_BY = appending
 objcrt_s_OBJCFLAGS = -dl -pic
-objcrt_s_DEPS = $(objcrt_1_TARGET)
+objcrt_s_ORDERDEPS = $(objcrt_1_TARGET)
 
 objcrtr_EXTENDS = objcrt
 objcrtr_EXTENDS_BY = appending
 objcrtr_OBJCFLAGS = -refcnt -DOBJC_REFCNT=1
-objcrtr_DEPS = $(objcrt_s_1_TARGET)
+objcrtr_ORDERDEPS = $(objcrt_s_1_TARGET)
 
 objcrthdr_INST = include/objcrt/
 objcrthdr_IFFLAGS = -m 644

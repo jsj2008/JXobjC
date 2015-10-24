@@ -1431,10 +1431,11 @@ id mkrefmeth (id classdef, id ivarnames, id ivartypes, id ssel, id sfun)
         {
             if ([[ivartypes at:i] isid])
             {
-                id e = mkidentexpr ([ivarnames at:i]);
+                id e  = mkidentexpr ([ivarnames at:i]);
+                id fn = mkfuncall (f, mklist (nil, mkcastexpr (t_id, e)));
 
                 [s add:mkexprstmtx (mkassignexpr (
-                           e, "=", mkfuncall (f, mklist (nil, e))))];
+                           e, "=", mkcastexpr ([ivartypes at:i], fn)))];
             }
         }
         [s add:mkreturnx (
