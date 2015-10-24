@@ -6,22 +6,22 @@ LIBRARIES += objpak objpakr objpak_s
 
 objpak_TEMPLATE = OBJC
 objpak_SOURCES = badvers.m notfound.m octext.m rectangl.m sortcltn.m \
-    typeinc.m bag.m dictnary.m objgraph.m ordcltn.m runarray.m stack.m \
+    typeinc.m bag.m Dictionary.m objgraph.m OrdCltn.m runarray.m stack.m \
     unknownt.m array.m bagseq.m idarray.m outofbnd.m sequence.m \
     treeseq.m valueseq.m ascfiler.m cltn.m intarray.m paragrph.m \
-    set.m txtattr.m assoc.m cltnseq.m keyseq.m ocstring.m point.m \
+    set.m txtattr.m assoc.m cltnseq.m keyseq.m OCString.m point.m \
     setseq.m txtstyle.m Number.m Obj+KVC.m
 objpak_INCS = $(PATH_SUB_CURRENT)/hdr $(INTERNAL_INCS)
 
 objpak_s_EXTENDS = objpak
 objpak_s_EXTENDS_BY = appending
 objpak_s_OBJCFLAGS = -dl -pic
-objpak_s_DEPS = $(objpak_1_TARGET)
+objpak_s_ORDERDEPS = $(objpak_1_TARGET)
 
 objpakr_EXTENDS = objpak
 objpakr_EXTENDS_BY = appending
 objpakr_OBJCFLAGS = -refcnt -DOBJC_REFCNT=1
-objpakr_DEPS = $(objpak_s_1_TARGET)
+objpakr_ORDERDEPS = $(objpak_s_1_TARGET)
 
 objpakhdr_INST = include/objpak/
 objpakhdr_IFFLAGS = -m 644

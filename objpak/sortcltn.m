@@ -26,10 +26,10 @@
 #include "sortcltn.h"
 #include "treeseq.h"
 #include "set.h"
-#include "ordcltn.h"
+#include "OrdCltn.h"
 #include "ascfiler.h"
 #include "sequence.h"
-#include "ocstring.h"
+#include "OCString.h"
 #if OBJC_BLOCKS
 #include "Block.h"
 #endif

@@ -24,7 +24,7 @@
 #include <assert.h>
 #include <stdlib.h>
 #include "cltnseq.h"
-#include "ordcltn.h"
+#include "OrdCltn.h"
 
 @implementation CollectionSequence
 

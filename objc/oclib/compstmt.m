@@ -21,10 +21,10 @@
 #include <string.h>
 #include <stdio.h> /* FILE */
 #include "Object.h"
-#include <ocstring.h>
-#include <ordcltn.h>
+#include <OCString.h>
+#include <OrdCltn.h>
 #include <set.h>
-#include <dictnary.h>
+#include <Dictionary.h>
 #include "node.h"
 #include "decl.h"
 #include "symbol.h"

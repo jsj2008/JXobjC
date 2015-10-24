@@ -24,7 +24,7 @@
 #include <stdlib.h>
 #include "cltn.h"
 #include "set.h"
-#include "ordcltn.h"
+#include "OrdCltn.h"
 #include "sequence.h"
 #if OBJC_BLOCKS
 #include "Block.h"

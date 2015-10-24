@@ -28,7 +28,7 @@
 #include "notfound.h"
 #include "outofbnd.h"
 #include "txtattr.h"
-#include "ordcltn.h"
+#include "OrdCltn.h"
 #include "intarray.h"
 
 @implementation RunArray

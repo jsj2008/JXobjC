@@ -27,8 +27,8 @@
 #include <stdio.h>  /* FILE */
 #include "Object.h" /* Stepstone Object.h assumes #import */
 #endif
-#include <ocstring.h>
-#include <dictnary.h>
+#include <OCString.h>
+#include <Dictionary.h>
 #include "node.h"
 #include "type.h"
 #include "stkframe.h"

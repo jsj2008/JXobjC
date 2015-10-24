@@ -21,12 +21,12 @@
  */
 
 #include "config.h"
-#include "dictnary.h"
+#include "Dictionary.h"
 #include "assoc.h"
 #include "keyseq.h"
 #include "valueseq.h"
 #include "notfound.h"
-#include "ocstring.h"
+#include "OCString.h"
 #include "sequence.h"
 #include "set.h"
 

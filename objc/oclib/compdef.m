@@ -28,8 +28,8 @@
 #include <stdio.h>  /* FILE */
 #include "Object.h" /* Stepstone Object.h assumes #import */
 #endif
-#include <ordcltn.h>
-#include <ocstring.h>
+#include <OrdCltn.h>
+#include <OCString.h>
 #include "node.h"
 #include "symbol.h"
 #include "compdef.h"

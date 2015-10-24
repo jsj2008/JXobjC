@@ -24,7 +24,7 @@
 
 #include "config.h"
 #include "outofbnd.h"
-#include "ocstring.h"
+#include "OCString.h"
 
 @implementation OutOfBounds
 - (unsigned)size { return size; }

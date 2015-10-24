@@ -24,7 +24,7 @@
 
 #include "config.h"
 #include "ascfiler.h"
-#include "ordcltn.h"
+#include "OrdCltn.h"
 #include "unknownt.h"
 #include "badvers.h"
 #include "typeinc.h"

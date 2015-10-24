@@ -24,7 +24,7 @@
 
 #include "config.h"
 #include "typeinc.h"
-#include "ocstring.h"
+#include "OCString.h"
 
 @implementation TypeInconsistency
 - (char)gotChar { return gotChar; }

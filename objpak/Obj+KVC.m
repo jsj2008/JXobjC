@@ -1,6 +1,8 @@
+/* Copyright (c) 2015 D. Mackay. All rights reserved. */
+
 #include <ctype.h>
 
-#import "ocstring.h"
+#import "OCString.h"
 #import "Obj+KVC.h"
 
 @implementation Object (KeyValueCoding)

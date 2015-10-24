@@ -26,7 +26,7 @@
 #include <stdlib.h>
 #include "idarray.h"
 #include "outofbnd.h"
-#include "ocstring.h"
+#include "OCString.h"
 #include "ascfiler.h"
 
 #define DEFAULT_CAPACITY (16)

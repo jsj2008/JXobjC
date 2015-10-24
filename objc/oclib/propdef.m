@@ -3,8 +3,8 @@
 #include <assert.h>
 #include <Object.h>
 #include <Block.h>
-#include <ocstring.h>
-#include <ordcltn.h>
+#include <OCString.h>
+#include <OrdCltn.h>
 #include "util.h"
 #include "symbol.h"
 #include "node.h"

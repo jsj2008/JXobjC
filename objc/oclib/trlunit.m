@@ -28,12 +28,12 @@
 #include <stdio.h> /* FILE */
 #include "Object.h"
 #include "Block.h"
-#include <ocstring.h>
+#include <OCString.h>
 #include "symbol.h"
 #include <set.h>
-#include <ordcltn.h>
+#include <OrdCltn.h>
 #include <sequence.h>
-#include <dictnary.h>
+#include <Dictionary.h>
 #include <sortcltn.h>
 #include "node.h"
 #include "expr.h"

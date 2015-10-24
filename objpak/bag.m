@@ -22,10 +22,10 @@
 #include <stdlib.h>
 #include "bag.h"
 #include "bagseq.h"
-#include "ordcltn.h"
+#include "OrdCltn.h"
 #include "set.h"
 #include "sequence.h"
-#include "ocstring.h"
+#include "OCString.h"
 #include "ascfiler.h"
 #if OBJC_BLOCKS
 #include "Block.h"

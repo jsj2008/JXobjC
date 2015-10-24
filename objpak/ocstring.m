@@ -21,10 +21,10 @@
 #include <ctype.h>
 #include <stdlib.h>
 #include "array.h"
-#include "ocstring.h"
+#include "OCString.h"
 #include "outofbnd.h"
 #include "ascfiler.h"
-#include "ordcltn.h"
+#include "OrdCltn.h"
 
 #define DEFAULT_CAPACITY (16)
 #define SPRINTF_BUFSIZE (4096)

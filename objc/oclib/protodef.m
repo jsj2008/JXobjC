@@ -7,10 +7,10 @@
 #include <stdio.h> /* FILE */
 #include "Object.h"
 #include "Block.h"
-#include <ocstring.h>
-#include <ordcltn.h>
+#include <OCString.h>
+#include <OrdCltn.h>
 #include <set.h>
-#include <dictnary.h>
+#include <Dictionary.h>
 #include "node.h"
 #include "symbol.h"
 #include "selector.h"

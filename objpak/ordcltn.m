@@ -24,12 +24,12 @@
 #include <assert.h>
 #include <string.h>
 #include <stdlib.h>
-#include "ordcltn.h"
+#include "OrdCltn.h"
 #include "cltnseq.h"
 #include "set.h"
 #include "sequence.h"
 #include "ascfiler.h"
-#include "ocstring.h"
+#include "OCString.h"
 #if OBJC_BLOCKS
 #include "Block.h"
 #endif

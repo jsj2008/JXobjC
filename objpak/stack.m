@@ -19,7 +19,7 @@
 #include "config.h"
 #include "stack.h"
 #include "set.h"
-#include "ordcltn.h"
+#include "OrdCltn.h"
 #include "ascfiler.h"
 #if OBJC_BLOCKS
 #include "Block.h"

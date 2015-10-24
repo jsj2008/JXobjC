@@ -30,8 +30,8 @@
 #include <stdio.h>  /* FILE */
 #include "Object.h" /* Stepstone Object.h assumes #import */
 #endif
-#include <ocstring.h>
-#include <ordcltn.h>
+#include <OCString.h>
+#include <OrdCltn.h>
 #include "node.h"
 #include "symbol.h"
 #include "options.h"

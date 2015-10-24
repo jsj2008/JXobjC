@@ -1,7 +1,7 @@
 
 /*
  * Portable Object Compiler (c) 1997,98,99,2003.  All Rights Reserved.
- * $Id: ordcltn.h,v 1.6 2004/10/23 15:53:40 stes Exp $
+ * $Id: OrdCltn.h,v 1.6 2004/10/23 15:53:40 stes Exp $
  */
 
 /*

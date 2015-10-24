@@ -23,7 +23,7 @@
 #include <stdio.h> /* FILE */
 #include "Object.h"
 #include "Block.h"
-#include "ocstring.h"
+#include "OCString.h"
 
 #include "options.h"
 #include "node.h"

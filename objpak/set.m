@@ -23,8 +23,8 @@
 #include "set.h"
 #include "setseq.h"
 #include "ascfiler.h"
-#include "ordcltn.h"
-#include "ocstring.h"
+#include "OrdCltn.h"
+#include "OCString.h"
 #include "sequence.h"
 #if OBJC_BLOCKS
 #include "Block.h"

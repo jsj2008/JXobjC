@@ -24,7 +24,7 @@
 
 #include "config.h"
 #include "badvers.h"
-#include "ocstring.h"
+#include "OCString.h"
 
 @implementation BadVersion
 - (int)goodVersion { return goodVersion; }

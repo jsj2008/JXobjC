@@ -27,7 +27,7 @@
 #include <stdio.h>  /* FILE */
 #include "Object.h" /* Stepstone Object.h assumes #import */
 #endif
-#include <ordcltn.h>
+#include <OrdCltn.h>
 #include "node.h"
 #include "enumsp.h"
 #include "enumtor.h"

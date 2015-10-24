@@ -26,7 +26,7 @@
 #include "intarray.h"
 #include "outofbnd.h"
 #include "ascfiler.h"
-#include "ocstring.h" /* OCMalloc */
+#include "OCString.h" /* OCMalloc */
 
 #define DEFAULT_CAPACITY (16)
 

@@ -23,7 +23,7 @@
 #ifndef __TEXTSTYLE_H__
 #define __TEXTSTYLE_H__
 
-#include "ocstring.h"
+#include "OCString.h"
 
 @interface TextStyle : String
 {

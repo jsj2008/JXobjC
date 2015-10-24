@@ -21,7 +21,7 @@
 #include <ctype.h>
 #include <stdlib.h>
 #include "octext.h"
-#include "ocstring.h"
+#include "OCString.h"
 #include "outofbnd.h"
 #include "runarray.h"
 #include "txtattr.h"

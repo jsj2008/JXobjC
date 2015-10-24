@@ -44,8 +44,8 @@
 
 #include "ascfiler.h"
 #include "cltn.h"
-#include "ordcltn.h"
-#include "dictnary.h"
+#include "OrdCltn.h"
+#include "Dictionary.h"
 #include "rectangl.h"
 #include "outofbnd.h"
 #include "notfound.h"
@@ -57,7 +57,7 @@
 #include "stack.h"
 #include "sequence.h"
 #include "sortcltn.h"
-#include "ocstring.h" /* avoid confusion with string.h */
+#include "OCString.h" /* avoid confusion with string.h */
 #include "point.h"
 #include "array.h"
 #include "idarray.h"

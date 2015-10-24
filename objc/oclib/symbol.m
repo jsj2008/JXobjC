@@ -28,7 +28,7 @@
 #define __OBJECT_INCLUDED__
 #include "Object.h" /* Stepstone Object.h assumes #import */
 #endif
-#include <ocstring.h>
+#include <OCString.h>
 #include "symbol.h"
 #include "node.h"
 #include "options.h"

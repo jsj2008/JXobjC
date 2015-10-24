@@ -30,8 +30,8 @@
 #endif
 #include "Block.h"
 #include "node.h"
-#include <ordcltn.h>
-#include <ocstring.h>
+#include <OrdCltn.h>
+#include <OCString.h>
 #include "symbol.h"
 #include "cppdirec.h"
 #include "util.h"

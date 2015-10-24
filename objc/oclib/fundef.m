@@ -28,8 +28,8 @@
 #include <stdio.h>  /* FILE */
 #include "Object.h" /* Stepstone Object.h assumes #import */
 #endif
-#include <ocstring.h>
-#include <ordcltn.h>
+#include <OCString.h>
+#include <OrdCltn.h>
 #include "node.h"
 #include "def.h"
 #include "symbol.h"
@@ -170,7 +170,7 @@
         gs ((o_cplus) ? "extern \"C\"" : "extern");
         gs (" void *_OBJCBIND_ascfiler(void);\n");
         gs ((o_cplus) ? "extern \"C\"" : "extern");
-        gs (" void *_OBJCBIND_ocstring(void);\n");
+        gs (" void *_OBJCBIND_OCString(void);\n");
         if (!o_postlink)
             [trlunit usesentry:[Symbol str:"AsciiFiler"]];
         if (!o_postlink)
@@ -184,7 +184,7 @@
     if (o_filer)
     {
         gs ("_OBJCBIND_ascfiler();\n");
-        gs ("_OBJCBIND_ocstring();\n");
+        gs ("_OBJCBIND_OCString();\n");
     }
     if (!o_cache)
     {

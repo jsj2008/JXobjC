@@ -1,10 +1,6 @@
-
 /*
  * Portable Object Compiler - Fix WATCOM cpp output.
- * $Id: fixwcpp.m,v 1.1.1.1 2000/06/07 21:09:25 stes Exp $
- */
-
-/*
+ *
  * This library is free software; you can redistribute it and/or modify it
  * under the terms of the GNU Library General Public License as published
  * by the Free Software Foundation; either version 2 of the License, or
@@ -37,7 +33,7 @@
 
 #include <stdio.h>
 #include <stdlib.h>
-#include "ocstring.h"
+#include "OCString.h"
 
 /* translate line continuation sequences (trailing \ + nl/cr) */
 

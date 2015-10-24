@@ -1,7 +1,7 @@
 
 /*
  * Portable Object Compiler (c) 1997,98.  All Rights Reserved.
- * $Id: dictnary.h,v 1.4 2009/10/23 19:36:43 stes Exp $
+ * $Id: Dictionary.h,v 1.4 2009/10/23 19:36:43 stes Exp $
  */
 
 /*
