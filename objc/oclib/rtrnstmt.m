@@ -111,7 +111,7 @@
         }
         if (incretval)
         {
-            gs ("idincref(_returnval);");
+            gs ("idincref((id)_returnval);");
         }
         gf ("goto %s;}", [label str]);
     }

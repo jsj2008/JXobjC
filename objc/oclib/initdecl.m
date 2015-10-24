@@ -105,7 +105,7 @@
     else
     {
         if (incref)
-            gs ("idincref("); /* just like in assignment */
+            gs ("idincref((id)"); /* just like in assignment */
         [initializer gen];
         if (incref)
             gc (')');

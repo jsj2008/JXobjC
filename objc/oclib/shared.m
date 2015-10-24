@@ -1,4 +1,3 @@
-
 /*
  * Copyright (c) 1998,1999,2000 David Stes.
  *
@@ -16,7 +15,6 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
  *
- * $Id: shared.m,v 1.1.1.1 2000/06/07 21:09:26 stes Exp $
  */
 
 /* some methods to which both compound statement and block expr respond */
@@ -55,7 +53,7 @@
     {
         if (lbrace)
             gl ([lbrace lineno], [[lbrace filename] str]);
-        gf ("idincref(%s);\n", [[increfs at:i] str]);
+        gf ("idincref((id)%s);\n", [[increfs at:i] str]);
     }
     gc ('\n');
     return self;
@@ -82,7 +80,8 @@
 
         if (rbrace)
             gl ([rbrace lineno], [[rbrace filename] str]);
-        gf ("%s=iddecref(%s);\n", s, s);
+        gf ("%s=", s);
+		gf ("iddecref((id)%s);\n", s);
     }
     gc ('\n');
     return self;
@@ -154,7 +153,9 @@
         if ([t isid])
         {
             char * s = [x str];
-            gf ("%s->%s=iddecref(%s->%s);\n", hvp, s, hvp, s);
+            gf ("%s->%s=(", hvp, s);
+			[t genabstrtype];
+			gf (")iddecref((id)%s->%s);\n", hvp, s);
         }
     }
     return self;
