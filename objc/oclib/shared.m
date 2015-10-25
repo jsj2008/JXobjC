@@ -37,10 +37,12 @@
     return self;
 }
 
-- addincref:v
+- addincref:v withType:t
 {
     if (!increfs)
         increfs = [OrdCltn new];
+    if (!increfts)
+        increfts = [OrdCltn new];
     [increfs add:v];
     return self;
 }
@@ -59,14 +61,17 @@
     return self;
 }
 
-- adddecref:v
+- adddecref:v withType:t
 {
     if (!decrefs)
         decrefs = [OrdCltn new];
+    if (!decrefts)
+        decrefts = [OrdCltn new];
     [decrefs add:v];
+    [decrefts add:t];
     /* get this to be added to both curcompound and stmt of for(;;) */
     if (curloopcompound && self != curloopcompound)
-        [curloopcompound adddecref:v];
+        [curloopcompound adddecref:v withType:t];
     return self;
 }
 
@@ -80,8 +85,9 @@
 
         if (rbrace)
             gl ([rbrace lineno], [[rbrace filename] str]);
-        gf ("%s=", s);
-        gf ("iddecref((id)%s);\n", s);
+        gf ("%s=(", s);
+        [[decrefts at:i] genabstrtype];
+        gf (")iddecref((id)%s);\n", s);
     }
     gc ('\n');
     return self;

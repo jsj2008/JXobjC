@@ -1,4 +1,3 @@
-
 /*
  * Copyright (c) 1998 David Stes.
  *
@@ -16,7 +15,6 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
  *
- * $Id: compstmt.h,v 1.2 2003/09/29 16:52:05 stes Exp $
  */
 
 extern id curcompound;
@@ -46,6 +44,7 @@ extern id curloopcompound;
     id heapvarblocks;
     id restype;
     id increfs, decrefs;
+    id increfts, decrefts;
     id lock, unlock;
     BOOL bracedgroup;
     BOOL needreturnflag;

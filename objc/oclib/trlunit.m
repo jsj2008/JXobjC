@@ -15,7 +15,6 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
  *
- * $Id: trlunit.m,v 1.4 2000/08/19 21:34:40 stes Exp $
  */
 
 #include "config.h"

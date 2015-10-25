@@ -1,4 +1,3 @@
-
 /*
  * Copyright (c) 1998 David Stes.
  *
@@ -16,7 +15,6 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
  *
- * $Id: shared.h,v 1.1.1.1 2000/06/07 21:09:26 stes Exp $
  */
 
 /* methods to which both compound stmt and block expr respond */
@@ -25,9 +23,9 @@
 - addtmpvar:v;
 - addicache:v;
 
-- addincref:v;
+- addincref:v withType:t;
 - genincrefs;
-- adddecref:v;
+- adddecref:v withType:t;
 - gendecrefs;
 
 - lookuplocal:sym;

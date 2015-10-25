@@ -1,4 +1,3 @@
-
 /*
  * Copyright (c) 1998 David Stes.
  *
@@ -16,7 +15,6 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
  *
- * $Id: blockxpr.m,v 1.1.1.1 2000/06/07 21:09:25 stes Exp $
  */
 
 #include "config.h"
@@ -195,24 +193,27 @@
 
         refvar = [trlunit gettmpvar];
         [curcompound addtmpvar:refvar];
-        [curcompound adddecref:refvar];
+        [curcompound adddecref:refvar withType:t_id];
         for (i = 0, n = [parmnames size]; i < n; i++)
         {
             id x = [parmnames at:i];
+            id t = [self lookupparm:x];
 
-            if ([[self lookupparm:x] isid] /* always true */)
+            if ([t isid] /* always true */)
             {
-                [self addincref:x];
-                [self adddecref:x];
+                [self addincref:x withType:t];
+                [self adddecref:x withType:t];
             }
         }
         for (i = 0, n = [locals size]; i < n; i++)
         {
             id x = [locals at:i];
+            id t = [self lookuplocal:x];
 
-            if ([[self lookuplocal:x] isid] && ![self isheapvar:x])
+            if ([t isid] && ![self isheapvar:x])
             {
-                [self adddecref:x]; /* works since all locals are nil'ed */
+                [self adddecref:x
+                       withType:t]; /* works since all locals are nil'ed */
             }
         }
     }

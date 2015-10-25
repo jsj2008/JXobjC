@@ -201,11 +201,12 @@ id curloopcompound;
             for (i = 0, n = [parmnames size]; i < n; i++)
             {
                 id x = [parmnames at:i];
+                id t = [curdef lookupparm:x];
 
-                if ([[curdef lookupparm:x] isid])
+                if ([t isid])
                 {
-                    [self addincref:x];
-                    [self adddecref:x];
+                    [self addincref:x withType:t];
+                    [self adddecref:x withType:t];
                 }
             }
         }
@@ -225,10 +226,12 @@ id curloopcompound;
         for (i = 0, n = [locals size]; i < n; i++)
         {
             id x = [locals at:i];
+            id t = [self lookuplocal:x];
 
-            if ([[self lookuplocal:x] isid] && ![self isheapvar:x])
+            if ([t isid] && ![self isheapvar:x])
             {
-                [self adddecref:x]; /* works since all locals are nil'ed */
+                [self adddecref:x
+                       withType:t]; /* works since all locals are nil'ed */
             }
         }
 

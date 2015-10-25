@@ -1,4 +1,3 @@
-
 /*
  * Copyright (c) 1998,1999 David Stes.
  *
@@ -16,7 +15,6 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
  *
- * $Id: funcall.m,v 1.1.1.1 2000/06/07 21:09:25 stes Exp $
  */
 
 #include "config.h"
@@ -99,7 +97,7 @@
     {
         refvar = [trlunit gettmpvar];
         [curcompound addtmpvar:refvar];
-        [curcompound adddecref:refvar];
+        [curcompound adddecref:refvar withType:t_id];
     }
     return self;
 }
