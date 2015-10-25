@@ -21,11 +21,8 @@
 #include <stdlib.h>
 #include <assert.h>
 #include <string.h>
-#ifndef __OBJECT_INCLUDED__
-#define __OBJECT_INCLUDED__
-#include <stdio.h>  /* FILE */
-#include "Object.h" /* Stepstone Object.h assumes #import */
-#endif
+#include <stdio.h> /* FILE */
+#include "Object.h"
 #include <OCString.h>
 #include <OrdCltn.h>
 #include <set.h>
@@ -174,6 +171,8 @@
         [datadefs elementsPerform:_cmd];
     if (stmts)
         [stmts elementsPerform:_cmd];
+    if (!expr)
+        expr = e_nil;
     if (expr)
         [expr synth];
     numparms    = (parms) ? [parms size] : 0;

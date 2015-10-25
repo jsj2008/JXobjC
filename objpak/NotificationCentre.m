@@ -109,6 +109,14 @@
     return block ? [block hash] : ((uintptr_t)object ^ (uintptr_t)selector);
 }
 
+- (void)_dispatch:(Notification *)notification
+{
+    if (block)
+        [block value:(id)notification];
+    else
+        [object perform:selector with:(id)notification];
+}
+
 - _matchesObjOrBlock:objorblock
 {
     if (block == objorblock || object == objorblock)
@@ -141,7 +149,42 @@
     return [super ARC_dealloc];
 }
 
-- (void)postNotification:(Notification *)notification {}
+- (void)_postNotification:(Notification *)notification
+                     name:(String *)name
+                   object:sender
+{
+    id key = [_ObserverDictEntry _keyWithName:name object:sender];
+    id set = [observers atKey:key];
+    [set elementsPerform:@selector (_dispatch:) with:(id)notification];
+}
+
+- (void)postNotification:(Notification *)note
+{
+    id object     = [note object];
+    String * name = [note notificationName];
+
+    [self _postNotification:note name:name object:object];
+    [self _postNotification:note name:name object:nil];
+    [self _postNotification:note name:(String *)nil object:object];
+    [self _postNotification:note name:(String *)nil object:nil];
+}
+
+- (void)postNotificationName:(String *)name object:object
+{
+    Notification * note =
+        [Notification notificationWithName:name object:object];
+    [self postNotification:note];
+}
+
+- (void)postNotificationName:(String *)name
+                      object:object
+                    userInfo:(Dictionary *)userInfo
+{
+    Notification * note = [Notification notificationWithName:name
+                                                      object:object
+                                                    userInfo:userInfo];
+    [self postNotification:note];
+}
 
 - (void)addObserver:observer
            selector:(SEL)selector
