@@ -7,8 +7,7 @@
 
 @interface NotificationCentre : Object
 {
-    Dictionary * objects;
-    id nullObjects;
+    Dictionary * nameToObserverDict;
 }
 : {
 	id defaultCentre;
