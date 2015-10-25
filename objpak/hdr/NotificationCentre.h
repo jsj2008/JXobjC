@@ -7,7 +7,7 @@
 
 @interface NotificationCentre : Object
 {
-    Dictionary * nameToObserverDict;
+    Dictionary * observers;
 }
 : {
 	id defaultCentre;
@@ -26,8 +26,8 @@
 - (void)addObserver:observer
            selector:(SEL)selector
                name:(String *)name
-             object:object;
-- (void)removeObserver:observer name:(String *)name object:object;
+             sender:object;
+- (void)removeObserver:observer name:(String *)name object:sender;
 - (void)removeObserver:observer;
 
 @end

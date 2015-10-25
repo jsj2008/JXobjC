@@ -1,59 +1,120 @@
 /* Copyright (c) 2015 D. Mackay. All rights reserved. */
 
+#include <stdint.h>
+
 #import "Block.h"
 #import "NotificationCentre.h"
 #import "set.h"
 
-@interface _Observer : Object
+@interface _ObserverDictEntry : Object
 {
-    /* The object that receives the notification. */
+    /* The name of the notification. */
+    String * name;
+    /* The object that sent the notification. */
     volatile id object;
-    /* The senders from which the notification should be from.
-     * If the sender of a notification is in this list, then
-     * the notification is sent. */
-    Set * senders;
-    SEL selector;
 }
 
-- initWithObject:_object selector:(SEL)_selector sender:_sender
+- _initWithName:_name object:_object
 {
-    [super init];
-    object   = _object;
-    selector = _selector;
-    senders  = [[Set new] add:_sender];
+    [self init];
+    name   = _name;
+    object = _object;
     return self;
 }
 
-+ observerWithObject:_object selector:(SEL)_selector sender:_sender
++ _keyWithName:_name object:_object
 {
-    return
-        [[self alloc] initWithObject:_object selector:_selector sender:_sender];
+    return [[self alloc] _initWithName:_name object:_object];
 }
 
 - ARC_dealloc
 {
-    object  = nil;
-    senders = nil;
+    name   = nil;
+    object = nil;
     return [super ARC_dealloc];
 }
 
-- addAcceptedSender:sender
+- (BOOL)isEqual:anObject
 {
-    [senders add:sender];
+    _ObserverDictEntry * otherObject;
+    if (![anObject isKindOf:_ObserverDictEntry])
+        return NO;
+    otherObject = anObject;
+    if ((otherObject->name == name || [otherObject->name isEqual:(id)name]) &&
+        otherObject->object == object)
+        return YES;
+    else
+        return NO;
+}
+
+- (unsigned)hash { return ((uintptr_t)object ^ (uintptr_t)[name hash]); }
+
+@end
+
+@interface _ObserverDictValue : Object
+{
+    /* Option one: an object and a selector */
+    volatile id object;
+    SEL selector;
+    /* Option two: a block. */
+    id block;
+}
+
+- initWithObject:_object selector:(SEL)_selector
+{
+    [super init];
+    object   = _object;
+    selector = _selector;
     return self;
 }
 
-- removeAcceptedSender:sender
+- initWithBlock:_block
 {
-    [senders remove:sender];
+    [super init];
+    block = _block;
     return self;
 }
 
-- (void)postNotification:(Notification *)notification
++ _valueWithBlock:_block { return [[self alloc] initWithBlock:_block]; }
+
++ _valueWithObject:_object selector:(SEL)_selector
 {
-    if ([senders contains:[notification object]] || [senders contains:nil] ||
-        !senders)
-        [object perform:selector with:(id)notification];
+    return [[self alloc] initWithObject:_object selector:_selector];
+}
+
+- ARC_dealloc
+{
+    object = nil;
+    block  = nil;
+    return [super ARC_dealloc];
+}
+
+- (BOOL)isEqual:anObject
+{
+    _ObserverDictValue * otherObject;
+    if (![anObject isKindOf:_ObserverDictValue])
+        return NO;
+    otherObject = anObject;
+    if (object && otherObject->object == object &&
+        otherObject->selector == selector)
+        return YES;
+    else if (block && otherObject->block == block)
+        return YES;
+    else
+        return NO;
+}
+
+- (unsigned)hash
+{
+    return block ? [block hash] : ((uintptr_t)object ^ (uintptr_t)selector);
+}
+
+- _matchesObjOrBlock:objorblock
+{
+    if (block == objorblock || object == objorblock)
+        return self;
+    else
+        return nil;
 }
 
 @end
@@ -70,50 +131,65 @@
 - init
 {
     [super init];
-    nameToObserverDict = [Dictionary new];
+    observers = [Dictionary new];
     return self;
 }
 
 - ARC_dealloc
 {
-    nameToObserverDict = nil;
+    observers = nil;
     return [super ARC_dealloc];
 }
 
-- (void)postNotification:(Notification *)notification
-{
-    id val = [nameToObserverDict atKey:[notification notificationName]];
-    [val keysDo:
-         {
-        :each | [val postNotification:notification];
-         }];
-}
+- (void)postNotification:(Notification *)notification {}
 
 - (void)addObserver:observer
            selector:(SEL)selector
                name:(String *)name
-             object:sender
+             sender:sender
 {
-    id obsDict = [nameToObserverDict atKey:name], obs;
-    if (obsDict)
+    id key    = [_ObserverDictEntry _keyWithName:name object:sender];
+    id theSet = [observers atKey:key];
+
+    if (!theSet)
     {
-        if ((obs = [obsDict atKey:observer]))
-            [obs addAcceptedSender:sender];
-        else
-            [obsDict atKey:observer
-                       put:[_Observer observerWithObject:observer
-                                                selector:selector
-                                                  sender:sender]];
+        theSet = [Set new];
+        [observers atKey:key put:theSet];
     }
-    else
-    {
-        [nameToObserverDict atKey:name put:[Dictionary new]];
-        [[nameToObserverDict atKey:name]
-            atKey:observer
-              put:[_Observer observerWithObject:observer
-                                       selector:selector
-                                         sender:sender]];
-    }
+
+    [theSet
+        add:[_ObserverDictValue _valueWithObject:observer selector:selector]];
+}
+
+- (void)removeObserver:observer name:(String *)name object:sender
+{
+    id key    = [_ObserverDictEntry _keyWithName:name object:sender];
+    id theSet = [observers atKey:key];
+
+    if (!theSet)
+        return;
+
+    [theSet do:
+            { :each | id matched;
+                if ((matched = [each _matchesObjOrBlock:observer]))
+                    [theSet remove:matched];
+            }];
+    if (![theSet size])
+        [observers removeKey:key];
+}
+
+- (void)removeObserver:observer
+{
+    [observers keysDo:
+               { :key | id set = [observers atKey:key];
+                   [set do:
+                        { :each | id matched;
+                            if ((matched = [each _matchesObjOrBlock:observer]))
+                                [set remove:matched];
+                        }];
+                   if (![set size])
+                       [observers removeKey:key];
+               }];
 }
 
 @end
