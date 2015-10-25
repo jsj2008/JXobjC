@@ -112,14 +112,14 @@ id msgwraps; /* VICI */
     if (tmpvar)
         return tmpvar;
     /* tmp var that will hold the receiver (evaluated only once) */
-    return tmpvar = [trlunit gettmpvar];
+    return (tmpvar = [trlunit gettmpvar]);
 }
 
 - icache
 {
     if (icache)
         return icache;
-    return icache = [String sprintf:"objcIC%i", [trlunit icachecount]];
+    return (icache = [String sprintf:"objcIC%i", [trlunit icachecount]]);
 }
 
 - msg { return msg; }

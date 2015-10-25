@@ -24,6 +24,7 @@
     id keyw;
     id expr;
     id compound;
+    id cmpdef;
     BOOL incretval;
 }
 

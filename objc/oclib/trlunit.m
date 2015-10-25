@@ -53,7 +53,7 @@ id trlunit;
     [Symbol commonsymbols];
     [Type commontypes];
     [Expr commonexprs];
-    return trlunit = [super new];
+    return (trlunit = [super new]);
 }
 
 - (int)msgcount { return msgcount++; /* count for tmp variables */ }

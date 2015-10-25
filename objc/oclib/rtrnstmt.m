@@ -36,6 +36,9 @@
 #include "def.h"
 #include "methdef.h"
 #include "stkframe.h"
+#include "binxpr.h"
+#include "dotxpr.h"
+#include "arrowxpr.h"
 
 @implementation ReturnStmt
 
@@ -64,6 +67,7 @@
         }
     }
     [expr synth];
+    cmpdef = curcompound;
     if (o_refcnt)
     {
         if (expr)
@@ -126,7 +130,19 @@
         else
             gs ("return");
         if (expr)
+        {
+            /* FIXME */
+
+            if ([cmpdef restype] && [[cmpdef restype] isid] &&
+                !([expr isKindOf:ArrowExpr] || [expr isKindOf:DotExpr]) &&
+                [[expr type] isid])
+            {
+                gc ('(');
+                [[cmpdef restype] genabstrtype];
+                gc (')');
+            }
             [expr gen];
+        }
         gc (';');
     }
     return self;

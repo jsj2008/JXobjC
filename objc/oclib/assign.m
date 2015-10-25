@@ -78,6 +78,7 @@
         if (isselfassign || [[lhs type] isrefcounted])
             isidassign++;
     }
+    /* FIXME */
     if (((o_refcnt || (![lhs isKindOf:ArrowExpr] && ![lhs isKindOf:DotExpr] &&
                        ![rhs isKindOf:ArrowExpr] && ![rhs isKindOf:DotExpr]))
 
