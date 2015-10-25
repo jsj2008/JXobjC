@@ -79,7 +79,8 @@ id e_ft_id;
     else
     {
         [self typesynth];
-        assert (type != nil);
+        if (type == nil)
+            printf ("[expr.82!|%s] warning: type is nil", [isa str]);
         return type;
     }
 }

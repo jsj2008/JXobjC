@@ -1,4 +1,3 @@
-
 /*
  * Copyright (c) 1998 David Stes.
  *
@@ -16,7 +15,6 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
  *
- * $Id: type.m,v 1.3 2011/06/15 19:06:42 stes Exp $
  */
 
 #include "config.h"

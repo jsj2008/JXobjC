@@ -36,6 +36,8 @@
 #include "classdef.h"
 #include "options.h"
 #include "trlunit.h"
+#include "arrowxpr.h"
+#include "dotxpr.h"
 
 @implementation Assignment
 
@@ -76,6 +78,13 @@
         if (isselfassign || [[lhs type] isrefcounted])
             isidassign++;
     }
+    if (((o_refcnt || (![lhs isKindOf:ArrowExpr] && ![lhs isKindOf:DotExpr] &&
+                       ![rhs isKindOf:ArrowExpr] && ![rhs isKindOf:DotExpr]))
+
+         && [[lhs type] isid] && [[rhs type] isid]) &&
+        ![[lhs type] isEqual:[rhs type]])
+        rcast = [lhs type];
+
     return self;
 }
 
@@ -110,20 +119,18 @@
         return self;
     }
     // this does not work, due to expr.m:82 (type == nil is sometimes true)
-    /*else
+    else if (rcast)
     {
-    [lhs gen];
-    gs (op);
-    if ([[lhs type] isid] && [[rhs type] isid])
-    {
+        [lhs gen];
+        gs (op);
         gc ('(');
-        [[lhs type] genabstrtype];
+        [rcast genabstrtype];
         gc (')');
+        [rhs gen];
+        return self;
     }
-    [rhs gen];
-    return self;
-    }*/
-    return [super gen];
+    else
+        return [super gen];
 }
 
 - go { return [lhs assignvar:[rhs go]]; }

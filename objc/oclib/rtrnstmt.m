@@ -1,4 +1,3 @@
-
 /*
  * Copyright (c) 1998,1999 David Stes.
  *
@@ -16,7 +15,6 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
  *
- * $Id: rtrnstmt.m,v 1.2 2000/09/10 09:18:44 stes Exp $
  */
 
 #include "config.h"

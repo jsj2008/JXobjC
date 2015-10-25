@@ -22,6 +22,7 @@
 @interface Assignment : BinaryExpr
 {
     id classdef;
+    id rcast;
     BOOL isidassign;
     BOOL isselfassign;
 }
