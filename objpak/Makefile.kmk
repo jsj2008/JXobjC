@@ -10,7 +10,9 @@ objpak_SOURCES = badvers.m notfound.m octext.m rectangl.m sortcltn.m \
     unknownt.m array.m bagseq.m idarray.m outofbnd.m sequence.m \
     treeseq.m valueseq.m ascfiler.m cltn.m intarray.m paragrph.m \
     set.m txtattr.m assoc.m cltnseq.m keyseq.m OCString.m point.m \
-    setseq.m txtstyle.m Number.m Obj+KVC.m Notification.m
+    setseq.m txtstyle.m Number.m Obj+KVC.m Notification.m \
+    NotificationCentre.m
+
 objpak_INCS = $(PATH_SUB_CURRENT)/hdr $(INTERNAL_INCS)
 
 objpak_s_EXTENDS = objpak

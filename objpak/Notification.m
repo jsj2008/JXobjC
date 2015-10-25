@@ -4,6 +4,19 @@
 
 @implementation Notification
 
++ (Notification *)notificationWithName:(String *)name object:object
+{
+    return [[self alloc] initWithName:name object:object userInfo:nil];
+}
+
++ (Notification *)notificationWithName:(String *)aName
+                                object:anObject
+                              userInfo:(Dictionary *)anUserInfo
+{
+    return
+        [[self alloc] initWithName:aName object:anObject userInfo:anUserInfo];
+}
+
 - initWithName:(String *)aName object:anObject userInfo:(Dictionary *)anUserInfo
 {
     name     = [aName copy];

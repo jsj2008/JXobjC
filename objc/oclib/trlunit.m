@@ -405,16 +405,17 @@ static char * mystrrchr (const char * s, int c)
 
 - genmodclslst
 {
-    int i, n;
+    int i, n, f;
 
     assert (clsimpls && !o_oneperfile);
     gs ("static id _modClsLst[] ={\n");
+    f = [clsimpls size];
     for (i = 0, n = [clsimpls size]; i < n; i++)
     {
         STR s = [[clsimpls at:i] c_classname];
 
         /* &_Foo is the value of "id Foo := (id)&_Foo" */
-        gf ("(id)&_%s,\n", s);
+        gf ("(id)&%s%s,\n", f > 1 ? "" : "_", s);
     }
     /* must be NULL terminated */
     gs ("(id)0};\n");
