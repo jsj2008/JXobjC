@@ -412,7 +412,7 @@ static char * mystrrchr (const char * s, int c)
     f = [clsimpls size];
     for (i = 0, n = [clsimpls size]; i < n; i++)
     {
-        STR s = [[clsimpls at:i] c_classname];
+        STR s = [[clsimpls at:i] _classname];
 
         /* &_Foo is the value of "id Foo := (id)&_Foo" */
         gf ("(id)&%s%s,\n", f > 1 ? "" : "_", s);

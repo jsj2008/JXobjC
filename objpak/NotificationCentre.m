@@ -189,7 +189,7 @@
 - (void)addObserver:observer
            selector:(SEL)selector
                name:(String *)name
-             sender:sender
+             object:sender
 {
     id key    = [_ObserverDictEntry _keyWithName:name object:sender];
     id theSet = [observers atKey:key];

@@ -26,7 +26,7 @@
 - (void)addObserver:observer
            selector:(SEL)selector
                name:(String *)name
-             sender:object;
+             object:sender;
 - (void)removeObserver:observer name:(String *)name object:sender;
 - (void)removeObserver:observer;
 
