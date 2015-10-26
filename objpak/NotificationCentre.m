@@ -164,9 +164,12 @@
     String * name = [note notificationName];
 
     [self _postNotification:note name:name object:object];
-    [self _postNotification:note name:name object:nil];
-    [self _postNotification:note name:(String *)nil object:object];
-    [self _postNotification:note name:(String *)nil object:nil];
+    if (object != nil)
+        [self _postNotification:note name:name object:nil];
+    if (name != nil)
+        [self _postNotification:note name:(String *)nil object:object];
+    if (name != nil && object != nil)
+        [self _postNotification:note name:(String *)nil object:nil];
 }
 
 - (void)postNotificationName:(String *)name object:object
