@@ -58,14 +58,17 @@
 
 - (unsigned)size { return [collection size]; }
 
-- next { return (offset < [collection size]) ? [collection at:offset++] : nil; }
+- next
+{
+    return ((offset < [collection size]) ? [collection at:offset++] : nil);
+}
 
-- peek { return (offset < [collection size]) ? [collection at:offset] : nil; }
+- peek { return ((offset < [collection size]) ? [collection at:offset] : nil); }
 
 - previous
 {
     assert (offset <= [collection size]);
-    return (0 < offset) ? [collection at:offset - 1] : nil;
+    return ((0 < offset) ? [collection at:offset - 1] : nil);
 }
 
 - first { return [collection firstElement]; }

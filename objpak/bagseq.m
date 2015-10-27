@@ -155,7 +155,7 @@ static int prev (objbag_t self, int i) { return ptrprev (self->ptr, i); }
 static id objbagseq_prev (objbagseq_t self)
 {
     int i = prev (self->set, self->offset);
-    return (i == -1) ? nil : at (self->set, i);
+    return ((i == -1) ? nil : at (self->set, i));
 }
 
 - previous { return objbagseq_prev ([self objbagseqvalue]); }
@@ -163,7 +163,7 @@ static id objbagseq_prev (objbagseq_t self)
 static id objbagseq_first (objbagseq_t self)
 {
     int i = match (self->set, 0);
-    return (i == -1) ? nil : at (self->set, i);
+    return ((i == -1) ? nil : at (self->set, i));
 }
 
 - first { return objbagseq_first ([self objbagseqvalue]); }
@@ -173,7 +173,7 @@ static int last (objbag_t self) { return prev (self, self->capacity); }
 static id objbagseq_last (objbagseq_t self)
 {
     int i = last (self->set);
-    return (i == -1) ? nil : at (self->set, i);
+    return ((i == -1) ? nil : at (self->set, i));
 }
 
 - last { return objbagseq_last ([self objbagseqvalue]); }

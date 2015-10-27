@@ -238,7 +238,7 @@ id msgwraps; /* VICI */
 
     gf ("%s=(id)", [t str]);
     assert (classdef != nil);
-    return (infactory) ? [classdef genmetasuper] : [classdef gensuper];
+    return ((infactory) ? [classdef genmetasuper] : [classdef gensuper]);
 }
 
 - genimpcall:(BOOL)tosuper

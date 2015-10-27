@@ -36,7 +36,7 @@ static pthread_mutexattr_t recursiveAttr;
 #include <gc.h> /* _alloc vectors to use Hans-J. Boehm gc */
 #endif
 
-static pthread_mutex_t allocMtx ()
+static pthread_mutex_t * allocMtx ()
 {
     pthread_mutex_t * mutx = OC_Malloc (sizeof (pthread_mutex_t));
 
@@ -1555,7 +1555,8 @@ BOOL noNilRcvr = NO;
 
 id EXPORT _nilHandler (id self, SEL sel)
 {
-    return (noNilRcvr) ? report (self, "Message '%s' sent to nil.", sel) : nil;
+    return ((noNilRcvr) ? report (self, "Message '%s' sent to nil.", sel)
+                        : nil);
 }
 
 /*****************************************************************************

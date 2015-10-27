@@ -278,13 +278,13 @@ static void clear (objcol_t self)
     return [Sequence over:aCarrier];
 }
 
-static id ptrfirst (id * p, int n) { return (n) ? p[0] : nil; }
+static id ptrfirst (id * p, int n) { return ((n) ? p[0] : nil); }
 
 static id first (objcol_t self) { return ptrfirst (self->ptr, self->count); }
 
 - firstElement { return first ((&value)); }
 
-static id ptrlast (id * p, int n) { return (n) ? p[n - 1] : nil; }
+static id ptrlast (id * p, int n) { return ((n) ? p[n - 1] : nil); }
 
 static id last (objcol_t self) { return ptrlast (self->ptr, self->count); }
 

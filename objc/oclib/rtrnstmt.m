@@ -110,11 +110,13 @@
             gs ("_returnval=(");
             if ([compound restype] && [[compound restype] isid])
             {
-                gc ('(');
+                gs ("((");
                 [[compound restype] genabstrtype];
                 gc (')');
             }
             [expr gen];
+            if ([compound restype] && [[compound restype] isid])
+                gc (')');
             gs (");");
         }
         if (incretval)
@@ -131,17 +133,19 @@
             gs ("return");
         if (expr)
         {
+            short shouldBracket = 0;
             /* FIXME */
-
             if ([cmpdef restype] && [[cmpdef restype] isid] &&
                 !([expr isKindOf:ArrowExpr] || [expr isKindOf:DotExpr]) &&
-                [[expr type] isid])
+                [[expr type] isid] && (shouldBracket = 1))
             {
-                gc ('(');
+                gs ("(");
                 [[cmpdef restype] genabstrtype];
-                gc (')');
+                gs (")(");
             }
             [expr gen];
+            if (shouldBracket == 1)
+                gc (')');
         }
         gc (';');
     }
