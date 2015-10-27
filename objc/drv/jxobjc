@@ -22,7 +22,7 @@ set - $OBJCOPT "$@"
 # Can be set as an environment variable (or with -B)
 #
 
-exprbin=${EXPR-"expr"}
+exprbin=${EXPR-"gexpr"}
 objcdir=${OBJCDIR-/usr/local}
 gcprefix=/usr/local
 

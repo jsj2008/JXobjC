@@ -109,11 +109,13 @@ DBLSUFFIX ([fFlL]{1,3})
 "long"				{ return keyw(typeword); }
 "register"			{ return keyw(storageclass); }
 "return"			{ return keyw(returnkeyw); }
+"_Noreturn"			{ return keyw(typequal); }
 "short"				{ return keyw(typeword); }
 "sizeof"			{ return keyw(sizeofop); }
 "static"			{ return keyw(storageclass); }
 "struct"			{ return keyw(structkeyw); }
 "switch"			{ return keyw(switchkeyw); }
+"_Thread_local"			{ return keyw(storageclass); }
 "typedef"			{ return keyw((o_duptypedefs)?typedefkeyw:storageclass); }
 "union"				{ return keyw(structkeyw); }
 "unsigned"			{ return keyw(typeword); }

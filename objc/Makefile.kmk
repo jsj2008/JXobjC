@@ -7,12 +7,12 @@ PROGRAMS += objc1 postlink fixwcpp
 
 fixwcpp_TEMPLATE = OBJC
 fixwcpp_INCS = $(INTERNAL_INCS)
-fixwcpp_LIBS = $(INTERNAL_LIBS)
+fixwcpp_LIBS = $(INTERNAL_LIBS) pthread
 fixwcpp_SOURCES = drv/fixwcpp.m
 
 objc1_TEMPLATE = OBJC
 objc1_INCS = $(INTERNAL_INCS) $(PATH_OBJ)
-objc1_LIBS = $(oclib_1_TARGET) $(INTERNAL_LIBS)
+objc1_LIBS = $(oclib_1_TARGET) $(INTERNAL_LIBS) pthread
 objc1_SOURCES = $(PATH_OBJ)/yacc.m $(PATH_OBJ)/lex.m objc1.m lexfiltr.m
 objc1_ORDERDEPS = $(PATH_OBJ)/yacc.m $(PATH_OBJ)/lex.m
 objc1_CLEAN = $(PATH_OBJ)/yacc.m $(PATH_OBJ)/lex.m \
@@ -20,7 +20,7 @@ objc1_CLEAN = $(PATH_OBJ)/yacc.m $(PATH_OBJ)/lex.m \
 
 postlink_TEMPLATE = OBJC
 postlink_INCS = $(INTERNAL_INCS)
-postlink_LIBS = $(INTERNAL_LIBS)
+postlink_LIBS = $(INTERNAL_LIBS) pthread
 postlink_SOURCES = postlink.m
 postlink_ORDERDEPS = $(PATH_OUT)/_prelink.o $(PATH_OUT)/_predll.o
 
