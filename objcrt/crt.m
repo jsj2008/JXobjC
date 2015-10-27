@@ -1751,7 +1751,11 @@ void EXPORT fwdmsg (id self, SEL sel, void * args, ARGIMP disp)
     {
         id msg = [Message selector:sel dispatch:disp args:args];
         [self doesNotUnderstand:msg];
+#ifndef OBJC_REFCNT
         msg = [msg free];
+#else
+        msg = iddecref (msg);
+#endif
     }
 }
 
