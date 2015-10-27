@@ -1,4 +1,3 @@
-
 /*
  * Copyright (c) 1998,1999,2000 David Stes.
  *
@@ -16,7 +15,6 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
  *
- * $Id: datadef.m,v 1.1.1.1 2000/06/07 21:09:25 stes Exp $
  */
 
 #include "config.h"
@@ -206,6 +204,7 @@
                     {
                         if (![[d initializer] isconstexpr])
                             [d incref];
+                        [d cast:t];
                     }
                     else
                     {
@@ -213,7 +212,7 @@
                          * (id)0 */
                         if (!isextern && !isstatic && !iskandr)
                         {
-                            d = [[[InitDecl new] decl:d] initnil];
+                            d = [[[InitDecl new] decl:d] initnilWithType:t];
                             [decllist at:i
                                      put:d]; /* make an init : id foo = nil */
                         }

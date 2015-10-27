@@ -33,6 +33,7 @@
 #include "expr.h"
 #include "listxpr.h"
 #include "options.h"
+#include "util.h"
 
 @implementation InitDecl
 
@@ -41,6 +42,12 @@
 - (BOOL)islistinit { return [initializer isKindOf:(id)[ListExpr class]]; }
 
 - (BOOL)isfunproto { return NO; }
+
+- cast:aCast
+{
+    cast = aCast;
+    return self;
+}
 
 - decl { return decl; }
 
@@ -65,6 +72,13 @@
     return self;
 }
 
+- initnilWithType:typ
+{
+    initnil     = YES;
+    initializer = mkcastexpr (typ, e_nil);
+    return self;
+}
+
 - incref
 {
     incref++;
@@ -77,6 +91,7 @@
 
 - synth
 {
+    [cast synth];
     [decl synth];
     [initializer synth];
     return self;
@@ -104,6 +119,12 @@
     }
     else
     {
+        if (cast)
+        {
+            gc ('(');
+            [cast genabstrtype];
+            gc (')');
+        }
         if (incref)
             gs ("idincref((id)"); /* just like in assignment */
         [initializer gen];

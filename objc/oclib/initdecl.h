@@ -21,18 +21,20 @@
 
 @interface InitDecl : Decl
 {
-    id decl, initializer;
+    id decl, initializer, cast;
     BOOL initnil;
     BOOL incref;
 }
 
 - (BOOL)isinit;
 - (BOOL)islistinit;
+- cast:aCast;
 - decl;
 - decl:aDecl;
 - initializer;
 - initializer:anExpr;
 - initnil;
+- initnilWithType:typ;
 - incref;
 - gen;
 

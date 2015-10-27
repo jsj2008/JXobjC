@@ -155,7 +155,7 @@ void gvarlist (id c, char * cm, char * iz)
 
     for (k = 0, n = [c size]; k < n;)
     {
-        gs (cm);
+        gf ("    %s     ", cm);
         for (j = 0; j < NUM_VARS_PER_LINE && k < n; j++, k++)
         {
             if (j)

@@ -34,4 +34,5 @@
 # Building
 out/*
 bld/*
+tmp/*
 *.tar.gz
