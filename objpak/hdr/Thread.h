@@ -2,8 +2,8 @@
 
 #include <pthread.h>
 
-#import <Object.h>
-#import <Dictionary.h>
+#import "Object.h"
+#import "Dictionary.h"
 
 @interface Thread : Object
 {

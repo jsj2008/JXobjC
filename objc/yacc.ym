@@ -58,7 +58,7 @@ int yylex() ;
 
 /* Objective C */
 %token atdefs atselector atinterface atend atencode atrequires atproperty
-%token atprotocol atblkreturn atsynchronised
+%token atprotocol atblkreturn atsynchronised atclass
 %token blockbegin
 %token pcstringlit
 %token propreadonly
@@ -482,6 +482,8 @@ extdef
     { $$ = nil; }
     | namespaceblock
     { $$ = nil; }
+	| atclass identifier ';'
+	{ gf("typedef struct %s_PRIVATE %s;\n", [$2 str], [$2 str]); $$ = nil; }
     ;
 
 externlangblock : externlang '{' '}'
