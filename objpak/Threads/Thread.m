@@ -27,7 +27,22 @@
     [super init];
     pthread_attr_init (&_thrd_attr);
     pthread_attr_setdetachstate (&_thrd_attr, PTHREAD_CREATE_DETACHED);
+    threadDictionary = [Dictionary new];
     return self;
+}
+
+- initWithSelector:(SEL)selector toTarget:target withObject:argument
+{
+    [self init];
+    _selector  = selector;
+    _object    = target;
+    _parameter = argument;
+    return self;
+}
+
++ (void)detachNewThreadSelector:(SEL)sel toTarget:targ withObject:arg
+{
+    [[[Thread alloc] initWithSelector:sel toTarget:targ withObject:arg] start];
 }
 
 - ARC_dealloc
@@ -39,6 +54,7 @@
     return [super ARC_dealloc];
 }
 
++ (BOOL)isMainThread { return mainThread == [Thread currentThread]; }
 + (Thread *)mainThread { return mainThread; };
 + (Thread *)currentThread { return pthread_getspecific (currentThread); }
 + (Dictionary *)threadDictionary
@@ -118,6 +134,15 @@ static void * _threadStart (Thread * thread)
     else if (_object)
         return [_object value];
     return nil;
+}
+
+@end
+
+@implementation Object (Threads)
+
+- (void)performSelectorInBackground:(SEL)selector withObject:object
+{
+    [Thread detachNewThreadSelector:selector toTarget:self withObject:object];
 }
 
 @end

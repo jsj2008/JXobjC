@@ -21,10 +21,11 @@
 @property BOOL isMainThread, isCancelled, isExecuting, isFinished;
 @property Dictionary * threadDictionary;
 
-+ initialize;
-- _initAsMainThread;
-- ARC_dealloc;
++ (void)detachNewThreadSelector:(SEL)selector
+                       toTarget:target
+                     withObject:argument;
 
++ (BOOL)isMainThread;
 + (Thread *)mainThread;
 + (Thread *)currentThread;
 + (Dictionary *)threadDictionary;
@@ -33,5 +34,16 @@
 - (void)cancel;
 - (void)exit;
 - main;
+
+/* private */
++ initialize;
+- _initAsMainThread;
+- ARC_dealloc;
+
+@end
+
+@interface Object (Threads)
+
+- (void)performSelectorInBackground:(SEL)selector withObject:object;
 
 @end
