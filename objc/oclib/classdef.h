@@ -107,6 +107,8 @@ extern id curstruct;
 - synthrefcntmethods;
 - synthpropmethods;
 
+- (BOOL)forcegenintf;
+
 - gen;
 - genivars;
 - gencvars;

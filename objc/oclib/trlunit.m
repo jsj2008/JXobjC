@@ -777,10 +777,11 @@ static char * mystrrchr (const char * s, int c)
     {
         gs ("static void __force_Refs(void) {\n");
         [cats do:
-              { :each | [each forcegenintf];
-                  gf ("void * %s_f = &%s; %s_f = %s_f;\n", [each c_classname],
+              { :each | if (![each forcegenintf])
+                  gf ("void * %s_f = &%s;\n %s_f = %s_f;\n", [each c_classname],
                       [each c_classname], [each c_classname],
                       [each c_classname]);
+                  else gf ("%s();\n", [each globfunname]);
               }];
         gs ("}\n");
     }

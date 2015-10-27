@@ -4,6 +4,7 @@
 
 #import "Object.h"
 #import "Dictionary.h"
+#import "RunLoop.h"
 
 @interface Thread : Object
 {
@@ -20,6 +21,7 @@
 
 @property BOOL isMainThread, isCancelled, isExecuting, isFinished;
 @property Dictionary * threadDictionary;
+@property RunLoop * runLoop;
 
 + (void)detachNewThreadSelector:(SEL)selector
                        toTarget:target
@@ -39,7 +41,6 @@
 + initialize;
 - _initAsMainThread;
 - ARC_dealloc;
-
 @end
 
 @interface Object (Threads)
