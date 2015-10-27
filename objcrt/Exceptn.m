@@ -86,7 +86,7 @@
     }
 }
 
-- signal:(STR)message { return [[self messageText:message] signal]; }
+- signal:(STR)message { return [[self str:message] signal]; }
 
 - messageText { return messageText; }
 

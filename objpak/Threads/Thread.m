@@ -32,6 +32,7 @@
 
 - ARC_dealloc
 {
+    printf ("dealloc\n");
     threadDictionary = nil;
     _return = nil;
     pthread_attr_destroy (&_thrd_attr);
@@ -50,29 +51,37 @@
     pthread_setspecific (currentThread, thrd);
 }
 
-static void * _threadStart (void * _thread)
+static void * _threadStart (Thread * thread)
 {
-    Thread * thread = _thread;
     [Thread _setCurrentThread:thread];
     [thread setIsExecuting:YES];
-    thread->_return = [thread main];
+    [
+        {
+            thread->_return = [thread main];
+        } ifError:
+          { :msg :rcv | printf("Exception in thread main method.\n");
+          }];
     [thread setIsExecuting:NO];
     [thread setIsFinished:YES];
-    pthread_exit (0);
+    iddecref ((id)thread);
+    thread = nil;
     return 0;
 }
 
 - (void)start
 {
+    short res;
     if (isExecuting)
-        [Exception signal:"Thread is already running."];
+        [Exception str:"Thread is already running."];
     if (isFinished)
         _return = nil;
 
     [self setIsCancelled:0];
     [self setIsExecuting:0];
     [self setIsFinished:0];
-    if (!pthread_create (&_thrd, &_thrd_attr, _threadStart, self))
+    res = pthread_create (&_thrd, &_thrd_attr, (void * (*)(void *))_threadStart,
+                          idincref (self));
+    if (res)
         [Exception signal:"Failed to start thread."];
 }
 
@@ -108,7 +117,7 @@ static void * _threadStart (void * _thread)
         return [_object value:_parameter];
     else if (_object)
         return [_object value];
-    return self;
+    return nil;
 }
 
 @end
