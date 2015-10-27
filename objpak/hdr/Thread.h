@@ -9,6 +9,9 @@
 {
     pthread_t _thrd;
     pthread_attr_t _thrd_attr;
+    SEL _selector;
+    volatile id _object, _parameter;
+    id _return;
 } :
 {
     id mainThread;
@@ -20,8 +23,15 @@
 
 + initialize;
 - _initAsMainThread;
+- ARC_dealloc;
 
 + (Thread *)mainThread;
 + (Thread *)currentThread;
++ (Dictionary *)threadDictionary;
+
+- (void)start;
+- (void)cancel;
+- (void)exit;
+- main;
 
 @end
