@@ -18,15 +18,16 @@
 
 #ifdef __PORTABLE_OBJC__
 
+#include <string.h> /* strlen */
+#include <assert.h>
+#include <stdlib.h>
+
 #include "ascfiler.h"
 #include "OrdCltn.h"
 #include "unknownt.h"
 #include "badvers.h"
 #include "typeinc.h"
 #include "outofbnd.h"
-#include <string.h> /* strlen */
-#include <assert.h>
-#include <stdlib.h>
 
 @implementation AsciiFiler
 /*****************************************************************************
@@ -173,11 +174,7 @@ static BOOL isClass (id anObject)
     inSecondPass = YES;
     for (i = 0, n = [toc size]; i < n; i++)
     {
-#ifdef STRICTSTEPSTONE
-        fprintf (file, "0 "); /* ixvars - unused for us */
-#else
         fprintf (file, "%i ", i + 1); /* record number, useful! */
-#endif
         [[toc at:i] fileOutOn:self];
         fprintf (file, "\n");
     }

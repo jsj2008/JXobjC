@@ -89,6 +89,10 @@ TOOL_PCPP_LDFLAGS.profile  ?= -g
 #
 # @param    $(outbase)  Output basename (full). Use this for list files and such.
 # @param    $(objsuff)  Object suffix.
+# Note that sed is used here to fix up:
+# A) the wrong file extension in the dependeny file (remember that JXObjc
+#  compiles first to C,) and
+# B) remove a bizarre leading comma from the object filename.
 TOOL_PCPP_COMPILE_OBJC_OUTPUT =
 TOOL_PCPP_COMPILE_OBJC_DEPEND =
 TOOL_PCPP_COMPILE_OBJC_DEPORD =
@@ -98,6 +102,8 @@ define TOOL_PCPP_COMPILE_OBJC_CMDS
 		-Wp,-Wp,-MD,$(dep) -Wp,-MT,$(obj) \
 		-o $(obj)\
 		$(abspath $(source))
+	$(QUIET)$(SED) -i 's|$(notdir $(source:.m=.c))|$(source)|' $(dep)
+	$(QUIET)$(SED) -i 's|,$(obj)|$(obj)|' $(dep)
 	$(QUIET)$(APPEND) -n "$(dep)" "" "$(source):" ""
 endef
 
