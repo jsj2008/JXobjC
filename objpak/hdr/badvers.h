@@ -1,10 +1,6 @@
-
 /*
  * Portable Object Compiler (c) 2003.  All Rights Reserved.
- * $Id: badvers.h,v 1.2 2004/07/24 18:50:39 stes Exp $
- */
-
-/*
+ *
  * This library is free software; you can redistribute it and/or modify it
  * under the terms of the GNU Library General Public License as published
  * by the Free Software Foundation; either version 2 of the License, or

@@ -1,10 +1,6 @@
-
 /*
- * Portable Object Compiler (c) 1997,98,99,2003.  All Rights Reserved.
- * $Id: ordcltn.m,v 1.6 2004/10/23 15:53:40 stes Exp $
- */
-
-/*
+ * Portable Object Compiler (c) 1997,98,2003.  All Rights Reserved.
+ *
  * This library is free software; you can redistribute it and/or modify it
  * under the terms of the GNU Library General Public License as published
  * by the Free Software Foundation; either version 2 of the License, or
@@ -24,26 +20,15 @@
 #include <assert.h>
 #include <string.h>
 #include <stdlib.h>
-#include "OrdCltn.h"
-#include "cltnseq.h"
-#include "set.h"
-#include "sequence.h"
+#include "Set.h"
+#include "setseq.h"
 #include "ascfiler.h"
+#include "OrdCltn.h"
 #include "OCString.h"
-#if OBJC_BLOCKS
+#include "sequence.h"
 #include "Block.h"
-#endif
-#include "notfound.h"
-#include "outofbnd.h"
 
-#define DEFAULT_CAPACITY (16)
-
-typedef struct
-{
-    @defs (OrdCltn)
-} TFOrdCltn;
-
-@implementation OrdCltn
+@implementation Set
 
 /*****************************************************************************
  *
@@ -51,13 +36,30 @@ typedef struct
  *
  ****************************************************************************/
 
-static void ptrinit (id * p, id q, int c)
+static void ptrzero (id * p, int c)
 {
     while (c--)
-        *p++ = q;
+    {
+        *p++ = nil; /* not same as memset in refcnt case */
+    }
 }
 
-static void init (objcol_t self, int n, int c)
+#ifndef NDEBUG
+static int ptrcount (id * p, int c)
+{
+    int n = 0;
+    while (c--)
+    {
+        if (*p++)
+        {
+            n++;
+        }
+    }
+    return n;
+}
+#endif
+
+static void init (objset_t self, int n, int c)
 {
     assert (0 <= n && n <= c);
     self->count    = n;
@@ -65,25 +67,15 @@ static void init (objcol_t self, int n, int c)
     self->ptr      = (id *)OC_Calloc (c * sizeof (id));
 }
 
-+ new
-{
-    int n        = DEFAULT_CAPACITY;
-    id newObject = [super new];
-#if OTBCRT
-    /* this is always ok, not just for -otb */
-    init ([newObject objcolvalue], 0, n);
-#else
-    /* faster, but not correct in the -otb case */
-    init (&(((TFOrdCltn *)newObject)->value), 0, n);
-#endif
-    return newObject;
-}
+static void initzero (objset_t self, int c) { init (self, 0, c); }
+
++ new { return [self new:16]; }
 
 + new:(unsigned)n
 {
-    id newObject = [super new];
-    init ([newObject objcolvalue], 0, n);
-    return newObject;
+    id newObj = [super new];
+    initzero ([newObj objsetvalue], n);
+    return newObj;
 }
 
 /*****************************************************************************
@@ -141,16 +133,16 @@ static void ptrcopy (id * p, id * q, int c)
     }
 }
 
-static void copy (objcol_t dst, objcol_t src)
+static void copy (objset_t dst, objset_t src)
 {
-    init (dst, src->count, src->count);
-    ptrcopy (dst->ptr, src->ptr, src->count);
+    init (dst, src->count, src->capacity);
+    ptrcopy (dst->ptr, src->ptr, src->capacity);
 }
 
 - copy
 {
     id aCopy = [super copy];
-    copy ([aCopy objcolvalue], (&value));
+    copy ([aCopy objsetvalue], (&value));
     return aCopy;
 }
 
@@ -163,10 +155,10 @@ static void ptrdeepcopy (id * p, id * q, int c)
     }
 }
 
-static void deepcopy (objcol_t dst, objcol_t src)
+static void deepcopy (objset_t dst, objset_t src)
 {
-    init (dst, src->count, src->count);
-    ptrdeepcopy (dst->ptr, src->ptr, src->count);
+    init (dst, src->count, src->capacity);
+    ptrdeepcopy (dst->ptr, src->ptr, src->capacity);
 }
 
 - deepCopy
@@ -175,19 +167,25 @@ static void deepcopy (objcol_t dst, objcol_t src)
     /* so we send |copy| to super instead             */
 
     id aCopy = [super copy];
-    deepcopy ([aCopy objcolvalue], (&value));
+    deepcopy ([aCopy objsetvalue], (&value));
     return aCopy;
 }
 
-static void empty (objcol_t self)
+static void empty (objset_t self)
 {
-    ptrinit (self->ptr, nil, self->count); /* not same as memset ! */
     self->count = 0;
+    ptrzero (self->ptr, self->capacity);
 }
 
 - emptyYourself
 {
     empty ((&value));
+    return self;
+}
+
+- addYourself
+{
+    /* trivial for sets, since there are no duplicates */
     return self;
 }
 
@@ -200,10 +198,11 @@ static void ptrclear (id * p, int c)
     }
 }
 
-static void freecontents (objcol_t self)
+static void freecontents (objset_t self)
 {
-    ptrclear (self->ptr, self->count);
     self->count = 0;
+    ptrclear (self->ptr, self->capacity);
+    assert (ptrcount (self->ptr, self->capacity) == 0);
 }
 
 - freeContents
@@ -221,10 +220,11 @@ static void ptrclearall (id * p, int c)
     }
 }
 
-static void freeall (objcol_t self)
+static void freeall (objset_t self)
 {
-    ptrclearall (self->ptr, self->count);
     self->count = 0;
+    ptrclearall (self->ptr, self->capacity);
+    assert (ptrcount (self->ptr, self->capacity) == 0);
 }
 
 - freeAll
@@ -233,7 +233,7 @@ static void freeall (objcol_t self)
     return self;
 }
 
-static void clear (objcol_t self)
+static void clear (objset_t self)
 {
     self->count    = 0;
     self->capacity = 0;
@@ -264,31 +264,23 @@ static void clear (objcol_t self)
  *
  ****************************************************************************/
 
-- (objcol_t)objcolvalue { return &value; }
+- (objset_t)objsetvalue { return &value; }
 
-- (unsigned)size { return (unsigned)((&value)->count); }
+static int count (objset_t self)
+{
+    assert (ptrcount (self->ptr, self->capacity) == self->count);
+    return self->count;
+}
 
-- (BOOL)isEmpty { return (&value)->count == 0; }
+- (unsigned)size { return (unsigned)count ((&value)); }
 
-- (unsigned)lastOffset { return (&value)->count - 1; }
+- (BOOL)isEmpty { return count ((&value)) == 0; }
 
 - eachElement
 {
-    id aCarrier = [CollectionSequence over:self];
+    id aCarrier = [SetSequence over:self];
     return [Sequence over:aCarrier];
 }
-
-static id ptrfirst (id * p, int n) { return ((n) ? p[0] : nil); }
-
-static id first (objcol_t self) { return ptrfirst (self->ptr, self->count); }
-
-- firstElement { return first ((&value)); }
-
-static id ptrlast (id * p, int n) { return ((n) ? p[n - 1] : nil); }
-
-static id last (objcol_t self) { return ptrlast (self->ptr, self->count); }
-
-- lastElement { return last ((&value)); }
 
 /*****************************************************************************
  *
@@ -301,42 +293,47 @@ static unsigned ptrhash (id * p, int n)
     unsigned code = n;
     while (n--)
     {
-        code ^= [*p++ hash];
+        id q = *p++;
+        if (q)
+            code ^= [q hash];
     }
     return code;
 }
 
-static unsigned hashcontents (objcol_t a) { return ptrhash (a->ptr, a->count); }
+static unsigned hashcontents (objset_t a) { return ptrhash (a->ptr, a->count); }
 
 - (unsigned)hash { return hashcontents (&value); }
 
-static BOOL ptreq (id * p, id * q, int n)
+- (BOOL)isEqual:set
 {
-    while (n--)
+    id e, seq;
+    BOOL res = YES;
+    if (self == set)
     {
-        if (![*p++ isEqual:*q++])
-        {
-            return NO;
-        }
+        return YES;
     }
-    return YES;
-}
-
-static BOOL eq (objcol_t a, objcol_t b)
-{
-    if (a->count == b->count)
-    {
-        return ptreq (a->ptr, b->ptr, a->count);
-    }
-    else
+    if (![set isKindOf:(id)[Set class]])
     {
         return NO;
     }
-}
-
-- (BOOL)isEqual:aCltn
-{
-    return (self == aCltn) ? YES : eq ((&value), [aCltn objcolvalue]);
+    if ([set size] != [self size])
+    {
+        return NO;
+    }
+    seq = [self eachElement];
+    while ((e = [seq next]))
+    {
+        if ([set contains:e])
+        {
+            res = NO;
+            goto done;
+        }
+    }
+done:
+#ifndef OBJC_REFCNT
+    [seq free];
+#endif
+    return res;
 }
 
 /*****************************************************************************
@@ -345,272 +342,237 @@ static BOOL eq (objcol_t a, objcol_t b)
  *
  ****************************************************************************/
 
-static BOOL needsexpand (objcol_t self)
+static id * ptrfind (id * p, id obj, int n)
 {
-    assert (self->count <= self->capacity);
-    return self->count == self->capacity;
-}
+    id *begin, *now, *end;
 
-static void expand (objcol_t self)
-{
-    self->capacity = 1 + 2 * self->capacity;
-    self->ptr = (id *)OC_Realloc (self->ptr, sizeof (id) * self->capacity);
-    memset (self->ptr + self->count, 0,
-            sizeof (id) * (self->capacity - self->count));
-}
+    begin = p;
+    now   = p + (([obj hash]) % n);
+    end   = p + n;
 
-static int ptraddlast (id * p, id obj, int n)
-{
-    p[n] = obj;
-    return n + 1;
-}
-
-static void addlast (objcol_t self, id obj)
-{
-    if (needsexpand (self))
+    for (; n--; now++)
     {
-        expand (self);
+        if (now >= end)
+        {
+            now = begin;
+        }
+        if (*now == nil || [*now isEqual:obj])
+        {
+            return now;
+        }
     }
-    self->count = ptraddlast (self->ptr, obj, self->count);
+
+    fprintf (stderr, "find: table full shouldn't happen");
+    return NULL;
+}
+
+static id * find (objset_t self, id obj)
+{
+    assert (obj != nil);
+    return ptrfind (self->ptr, obj, self->capacity);
 }
 
 - add:anObject
 {
-    if (anObject)
-    {
-        addlast ((&value), anObject);
-        return self;
-    }
-    else
-    {
-        return self;
-    }
-}
-
-- addYourself
-{
-    int i, n = [self size];
-    for (i = 0; i < n; i++)
-        [self add:[self at:i]];
+    [self addNTest:anObject];
     return self;
 }
 
-static int ptraddfirst (id * p, id obj, int n)
+static BOOL needsexpand (objset_t self)
 {
-    int m = n;
-    p += n;
-    while (m--)
-    {
-        id * q = p - 1;
-        *p     = *q;
-        p      = q;
-    }
-    *p = obj;
-    return n + 1;
+    return 2 * self->count > self->capacity;
 }
 
-static void addfirst (objcol_t self, id obj)
+/* don't use "new" as variable name (for C++) */
+static void ptrrehash (id * newp, int newc, id * old, int oldc)
 {
-    if (needsexpand (self))
+    while (oldc--)
     {
-        expand (self);
-    }
-    self->count = ptraddfirst (self->ptr, obj, self->count);
-}
-
-- addFirst:newObject
-{
-    if (newObject)
-    {
-        addfirst ((&value), newObject);
-        return self;
-    }
-    else
-    {
-        return self;
+        id obj      = *old++;
+        id * newend = newp + newc;
+        if (obj)
+        {
+            id * pos = newp + ([obj hash] % ((unsigned)newc));
+            while (*pos)
+            {
+                pos++;
+                if (pos == newend)
+                {
+                    pos = newp;
+                }
+            }
+            *pos = obj;
+        }
     }
 }
 
-- addLast:newObject { return [self add:newObject]; }
-
-- addIfAbsent:anObject
+static void rehash (objset_t self)
 {
-    if ([self find:anObject] == nil)
-    {
-        [self add:anObject];
-    }
-    return self;
+    int c;
+    id *newp, *old;
+
+    c    = self->capacity;
+    old  = self->ptr;
+    newp = (id *)OC_Calloc (c * sizeof (id));
+
+    assert (ptrcount (old, c) == self->count);
+    ptrrehash (newp, c, old, c);
+    assert (ptrcount (newp, c) == self->count);
+
+    OC_Free (old);
+    self->ptr = newp;
 }
 
-- addIfAbsentMatching:anObject
+static void expand (objset_t self)
 {
-    if ([self findMatching:anObject] == nil)
-    {
-        [self add:anObject];
-    }
-    return self;
+    id *newp, *old;
+    int newc, oldc;
+
+    oldc = self->capacity;
+    old  = self->ptr;
+    newc = 1 + 2 * oldc;
+    newp = (id *)OC_Calloc (newc * sizeof (id));
+
+    assert (ptrcount (old, oldc) == self->count);
+    ptrrehash (newp, newc, old, oldc);
+    assert (ptrcount (newp, newc) == self->count);
+
+    OC_Free (old);
+    self->ptr      = newp;
+    self->capacity = newc;
 }
 
-/*****************************************************************************
- *
- * Insertion
- *
- ****************************************************************************/
-
-static int ptrinsert (id * p, id obj, int i, int n)
+static id add (objset_t self, id obj)
 {
-    if (i == n)
-    {
-        return ptraddlast (p, obj, n);
-    }
-    else
-    {
-        return i + ptraddfirst (p + i, obj, n - i);
-    }
-}
+    id * p;
 
-static void insert (objcol_t self, id obj, int i)
-{
     if (needsexpand (self))
     {
         expand (self);
     }
 
-    self->count = ptrinsert (self->ptr, obj, i, self->count);
+    if (*(p = find (self, obj)))
+    {
+        return nil;
+    }
+    else
+    {
+        self->count++;
+        return * p = obj;
+    }
 }
 
-- at:(unsigned)anOffset insert:anObject
+- addNTest:anObject
 {
     if (anObject)
     {
-        if (anOffset > [self size])
-        {
-            [[[OutOfBounds new:[ self size ]] at:anOffset] signal];
-        }
-        else
-        {
-            insert ((&value), anObject, (int)anOffset);
-        }
-        return self;
+        return add ((&value), anObject);
     }
     else
     {
-        return self;
-    }
-}
-
-- couldntfind { return [NotFound signal]; }
-
-- insert:newObject after:oldObject
-{
-    if (newObject)
-    {
-        unsigned offset = [self offsetOf:oldObject];
-        if (offset == (unsigned)-1)
-        {
-            return [self couldntfind];
-        }
-        else
-        {
-            return [self at:offset + 1 insert:newObject];
-        }
-    }
-    else
-    {
-        return self;
-    }
-}
-
-- insert:newObject before:oldObject
-{
-    if (newObject)
-    {
-        unsigned offset = [self offsetOf:oldObject];
-        if (offset == (unsigned)-1)
-        {
-            return [self couldntfind];
-        }
-        else
-        {
-            return [self at:offset - 1 insert:newObject];
-        }
-    }
-    else
-    {
-        return self;
-    }
-}
-
-/*****************************************************************************
- *
- * Relative Accessing
- *
- ****************************************************************************/
-
-- after:anObject
-{
-    unsigned offset = [self offsetOf:anObject];
-    if (offset == (unsigned)-1)
-    {
-        return [self couldntfind];
-    }
-    else
-    {
-        return (offset == [self lastOffset]) ? nil : [self at:offset + 1];
-    }
-}
-
-- before:anObject
-{
-    unsigned offset = [self offsetOf:anObject];
-    if (offset == (unsigned)-1)
-    {
-        return [self couldntfind];
-    }
-    else
-    {
-        return (offset == 0) ? nil : [self at:offset - 1];
-    }
-}
-
-static id at (objcol_t self, int i)
-{
-    assert (0 <= i && i < self->count);
-    return (self->ptr)[i];
-}
-
-- at:(unsigned)anOffset
-{
-    if (anOffset >= [self size])
-    {
-        [[[OutOfBounds new:[ self size ]] at:anOffset] signal];
         return nil;
     }
+}
+
+static id filter (objset_t self, id obj)
+{
+    id * p;
+
+    if (needsexpand (self))
+    {
+        expand (self);
+    }
+
+    if (*(p = find (self, obj)))
+    {
+        return *p;
+    }
     else
     {
-        return at ((&value), anOffset);
-    }
-}
-
-static id atput (objcol_t self, int i, id obj)
-{
-    id tmp;
-    assert (0 <= i && i < self->count);
-    tmp = (self->ptr)[i];
-    (self->ptr)[i] = obj;
-    return tmp;
-}
-
-- at:(unsigned)anOffset put:anObject
-{
-    if (anOffset >= [self size])
-    {
-        [[[OutOfBounds new:[ self size ]] at:anOffset] signal];
+        self->count++;
+        *p = obj;
         return nil;
     }
+}
+
+- filter:anObject
+{
+    if (anObject)
+    {
+        id t = filter ((&value), anObject);
+        if (t)
+        {
+#ifndef OBJC_REFCNT
+            [anObject free];
+#endif
+            return t;
+        }
+        else
+        {
+            return anObject;
+        }
+    }
     else
     {
-        return atput ((&value), anOffset, anObject);
+        return nil;
+    }
+}
+
+#if OBJC_BLOCKS
+- add:anObject ifDuplicate:aBlock
+{
+    if (anObject)
+    {
+        id t = filter ((&value), anObject);
+        if (t)
+        {
+            [aBlock value];
+            return t;
+        }
+        else
+        {
+            return anObject;
+        }
+    }
+    else
+    {
+        return nil;
+    }
+}
+#endif /* OBJC_BLOCKS */
+
+static id replace (objset_t self, id obj)
+{
+    id * p;
+
+    if (needsexpand (self))
+    {
+        expand (self);
+    }
+
+    if (*(p = find (self, obj)))
+    {
+        id tmp = *p;
+        *p     = obj;
+        return tmp;
+    }
+    else
+    {
+        self->count++;
+        *p = obj;
+        return nil;
+    }
+}
+
+- replace:anObject
+{
+    if (anObject)
+    {
+        return replace ((&value), anObject);
+    }
+    else
+    {
+        return nil;
     }
 }
 
@@ -620,120 +582,47 @@ static id atput (objcol_t self, int i, id obj)
  *
  ****************************************************************************/
 
-static id ptrremovefirst (id * p, int n)
+static id delete (objset_t self, id obj)
 {
-    id obj = *p;
-    n--;
-    while (n--)
-    {
-        id * q = p + 1;
-        *p     = *q;
-        p      = q;
-    }
-    *p = nil;
-    return obj;
-}
+    id * p;
 
-static id removefirst (objcol_t self)
-{
-    if (self->count)
+    if (*(p = find (self, obj)))
     {
-        id obj = ptrremovefirst (self->ptr, self->count);
+        id tmp = *p;
+        *p     = nil;
         self->count--;
-        return obj;
+        rehash (self);
+        return tmp;
     }
     else
     {
         return nil;
     }
 }
-
-- removeFirst { return removefirst ((&value)); }
-
-static id ptrremove (id * p)
-{
-    id obj = *p;
-    *p     = nil;
-    return obj;
-}
-
-static id removelast (objcol_t self)
-{
-    if (self->count)
-    {
-        id obj = ptrremove (self->ptr + self->count - 1);
-        self->count--;
-        return obj;
-    }
-    else
-    {
-        return nil;
-    }
-}
-
-- removeLast { return removelast ((&value)); }
-
-static id ptrremoveat (id * p, int i, int n)
-{
-    if (i == n - 1)
-    {
-        return ptrremove (p + n - 1);
-    }
-    else
-    {
-        return ptrremovefirst (p + i, n - i);
-    }
-}
-
-static id removeat (objcol_t self, int i)
-{
-    if (self->count)
-    {
-        id obj = ptrremoveat (self->ptr, i, self->count);
-        self->count--;
-        return obj;
-    }
-    else
-    {
-        return nil;
-    }
-}
-
-- removeAt:(unsigned)anOffset
-{
-    if (anOffset >= [self size])
-    {
-        [[[OutOfBounds new:[ self size ]] at:anOffset] signal];
-        return nil;
-    }
-    else
-    {
-        return removeat ((&value), anOffset);
-    }
-}
-
-- removeAtIndex:(unsigned)anOffset { return [self removeAt:anOffset]; }
 
 - remove:oldObject
 {
-    unsigned offset = [self offsetOf:oldObject];
-    if (offset == (unsigned)-1)
+    if (oldObject)
     {
-        return nil;
+        return delete ((&value), oldObject);
     }
     else
     {
-        return [self removeAt:offset];
+        return nil;
     }
 }
 
-#if OBJC_BLOCKS
 - remove:oldObject ifAbsent:exceptionBlock
 {
-    id anObject = [self remove:oldObject];
-    return (anObject) ? anObject : [exceptionBlock value];
+    if (oldObject)
+    {
+        return delete ((&value), oldObject);
+    }
+    else
+    {
+        return nil;
+    }
 }
-#endif /* OBJC_BLOCKS */
 
 /*****************************************************************************
  *
@@ -1087,84 +976,106 @@ static id removeat (objcol_t self, int i)
 
 - elementsPerform:(SEL)aSelector
 {
-    int i, n;
-    for (i = 0, n = [self size]; i < n; i++)
+    id e, seq;
+
+    seq = [self eachElement];
+    while ((e = [seq next]))
     {
-        [[self at:i] perform:aSelector];
+        [e perform:aSelector];
     }
+#ifndef OBJC_REFCNT
+    seq = [seq free];
+#endif
+
     return self;
 }
 
 - elementsPerform:(SEL)aSelector with:anObject
 {
-    int i, n;
-    for (i = 0, n = [self size]; i < n; i++)
+    id e, seq;
+
+    seq = [self eachElement];
+    while ((e = [seq next]))
     {
-        [[self at:i] perform:aSelector with:anObject];
+        [e perform:aSelector with:anObject];
     }
+#ifndef OBJC_REFCNT
+    seq = [seq free];
+#endif
+
     return self;
 }
 
 - elementsPerform:(SEL)aSelector with:anObject with:otherObject
 {
-    int i, n;
-    for (i = 0, n = [self size]; i < n; i++)
+    id e, seq;
+
+    seq = [self eachElement];
+    while ((e = [seq next]))
     {
-        [[self at:i] perform:aSelector with:anObject with:otherObject];
+        [e perform:aSelector with:anObject with:otherObject];
     }
+#ifndef OBJC_REFCNT
+    seq = [seq free];
+#endif
+
     return self;
 }
 
 - elementsPerform:(SEL)aSelector with:anObject with:otherObject with:thirdObj
 {
-    int i, n;
-    for (i = 0, n = [self size]; i < n; i++)
+    id e, seq;
+
+    seq = [self eachElement];
+    while ((e = [seq next]))
     {
-        [[self at:i] perform:aSelector
-                        with:anObject
-                        with:otherObject
-                        with:thirdObj];
+        [e perform:aSelector with:anObject with:otherObject with:thirdObj];
     }
+#ifndef OBJC_REFCNT
+    seq = [seq free];
+#endif
+
     return self;
 }
 /*****************************************************************************
  *
- * Do Blocks  (also provide a -reverseDo: here)
+ * Do Blocks
  *
  ****************************************************************************/
 
 #if OBJC_BLOCKS
 - do:aBlock
 {
-    int i = 0;
-    int n = [self size];
-    for (i = 0; i < n; i++)
+    id e, seq;
+
+    seq = [self eachElement];
+
+    while ((e = [seq next]))
     {
-        [aBlock value:[self at:i]];
+        [aBlock value:e];
     }
+
+#ifndef OBJC_REFCNT
+    seq = [seq free];
+#endif
     return self;
 }
-
 - do:aBlock until:(BOOL *)flag
 {
-    int i = 0;
-    int n = [self size];
-    for (i = 0; i < n; i++)
+    id e, seq;
+
+    seq = [self eachElement];
+
+    while ((e = [seq next]))
     {
-        [aBlock value:[self at:i]];
+        [aBlock value:e];
         if (*flag)
             break;
     }
-    return self;
-}
 
-- reverseDo:aBlock
-{
-    unsigned n = [self size];
-    while (n--)
-    {
-        [aBlock value:[self at:n]];
-    }
+#ifndef OBJC_REFCNT
+    seq = [seq free];
+#endif
     return self;
 }
 #endif /* OBJC_BLOCKS */
@@ -1175,89 +1086,16 @@ static id removeat (objcol_t self, int i)
  *
  ****************************************************************************/
 
-static id ptrfind (id * p, id obj, int n)
+- find:anObject { return (anObject) ? *find ((&value), anObject) : nil; }
+
+- (BOOL)contains:anObject { return (BOOL) ([self find:anObject] ? YES : NO); }
+
+- (BOOL)includes:anObject { return [self contains:anObject]; }
+
+- (unsigned)occurrencesOf:anObject
 {
-    int i;
-    for (i = 0; i < n; i++)
-    {
-        if (p[i] == obj)
-        {
-            return p[i];
-        }
-    }
-    return nil;
+    return (unsigned)([self find:anObject] ? 1 : 0);
 }
-
-static id find (objcol_t self, id obj)
-{
-    return ptrfind (self->ptr, obj, self->count);
-}
-
-- find:anObject { return find ((&value), anObject); }
-
-static id ptrfindmatch (id * p, id obj, int n)
-{
-    int i;
-    for (i = 0; i < n; i++)
-    {
-        if (p[i] == obj || [p[i] isEqual:obj])
-        {
-            return p[i];
-        }
-    }
-    return nil;
-}
-
-static id findmatch (objcol_t self, id obj)
-{
-    return ptrfindmatch (self->ptr, obj, self->count);
-}
-
-- findMatching:anObject { return findmatch ((&value), anObject); }
-
-- (BOOL)includes:anObject { return [self findMatching:anObject] != nil; }
-
-static id ptrfindstr (id * p, STR s, int n)
-{
-    int i;
-    for (i = 0; i < n; i++)
-    {
-        if ([p[i] isEqualSTR:s])
-        {
-            return p[i];
-        }
-    }
-    return nil;
-}
-
-static id findstr (objcol_t self, STR s)
-{
-    return ptrfindstr (self->ptr, s, self->count);
-}
-
-- findSTR:(STR)aString { return findstr ((&value), aString); }
-
-- (BOOL)contains:anObject { return [self find:anObject] != nil; }
-
-static int ptroffset (id * p, id obj, int n)
-{
-    int i;
-    for (i = 0; i < n; i++)
-    {
-        if (*p++ == obj)
-        {
-            return i;
-        }
-    }
-    return -1;
-}
-
-static int offset (objcol_t self, id obj)
-{
-    return ptroffset (self->ptr, obj, self->count);
-}
-
-- (unsigned)offsetOf:anObject { return (unsigned)offset ((&value), anObject); }
 
 /*****************************************************************************
  *
@@ -1267,13 +1105,11 @@ static int offset (objcol_t self, id obj)
 
 - printOn:(IOD)aFile
 {
-    int i, n = [self size];
-    for (i = 0; i < n; i++)
-    {
-        id s = [self at:i];
-        [s printOn:aFile];
-        fprintf (aFile, "\n");
-    }
+    id s = [self eachElement];
+    [s printOn:aFile];
+#ifndef OBJC_REFCNT
+    [s free];
+#endif
     return self;
 }
 
@@ -1288,31 +1124,40 @@ static void ptrfileout (id aFiler, id * a, int n)
 {
     while (n--)
     {
-        [aFiler fileOut:a++ type:'@'];
+        id obj = *a++;
+        if (obj)
+        {
+            [aFiler fileOut:&obj type:'@'];
+        }
     }
 }
 
 static void ptrfilein (id aFiler, id * a, int n)
 {
+    /* The idea here is that the set is not usable until a "rehash"
+     * is performed, in the awakeFrom: method.
+     * The hash-value of the objects themselves cannot, by the way, be
+     * computed before the |awakeFrom:| message is being sent.
+     */
+
     while (n--)
     {
         [aFiler fileIn:a++ type:'@'];
     }
 }
 
-static void fileout (id aFiler, objcol_t self)
+static void fileout (id aFiler, objset_t self)
 {
-    [aFiler fileOut:&self->count type:'i'];
-    [aFiler fileOut:&self->capacity type:'i'];
-    ptrfileout (aFiler, self->ptr, self->count);
+    int n = self->count;
+    [aFiler fileOut:&n type:'i'];
+    ptrfileout (aFiler, self->ptr, self->capacity);
 }
 
-static void filein (id aFiler, objcol_t self)
+static void filein (id aFiler, objset_t self)
 {
-    int n, c;
+    int n;
     [aFiler fileIn:&n type:'i'];
-    [aFiler fileIn:&c type:'i'];
-    init (self, n, c);
+    init (self, n, n);
     ptrfilein (aFiler, self->ptr, n);
 }
 
@@ -1330,6 +1175,12 @@ static void filein (id aFiler, objcol_t self)
     return self;
 }
 
+- awakeFrom:aFiler
+{
+    /* double size of capacity and rehash */
+    expand (&value);
+    return self;
+}
 #endif /* __PORTABLE_OBJC__ */
 
 @end

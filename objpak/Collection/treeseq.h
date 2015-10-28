@@ -1,10 +1,6 @@
-
 /*
- * Portable Object Compiler (c) 1997.  All Rights Reserved.
- * $Id: setseq.h,v 1.1.1.1 2000/06/07 21:09:25 stes Exp $
- */
-
-/*
+ * Portable Object Compiler (c) 1997,98.  All Rights Reserved.
+ *
  * This library is free software; you can redistribute it and/or modify it
  * under the terms of the GNU Library General Public License as published
  * by the Free Software Foundation; either version 2 of the License, or
@@ -20,23 +16,19 @@
  * Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
  */
 
-#ifndef __OBJSETSEQ_H__
-#define __OBJSETSEQ_H__
+#ifndef __OBJSORTSEQ_H__
+#define __OBJSORTSEQ_H__
 
-#include "set.h"
+#include "sortcltn.h"
 
-typedef struct objsetseq
+@interface TreeSequence : Object
 {
-    objset_t set;
-    int offset;
-} * objsetseq_t;
-
-@interface SetSequence : Object
-{
-    struct objsetseq value;
+    objbbt_t top;
+    objbbt_t next;
+    objbbt_t prev;
 }
-- (objsetseq_t)objsetseqvalue;
-+ over:set;
+- setUpSort:aSort;
++ over:aSort;
 - copy;
 - free;
 - (unsigned)size;
@@ -48,4 +40,4 @@ typedef struct objsetseq
 
 @end
 
-#endif /* __OBJSETSEQ_H__ */
+#endif /* __OBJSORTSEQ_H__ */

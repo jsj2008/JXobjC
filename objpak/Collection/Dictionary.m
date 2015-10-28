@@ -28,7 +28,7 @@
 #include "notfound.h"
 #include "OCString.h"
 #include "sequence.h"
-#include "set.h"
+#include "Set.h"
 
 @implementation Dictionary
 

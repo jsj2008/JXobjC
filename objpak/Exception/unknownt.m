@@ -1,10 +1,6 @@
-
 /*
  * Portable Object Compiler (c) 2003.  All Rights Reserved.
- * $Id: typeinc.m,v 1.2 2004/07/24 18:50:39 stes Exp $
- */
-
-/*
+ *
  * This library is free software; you can redistribute it and/or modify it
  * under the terms of the GNU Library General Public License as published
  * by the Free Software Foundation; either version 2 of the License, or
@@ -22,29 +18,15 @@
 
 #include "Exceptn.h"
 
-#include "config.h"
-#include "typeinc.h"
-#include "OCString.h"
+#include "unknownt.h"
 
-@implementation TypeInconsistency
-- (char)gotChar { return gotChar; }
+@implementation UnknownType
+- (char)typeDesc { return aChar; }
 
-- (char)wantChar { return wantChar; }
-
-- got:(char)c wanted:(char)w
+- typeDesc:(char)c
 {
-    gotChar  = c;
-    wantChar = w;
+    aChar = c;
     return self;
-}
-
-- signal
-{
-    if (!messageText)
-    {
-        messageText = [String sprintf:"Want %c, got %c", wantChar, gotChar];
-    }
-    return [super signal];
 }
 
 @end

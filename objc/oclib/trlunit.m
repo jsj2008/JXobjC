@@ -28,7 +28,7 @@
 #include "Block.h"
 #include <OCString.h>
 #include "symbol.h"
-#include <set.h>
+#include <Set.h>
 #include <OrdCltn.h>
 #include <sequence.h>
 #include <Dictionary.h>

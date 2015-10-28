@@ -23,7 +23,7 @@
 #include "config.h"
 #include <stdlib.h>
 #include "cltn.h"
-#include "set.h"
+#include "Set.h"
 #include "OrdCltn.h"
 #include "sequence.h"
 #if OBJC_BLOCKS

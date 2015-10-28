@@ -27,7 +27,7 @@
 #include "Object.h" /* Stepstone Object.h assumes #import */
 #endif
 #include <OCString.h>
-#include <set.h>
+#include <Set.h>
 #include "node.h"
 #include "expr.h"
 #include "msgxpr.h"

@@ -1,10 +1,6 @@
-
 /*
- * Portable Object Compiler (c) 1998.  All Rights Reserved.
- * $Id: objgraph.m,v 1.1.1.1 2000/06/07 21:09:25 stes Exp $
- */
-
-/*
+ * Portable Object Compiler (c) 2003.  All Rights Reserved.
+ *
  * This library is free software; you can redistribute it and/or modify it
  * under the terms of the GNU Library General Public License as published
  * by the Free Software Foundation; either version 2 of the License, or
@@ -20,37 +16,31 @@
  * Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
  */
 
+#include "Exceptn.h"
+
 #include "config.h"
-#include "objgraph.h"
+#include "typeinc.h"
+#include "OCString.h"
 
-@implementation ObjGraph
+@implementation TypeInconsistency
+- (char)gotChar { return gotChar; }
 
-/*
- * (unused) class for compatibility with Stepstone runtime
- */
+- (char)wantChar { return wantChar; }
 
-+ over:anId { return [self notImplemented:_cmd]; }
-
-- over:anId unique:(BOOL)flag { return [self notImplemented:_cmd]; }
-
-+ over:anId unique:(BOOL)flag { return [self notImplemented:_cmd]; }
-
-- (unsigned)size
+- got:(char)c wanted:(char)w
 {
-    [self notImplemented:_cmd];
-    return 0;
-}
-
-- error:(STR)fmt, ...
-{
-    [self notImplemented:_cmd];
+    gotChar  = c;
+    wantChar = w;
     return self;
 }
 
-- add:anObject
+- signal
 {
-    [self notImplemented:_cmd];
-    return self;
+    if (!messageText)
+    {
+        messageText = [String sprintf:"Want %c, got %c", wantChar, gotChar];
+    }
+    return [super signal];
 }
 
 @end

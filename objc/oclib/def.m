@@ -28,7 +28,7 @@
 #include "Object.h" /* Stepstone Object.h assumes #import */
 #endif
 #include <OrdCltn.h>
-#include <set.h>
+#include <Set.h>
 #include <Dictionary.h>
 #include "node.h"
 #include "def.h"

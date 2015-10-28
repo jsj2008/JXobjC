@@ -1,10 +1,6 @@
-
 /*
  * Portable Object Compiler (c) 1997,98,99,2003,09,14.  All Rights Reserved.
- * $Id: OCString.h,v 1.5 2014/03/04 09:02:28 stes Exp $
- */
-
-/*
+ *
  * This library is free software; you can redistribute it and/or modify it
  * under the terms of the GNU Library General Public License as published
  * by the Free Software Foundation; either version 2 of the License, or

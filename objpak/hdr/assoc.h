@@ -1,10 +1,6 @@
-
 /*
  * Portable Object Compiler (c) 1997.  All Rights Reserved.
- * $Id: assoc.h,v 1.2 2000/11/09 22:55:16 stes Exp $
- */
-
-/*
+ *
  * This library is free software; you can redistribute it and/or modify it
  * under the terms of the GNU Library General Public License as published
  * by the Free Software Foundation; either version 2 of the License, or
@@ -23,11 +19,8 @@
 #ifndef __OBJASSOC_H__
 #define __OBJASSOC_H__
 
-#ifndef __OBJECT_INCLUDED__
-#define __OBJECT_INCLUDED__
 #include <stdio.h>
-#include "Object.h" /* Stepstone Object.h assumes #import */
-#endif
+#include "Object.h"
 
 /* the name of this class in older versions of Object Pak */
 #define Association Assoc

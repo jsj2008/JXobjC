@@ -1,10 +1,6 @@
-
 /*
- * Portable Object Compiler (c) 2003.  All Rights Reserved.
- * $Id: unknownt.m,v 1.2 2009/10/23 19:36:44 stes Exp $
- */
-
-/*
+ * Portable Object Compiler (c) 1997.  All Rights Reserved.
+ *
  * This library is free software; you can redistribute it and/or modify it
  * under the terms of the GNU Library General Public License as published
  * by the Free Software Foundation; either version 2 of the License, or
@@ -20,17 +16,32 @@
  * Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
  */
 
-#include "Exceptn.h"
+#ifndef __OBJSETSEQ_H__
+#define __OBJSETSEQ_H__
 
-#include "unknownt.h"
+#include "Set.h"
 
-@implementation UnknownType
-- (char)typeDesc { return aChar; }
-
-- typeDesc:(char)c
+typedef struct objsetseq
 {
-    aChar = c;
-    return self;
+    objset_t set;
+    int offset;
+} * objsetseq_t;
+
+@interface SetSequence : Object
+{
+    struct objsetseq value;
 }
+- (objsetseq_t)objsetseqvalue;
++ over:set;
+- copy;
+- free;
+- (unsigned)size;
+- next;
+- peek;
+- previous;
+- first;
+- last;
 
 @end
+
+#endif /* __OBJSETSEQ_H__ */

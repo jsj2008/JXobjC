@@ -1,10 +1,6 @@
-
 /*
- * Portable Object Compiler (c) 1997,98.  All Rights Reserved.
- * $Id: treeseq.h,v 1.1.1.1 2000/06/07 21:09:25 stes Exp $
- */
-
-/*
+ * Portable Object Compiler (c) 2003.  All Rights Reserved.
+ *
  * This library is free software; you can redistribute it and/or modify it
  * under the terms of the GNU Library General Public License as published
  * by the Free Software Foundation; either version 2 of the License, or
@@ -20,28 +16,9 @@
  * Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
  */
 
-#ifndef __OBJSORTSEQ_H__
-#define __OBJSORTSEQ_H__
+#include "Exceptn.h"
 
-#include "sortcltn.h"
+#include "notfound.h"
 
-@interface TreeSequence : Object
-{
-    objbbt_t top;
-    objbbt_t next;
-    objbbt_t prev;
-}
-- setUpSort:aSort;
-+ over:aSort;
-- copy;
-- free;
-- (unsigned)size;
-- next;
-- peek;
-- previous;
-- first;
-- last;
-
+@implementation NotFound
 @end
-
-#endif /* __OBJSORTSEQ_H__ */

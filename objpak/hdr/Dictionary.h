@@ -1,10 +1,6 @@
-
 /*
  * Portable Object Compiler (c) 1997,98.  All Rights Reserved.
- * $Id: Dictionary.h,v 1.4 2009/10/23 19:36:43 stes Exp $
- */
-
-/*
+ *
  * This library is free software; you can redistribute it and/or modify it
  * under the terms of the GNU Library General Public License as published
  * by the Free Software Foundation; either version 2 of the License, or
@@ -23,11 +19,8 @@
 #ifndef __OBJDIC_H__
 #define __OBJDIC_H__
 
-#ifndef __OBJECT_INCLUDED__
-#define __OBJECT_INCLUDED__
 #include <stdio.h>
-#include "Object.h" /* Stepstone Object.h assumes #import */
-#endif
+#include "Object.h"
 
 @interface Dictionary : Object
 {

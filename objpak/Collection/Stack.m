@@ -16,14 +16,11 @@
  * Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
  */
 
-#include "config.h"
-#include "stack.h"
-#include "set.h"
+#include "Stack.h"
+#include "Set.h"
 #include "OrdCltn.h"
 #include "ascfiler.h"
-#if OBJC_BLOCKS
 #include "Block.h"
-#endif
 
 #define DEFAULT_CAPACITY (16)
 

@@ -9,7 +9,7 @@
 #include "Block.h"
 #include <OCString.h>
 #include <OrdCltn.h>
-#include <set.h>
+#include <Set.h>
 #include <Dictionary.h>
 #include "node.h"
 #include "symbol.h"

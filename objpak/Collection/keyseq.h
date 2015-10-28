@@ -1,10 +1,7 @@
-
 /*
- * Portable Object Compiler (c) 1998.  All Rights Reserved.
- * $Id: objgraph.h,v 1.1.1.1 2000/06/07 21:09:25 stes Exp $
- */
-
-/*
+ * Portable Object Compiler (c) 1997,98.  All Rights Reserved.
+ * $Id: keyseq.h,v 1.1.1.1 2000/06/07 21:09:25 stes Exp $
+ *
  * This library is free software; you can redistribute it and/or modify it
  * under the terms of the GNU Library General Public License as published
  * by the Free Software Foundation; either version 2 of the License, or
@@ -20,25 +17,30 @@
  * Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
  */
 
-#ifndef __OBJGRAPH_H__
-#define __OBJGRAPH_H__
+#ifndef __OBJKEYSEQ_H__
+#define __OBJKEYSEQ_H__
 
-#ifndef __OBJECT_INCLUDED__
-#define __OBJECT_INCLUDED__
 #include <stdio.h>
-#include "Object.h" /* Stepstone Object.h assumes #import */
-#endif
+#include "Object.h"
 
-@interface ObjGraph : Object
+@interface KeySequence : Object
 {
+    id carrier;
 }
 
-+ over:anId;
-- over:anId unique:(BOOL)flag;
-+ over:anId unique:(BOOL)flag;
+- setUpCarrier:aCarrier;
++ over:aCarrier;
+- copy;
+- free;
+
 - (unsigned)size;
-- error:(STR)fmt, ...;
-- add:anObject;
+
+- next;
+- peek;
+- previous;
+- first;
+- last;
+
 @end
 
-#endif /* __OBJGRAPH_H__ */
+#endif /* __OBJKEYSEQ_H__ */

@@ -5,16 +5,14 @@ INSTALLS += objpakhdr
 LIBRARIES += objpak objpakr objpak_s
 
 objpak_TEMPLATE = OBJC
-objpak_SOURCES = badvers.m notfound.m octext.m rectangl.m sortcltn.m \
-    typeinc.m bag.m Dictionary.m objgraph.m OrdCltn.m runarray.m stack.m \
-    unknownt.m array.m bagseq.m idarray.m outofbnd.m sequence.m \
-    treeseq.m valueseq.m ascfiler.m cltn.m intarray.m paragrph.m \
-    set.m txtattr.m assoc.m cltnseq.m keyseq.m OCString.m point.m \
-    setseq.m txtstyle.m Number.m Obj+KVC.m \
+objpak_SOURCES = $(wildcard $(PATH_ROOT)/objpak/*.m) \
+	$(wildcard $(PATH_ROOT)/objpak/Collection/*.m) \
+	$(wildcard $(PATH_ROOT)/objpak/Exception/*.m) \
 	$(wildcard $(PATH_ROOT)/objpak/Notification/*.m) \
-	$(wildcard $(PATH_ROOT)/objpak/Threads/*.m)
+	$(wildcard $(PATH_ROOT)/objpak/Threads/*.m) \
+	$(wildcard $(PATH_ROOT)/objpak/RunLoop/*.m)
 
-objpak_INCS = $(PATH_SUB_CURRENT)/hdr $(INTERNAL_INCS)
+objpak_INCS = $(INTERNAL_INCS) Collection
 
 objpak_s_EXTENDS = objpak
 objpak_s_EXTENDS_BY = appending

@@ -25,7 +25,7 @@
 #include "Object.h"
 #include <OCString.h>
 #include <OrdCltn.h>
-#include <set.h>
+#include <Set.h>
 #include <Dictionary.h>
 #include "symbol.h"
 #include "node.h"

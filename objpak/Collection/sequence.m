@@ -1,10 +1,6 @@
-
 /*
  * Portable Object Compiler (c) 1997,98.  All Rights Reserved.
- * $Id: sequence.m,v 1.2 2000/11/09 22:55:16 stes Exp $
- */
-
-/*
+ *
  * This library is free software; you can redistribute it and/or modify it
  * under the terms of the GNU Library General Public License as published
  * by the Free Software Foundation; either version 2 of the License, or
@@ -22,9 +18,7 @@
 
 #include "config.h"
 #include "sequence.h"
-#if OBJC_BLOCKS
 #include "Block.h"
-#endif
 
 @implementation Sequence
 /*****************************************************************************

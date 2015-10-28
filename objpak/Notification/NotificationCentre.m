@@ -4,7 +4,7 @@
 
 #import "Block.h"
 #import "NotificationCentre.h"
-#import "set.h"
+#import "Set.h"
 
 @interface _ObserverDictEntry : Object
 {

@@ -1,10 +1,6 @@
-
 /*
  * Portable Object Compiler (c) 1997,98,99,2003.  All Rights Reserved.
- * $Id: objpak.h,v 1.4 2009/10/23 19:36:43 stes Exp $
- */
-
-/*
+ *
  * This library is free software; you can redistribute it and/or modify it
  * under the terms of the GNU Library General Public License as published
  * by the Free Software Foundation; either version 2 of the License, or
@@ -23,24 +19,14 @@
 #ifndef __objpak__
 #define __objpak__
 
-#define __objpak_revision__ "3.2.1"
+#define __objpak_revision__ "4.5"
 
 #include "stdio.h" /* FILE for printOn: prototype */
-
-#ifndef __OBJECT_INCLUDED__
-#define __OBJECT_INCLUDED__
 #include "Object.h" /* Stepstone Object.h assumes #import */
-#endif
 
-#if OBJC_BLOCKS
 #include "Block.h"
-#endif /* don't need this otherwise */
-
 #include "Exceptn.h"
-
-#ifdef __PORTABLE_OBJC__
 #include "Message.h"
-#endif
 
 #include "ascfiler.h"
 #include "cltn.h"
@@ -53,8 +39,8 @@
 #include "unknownt.h"
 #include "typeinc.h"
 #include "bag.h"
-#include "set.h"
-#include "stack.h"
+#include "Set.h"
+#include "Stack.h"
 #include "sequence.h"
 #include "sortcltn.h"
 #include "OCString.h" /* avoid confusion with string.h */
