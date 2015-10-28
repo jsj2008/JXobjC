@@ -103,16 +103,18 @@
         gs ("if (_returnflag==0) {_returnflag++;");
         if (expr)
         {
+            short shouldBracket = 0;
             gs ("_returnval=(");
-            if ([compound restype] && [[compound restype] isid])
+            if ([compound restype] && [[compound restype] isid] &&
+                (shouldBracket = 1))
             {
                 gs ("((");
                 [[compound restype] genabstrtype];
-                gc (')');
+                gs (")(");
             }
             [expr gen];
-            if ([compound restype] && [[compound restype] isid])
-                gc (')');
+            if (shouldBracket)
+                gs ("))");
             gs (");");
         }
         if (incretval)
@@ -137,11 +139,11 @@
             {
                 gs ("((");
                 [[cmpdef restype] genabstrtype];
-                gc (')');
+                gs (")(");
             }
             [expr gen];
             if (shouldBracket == 1)
-                gc (')');
+                gs ("))");
         }
         gc (';');
     }

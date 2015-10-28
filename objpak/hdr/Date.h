@@ -17,9 +17,15 @@
 - initWithTimeIntervalSinceNow:(TimeInterval)secsToBeAdded;
 - initWithTimeIntervalSince1970:(TimeInterval)secs;
 
+- (Date *)earlierDate:(Date *)otherDate;
+- (Date *)laterDate:(Date *)otherDate;
+
 - (unsigned int)microsecond;
-- (unsigned int)second;
-- (unsigned int)minute;
-- (unsigned int)hour;
+- (unsigned char)second;
+- (unsigned char)minute;
+- (unsigned char)hour;
+- (unsigned char)dayOfMonth;
+- (unsigned char)month;
+- (unsigned short)year;
 
 @end
