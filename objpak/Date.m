@@ -29,18 +29,30 @@ static id _distantPast, _distantFuture;
                                                                                \
     return tm.tm_##x;
 
+static TimeInterval _currentTime ()
+{
+    struct timeval tv;
+    TimeInterval curtime;
+
+    gettimeofday (&tv, NULL);
+    curtime = tv.tv_sec;
+    curtime += ((TimeInterval)tv.tv_usec / (TimeInterval)1000000);
+
+    return curtime;
+}
+
 @implementation Date
 
 + date { return [[self alloc] init]; }
 
-+ dateWithTimeIntervalSinceNow:(TimeInterval)seconds
++ dateWithTimeIntervalSinceNow:(TimeInterval)secs
 {
-    return [[self alloc] initWithTimeIntervalSinceNow:seconds];
+    return [[self alloc] initWithTimeIntervalSinceNow:secs];
 }
 
-+ dateWithTimeIntervalSince1970:(TimeInterval)seconds
++ dateWithTimeIntervalSince1970:(TimeInterval)secs
 {
-    return [[self alloc] initWithTimeIntervalSince1970:seconds];
+    return [[self alloc] initWithTimeIntervalSince1970:secs];
 }
 
 + distantFuture
@@ -61,11 +73,8 @@ static id _distantPast, _distantFuture;
 
 - init
 {
-    struct timeval t;
     [super init];
-    gettimeofday (&t, NULL);
-    seconds = t.tv_sec;
-    seconds += ((TimeInterval)t.tv_usec / (TimeInterval)1000000);
+    seconds = _currentTime ();
     return self;
 }
 
@@ -102,6 +111,8 @@ static id _distantPast, _distantFuture;
     return NO;
 }
 
+- (int)compare:anObject { return (int)(seconds - [anObject seconds]); }
+
 - (Date *)earlierDate:(Date *)otherDate
 {
     return [otherDate seconds] < seconds ? otherDate : (Date *)self;
@@ -111,6 +122,24 @@ static id _distantPast, _distantFuture;
 {
     return [otherDate seconds] > seconds ? otherDate : (Date *)self;
 }
+
+/* Intervals adding and subtracting */
+
+- (Date *)addTimeInterval:(TimeInterval)sec
+{
+    return [[self copy] setSeconds:seconds + sec];
+}
+
+- (TimeInterval)timeIntervalSince1970 { return seconds; }
+
+- (TimeInterval)timeIntervalSinceDate:(Date *)otherDate
+{
+    return seconds - [otherDate seconds];
+}
+
+- (TimeInterval)timeIntervalSinceNow { return seconds - _currentTime (); }
+
+/* Extract components */
 
 - (unsigned int)microsecond
 {

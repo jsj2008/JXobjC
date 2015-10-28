@@ -20,6 +20,10 @@
 - (Date *)earlierDate:(Date *)otherDate;
 - (Date *)laterDate:(Date *)otherDate;
 
+- (TimeInterval)timeIntervalSince1970;
+- (TimeInterval)timeIntervalSinceDate:(Date *)otherDate;
+- (TimeInterval)timeIntervalSinceNow;
+
 - (unsigned int)microsecond;
 - (unsigned char)second;
 - (unsigned char)minute;
