@@ -18,7 +18,6 @@
 
 #include "Exceptn.h"
 
-#include "config.h"
 #include "badvers.h"
 #include "OCString.h"
 

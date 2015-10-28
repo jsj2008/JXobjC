@@ -141,11 +141,11 @@ static BOOL isminmaxsel (SEL s) { return (minsel <= s) && (s <= maxsel); }
  */
 
 #ifndef OBJCRT_NOSHARED
-#if OBJCRT_SCOPE_OBJCMODULES_EXTERN
+//#if OBJCRT_SCOPE_OBJCMODULES_EXTERN
 extern Mentry_t _objcModules;
-#else
-Mentry_t _objcModules;
-#endif
+//#else
+// Mentry_t _objcModules;
+//#endif
 #endif
 
 /* list for when loading shared objects (using dlopen() or similar)

@@ -1,10 +1,6 @@
-
 /*
  * Portable Object Compiler (c) 1997,2000,03,04.  All Rights Reserved.
- * $Id: ascfiler.m,v 1.4 2009/10/23 19:36:43 stes Exp $
- */
-
-/*
+ *
  * This library is free software; you can redistribute it and/or modify it
  * under the terms of the GNU Library General Public License as published
  * by the Free Software Foundation; either version 2 of the License, or
@@ -22,7 +18,6 @@
 
 #ifdef __PORTABLE_OBJC__
 
-#include "config.h"
 #include "ascfiler.h"
 #include "OrdCltn.h"
 #include "unknownt.h"

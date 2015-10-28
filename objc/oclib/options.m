@@ -1,4 +1,3 @@
-
 /*
  * Copyright (c) 1998,99,2002 David Stes.
  *
@@ -15,14 +14,16 @@
  * You should have received a copy of the GNU Library General Public License
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
- *
- * $Id: options.m,v 1.4 2005/05/08 18:38:52 stes Exp $
  */
 
 #include "config.h"
 #include <stdlib.h>
 #include <assert.h>
 #include "options.h"
+
+#ifndef OBJCRT_DEFAULT_PATHSEPC
+#define OBJCRT_DEFAULT_PATHSEPC "/"
+#endif
 
 int o_warnings;
 int o_gnu;

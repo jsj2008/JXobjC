@@ -126,8 +126,9 @@
         gs (op);
         gc ('(');
         [rcast genabstrtype];
-        gc (')');
+        gs (")(");
         [rhs gen];
+        gc (')');
         return self;
     }
     else

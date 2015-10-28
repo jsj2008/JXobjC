@@ -433,9 +433,16 @@ id t_id;
 {
     if (decl)
         return nil;
-    if ([specs size] != 1)
-        return nil;
-    return [[specs at:0] dot:sym];
+    else if ([specs size] != 1)
+    {
+        id stsp;
+        [specs do:
+               { :each | if ([each isKindOf:StructSpec]) stsp = each;
+               }];
+        return [stsp dot:sym];
+    }
+    else
+        return [[specs at:0] dot:sym];
 }
 
 - star

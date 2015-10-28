@@ -19,7 +19,7 @@
 #ifndef __CLTN_H__
 #define __CLTN_H__
 
-#include <stdio.h>  /* FILE */
+#include <stdio.h> /* FILE */
 #include "Object.h"
 
 @interface Cltn : Object

@@ -16,8 +16,6 @@
  * Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
  */
 
-#ifdef __PORTABLE_OBJC__
-
 #ifndef __objcrt__
 #define __objcrt__
 
@@ -46,11 +44,12 @@
 /* The traditional Objective C types (see Brad Cox' book)
  */
 
-typedef char * SEL; /* Uniqued String for Selector */
-typedef char * STR; /* C, NULL-terminated, String */
-typedef char BOOL;  /* Boolean */
-typedef FILE * IOD; /* I/O Device */
-typedef id SHR;     /* type of class, for us, it's id */
+typedef char * SEL;          /* Uniqued String for Selector */
+typedef char * STR;          /* C, NULL-terminated, String */
+typedef char BOOL;           /* Boolean */
+typedef FILE * IOD;          /* I/O Device */
+typedef id SHR;              /* type of class, for us, it's id */
+typedef double TimeInterval; /* time interval in seconds */
 
 #ifdef __cplusplus
 typedef id (*IMP) (...); /* Method pointer */
@@ -312,5 +311,3 @@ void poseAs (id posing, id target);
 id swapclass (id self, id target);
 
 #endif /* __objcrt__ */
-
-#endif /* __PORTABLE_OBJC__ */

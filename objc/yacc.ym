@@ -89,6 +89,7 @@ int yylex() ;
 %left arrow '.'
 %left hyperunary
 %left '(' '[' ')' ']'
+%right structaccess
 
 %%
 
@@ -768,13 +769,13 @@ primaryexpr : identifier
      { $$ = mkfuncall($1,$3); }
   | primaryexpr '(' compoundstmt ')' %prec hyperunary
      { $$ = mkpostfixexpr($1,mkprecexpr($3)); }
-  | primaryexpr '.' identifier
+  | primaryexpr '.' identifier %prec structaccess
      { $$ = mkdotexpr($1,$3); }
-  | primaryexpr '.' typeword
+  | primaryexpr '.' typeword %prec structaccess
      { $$ = mkdotexpr($1,$3); }
-  | primaryexpr arrow identifier
+  | primaryexpr arrow identifier %prec structaccess
      { $$ = mkarrowexpr($1,$3); }
-  | primaryexpr arrow typeword
+  | primaryexpr arrow typeword %prec structaccess
      { $$ = mkarrowexpr($1,$3); }
   | primaryexpr plusplus
      { $$ = mkpostfixexpr($1,$2); }

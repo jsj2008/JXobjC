@@ -1,10 +1,6 @@
-
 /*
  * Portable Object Compiler (c) 1998.  All Rights Reserved.
- * $Id: intarray.m,v 1.3 2009/10/23 19:36:43 stes Exp $
- */
-
-/*
+ *
  * This library is free software; you can redistribute it and/or modify it
  * under the terms of the GNU Library General Public License as published
  * by the Free Software Foundation; either version 2 of the License, or
@@ -20,7 +16,6 @@
  * Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
  */
 
-#include "config.h"
 #include <assert.h>
 #include <stdlib.h>
 #include "intarray.h"

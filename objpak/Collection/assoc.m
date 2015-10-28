@@ -1,10 +1,6 @@
-
 /*
  * Portable Object Compiler (c) 1997.  All Rights Reserved.
- * $Id: assoc.m,v 1.2 2000/11/09 22:55:16 stes Exp $
- */
-
-/*
+ *
  * This library is free software; you can redistribute it and/or modify it
  * under the terms of the GNU Library General Public License as published
  * by the Free Software Foundation; either version 2 of the License, or
@@ -20,7 +16,6 @@
  * Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
  */
 
-#include "config.h"
 #include "assoc.h"
 
 @implementation Assoc

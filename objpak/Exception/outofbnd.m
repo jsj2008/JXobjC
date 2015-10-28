@@ -18,7 +18,6 @@
 
 #include "Exceptn.h"
 
-#include "config.h"
 #include "outofbnd.h"
 #include "OCString.h"
 
