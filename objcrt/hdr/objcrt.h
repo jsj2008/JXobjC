@@ -59,6 +59,13 @@ typedef id (*IMP) (); /* Method pointer */
 
 typedef void (*ARGIMP) (id, SEL, void *); /* dispatcher */
 
+#if defined(WINDOWS) || defined(__WIN32) || defined(__WIN64)
+#define OBJC_WINDOWS 1
+typedef SOCKET SocketDescriptor;
+#else
+typedef int SocketDescriptor;
+#endif
+
 /* The traditional Objective C defines
  */
 
