@@ -77,3 +77,10 @@ resolvinfo_t ** jx_resolv (String * host, unsigned short port, int protocol)
 
     return result;
 }
+
+void jx_freeresolv (resolvinfo_t ** toFree)
+{
+    free (toFree[0]->addrinfo);
+    free (toFree[0]);
+    free (toFree);
+}

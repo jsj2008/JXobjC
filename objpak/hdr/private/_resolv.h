@@ -14,3 +14,4 @@ typedef struct resolvinfo_s
 } resolvinfo_t;
 
 resolvinfo_t ** jx_resolv (String * host, unsigned short port, int typ);
+void jx_freeresolv (resolvinfo_t ** toFree);
