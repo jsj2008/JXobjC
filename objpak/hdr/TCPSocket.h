@@ -1,6 +1,6 @@
 /* Copyright (c) 2015 D. Mackay. All rights reserved. */
 
-#include "_sockets.h"
+#include "private/_sockets.h"
 
 #import "AbstractSocket.h"
 #import "OCString.h"

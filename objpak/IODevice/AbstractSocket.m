@@ -1,7 +1,7 @@
 /* Copyright (c) 2015 D. Mackay. All rights reserved. */
 
 #include <stdio.h>
-#include "_sockets.h"
+#include "private/_sockets.h"
 
 #import "Exceptn.h"
 #import "AbstractSocket.h"

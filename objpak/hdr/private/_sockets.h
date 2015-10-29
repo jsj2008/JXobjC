@@ -12,6 +12,7 @@
 #include <ws2tcpip.h>
 #define close(socket) closesocket(socket
 #else
+#include <netdb.h>
 #include <netinet/in.h>
 #include <netinet/tcp.h>
 #include <sys/socket.h>
