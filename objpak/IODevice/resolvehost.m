@@ -6,6 +6,8 @@
 
 #import "Block.h"
 #import "Exceptn.h"
+#import "Number.h"
+#import "Pair.h"
 
 static pthread_mutex_t getaddrinfo_mtx = PTHREAD_MUTEX_INITIALIZER;
 
@@ -25,7 +27,7 @@ static resolvinfo_t ** _jx_resolv_impl (String * host, unsigned short port,
     snprintf (port_str, 6, "%d", port);
 
     if ((err = getaddrinfo ([host str], port_str, &hints, &addrinfo1)))
-        [Exception signal:"Failed to resolve host: getaddrinfo failed."];
+        [Exception signal:"Failed to resolve IP: getaddrinfo failed"];
 
     for (addrinfo = addrinfo1; addrinfo != NULL; addrinfo = addrinfo->ai_next)
         num++;
@@ -34,7 +36,7 @@ static resolvinfo_t ** _jx_resolv_impl (String * host, unsigned short port,
     {
         freeaddrinfo (addrinfo1);
         [Exception
-            signal:"Failed to resolve host: getaddrinfo returned no results."];
+            signal:"Failed to resolve host: getaddrinfo returned no results"];
     }
 
     ret     = calloc (num + 1, sizeof (*ret));
@@ -66,6 +68,46 @@ resolvinfo_t ** jx_resolv (String * host, unsigned short port, int protocol)
     [
         {
             result = _jx_resolv_impl (host, port, protocol);
+        } on:Exception
+          do:
+          { :exc | except = exc;
+          }];
+    pthread_mutex_unlock (&getaddrinfo_mtx);
+
+    if (except)
+        [except signal];
+
+    return result;
+}
+
+static Pair * _jx_addrtonameport_impl (struct sockaddr * addr,
+                                       socklen_t addrlen)
+{
+    char hostname[NI_MAXHOST], port[NI_MAXSERV], *endptr;
+    unsigned short portnum;
+    int err;
+
+    if ((err = getnameinfo (addr, addrlen, hostname, NI_MAXHOST, port,
+                            NI_MAXSERV, NI_NUMERICHOST | NI_NUMERICSERV)))
+        [Exception signal:"Failed to resolve hostname: getnameinfo failed"];
+
+    portnum = strtol (port, &endptr, 10);
+    if (endptr)
+        [Exception signal:"Failed to convert port to integer"];
+
+    return (Pair *)[Pair pairWithFirst:[String str:hostname]
+                                second:[Number numberWithUShort:portnum]];
+}
+
+Pair * jx_addrtonameport (struct sockaddr * addr, socklen_t addrlen)
+{
+    Pair * result      = 0;
+    Exception * except = 0;
+
+    pthread_mutex_lock (&getaddrinfo_mtx);
+    [
+        {
+            result = _jx_addrtonameport_impl (addr, addrlen);
         } on:Exception
           do:
           { :exc | except = exc;

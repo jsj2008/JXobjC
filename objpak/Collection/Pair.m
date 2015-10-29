@@ -4,6 +4,19 @@
 
 @implementation Pair
 
++ (Pair *)pairWithFirst:one second:two
+{
+    return [[self alloc] initWithFirst:one second:two];
+}
+
+- initWithFirst:one second:two
+{
+    [super init];
+    first  = one;
+    second = two;
+    return self;
+}
+
 - ARC_dealloc
 {
     first  = nil;

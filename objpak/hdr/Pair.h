@@ -6,4 +6,7 @@
 
 @property id first, second;
 
++ (Pair *)pairWithFirst:one second:two;
+- initWithFirst:one second:two;
+
 @end
