@@ -39,15 +39,17 @@ typedef enum number_type_e
     union number_value_u
     {
         char c;
-        unsigned char uc;
+        unsigned char C;
         short s;
-        unsigned short us;
+        unsigned short S;
         int i;
-        unsigned int ui;
+        unsigned int I;
         long l;
-        unsigned long ul;
-        long long ll;
-        unsigned long long ull;
+        unsigned long L;
+        long long q;
+        unsigned long long Q;
+        float f;
+        double d;
     } value;
 }
 
@@ -66,6 +68,8 @@ NumFrom (long, Long);
 NumFrom (unsigned long, ULong);
 NumFrom (long long, LongLong);
 NumFrom (unsigned long long, ULongLong);
+NumFrom (float, Float);
+NumFrom (double, Double);
 #undef NumFrom
 
 #define NumVal(typ, nam) -(typ)nam##Value
@@ -79,6 +83,8 @@ NumVal (long, long);
 NumVal (unsigned long, uLong);
 NumVal (long long, longLong);
 NumVal (unsigned long long, uLongLong);
+NumVal (float, float);
+NumVal (double, double);
 #undef NumVal
 
 @end

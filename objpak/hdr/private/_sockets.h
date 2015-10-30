@@ -10,7 +10,7 @@
 #endif
 #include <windows.h>
 #include <ws2tcpip.h>
-#define close(socket) closesocket(socket
+#define sockclose(socket) closesocket (socket)
 #else
 #include <errno.h>
 #include <netdb.h>
@@ -18,6 +18,7 @@
 #include <netinet/tcp.h>
 #include <sys/socket.h>
 #include <unistd.h>
+#define sockclose(socket) close (socket)
 #endif
 
 #endif

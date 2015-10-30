@@ -14,11 +14,15 @@
 
 @implementation TCPSocket
 
-- ARC_dealloc
+- ARC_dealloc { return [super ARC_dealloc]; }
+
+- (void)close
 {
     if (addrlen)
         free (addr);
-    return [super ARC_dealloc];
+    addr    = 0;
+    addrlen = 0;
+    sockclose (descriptor);
 }
 
 - connectToHostname:(String *)host port:(unsigned short)port
