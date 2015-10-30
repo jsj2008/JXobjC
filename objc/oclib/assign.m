@@ -21,11 +21,8 @@
 #include <stdlib.h>
 #include <assert.h>
 #include <string.h>
-#ifndef __OBJECT_INCLUDED__
-#define __OBJECT_INCLUDED__
-#include <stdio.h>  /* FILE */
-#include "Object.h" /* Stepstone Object.h assumes #import */
-#endif
+#include <stdio.h> /* FILE */
+#include "Object.h"
 #include "node.h"
 #include "expr.h"
 #include "binxpr.h"

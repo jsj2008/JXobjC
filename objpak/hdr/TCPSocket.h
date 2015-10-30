@@ -9,19 +9,22 @@
 
 @interface TCPSocket : AbstractSocket
 {
-    struct sockaddr * address;
-    socklen_t addressLength;
+    struct sockaddr * addr;
+    socklen_t addrlen;
 }
 
 @property /* (readonly) */ BOOL listening;
 @property BOOL keepAlive;
 
-- connectToHost:(String *)host port:(unsigned short)port;
+- connectToHostname:(String *)host port:(unsigned short)port;
 
 /* A port of 0 will result in the choosing of a random port.
  * That port number will be returned. */
-- (unsigned short)bindToHost:(String *)host port:(unsigned short)port;
+- (unsigned short)bindToHostname:(String *)host port:(unsigned short)port;
 
-- (void)listen;
+- listen;
+- listenWithBacklog:(int)backlog;
+
+- accept;
 
 @end

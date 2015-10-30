@@ -28,8 +28,7 @@
     id messageText;
     id tag;
     id resumeHandler;
-}
-:
+} :
 {
   id handler;
 }

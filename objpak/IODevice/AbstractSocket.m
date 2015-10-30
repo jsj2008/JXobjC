@@ -18,6 +18,13 @@
     return self;
 }
 
+- init
+{
+    [super init];
+    descriptor = -1;
+    return self;
+}
+
 - ARC_dealloc
 {
     if ((int)descriptor != -1)

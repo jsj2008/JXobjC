@@ -14,17 +14,13 @@
  * You should have received a copy of the GNU Library General Public License
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
- *
  */
 
 #include "config.h"
 #include <stdlib.h>
 #include <assert.h>
-#ifndef __OBJECT_INCLUDED__
-#define __OBJECT_INCLUDED__
-#include <stdio.h>  /* FILE */
-#include "Object.h" /* Stepstone Object.h assumes #import */
-#endif
+#include <stdio.h> /* FILE */
+#include "Object.h"
 #include <OCString.h>
 #include <OrdCltn.h>
 #include "node.h"
