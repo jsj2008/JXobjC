@@ -10,4 +10,7 @@
     SocketDescriptor descriptor;
 }
 
+- (void)_setDescriptor:(SocketDescriptor)fd;
+- (SocketDescriptor)_descriptor;
+
 @end

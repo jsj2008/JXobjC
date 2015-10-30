@@ -96,8 +96,6 @@
 
 - synthinits
 {
-    printf ("Cast: %s Decl: %s Initializer: %s\n", [cast str] ?: "no",
-            [decl str], [initializer str]);
     [initializer synth];
     if (![initializer isKindOf:DotExpr] && ![initializer isKindOf:ArrowExpr] &&
         ![initializer isKindOf:ListExpr] && [[initializer type] isid])

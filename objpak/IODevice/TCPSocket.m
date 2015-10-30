@@ -60,6 +60,10 @@
 - (unsigned short)bindToHostname:(String *)host port:(unsigned short)port
 {
     resolvinfo_t ** results;
+    /* Because we aren't sure what protocol will be used, we use this union.
+     * sockaddr_storage is the maximum size of a protocol's sockaddr, and we
+     * can find out the concrete type of what we've stored in there by querying
+     * its ss_family member. This allows us to retrieve our port number. */
     union
     {
         struct sockaddr_storage storage;
@@ -123,7 +127,7 @@
     {
         close (descriptor);
         descriptor = -1;
-        [Exception signal:"Failed to bind"];
+        [Exception signal:"Failed to bind: protocol not INET or INET6"];
         return -1; /* clang doesn't know that Exception transfers control */
     }
 }
@@ -141,6 +145,28 @@
     return self;
 }
 
-- accept { TCPSocket * cl = (TCPSocket *)[[[self class] alloc] init]; }
+- accept
+{
+    TCPSocket * cl = (TCPSocket *)[[[self class] alloc] init];
+
+    cl->addr    = malloc (sizeof (struct sockaddr_storage));
+    cl->addrlen = (socklen_t)sizeof (struct sockaddr_storage);
+
+#if defined(SOCK_NOCLOEXEC)
+    [cl _setDescriptor:accept (descriptor, cl->addr, &cl->addrlen)];
+    if ([cl _descriptor] == -1)
+        [Exception signal:"Failed to accept connection: accept() returned -1"];
+
+    fcntl ([cl _descriptor], F_SETFD,
+           fcntl ([cl _descriptor], F_GETFD, 0) | FD_CLOEXEC);
+#else
+    [cl _setDescriptor:accept4 (descriptor, cl->addr, &cl->addrlen,
+                                SOCK_CLOEXEC)];
+    if ([cl _descriptor] == -1)
+        [Exception signal:"Failed to accept connection: accept4() returned -1"];
+#endif
+
+    return cl;
+}
 
 @end

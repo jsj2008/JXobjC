@@ -54,4 +54,7 @@
 
 - (int)writeFileDescriptor { return (int)descriptor; }
 
+- (void)_setDescriptor:(SocketDescriptor)fd { descriptor = fd; }
+- (SocketDescriptor)_descriptor { return descriptor; }
+
 @end
