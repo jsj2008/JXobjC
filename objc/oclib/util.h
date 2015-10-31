@@ -1,4 +1,3 @@
-
 /*
  * Copyright (c) 1998 David Stes.
  *
@@ -15,8 +14,6 @@
  * You should have received a copy of the GNU Library General Public License
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
- *
- * $Id: util.h,v 1.2 2003/09/29 16:52:05 stes Exp $
  */
 
 #define YYSTYPE id
@@ -87,6 +84,7 @@ id mklist (id c, id s);
 id mklist2 (id c, id s, id t);
 id atdefsaddall (id c, id n);
 id mkblockexpr (id lb, id parms, id datadefs, id stmts, id expr, id rb);
+void mkclassfwd (id name);
 id mkclassdef (id keyw, id name, id sname, id protocols, id ivars, id cvars,
                BOOL iscategory);
 id mkdatadef (id datadef, id specs, id decl, id initializer);

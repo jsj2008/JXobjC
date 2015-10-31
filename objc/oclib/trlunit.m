@@ -915,6 +915,17 @@ static char * mystrrchr (const char * s, int c)
     return self;
 }
 
+- defasclassfwd:sym
+{
+    if (!classfwds)
+        ;
+    classfwds = [Set new];
+    [classfwds add:sym];
+    return self;
+}
+
+- lookupclassfwd:sym { return [classfwds contains:sym]; }
+
 - lookupclass:sym { return [classdefs atKey:sym]; }
 
 - lookupmethod:sel { return [methods atKey:sel]; }

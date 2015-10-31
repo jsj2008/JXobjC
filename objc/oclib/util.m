@@ -990,6 +990,17 @@ id mkblockexpr (id lb, id parms, id datadefs, id stmts, id expr, id rb)
     return r;
 }
 
+void mkclassfwd (id name)
+{
+    id r = [StructSpec new];
+
+    [r keyw:[Symbol sprintf:"struct"]];
+    [r name:[Symbol sprintf:"%s_PRIVATE", [name str]]];
+    [trlunit defstruct:r];
+    [trlunit def:name astype:[[[Type new] addspec:r] setIsobject:YES]];
+    [trlunit defasclassfwd:name];
+}
+
 id mkclassdef (id keyw, id name, id sname, id protocols, id ivars, id cvars,
                BOOL iscategory)
 {

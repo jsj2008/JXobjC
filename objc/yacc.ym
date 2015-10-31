@@ -180,9 +180,9 @@ gnuattriblist : gnuattrib
   ;
 
 blkrtrnstmt
-	: atblkreturn expr ';'
-	{ $$ = $2; }
-	;
+    : atblkreturn expr ';'
+    { $$ = $2; }
+    ;
 
 optblkrtrn
 	: blkrtrnstmt
@@ -263,9 +263,9 @@ optprotoreflist
     ;
 
 identorclass
-	: identifier
-	| classname
-	;
+    : identifier
+    | classname
+    ;
 
 classdef : atbegin identorclass optprotoreflist ivardef
      { $$ = mkclassdef($1,$2,nil,$3,$4,nil,0); }
@@ -273,11 +273,11 @@ classdef : atbegin identorclass optprotoreflist ivardef
      { $$ = mkclassdef($1,$2,nil,$3,$4,$6,0); }
   | atbegin identorclass optprotoreflist
      { $$ = mkclassdef($1,$2,nil,$3,nil,nil,0); }
-  | atbegin identifier  ':' classname optprotoreflist
+  | atbegin identorclass  ':' classname optprotoreflist
      { $$ = mkclassdef($1,$2,$4,$5,nil,nil,0); }
-  | atbegin identifier ':' classname optprotoreflist ivardef
+  | atbegin identorclass ':' classname optprotoreflist ivardef
      { $$ = mkclassdef($1,$2,$4,$5,$6,nil,0); }
-  | atbegin identifier ':' classname optprotoreflist ivardef  ':' ivardef
+  | atbegin identorclass ':' classname optprotoreflist ivardef  ':' ivardef
      { $$ = mkclassdef($1,$2,$4,$5,$6,$8,0); }
   | atbegin identorclass '(' identifier ')' optprotoreflist
      { $$ = mkclassdef($1, $4, $2, $6, nil, nil, 1); }
@@ -483,8 +483,12 @@ extdef
     { $$ = nil; }
     | namespaceblock
     { $$ = nil; }
-	| atclass identifier ';'
-	{ gf("typedef struct %s_PRIVATE %s;\n", [$2 str], [$2 str]); $$ = nil; }
+    | atclass identifier ';'
+    {
+        gf("typedef struct %s_PRIVATE %s;\n", [$2 str], [$2 str]);
+        mkclassfwd($2);
+        $$ = nil;
+    }
     ;
 
 externlangblock : externlang '{' '}'
@@ -586,10 +590,10 @@ keywarglist : keywarg
   ;
 
 exprorclass
-	: expr
-	| classname
-	  { $$ = mkidentexpr($1); }
-	;
+    : expr
+    | classname
+      { $$ = mkidentexpr($1); }
+    ;
 
 keywarg : unaryselector ':' {okblock=1;} exprorclass
     { okblock=0;$$ = mkkeywarg($1,$4); }

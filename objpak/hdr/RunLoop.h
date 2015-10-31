@@ -6,11 +6,13 @@
 #import "Set.h"
 #import "IODevice.h"
 
+@class RunLoopDescriptor;
+
 @interface RunLoop : Object
 {
     SortCltn * _timers;
     Stack * _performs;
-    Set * _eventSources;
+    Set * _eventSources; /* all of these are RunLoopDescriptors */
 } : 
 {
     id mainRunLoop;
@@ -20,6 +22,8 @@
 
 + (RunLoop *)mainRunLoop;
 + (RunLoop *)currentRunLoop;
+
+- associateDescriptor:(RunLoopDescriptor *)desc;
 
 @end
 
@@ -68,6 +72,5 @@ typedef enum FdEvSourceType_e
 @property enum FdEvSourceType_e descriptorEventType;
 
 - setIOD:aniod eventTypes:(FdEvSourceType_t)types;
-- associateWithRunLoop:(RunLoop *)loop;
 
 @end

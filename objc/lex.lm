@@ -376,7 +376,7 @@ int identif(void)
   yylval = [Symbol str:yytext lineno:inlineno filename:infilename];
   if (!o_duptypedefs) {
     if (isbuiltinfun(yylval)) return builtinfun;
-	if ([trlunit lookupclass: yylval]) return classname;
+    if ([trlunit lookupclass: yylval] || [trlunit lookupclassfwd: yylval]) return classname;
     if (istypeword(yylval)) return typeword;
   }
   return identifier;

@@ -38,6 +38,4 @@
     return self;
 }
 
-- associateWithRunLoop:(RunLoop *)loop { return self; }
-
 @end

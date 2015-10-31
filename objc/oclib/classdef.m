@@ -14,24 +14,19 @@
  * You should have received a copy of the GNU Library General Public License
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
- *
- * $Id: classdef.m,v 1.6 2000/09/08 15:51:26 stes Exp $
  */
 
 #include "config.h"
 #include <stdlib.h>
 #include <assert.h>
 #include <string.h>
-#ifndef __OBJECT_INCLUDED__
-#define __OBJECT_INCLUDED__
-#include <stdio.h>  /* FILE */
-#include "Object.h" /* Stepstone Object.h assumes #import */
-#endif
+#include <stdio.h> /* FILE */
+#include "Object.h"
 #include "Block.h"
-#include <OCString.h>
-#include <OrdCltn.h>
-#include <Set.h>
-#include <Dictionary.h>
+#include "OCString.h"
+#include "OrdCltn.h"
+#include "Set.h"
+#include "Dictionary.h"
 #include "node.h"
 #include "symbol.h"
 #include "selector.h"
