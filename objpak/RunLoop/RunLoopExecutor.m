@@ -5,7 +5,7 @@
 
 - initWithSelector:(SEL)sel target:targ argument:arg
 {
-    [super init];
+    [self init];
     selector = sel;
     target   = targ;
     argument = arg;
@@ -14,7 +14,7 @@
 
 - initWithBlock:blk argument:arg
 {
-    [super init];
+    [self init];
     block    = blk;
     argument = arg;
     return self;

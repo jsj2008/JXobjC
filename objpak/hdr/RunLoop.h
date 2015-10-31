@@ -4,6 +4,7 @@
 #import "SortCltn.h"
 #import "Stack.h"
 #import "Set.h"
+#import "IODevice.h"
 
 @interface RunLoop : Object
 {
@@ -51,20 +52,22 @@
 
 typedef enum FdEvSourceType_e
 {
-    FDEVSOURCE_INPUT  = 1,
-    FDEVSOURCE_OUTPUT = 2,
-    FDEVSOURCE_EXCEPT = 4,
+    FDEV_READ   = 1,
+    FDEV_WRITE  = 2,
+    FDEV_EXCEPT = 4,
 } FdEvSourceType_t;
 
 @interface RunLoopDescriptor : RunLoopExecutor
 {
-    volatile id iod;
+    id iod;
+    SocketDescriptor readFd, writeFd;
+    BOOL readExc, writeExc;
 }
 
 @property volatile BOOL valid;
-@property enum FdEvSourceType_e fdEvSourceType;
-@property volatile id IODevice;
+@property enum FdEvSourceType_e descriptorEventType;
 
-- setIOD:aniod evTypes:(FdEvSourceType_t)types;
+- setIOD:aniod eventTypes:(FdEvSourceType_t)types;
+- associateWithRunLoop:(RunLoop *)loop;
 
 @end

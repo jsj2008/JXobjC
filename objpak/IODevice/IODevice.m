@@ -21,13 +21,13 @@
 }
 
 /* Retrieve a file descriptor for reading or writing to respectively ✔ */
-- (int)readFileDescriptor
+- (int)readDescriptor
 {
     [self subclassResponsibility:_cmd];
     return 0;
 }
 
-- (int)writeFileDescriptor
+- (int)writeDescriptor
 {
     [self subclassResponsibility:_cmd];
     return 0;

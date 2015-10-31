@@ -19,7 +19,3 @@
 #endif
 }
 @end
-
-@interface PipeRLE : RunLoopExecutor
-
-@end

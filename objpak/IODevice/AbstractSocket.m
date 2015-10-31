@@ -55,9 +55,9 @@
         [Exception signal:"Failure in send()"];
 }
 
-- (int)readFileDescriptor { return (int)descriptor; }
+- (int)readDescriptor { return (int)descriptor; }
 
-- (int)writeFileDescriptor { return (int)descriptor; }
+- (int)writeDescriptor { return (int)descriptor; }
 
 - (void)_setDescriptor:(SocketDescriptor)fd { descriptor = fd; }
 - (SocketDescriptor)_descriptor { return descriptor; }

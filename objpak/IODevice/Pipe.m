@@ -70,7 +70,7 @@
 }
 
 /* Retrieve a file descriptor for reading or writing to respectively ✔ */
-- (int)readFileDescriptor
+- (int)readDescriptor
 {
 #if defined(OBJC_WINDOWS)
     return [readFd readFileDescriptor];
@@ -79,7 +79,7 @@
 #endif
 }
 
-- (int)writeFileDescriptor
+- (int)writeDescriptor
 {
 #if defined(OBJC_WINDOWS)
     return [writeFd writeFileDescriptor];

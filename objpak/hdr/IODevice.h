@@ -21,7 +21,7 @@
 - (void)rawWriteBuffer:(const void *)buffer length:(size_t)length;
 
 /* Retrieve a file descriptor for reading or writing to respectively ✔ */
-- (int)readFileDescriptor;
-- (int)writeFileDescriptor;
+- (int)readDescriptor;
+- (int)writeDescriptor;
 
 @end
