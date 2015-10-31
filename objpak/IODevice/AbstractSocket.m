@@ -27,9 +27,14 @@
 
 - ARC_dealloc
 {
-    if ((int)descriptor != -1)
-        close (descriptor);
+    [self close];
     return [super ARC_dealloc];
+}
+
+- (void)close
+{
+    if ((int)descriptor != -1)
+        sockclose (descriptor);
 }
 
 - (size_t)rawReadIntoBuffer:(void *)buffer length:(size_t)length

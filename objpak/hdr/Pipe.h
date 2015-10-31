@@ -12,13 +12,9 @@
 @interface Pipe : IODevice
 {
 #if defined(OBJC_WINDOWS)
-    TCPSocket readFd, writeFd;
+    TCPSocket *readFd, *writeFd;
 #else
     int readFd, writeFd;
 #endif
-} :
-{
-    /* 49,644 to 50,668 */
-    Set * ports;
 }
 @end

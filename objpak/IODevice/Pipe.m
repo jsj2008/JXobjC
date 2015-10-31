@@ -1,13 +1,37 @@
 /* Copyright (c) 2015 D. Mackay. All rights reserved. */
 
 #import "Pipe.h"
+#import "Exceptn.h"
 
 @implementation Pipe
 
-+ ARC_dealloc
+- ARC_dealloc
 {
     [self close];
     return [super ARC_dealloc];
+}
+
+- init
+{
+#if !defined(OBJC_WINDOWS)
+    int pipefds[2];
+    unsigned short port;
+#endif
+
+    [super init];
+#if defined(OBJC_WINDOWS)
+    readFd = [TCPSocket new];
+    port   = [readFd bindToHostname:@"127.0.0.1" port:0];
+    [readFd listen];
+    writeFd = [[TCPSocket new] connectToHostname:@"127.0.0.1" port:port];
+    readFd  = [readFd accept];
+#else
+    pipe2 (pipefds, SOCK_CLOEXEC);
+    readFd  = pipefds[0];
+    writeFd = pipefds[1];
+#endif
+
+    return self;
 }
 
 - (void)close
@@ -15,6 +39,8 @@
 #if defined(OBJC_WINDOWS)
     [writeFd close];
     [readFd close];
+    writeFd = nil;
+    readFd  = nil;
 #else
     close (writeFd);
     close (readFd);

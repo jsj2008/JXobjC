@@ -1,7 +1,7 @@
 SUB_DEPTH = ..
 include $(KBUILD_PATH)/subheader.kmk
 
-INSTALLS += objpakhdr
+INSTALLS += objpakhdr objpakhdr2
 LIBRARIES += objpak objpakr objpak_s
 
 objpak_TEMPLATE = OBJC
@@ -28,5 +28,9 @@ objpakr_ORDERDEPS = $(objpak_s_1_TARGET)
 objpakhdr_INST = include/objpak/
 objpakhdr_IFFLAGS = -m 644
 objpakhdr_SOURCES = $(wildcard $(PATH_ROOT)/objpak/hdr/*.h)
+
+objpakhdr2_INST = include/objpak/private/
+objpakhdr2_IFFLAGS = -m 644
+objpakhdr2_SOURCES = $(wildcard $(PATH_ROOT)/objpak/hdr/private/*.h)
 
 include $(FILE_KBUILD_SUB_FOOTER)

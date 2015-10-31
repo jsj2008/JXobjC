@@ -14,8 +14,6 @@
 
 @implementation TCPSocket
 
-- ARC_dealloc { return [super ARC_dealloc]; }
-
 - (void)close
 {
     if (addrlen)
@@ -55,6 +53,7 @@
     }
 
     jx_freeresolv (results);
+
     if (descriptor == -1)
         [Exception signal:"Failed to connect to host"];
 
@@ -151,7 +150,7 @@
 
 - accept
 {
-    TCPSocket * cl = (TCPSocket *)[[[self class] alloc] init];
+    TCPSocket * cl = (TCPSocket *)[[self class] new];
 
     cl->addr    = malloc (sizeof (struct sockaddr_storage));
     cl->addrlen = (socklen_t)sizeof (struct sockaddr_storage);
