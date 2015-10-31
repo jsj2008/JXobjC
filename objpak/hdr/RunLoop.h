@@ -2,10 +2,13 @@
 
 #import "Object.h"
 #import "OrdCltn.h"
+#import "Stack.h"
 
 @interface RunLoop : Object
 {
     OrdCltn * _timers;
+    Stack * _performs;
+    OrdCltn * _eventSources;
 } : 
 {
     id mainRunLoop;
@@ -32,7 +35,12 @@
 
     /* And an argument passed to each. */
     id argument;
+
+    /* Used in the DescriptorEventSource specialisation. */
+    volatile id IODevice;
 }
+
+@property enum FdEvSourceType_e fdEvSourceType;
 
 + newWithSelector:(SEL)sel target:targ argument:arg;
 + newWithBlock:blk argument:arg;
@@ -42,5 +50,16 @@
 
 /* Without prejudicing its typical schedule, run the executor once. */
 - (void)fire;
+
+@end
+
+typedef enum FdEvSourceType_e
+{
+    FDEVSOURCE_INPUT  = 1,
+    FDEVSOURCE_OUTPUT = 2,
+    FDEVSOURCE_EXCEPT = 4,
+} FdEvSourceType_t;
+
+@interface RunLoopExecutor (DescriptorEventSource)
 
 @end

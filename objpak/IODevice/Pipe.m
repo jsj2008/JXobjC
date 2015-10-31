@@ -15,6 +15,7 @@
 {
 #if !defined(OBJC_WINDOWS)
     int pipefds[2];
+#else
     unsigned short port;
 #endif
 

@@ -54,7 +54,7 @@
     {
         [block value:argument
              ifError:
-             { :msg :rcv | printf("Exception in RunLoop executor method.\n");
+             { :msg :rcv | printf("Exception in RunLoop executor block.\n");
              }];
     }
 }
