@@ -42,7 +42,7 @@
 #include "Set.h"
 #include "Stack.h"
 #include "sequence.h"
-#include "sortcltn.h"
+#include "SortCltn.h"
 #include "OCString.h" /* avoid confusion with string.h */
 #include "point.h"
 #include "array.h"

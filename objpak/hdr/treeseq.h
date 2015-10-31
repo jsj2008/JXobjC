@@ -19,7 +19,7 @@
 #ifndef __OBJSORTSEQ_H__
 #define __OBJSORTSEQ_H__
 
-#include "sortcltn.h"
+#include "SortCltn.h"
 
 @interface TreeSequence : Object
 {

@@ -2,6 +2,7 @@
 
 #include "private/_sockets.h"
 
+#import "RunLoop.h"
 #import "TCPSocket.h"
 #import "Set.h"
 
@@ -17,4 +18,8 @@
     int readFd, writeFd;
 #endif
 }
+@end
+
+@interface PipeRLE : RunLoopExecutor
+
 @end

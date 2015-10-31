@@ -14,10 +14,8 @@
  * You should have received a copy of the GNU Library General Public License
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
- *
  */
 
-#include "config.h"
 #include <stddef.h>
 #include <stdlib.h>
 #include <assert.h>
@@ -26,13 +24,13 @@
 #include <stdio.h> /* FILE */
 #include "Object.h"
 #include "Block.h"
-#include <OCString.h>
+#include "OCString.h"
 #include "symbol.h"
-#include <Set.h>
-#include <OrdCltn.h>
-#include <sequence.h>
-#include <Dictionary.h>
-#include <sortcltn.h>
+#include "Set.h"
+#include "OrdCltn.h"
+#include "sequence.h"
+#include "Dictionary.h"
+#include "SortCltn.h"
 #include "node.h"
 #include "expr.h"
 #include "trlunit.h"

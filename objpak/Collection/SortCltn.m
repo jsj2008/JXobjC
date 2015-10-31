@@ -18,7 +18,7 @@
 
 #include <assert.h>
 #include <stdlib.h>
-#include "sortcltn.h"
+#include "SortCltn.h"
 #include "treeseq.h"
 #include "Set.h"
 #include "OrdCltn.h"

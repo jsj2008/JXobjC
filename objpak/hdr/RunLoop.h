@@ -1,14 +1,15 @@
 /* Copyright (c) 2015 D. Mackay. All rights reserved. */
 
 #import "Object.h"
-#import "OrdCltn.h"
+#import "SortCltn.h"
 #import "Stack.h"
+#import "Set.h"
 
 @interface RunLoop : Object
 {
-    OrdCltn * _timers;
+    SortCltn * _timers;
     Stack * _performs;
-    OrdCltn * _eventSources;
+    Set * _eventSources;
 } : 
 {
     id mainRunLoop;
@@ -35,12 +36,7 @@
 
     /* And an argument passed to each. */
     id argument;
-
-    /* Used in the DescriptorEventSource specialisation. */
-    volatile id IODevice;
 }
-
-@property enum FdEvSourceType_e fdEvSourceType;
 
 + newWithSelector:(SEL)sel target:targ argument:arg;
 + newWithBlock:blk argument:arg;
@@ -60,6 +56,15 @@ typedef enum FdEvSourceType_e
     FDEVSOURCE_EXCEPT = 4,
 } FdEvSourceType_t;
 
-@interface RunLoopExecutor (DescriptorEventSource)
+@interface RunLoopDescriptor : RunLoopExecutor
+{
+    volatile id iod;
+}
+
+@property volatile BOOL valid;
+@property enum FdEvSourceType_e fdEvSourceType;
+@property volatile id IODevice;
+
+- setIOD:aniod evTypes:(FdEvSourceType_t)types;
 
 @end
