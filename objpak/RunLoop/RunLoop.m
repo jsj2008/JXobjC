@@ -36,4 +36,33 @@
 
 - associateDescriptor:(RunLoopDescriptor *)desc { return self; }
 
+- rebuildSeltab
+{
+    FD_ZERO (&_reads);
+    FD_ZERO (&_writes);
+    FD_ZERO (&_excepts);
+    highFd = 0;
+
+    FD_SET ([_comm readDescriptor], &_reads);
+    [_eventSources do:
+                   { :each | SocketDescriptor r, w;
+                       r = [each readFd];
+                       w = [each writeFd];
+                       if (r)
+                           FD_SET (r, &_reads);
+                       if (w)
+                           FD_SET (w, &_writes);
+                       if ([each readExc])
+                           FD_SET (r, &_excepts);
+                       if ([each writeExc])
+                           FD_SET (w, &_excepts);
+                       if (r > highFd)
+                           highFd = r;
+                       if (w > highFd)
+                           highFd = w;
+                   }];
+
+    return self;
+}
+
 @end

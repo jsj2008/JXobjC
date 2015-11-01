@@ -99,7 +99,7 @@ extern id trlunit;
 - defenumtor:e;
 - lookupprotocol:sym;
 - lookupclass:sym;
-- lookupclassfwd:sym;
+- (BOOL)lookupclassfwd:sym;
 - lookupglobal:sym;
 - lookupmethod:sel;
 - lookuptype:sym;

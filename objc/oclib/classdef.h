@@ -126,6 +126,7 @@ extern id curstruct;
 - (BOOL)iscvar:sym;
 - defcomp:sym astype:t;
 - undefcomps;
+- use;
 
 - getivarval:instance:(BOOL)infactory:varname;
 - setivarval:instance:(BOOL)infactory:varname:value;

@@ -1,12 +1,5 @@
 #import "RunLoop.h"
 
-/*typedef enum FdEvSourceType_e
-{
-    FDEVSOURCE_INPUT  = 1,
-    FDEVSOURCE_OUTPUT = 2,
-    FDEVSOURCE_EXCEPT = 4,
-} FdEvSourceType_t;*/
-
 @implementation RunLoopDescriptor
 
 - init

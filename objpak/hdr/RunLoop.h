@@ -1,5 +1,7 @@
 /* Copyright (c) 2015 D. Mackay. All rights reserved. */
 
+#include <sys/select.h>
+
 #import "Object.h"
 #import "SortCltn.h"
 #import "Stack.h"
@@ -7,13 +9,19 @@
 #import "IODevice.h"
 
 @class RunLoopDescriptor;
+@class Pipe;
 
 @interface RunLoop : Object
 {
     SortCltn * _timers;
     Stack * _performs;
     Set * _eventSources; /* all of these are RunLoopDescriptors */
-} : 
+    Pipe * _comm;
+
+    BOOL _seltabNeedsRebuild;
+    fd_set _reads, _writes, _excepts;
+    SocketDescriptor highFd;
+} :
 {
     id mainRunLoop;
 }
@@ -24,6 +32,9 @@
 + (RunLoop *)currentRunLoop;
 
 - associateDescriptor:(RunLoopDescriptor *)desc;
+
+/* private */
+- rebuildSeltab;
 
 @end
 
@@ -64,12 +75,12 @@ typedef enum FdEvSourceType_e
 @interface RunLoopDescriptor : RunLoopExecutor
 {
     id iod;
-    SocketDescriptor readFd, writeFd;
-    BOOL readExc, writeExc;
 }
 
 @property volatile BOOL valid;
 @property enum FdEvSourceType_e descriptorEventType;
+@property /* (readonly) */ SocketDescriptor readFd, writeFd;
+@property /* (readonly) */ BOOL readExc, writeExc;
 
 - setIOD:aniod eventTypes:(FdEvSourceType_t)types;
 

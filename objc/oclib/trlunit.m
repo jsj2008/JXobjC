@@ -918,13 +918,12 @@ static char * mystrrchr (const char * s, int c)
 - defasclassfwd:sym
 {
     if (!classfwds)
-        ;
-    classfwds = [Set new];
+        classfwds = [Set new];
     [classfwds add:sym];
     return self;
 }
 
-- lookupclassfwd:sym { return [classfwds contains:sym]; }
+- (BOOL)lookupclassfwd:sym { return [classfwds contains:sym]; }
 
 - lookupclass:sym { return [classdefs atKey:sym]; }
 
