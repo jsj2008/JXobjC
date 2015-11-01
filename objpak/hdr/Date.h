@@ -1,5 +1,20 @@
 /* Copyright (c) 2015 D. Mackay. All rights reserved. */
 
+#if defined(_MSC_VER) || defined(__MINGW32__)
+#include <time.h>
+#ifndef _TIMEVAL_DEFINED
+#define _TIMEVAL_DEFINED
+struct timeval
+{
+    long tv_sec;
+    long tv_usec;
+};
+#endif
+#else
+#include <time.h>
+#include <sys/time.h>
+#endif
+
 #import "Object.h"
 
 @interface Date : Object
@@ -33,3 +48,5 @@
 - (unsigned short)year;
 
 @end
+
+struct timeval JXtimevalFromTimeInterval (TimeInterval ti);

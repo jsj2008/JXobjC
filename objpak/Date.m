@@ -41,6 +41,22 @@ static TimeInterval _currentTime ()
     return curtime;
 }
 
+struct timeval JXtimevalFromTimeInterval (TimeInterval ti)
+{
+    struct timeval res;
+
+    if (ti < 0)
+    {
+        res.tv_sec  = 0;
+        res.tv_usec = 0;
+        return res;
+    }
+
+    res.tv_sec  = floor (ti);
+    res.tv_usec = ((ti - floor (ti)) * 1000000);
+    return res;
+}
+
 @implementation Date
 
 + date { return [[self alloc] init]; }
