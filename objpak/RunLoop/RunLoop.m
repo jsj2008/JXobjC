@@ -17,6 +17,9 @@
 - init
 {
     [super init];
+    _timers       = [SortCltn new];
+    _performs     = [Stack new];
+    _eventSources = [Set new];
     return self;
 }
 
