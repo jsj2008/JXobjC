@@ -29,6 +29,7 @@
 #include "node.h"
 #include "util.h"
 #include "stmt.h"
+#include "trlunit.h"
 
 #ifndef __WATCOMC__
 /* breaks compile wcc386 */
@@ -460,6 +461,10 @@ exprlist : assignexpr
      { $$ = mklist($1,$3); }
   ;
 
+identorclassortype
+    : identorclass
+    | typename;
+
 extdef 
     : fundef
     { $$ = $1; }
@@ -483,10 +488,13 @@ extdef
     { $$ = nil; }
     | namespaceblock
     { $$ = nil; }
-    | atclass identifier ';'
+    | atclass identorclassortype ';'
     {
-        gf("typedef struct %s_PRIVATE %s;\n", [$2 str], [$2 str]);
-        mkclassfwd($2);
+        if (![trlunit lookupclass:$2])
+        {
+            gf("typedef struct %s_PRIVATE %s;\n", [$2 str], [$2 str]);
+            mkclassfwd($2);
+        }
         $$ = nil;
     }
     ;

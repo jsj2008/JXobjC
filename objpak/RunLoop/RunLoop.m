@@ -1,6 +1,8 @@
 /* Copyright (c) 2015 D. Mackay. All rights reserved. */
 
 #import "Block.h"
+#import "Date.h"
+#import "Pipe.h"
 #import "RunLoop.h"
 #import "Thread.h"
 
@@ -28,13 +30,54 @@
     _timers       = nil;
     _performs     = nil;
     _eventSources = nil;
+    _comm         = nil;
     return [super ARC_dealloc];
 }
 
 + (RunLoop *)mainRunLoop { return [[Thread mainThread] runLoop]; }
 + (RunLoop *)currentRunLoop { return [[Thread currentThread] runLoop]; }
 
-- associateDescriptor:(RunLoopDescriptor *)desc { return self; }
+- associateDescriptor:(RunLoopDescriptor *)desc
+{
+    [_eventSources add:desc];
+    return self;
+}
+
+- associateTimer:(Timer *)timer
+{
+    [_timers add:timer];
+    return self;
+}
+
+- (BOOL)runBeforeDate:(Date *)limitDate
+{
+    BOOL inputSourceEvent = NO;
+
+    while (!inputSourceEvent)
+    {
+        struct timeval tv;
+        TimeInterval limitSecs;
+        unsigned depth;
+
+        if ((depth = [_performs depth]))
+            while (depth--)
+                [[_performs pop] fire];
+
+        [self rebuildSeltab];
+
+        limitSecs = [limitDate timeIntervalSinceNow];
+        [_timers
+            do:
+            { :each | TimeInterval c;
+                if ((c = [[each fireDate] timeIntervalSinceNow]) < limitSecs)
+                    limitSecs = c;
+            }];
+
+        tv = JXtimevalFromTimeInterval (limitSecs);
+        select (highFd, &_reads, &_writes, &_excepts, &tv);
+    }
+    return YES;
+}
 
 - rebuildSeltab
 {
@@ -46,15 +89,15 @@
     FD_SET ([_comm readDescriptor], &_reads);
     [_eventSources do:
                    { :each | SocketDescriptor r, w;
-                       r = [each readFd];
-                       w = [each writeFd];
+                       r = [each readFd] != -1 ? [each readFd] : 0;
+                       w = [each writeFd] != 1 ? [each writeFd] : 0;
                        if (r)
                            FD_SET (r, &_reads);
                        if (w)
                            FD_SET (w, &_writes);
-                       if ([each readExc])
+                       if (r && [each readExc])
                            FD_SET (r, &_excepts);
-                       if ([each writeExc])
+                       if (w && [each writeExc])
                            FD_SET (w, &_excepts);
                        if (r > highFd)
                            highFd = r;

@@ -2,20 +2,21 @@
 
 #include <sys/select.h>
 
-#import "Object.h"
+#import "IODevice.h"
 #import "SortCltn.h"
 #import "Stack.h"
 #import "Set.h"
-#import "IODevice.h"
 
-@class RunLoopDescriptor;
+@class Date;
 @class Pipe;
+@class RunLoopDescriptor;
+@class Timer;
 
 @interface RunLoop : Object
 {
     SortCltn * _timers;
-    Stack * _performs;
-    Set * _eventSources; /* all of these are RunLoopDescriptors */
+    Stack * _performs;   /* In fact, this is an AtomicProxy to a Stack. */
+    Set * _eventSources; /* The entries are RunLoopDescriptors. */
     Pipe * _comm;
 
     BOOL _seltabNeedsRebuild;
@@ -31,7 +32,10 @@
 + (RunLoop *)mainRunLoop;
 + (RunLoop *)currentRunLoop;
 
+- (BOOL)runBeforeDate:(Date *)date;
+
 - associateDescriptor:(RunLoopDescriptor *)desc;
+- associateTimer:(Timer *)timer;
 
 /* private */
 - rebuildSeltab;
