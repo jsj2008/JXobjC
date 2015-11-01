@@ -57,7 +57,7 @@
     {
         struct timeval tv;
         TimeInterval limitSecs;
-        unsigned depth;
+        unsigned depth, cur;
 
         if ((depth = [_performs depth]))
             while (depth--)
@@ -75,6 +75,54 @@
 
         tv = JXtimevalFromTimeInterval (limitSecs);
         select (highFd, &_reads, &_writes, &_excepts, &tv);
+
+        for (cur = 0; cur != highFd; cur++)
+        {
+            BOOL found;
+
+            if (FD_ISSET (cur, &_reads))
+                [_eventSources do:
+                               { :each |
+                          if ([each readDescriptor] == cur)
+                                   {
+                                       [each descriptorReadyForRead:cur];
+                                       found            = YES;
+                                       inputSourceEvent = YES;
+                                   }
+                               }
+                            until:&found];
+            found = NO;
+
+            if (FD_ISSET (cur, &_writes))
+                [_eventSources do:
+                               { :each |
+                          if ([each writeDescriptor] == cur)
+                                   {
+                                       [each descriptorReadyForWrite:cur];
+                                       found            = YES;
+                                       inputSourceEvent = YES;
+                                   }
+                               }
+                            until:&found];
+
+            if (FD_ISSET (cur, &_excepts))
+                [_eventSources do:
+                               { :each |
+                          if ([each readDescriptor] == cur || [each writeDescriptor] == cur)
+                                   {
+                                       [each descriptorException:cur];
+                                       found            = YES;
+                                       inputSourceEvent = YES;
+                                   }
+                               }
+                            until:&found];
+        }
+
+        [_timers do:
+                 { :each |
+                if ([[each fireDate] timeIntervalSinceNow] <= 0)
+                    [each fire];
+                 }];
     }
     return YES;
 }
@@ -104,6 +152,8 @@
                        if (w > highFd)
                            highFd = w;
                    }];
+
+    highFd++;
 
     return self;
 }

@@ -88,4 +88,8 @@ typedef enum FdEvSourceType_e
 
 - setIOD:aniod eventTypes:(FdEvSourceType_t)types;
 
+- descriptorReadyForRead:(SocketDescriptor)fd;
+- descriptorReadyForWrite:(SocketDescriptor)fd;
+- descriptorException:(SocketDescriptor)fd;
+
 @end
