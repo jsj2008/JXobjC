@@ -7,6 +7,8 @@
     id _delegate;
 }
 
+- ARC_dealloc;
+
 + atomicProxyWithTarget:object;
 - initWithTarget:object;
 

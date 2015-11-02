@@ -1,5 +1,6 @@
 /* Copyright (c) 2015 D. Mackay. All rights reserved. */
 
+#import "AtomicProxy.h"
 #import "Block.h"
 #import "Date.h"
 #import "Pipe.h"
@@ -19,9 +20,10 @@
 - init
 {
     [super init];
-    _timers       = [SortCltn new];
-    _performs     = [Stack new];
-    _eventSources = [Set new];
+    _timers       = [AtomicProxy atomicProxyWithTarget:[SortCltn new]];
+    _performs     = [AtomicProxy atomicProxyWithTarget:[Stack new]];
+    _eventSources = [AtomicProxy atomicProxyWithTarget:[Set new]];
+    _comm         = [AtomicProxy atomicProxyWithTarget:[Pipe new]];
     return self;
 }
 
@@ -123,6 +125,9 @@
                 if ([[each fireDate] timeIntervalSinceNow] <= 0)
                     [each fire];
                  }];
+
+        if ([limitDate timeIntervalSinceNow] <= 0)
+            return YES;
     }
     return YES;
 }

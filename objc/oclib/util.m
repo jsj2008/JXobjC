@@ -286,6 +286,7 @@ static BOOL ispragma (char * s)
     char * t;
     id x       = [String str:s];
     char * sep = " #/\t\n\r";
+    static int old_refcnt;
 
     t = strtok ([x str], sep);
     if (strcmp (t, "pragma") != 0)
@@ -310,8 +311,14 @@ static BOOL ispragma (char * s)
     }
     if (strcmp (t, "OCRefCnt") == 0)
     {
-        o_refcnt = pragmatoggle (strtok (NULL, sep));
+        old_refcnt = o_refcnt;
+        o_refcnt   = pragmatoggle (strtok (NULL, sep));
         return YES; /* do not emit */
+    }
+    if (strcmp (t, "OCRestoreRefCnt") == 0)
+    {
+        o_refcnt = old_refcnt;
+        return YES;
     }
     if (strcmp (t, "OCInlineCache") == 0)
     {

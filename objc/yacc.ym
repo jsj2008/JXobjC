@@ -186,10 +186,10 @@ blkrtrnstmt
     ;
 
 optblkrtrn
-	: blkrtrnstmt
-	| /* ε */
-	{ $$ = nil; }
-	;
+    : blkrtrnstmt
+    | /* ε */
+    { $$ = nil; }
+    ;
 
 blockexpr : blockbegin optblkrtrn '}'  /* blockbegin == '{' */
      { $$ = mkblockexpr($1,nil,nil,nil,$2,$3); }
@@ -385,15 +385,16 @@ templdecl
         $$ = mklist(nil, nil);
     }
 
-decl : declx
+decl
+    : declx
      { $$ = $1; }
-  | pointer declx
+    | pointer declx
      { $$ = mkstardecl($1,$2); }
-  | gnuattribdecl decl
+    | gnuattribdecl decl
      { $$ = mkprefixdecl($1,$2); }
-  | pointer gnuattribdecl decl
+    | pointer gnuattribdecl decl
      { $$ = mkstardecl($1,mkprefixdecl($2,$3)); }
-  ;
+    ;
 
 declx : identifier
      { $$ = mkdecl($1); }

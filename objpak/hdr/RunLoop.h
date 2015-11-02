@@ -14,11 +14,16 @@
 
 @interface RunLoop : Object
 {
+    /* In fact, all of these collections are actually AtomicProxies;
+     * this is because the RunLoop may be manipulated from another thread.
+     * The AtomicProxy is an example of the Advanced Seperation of Cocncerns,
+     * or the Aspect-Oriented Programming; it segregates a crosscutting
+     * concern away. */
     SortCltn * _timers;
-    Stack * _performs;   /* In fact, this is an AtomicProxy to a Stack. */
+    Stack * _performs;
     Set * _eventSources; /* The entries are RunLoopDescriptors. */
-    Pipe * _comm;
 
+    Pipe * _comm;
     BOOL _seltabNeedsRebuild;
     fd_set _reads, _writes, _excepts;
     SocketDescriptor highFd;
