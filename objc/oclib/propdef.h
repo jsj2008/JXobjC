@@ -7,6 +7,8 @@
     id classdef;
 }
 
+@property BOOL isCopy, isNonAtomic;
+
 - classdef:aClass;
 - compdec:aDec;
 

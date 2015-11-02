@@ -21,7 +21,7 @@
 
 @interface Pointer : Decl
 {
-    id specs, pointer;
+    id specs, pointer, anident;
 }
 
 - specs:aList;

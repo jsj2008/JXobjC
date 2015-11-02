@@ -755,8 +755,10 @@ id mkpropsetmeth (id compdec, id type, id name, int ispointer)
         id s        = [OrdCltn new];
         id vartoset = [mkarrowexpr (s_self, name) type:type];
 
+        [s add:mklockmesg (e_self)];
         [s add:mkexprstmtx (mkassignexpr (
                    vartoset, "=", mkidentexpr ([Symbol str:"valset"])))];
+        [s add:mkunlockmesg (e_self)];
         [s add:mkreturnx (e_self)];
         [b stmts:s];
         [r body:b];
@@ -780,10 +782,26 @@ id mkpropgetmeth (id compdec, id type, id name, int ispointer)
     [r prototype];
     if ((b = [CompoundStmt new]))
     {
-        id s        = [OrdCltn new];
+        id s = [OrdCltn new], dd = [OrdCltn new];
+        id rdecl  = [type decl];
+        id tmpsym = [Symbol sprintf:"%s_s", [name str]];
+        id decl   = rdecl
+                      ? [rdecl isKindOf:Pointer]
+                            ? mkstardecl (rdecl, mkdecl (tmpsym))
+                            : [[rdecl copy] identifier:tmpsym]
+                      : mkdecl (tmpsym);
+        id datadef  = mkdatadef (nil, [type specs], decl, nil);
         id vartoget = [mkarrowexpr ([[e_self copy] lhsself:1], name) type:type];
+        id tassign =
+            mkexprstmtx (mkassignexpr (mkidentexpr (tmpsym), "=", vartoget));
 
-        [s add:mkreturnx (vartoget)];
+        [dd add:datadef];
+        [s add:mklockmesg (e_self)];
+        [s add:tassign];
+        [s add:mkunlockmesg (e_self)];
+        [s add:mkreturnx (mkidentexpr (tmpsym))];
+
+        [b datadefs:dd];
         [b stmts:s];
         [r body:b];
     }

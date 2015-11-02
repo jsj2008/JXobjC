@@ -21,14 +21,11 @@
 #include <stdlib.h>
 #include <assert.h>
 #include <string.h>
-#ifndef __OBJECT_INCLUDED__
-#define __OBJECT_INCLUDED__
-#include <stdio.h>  /* FILE */
-#include "Object.h" /* Stepstone Object.h assumes #import */
-#endif
+#include <stdio.h> /* FILE */
+#include "Object.h"
 #include "Block.h"
-#include <OCString.h>
-#include <OrdCltn.h>
+#include "OCString.h"
+#include "OrdCltn.h"
 #include "node.h"
 #include "type.h"
 #include "symbol.h"
