@@ -271,7 +271,7 @@ id t_id;
 
 - (BOOL)isrefcounted
 {
-    BOOL isobj = NO;
+    BOOL isobj = NO, isvolatile = NO;
     int n;
 
     if (self == t_id)
@@ -281,22 +281,18 @@ id t_id;
 
     [specs do:
            { : each |
-		if ([trlunit lookupclass:[String str:[each str]]])
-			isobj = YES;
+               if ([trlunit lookupclass:[String str:[each str]]])
+                   isobj = YES;
+               if ([each isvolatile])
+                   isvolatile = YES;
            }];
+
+    if (isvolatile)
+        return NO;
     if (isobj && decl && [decl isKindOf:Pointer] && ![decl pointer])
         return YES;
-
     if (decl == nil && (n = [specs size]) > 0)
-    {
-        int i;
-        for (i = 0; i < n; i++)
-        {
-            if ([[specs at:i] isvolatile])
-                return NO;
-        }
         return [[specs at:n - 1] isrefcounted];
-    }
 
     return NO;
 }
