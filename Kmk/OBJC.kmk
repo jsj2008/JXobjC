@@ -30,7 +30,7 @@
 TOOL_PCPP := PC++
 
 # Tool Specific Properties
-TOOL_PCPP_OBJC ?= objc${HOSTSUFF_EXE}
+TOOL_PCPP_OBJC ?= jxobjc${HOSTSUFF_EXE}
 TOOL_PCPP_CC  ?= gcc$(HOSTSUFF_EXE)
 TOOL_PCPP_CXX ?= g++$(HOSTSUFF_EXE)
 TOOL_PCPP_AS  ?= gcc$(HOSTSUFF_EXE)
