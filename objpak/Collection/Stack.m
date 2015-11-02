@@ -158,6 +158,8 @@
     }
 }
 
+- remove:anObject { return [contents remove:anObject]; }
+
 /*****************************************************************************
  *
  * Printing

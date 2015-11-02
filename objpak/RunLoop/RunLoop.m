@@ -132,6 +132,53 @@
     return YES;
 }
 
+- performSelector:(SEL)sel target:targ argument:arg
+{
+    [_performs
+        push:[RunLoopExecutor newWithSelector:sel target:targ argument:arg]];
+    return self;
+}
+
+- performBlock:blk argument:arg
+{
+    [_performs push:[RunLoopExecutor newWithBlock:blk argument:arg]];
+    return self;
+}
+
+- (void)cancelPerformSelector:(SEL)sel target:targ argument:arg
+{
+    id subset;
+
+    subset = [_performs
+        select:{ : each | [each matchesSelector:sel target:targ argument:arg]}];
+    [_performs removeContentsOf:subset];
+}
+
+- (void)cancelPerformSelectorsWithTarget:targ
+{
+    id subset;
+
+    subset = [_performs select:{ : each | [each matchesTarget:targ]}];
+    [_performs removeContentsOf:subset];
+}
+
+- (void)cancelPerformBlock:blk argument:arg
+{
+    id subset;
+
+    subset =
+        [_performs select:{ : each | [each matchesBlock:blk argument:arg]}];
+    [_performs removeContentsOf:subset];
+}
+
+- (void)cancelPerformBlock:blk
+{
+    id subset;
+
+    subset = [_performs select:{ : each | [each matchesBlock:blk]}];
+    [_performs removeContentsOf:subset];
+}
+
 - rebuildSeltab
 {
     FD_ZERO (&_reads);

@@ -363,7 +363,7 @@
 
     while ((e = [seq next]))
     {
-        if (([testBlock value:e]))
+        if (([testBlock intvalue:e]))
         {
             [newObject add:e];
         }

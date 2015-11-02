@@ -19,14 +19,14 @@
 
 - ARC_dealloc
 {
-    [_delegate ARC_dealloc];
+    _delegate = nil;
     return [super ARC_dealloc];
 }
 
 - doesNotUnderstand:msg
 {
     @synchronized (self) { [msg sentTo:_delegate]; }
-    return _delegate;
+    return nil;
 }
 
 @end

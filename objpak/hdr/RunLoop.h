@@ -17,8 +17,9 @@
     /* In fact, all of these collections are actually AtomicProxies;
      * this is because the RunLoop may be manipulated from another thread.
      * The AtomicProxy is an example of the Advanced Seperation of Cocncerns,
-     * or the Aspect-Oriented Programming; it segregates a crosscutting
-     * concern away. */
+     * or the Aspect-Oriented Programming. It appears to be a regular SortCltn,
+     * Stack, or Set, but in fact, it is proxied through with mutex locking on
+     * the call. It transparently segregates a crosscutting concern away. */
     SortCltn * _timers;
     Stack * _performs;
     Set * _eventSources; /* The entries are RunLoopDescriptors. */
@@ -41,6 +42,12 @@
 
 - associateDescriptor:(RunLoopDescriptor *)desc;
 - associateTimer:(Timer *)timer;
+
+- performSelector:(SEL)sel target:targ argument:arg;
+- performBlock:blk argument:arg;
+- (void)cancelPerformSelector:(SEL)sel target:targ argument:arg;
+- (void)cancelPerformSelectorsWithTarget:targ;
+- (void)cancelPerformBlock:blk argument:arg;
 
 /* private */
 - rebuildSeltab;
@@ -68,6 +75,11 @@
 
 - initWithSelector:(SEL)sel target:targ argument:arg;
 - initWithBlock:blk argument:arg;
+
+- (BOOL)matchesSelector:(SEL)sel target:targ argument:arg;
+- (BOOL)matchesTarget:targ;
+- (BOOL)matchesBlock:blk argument:arg;
+- (BOOL)matchesBlock:blk;
 
 /* Without prejudicing its typical schedule, run the executor once. */
 - (void)fire;

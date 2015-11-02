@@ -38,6 +38,46 @@
     return [super ARC_dealloc];
 }
 
+- (BOOL)matchesSelector:(SEL)sel target:targ argument:arg
+{
+    if (!targ || !sel)
+        return NO;
+    else if (target == targ && selector == sel && argument == arg)
+        return YES;
+    else
+        return NO;
+}
+
+- (BOOL)matchesTarget:targ
+{
+    if (!targ)
+        return NO;
+    else if (target == targ)
+        return YES;
+    else
+        return NO;
+}
+
+- (BOOL)matchesBlock:blk argument:arg
+{
+    if (!blk)
+        return NO;
+    else if (block == blk && argument == arg)
+        return YES;
+    else
+        return NO;
+}
+
+- (BOOL)matchesBlock:blk
+{
+    if (!blk)
+        return NO;
+    else if (block == blk)
+        return YES;
+    else
+        return NO;
+}
+
 - (void)fire
 {
 
