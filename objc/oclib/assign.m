@@ -17,11 +17,9 @@
  *
  */
 
-#include "config.h"
 #include <stdlib.h>
 #include <assert.h>
 #include <string.h>
-#include <stdio.h> /* FILE */
 #include "Object.h"
 #include "node.h"
 #include "expr.h"
@@ -44,6 +42,7 @@
 
 - typesynth
 {
+    lhs  = [lhs typesynth];
     type = [lhs type];
     return self;
 }

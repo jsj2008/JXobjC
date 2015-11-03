@@ -67,7 +67,7 @@
 {
     if (![aDecl isKindOf:(id)isa])
     {
-        fprintf (stderr, "pointer.m! aDecl != a pointer\n");
+        /* this should not be the case */
     }
     pointer = aDecl;
     return self;

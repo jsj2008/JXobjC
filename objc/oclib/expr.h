@@ -15,9 +15,9 @@
  * You should have received a copy of the GNU Library General Public License
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
- *
- * $Id: expr.h,v 1.1.1.1 2000/06/07 21:09:25 stes Exp $
  */
+
+#import "node.h"
 
 extern id e_nil;
 extern id e_self;

@@ -1,4 +1,3 @@
-
 /*
  * Copyright (c) 1998,99 David Stes.
  *
@@ -15,21 +14,15 @@
  * You should have received a copy of the GNU Library General Public License
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
- *
- * $Id: method.m,v 1.2 2000/09/08 15:09:06 stes Exp $
  */
 
-#include "config.h"
 #include <stdlib.h>
 #include <string.h>
 #include <assert.h>
-#ifndef __OBJECT_INCLUDED__
-#define __OBJECT_INCLUDED__
-#include <stdio.h>  /* FILE */
-#include "Object.h" /* Stepstone Object.h assumes #import */
-#endif
-#include <OCString.h>
-#include <OrdCltn.h>
+#include "Block.h"
+#include "Object.h"
+#include "OCString.h"
+#include "OrdCltn.h"
 #include "node.h"
 #include "decl.h"
 #include "keywdecl.h"
@@ -489,7 +482,7 @@
 - synth
 {
     if (ksel)
-        [ksel elementsPerform:_cmd];
+        [ksel collect:{ : each | [each perform:_cmd]}];
     return self;
 }
 

@@ -19,12 +19,12 @@
 #include <stdlib.h>
 #include <assert.h>
 #include <string.h>
-#include <stdio.h> /* FILE */
+#include "Block.h"
 #include "Object.h"
-#include <OCString.h>
-#include <OrdCltn.h>
-#include <Set.h>
-#include <Dictionary.h>
+#include "OCString.h"
+#include "OrdCltn.h"
+#include "Set.h"
+#include "Dictionary.h"
 #include "node.h"
 #include "decl.h"
 #include "symbol.h"
@@ -217,9 +217,9 @@ id curloopcompound;
         unlock = [mkunlockmesg (lockingOn) synth];
     }
     if (datadefs)
-        [datadefs elementsPerform:_cmd];
+        datadefs = [datadefs collect:{ : each | [each perform:_cmd]}];
     if (stmts)
-        [stmts elementsPerform:_cmd];
+        stmts = [stmts collect:{ : each | [each perform:_cmd]}];
     if (heapvars)
         [self removeheapvarsfromdatadefs];
     if (o_refcnt)

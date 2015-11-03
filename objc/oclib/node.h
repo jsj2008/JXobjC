@@ -1,4 +1,3 @@
-
 /*
  * Copyright (c) 1998 David Stes.
  *
@@ -15,9 +14,9 @@
  * You should have received a copy of the GNU Library General Public License
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
- *
- * $Id: node.h,v 1.3 2011/06/15 19:06:42 stes Exp $
  */
+
+#import "Object.h"
 
 extern FILE * gfile;
 extern int inlineno;

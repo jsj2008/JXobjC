@@ -141,7 +141,7 @@
 - synth
 {
     if (decl)
-        [decl synth];
+        decl = [decl synth];
     return self;
 }
 

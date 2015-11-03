@@ -1,4 +1,3 @@
-
 /*
  * Copyright (c) 1998 David Stes.
  *
@@ -15,18 +14,12 @@
  * You should have received a copy of the GNU Library General Public License
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
- *
- * $Id: ifstmt.m,v 1.2 2003/09/29 16:52:05 stes Exp $
  */
 
 #include "config.h"
 #include <stdlib.h>
 #include <assert.h>
-#ifndef __OBJECT_INCLUDED__
-#define __OBJECT_INCLUDED__
-#include <stdio.h>  /* FILE */
-#include "Object.h" /* Stepstone Object.h assumes #import */
-#endif
+#include "Object.h"
 #include "node.h"
 #include "stmt.h"
 #include "ifstmt.h"
@@ -79,10 +72,10 @@
 
 - synth
 {
-    [expr synth];
-    [stmt synth];
+    expr = [expr synth];
+    stmt = [stmt synth];
     if (estmt)
-        [estmt synth];
+        estmt = [estmt synth];
     return self;
 }
 

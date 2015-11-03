@@ -16,10 +16,8 @@
  * Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
  */
 
-#include "config.h"
 #include <stdlib.h>
 #include <assert.h>
-#include <stdio.h> /* FILE */
 #include "Object.h"
 #include "node.h"
 #include "expr.h"
@@ -67,10 +65,10 @@
 
 - synth
 {
-    [expr synth];
+    expr = [expr synth];
     if (lhs)
-        [lhs synth];
-    [rhs synth];
+        lhs = [lhs synth];
+    rhs     = [rhs synth];
     return self;
 }
 

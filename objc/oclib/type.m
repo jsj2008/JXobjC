@@ -17,11 +17,9 @@
  *
  */
 
-#include "config.h"
 #include <stdlib.h>
 #include <assert.h>
 #include <string.h>
-#include <stdio.h> /* FILE */
 #include "Object.h"
 #include "Block.h"
 #include "OCString.h"
@@ -398,7 +396,7 @@ id t_id;
     if (specs)
         [specs elementsPerform:@selector (gen)];
     if (decl)
-        [decl gen];
+        decl = [decl gen];
     return self;
 }
 

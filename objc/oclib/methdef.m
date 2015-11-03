@@ -1,4 +1,3 @@
-
 /*
  * Copyright (c) 1998 David Stes.
  *
@@ -15,20 +14,13 @@
  * You should have received a copy of the GNU Library General Public License
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
- *
- * $Id: methdef.m,v 1.1.1.1 2000/06/07 21:09:25 stes Exp $
  */
 
-#include "config.h"
 #include <stdlib.h>
 #include <assert.h>
-#ifndef __OBJECT_INCLUDED__
-#define __OBJECT_INCLUDED__
-#include <stdio.h>  /* FILE */
-#include "Object.h" /* Stepstone Object.h assumes #import */
-#endif
-#include <Set.h>
-#include <OCString.h>
+#include "Object.h"
+#include "Set.h"
+#include "OCString.h"
 #include "symbol.h"
 #include "selector.h"
 #include "node.h"
@@ -182,7 +174,7 @@
         [x lineno:[method lineno]];
         [x filename:[method filename]];
         [self defparm:x astype:t_sel];
-        [method synth];
+        method = [method synth];
         [curclassdef forceimpl];
         selname = [[method selector] str];
         fmt     = (factory) ? "c_%s_%s" : "i_%s_%s";
@@ -197,7 +189,7 @@
             [curclassdef addnstdisp:self];
         }
         [trlunit usingselfassign:NO];
-        [body synth];
+        body   = [body synth];
         curdef = nil;
     }
     return self;

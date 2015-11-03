@@ -19,7 +19,6 @@
 #include "config.h"
 #include <stdlib.h>
 #include <assert.h>
-#include <stdio.h> /* FILE */
 #include "Object.h"
 #include "OCString.h"
 #include "node.h"
@@ -72,10 +71,11 @@ id e_ft_id;
     }
     else
     {
-        [self typesynth];
-        if (type == nil)
+        id new;
+        new = [ self typesynth ];
+        if ([new type] == nil)
             printf ("[expr.82!|%s] warning: type is nil", [isa str]);
-        return type;
+        return [new type];
     }
 }
 

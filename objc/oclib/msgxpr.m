@@ -20,7 +20,6 @@
 #include <stdlib.h>
 #include <assert.h>
 #include <string.h>
-#include <stdio.h> /* FILE */
 #include "Object.h"
 #include "OCString.h"
 #include "Set.h"
@@ -207,8 +206,8 @@ id msgwraps; /* VICI */
     }
 
     if (rcvr)
-        [rcvr synth];
-    [msg synth];
+        rcvr = [rcvr synth];
+    msg      = [msg synth];
 
     if (o_refcnt && [[self type] isid])
     {

@@ -27,19 +27,42 @@
 #include "binxpr.h"
 #include "type.h"
 #include "dotxpr.h"
+#include "prdotxpr.h"
 
 @implementation DotExpr
 
-+ new { return [[super new] op:"."]; }
++ new
+{
+    id neu = [[[super new] op:"."] setPossibleMsg:[DotPropertyExpr new]];
+    [[neu possibleMsg] tmpvar];
+    return neu;
+}
 
 - typesynth
 {
     assert ([rhs isKindOf:(id)[Symbol class]]);
+    if ([[lhs type] isid])
+    {
+        [possibleMsg receiver:lhs];
+        [possibleMsg setPropSym:rhs];
+        return [possibleMsg synth];
+    }
     type = [lhs type];
     type = [type dot:rhs];
     if (!type)
         fatalat (rhs, "structure has no field '%s'", [rhs str]);
     return self;
+}
+
+- synth
+{
+    if ([[lhs type] isid])
+    {
+        [possibleMsg receiver:lhs];
+        [possibleMsg setPropSym:rhs];
+        return [possibleMsg synth];
+    }
+    return [super synth];
 }
 
 @end

@@ -16,10 +16,9 @@
  * Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
  */
 
-#include "config.h"
 #include <stdlib.h>
 #include <assert.h>
-#include <stdio.h> /* FILE */
+#include "Block.h"
 #include "Object.h"
 #include "OrdCltn.h"
 #include "node.h"
@@ -84,9 +83,9 @@
 - synth
 {
     if (typequals)
-        [typequals elementsPerform:_cmd];
+        [typequals collect:{ : each | [each perform:_cmd]}];
     if (decl)
-        [decl synth];
+        decl = [decl synth];
     return self;
 }
 

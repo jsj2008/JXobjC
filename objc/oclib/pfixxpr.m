@@ -17,14 +17,9 @@
  *
  */
 
-#include "config.h"
 #include <stdlib.h>
 #include <assert.h>
-#ifndef __OBJECT_INCLUDED__
-#define __OBJECT_INCLUDED__
-#include <stdio.h>  /* FILE */
-#include "Object.h" /* Stepstone Object.h assumes #import */
-#endif
+#include "Object.h"
 #include "node.h"
 #include "expr.h"
 #include "pfixxpr.h"
@@ -52,12 +47,13 @@
 
 - synth
 {
-    [expr synth];
+    expr = [expr synth];
     return self;
 }
 
 - typesynth
 {
+    expr = [expr typesynth];
     type = [expr type];
     return self;
 }

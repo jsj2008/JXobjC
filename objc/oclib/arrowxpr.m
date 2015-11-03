@@ -20,9 +20,8 @@
 #include <stdlib.h>
 #include <assert.h>
 #include <string.h>
-#include <stdio.h> /* FILE */
 #include "Object.h"
-#include <OCString.h>
+#include "OCString.h"
 #include "node.h"
 #include "expr.h"
 #include "binxpr.h"
@@ -37,6 +36,7 @@
 - typesynth
 {
     assert ([rhs isKindOf:(id)[Symbol class]]);
+    lhs  = [lhs typesynth];
     type = [[lhs type] star];
     type = [type dot:rhs];
     if (!type)

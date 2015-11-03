@@ -17,16 +17,12 @@
  *
  */
 
-#include "config.h"
 #include <stdlib.h>
 #include <assert.h>
-#ifndef __OBJECT_INCLUDED__
-#define __OBJECT_INCLUDED__
-#include <stdio.h>  /* FILE */
-#include "Object.h" /* Stepstone Object.h assumes #import */
-#endif
-#include <OrdCltn.h>
-#include <idarray.h>
+#include "Block.h"
+#include "Object.h"
+#include "OrdCltn.h"
+#include "idarray.h"
 #include "node.h"
 #include "expr.h"
 #include "type.h"
@@ -92,7 +88,7 @@
 {
     [funname synth];
     if (funargs)
-        [funargs elementsPerform:_cmd];
+        [funargs collect:{ : each | [each perform:_cmd]}];
     if (o_refcnt && [[self type] isid])
     {
         refvar = [trlunit gettmpvar];

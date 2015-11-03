@@ -17,16 +17,15 @@
  *
  */
 
-#include "config.h"
 #include <stdlib.h>
 #include <assert.h>
 #include <string.h>
-#include <stdio.h> /* FILE */
+#import "Block.h"
 #include "Object.h"
-#include <OCString.h>
-#include <OrdCltn.h>
-#include <Set.h>
-#include <Dictionary.h>
+#include "OCString.h"
+#include "OrdCltn.h"
+#include "Set.h"
+#include "Dictionary.h"
 #include "symbol.h"
 #include "node.h"
 #include "decl.h"
@@ -168,13 +167,13 @@
   curdef = enclosingdef;
 #endif
     if (datadefs)
-        [datadefs elementsPerform:_cmd];
+        datadefs = [datadefs collect:{ : each | [each perform:_cmd]}];
     if (stmts)
-        [stmts elementsPerform:_cmd];
+        stmts = [stmts collect:{ : each | [each perform:_cmd]}];
     if (!expr)
         expr = e_nil;
     if (expr)
-        [expr synth];
+        expr    = [expr synth];
     numparms    = (parms) ? [parms size] : 0;
     blkconsname = [[String sprintf:"newblk%i", blockcount] strCopy];
     blkdtorname = [[String sprintf:"clearblk%i", blockcount] strCopy];

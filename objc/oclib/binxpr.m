@@ -17,10 +17,8 @@
  *
  */
 
-#include "config.h"
 #include <stdlib.h>
 #include <assert.h>
-#include <stdio.h> /* FILE */
 #include "Object.h"
 #include "node.h"
 #include "expr.h"
@@ -57,14 +55,16 @@
 
 - typesynth
 {
+    lhs  = [lhs typesynth];
+    rhs  = [rhs typesynth];
     type = [[lhs type] max:[rhs type]];
     return self;
 }
 
 - synth
 {
-    [lhs synth];
-    [rhs synth];
+    lhs = [lhs synth];
+    rhs = [rhs synth];
     return self;
 }
 

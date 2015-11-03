@@ -62,7 +62,7 @@
                      "non-local return from within block not yet supported");
         }
     }
-    [expr synth];
+    expr   = [expr synth];
     cmpdef = curcompound;
     if (o_refcnt)
     {

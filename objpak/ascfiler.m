@@ -572,7 +572,7 @@ static void skipNL (id self, FILE * file) { lex (self, file, '\n', NULL); }
         }
         else
         {
-            id realObject = (offset) ? [toc at:offset - 1] : nil;
+            id realObject = ((offset) ? [toc at:offset - 1] : nil);
             // careful here, because *value, the offset,
             // is not a valid object for idAssign()
             // clear it first

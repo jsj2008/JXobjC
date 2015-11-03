@@ -166,9 +166,9 @@
     [self _postNotification:note name:name object:object];
     if (object != nil)
         [self _postNotification:note name:name object:nil];
-    if (name != nil)
+    if (name != (String *)nil)
         [self _postNotification:note name:(String *)nil object:object];
-    if (name != nil && object != nil)
+    if (name != (String *)nil && object != nil)
         [self _postNotification:note name:(String *)nil object:nil];
 }
 
