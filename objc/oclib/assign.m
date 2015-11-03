@@ -50,6 +50,9 @@
 
 - synth
 {
+    /* Future note: Here, test if LHS is a property dot-accessor.
+     * If so, then tell it to become a setter accessor and associate RHS
+     * as its argument. */
     [super synth];
     if (curdef && [curdef ismethdef] && [lhs isidentexpr] &&
         strcmp ([lhs str], "self") == 0)

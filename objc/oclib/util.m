@@ -1293,7 +1293,14 @@ id mkarrowexpr (id array, id ix)
 
 id mkdotexpr (id array, id ix)
 {
-    id r = [DotExpr new];
+    id r;
+
+    /* Future note: If array is an ID-type expression then we should create
+     * a message expression to the setter/getter here.
+     * It will default to a getter; an assign expression or other manipulator
+     * will turn it into a setter and associate its right-hand-side as the
+     * argument. */
+    r = [DotExpr new];
 
     [r lhs:array];
     [r rhs:ix];
