@@ -2,7 +2,9 @@
 
 #include <ctype.h>
 
+#import "Block.h"
 #import "OCString.h"
+#import "OrdCltn.h"
 #import "Obj+KVC.h"
 
 @implementation Object (KeyValueCoding)
@@ -42,8 +44,6 @@
            put:toupper ([strSet charAt:3])];
 
     set = selUid ([strSet str]);
-    if (!set)
-        return;
 
     if ([self respondsTo:set])
     {
@@ -52,10 +52,37 @@
          * not just id. */
         [self perform:set with:value];
     }
+
+#ifndef OBJC_REFCNT
+    [strSet free];
+#endif
 }
 
 - valueForKeyPath:keyPath { return nil; }
 
-- (void)setValue:value forKeyPath:keyPath {}
+- (void)setValue:value forKeyPath:keyPath
+{
+    id components = [keyPath componentsSeparatedByString:@"."], indirStr = nil,
+       indirector = nil;
+
+    if ([components size] == 1)
+        [self setValue:value forKey:keyPath];
+    else
+    {
+        id newPath = [String new];
+
+        indirStr = [components removeFirst];
+        [components do:
+                    { :each | [newPath concat:each];
+                    }];
+        indirector = [self valueForKey:indirStr];
+        [indirector setValue:value forKeyPath:newPath];
+    }
+
+#ifndef OBJC_REFCNT
+    [indirStr free];
+    [[components freeContents] free];
+#endif
+}
 
 @end

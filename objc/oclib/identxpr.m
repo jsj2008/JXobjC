@@ -1,4 +1,3 @@
-
 /*
  * Copyright (c) 1998,1999,2000 David Stes.
  *
@@ -17,12 +16,10 @@
  * Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
  */
 
-#include "config.h"
 #include <stdlib.h>
 #include <assert.h>
-#include <stdio.h>  /* FILE */
-#include "Object.h" /* Stepstone Object.h assumes #import */
-#include <OCString.h>
+#include "Object.h"
+#include "OCString.h"
 #include "node.h"
 #include "expr.h"
 #include "identxpr.h"
