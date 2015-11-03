@@ -25,6 +25,7 @@
     id rcast;
     BOOL isidassign;
     BOOL isselfassign;
+    id msg;
 }
 
 - typesynth;

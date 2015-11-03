@@ -33,6 +33,7 @@
 #include "trlunit.h"
 #include "arrowxpr.h"
 #include "dotxpr.h"
+#import "prdotxpr.h"
 
 @implementation Assignment
 
@@ -49,9 +50,18 @@
 
 - synth
 {
-    /* Future note: Here, test if LHS is a property dot-accessor.
+    lhs = [lhs synth];
+    /* Here, we test if LHS is a property dot-accessor.
      * If so, then tell it to become a setter accessor and associate RHS
      * as its argument. */
+    if ([lhs isKindOf:DotPropertyExpr])
+    {
+        [lhs setSetExpr:rhs];
+        [lhs synth];
+        [lhs setReplaced:YES];
+        subsumed = YES;
+        return self;
+    }
     [super synth];
     if (curdef && [curdef ismethdef] && [lhs isidentexpr] &&
         strcmp ([lhs str], "self") == 0)
@@ -90,6 +100,8 @@
 
 - gen
 {
+    if (subsumed)
+        return [lhs forcegen];
     if (isidassign)
     {
         gl ([lhs lineno], [[lhs filename] str]);

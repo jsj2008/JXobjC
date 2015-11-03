@@ -196,9 +196,12 @@ id msgwraps; /* VICI */
             if (supermsg)
                 rcvr = nil;
         }
-        [curcompound addtmpvar:[self tmpvar]];
-        if (o_inlinecache)
-            [curcompound addicache:[self icache]];
+        if (!hasSynthed)
+        {
+            [curcompound addtmpvar:[self tmpvar]];
+            if (o_inlinecache)
+                [curcompound addicache:[self icache]];
+        }
     }
     else
     {
@@ -209,12 +212,15 @@ id msgwraps; /* VICI */
         rcvr = [rcvr synth];
     msg      = [msg synth];
 
-    if (o_refcnt && [[self type] isid])
+    if (o_refcnt && [[self type] isid] && !hasSynthedForId)
     {
-        refvar = [trlunit gettmpvar];
+        hasSynthedForId = YES;
+        refvar          = [trlunit gettmpvar];
         [curcompound addtmpvar:refvar];
         [curcompound adddecref:refvar withType:t_id];
     }
+
+    hasSynthed = YES;
     return self;
 }
 

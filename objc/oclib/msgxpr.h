@@ -38,6 +38,8 @@ extern id msgwraps; /* VICI */
     char * dispname;
     char * argstructname;
     id msgwrap; /* VICI */
+    BOOL hasSynthed,
+        hasSynthedForId; /* for re-synthing property dot accessors */
 }
 
 - (unsigned)hash;

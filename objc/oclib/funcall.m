@@ -88,7 +88,7 @@
 {
     [funname synth];
     if (funargs)
-        [funargs collect:{ : each | [each perform:_cmd]}];
+        funargs = [funargs collect:{ : each | [each perform:_cmd]}];
     if (o_refcnt && [[self type] isid])
     {
         refvar = [trlunit gettmpvar];

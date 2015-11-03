@@ -49,6 +49,7 @@ extern id curloopcompound;
     BOOL bracedgroup;
     BOOL needreturnflag;
     BOOL checkreturnflag;
+    BOOL hasSynthed;
 }
 
 @property id lockingOn;

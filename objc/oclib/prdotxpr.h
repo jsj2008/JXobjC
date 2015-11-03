@@ -4,7 +4,10 @@
 
 @interface DotPropertyExpr : MesgExpr
 
+@property BOOL replaced;
 @property id setExpr;
 @property id propSym;
+
+- forcegen;
 
 @end

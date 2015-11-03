@@ -1,20 +1,46 @@
 /* Copyright (c) 2015 D. Mackay. All rights reserved. */
 
+#include <ctype.h>
+
+#import "OCString.h"
 #import "prdotxpr.h"
+#import "identxpr.h"
 #import "util.h"
 
 @implementation DotPropertyExpr
 
 - synth
 {
-    id arg, args, mesg;
+    id arg, args;
 
     if (!setExpr)
-        mesg = mkmethproto (nil, mkidentexpr (propSym), nil, NO);
+        msg = mkmethproto (nil, mkidentexpr (propSym), nil, NO);
+    else
+    {
+        id selnam = [String sprintf:"set%s", [propSym str]];
 
-    msg = mesg;
+        [selnam charAt:3 put:toupper ([selnam charAt:3])];
+
+        arg         = mkkeywarg ([IdentifierExpr str:[selnam str]], setExpr);
+        args        = mklist (nil, arg);
+        msg         = mkmethproto (nil, nil, args, NO);
+        methodfound = NO;
+        method      = nil;
+        sel         = nil;
+    }
+
     return [super synth];
 }
+
+- gen
+{
+    if (!replaced)
+        return [self forcegen];
+    else
+        return self;
+}
+
+- forcegen { return [super gen]; }
 
 @end
 

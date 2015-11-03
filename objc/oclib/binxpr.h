@@ -23,6 +23,7 @@
 {
     STR op;
     id lhs, rhs;
+    BOOL subsumed;
 }
 
 - lhs:aRcvr;
