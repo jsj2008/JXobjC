@@ -1,6 +1,7 @@
 /* Copyright (c) 2015 D. Mackay. All rights reserved. */
 
 #import "Object.h"
+#import "Pair.h"
 
 @interface Object (KeyValueCoding)
 
@@ -9,5 +10,7 @@
 
 - (id)valueForKeyPath:keyPath;
 - (void)setValue:value forKeyPath:keyPath;
+
+- (Pair *)resolveKeyPathFirst:keyPath;
 
 @end

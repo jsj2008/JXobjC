@@ -73,8 +73,9 @@
     }
     else
     {
-        indirector$remainder.first  = first;
-        indirector$remainder.second = [components componentsJoinedByString:@""];
+        indirector$remainder.first = first;
+        indirector$remainder.second =
+            [components componentsJoinedByString:@"."];
     }
 
 #ifndef OBJC_REFCNT

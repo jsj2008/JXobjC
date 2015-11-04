@@ -90,12 +90,8 @@ static void setUp (id * associations) { *associations = [Set new]; }
 
 - ARC_dealloc
 {
-#ifdef OBJC_REFCNT
     associations = nil;
     return [super ARC_dealloc];
-#else
-    return [self notImplemented:_cmd];
-#endif
 }
 
 /*****************************************************************************

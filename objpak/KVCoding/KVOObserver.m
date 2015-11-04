@@ -3,32 +3,35 @@
 
 @implementation KPObserver
 
-- initWithSelector:(SEL)sel target:targ userInfo:arg
+- initWithKeyPath:kp selector:(SEL)sel target:targ userInfo:arg
 {
     [self init];
+    keyPath  = kp;
     selector = sel;
     target   = targ;
     userInfo = arg;
     return self;
 }
 
-- initWithBlock:blk target:targ userInfo:arg
+- initWithKeyPath:kp block:blk target:targ userInfo:arg
 {
     [self init];
+    keyPath  = kp;
     target   = targ;
     block    = blk;
     userInfo = arg;
     return self;
 }
 
-+ newWithSelector:(SEL)sel target:targ userInfo:arg
++ newWithKeyPath:kp selector:(SEL)sel target:targ userInfo:arg
 {
-    return [[self alloc] initWithSelector:sel target:targ userInfo:arg];
+    return
+        [[self alloc] initWithKeyPath:kp selector:sel target:targ userInfo:arg];
 }
 
-+ newWithBlock:blk target:targ userInfo:arg
++ newWithKeyPath:kp block:blk target:targ userInfo:arg
 {
-    return [[self alloc] initWithBlock:blk target:targ userInfo:arg];
+    return [[self alloc] initWithKeyPath:kp block:blk target:targ userInfo:arg];
 }
 
 - ARC_dealloc
@@ -36,7 +39,28 @@
     target   = nil;
     userInfo = nil;
     block    = nil;
+    keyPath  = nil;
     return [super ARC_dealloc];
+}
+
+- (unsigned)hash
+{
+    return selector ? [selector hash] % [target hash]
+                    : [block hash] % [target hash];
+}
+
+- (BOOL)isEqual:anObject
+{
+    if (![anObject isKindOf:KPObserver])
+        return NO;
+    else if (([anObject matchesSelector:selector
+                                 target:target
+                               userInfo:userInfo] ||
+              [anObject matchesBlock:block userInfo:userInfo]) &&
+             [keyPath isEqual:[anObject keyPath]])
+        return YES;
+    else
+        return NO;
 }
 
 - (BOOL)matchesSelector:(SEL)sel target:targ userInfo:arg
@@ -78,6 +102,10 @@
     else
         return NO;
 }
+
+- (BOOL)matchesKeyPath:kp { return [keyPath isEqual:kp]; }
+
+- (String *)keyPath { return keyPath; }
 
 - (void)fire:info
 {

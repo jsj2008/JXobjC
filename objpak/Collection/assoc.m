@@ -62,20 +62,20 @@
 
 - freeAll
 {
-    key   = [key free];
+    if ([key respondsTo:@selector (freeContents)])
+        [key freeContents];
+    key = [key free];
+    if ([value respondsTo:@selector (freeContents)])
+        [value freeContents];
     value = [value free];
     return [super free];
 }
 
 - ARC_dealloc
 {
-#ifdef OBJC_REFCNT
     key   = nil;
     value = nil;
     return [super ARC_dealloc];
-#else
-    return [self notImplemented:_cmd];
-#endif
 }
 
 /*****************************************************************************

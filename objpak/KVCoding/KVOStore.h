@@ -15,20 +15,22 @@
     id block;
 
     id userInfo;
-    String * keypath;
+    String * keyPath;
 }
 
-+ newWithSelector:(SEL)sel target:targ userInfo:arg;
-+ newWithBlock:blk target:targ userInfo:arg;
++ newWithKeyPath:kp selector:(SEL)sel target:targ userInfo:arg;
++ newWithKeyPath:kp block:blk target:targ userInfo:arg;
 
-- initWithSelector:(SEL)sel target:targ userInfo:arg;
-- initWithBlock:blk target:targ userInfo:arg;
+- initWithKeyPath:kp selector:(SEL)sel target:targ userInfo:arg;
+- initWithKeyPath:kp block:blk target:targ userInfo:arg;
 
 - (BOOL)matchesSelector:(SEL)sel target:targ userInfo:arg;
 - (BOOL)matchesTarget:targ;
 - (BOOL)matchesBlock:blk userInfo:arg;
 - (BOOL)matchesBlock:blk;
+- (BOOL)matchesKeyPath:kp;
 
+- (String *)keyPath;
 - (void)fire:information;
 
 @end
@@ -44,6 +46,15 @@
     Dictionary * ownerRefToKPObserverDict;
 }
 
-+ (void)addObserver:observer forKeyPath:keyPath ofObject:object;
++ (void)addObserver:observer
+         forKeyPath:keyPath
+           ofObject:object
+          withBlock:blk
+           userInfo:ui;
++ (void)addObserver:observer
+         forKeyPath:keyPath
+           ofObject:object
+       withSelector:(SEL)sel
+           userInfo:ui;
 
 @end
