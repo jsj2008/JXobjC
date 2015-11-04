@@ -376,14 +376,32 @@ static char putcharat (objstr_t self, int i, char c)
     return putcharat ((&value), anOffset, aChar);
 }
 
+- (Range)rangeOfString:aString
+{
+    size_t i, sepsize = [aString size];
+    STR sepstr        = [aString str];
+    Range r;
+
+    for (i = 0; i < value.count - sepsize; i++)
+    {
+        if (!strncmp ((value.ptr + i), sepstr, sepsize))
+        {
+            r = MakeRange (i, sepsize);
+            break;
+        }
+    }
+    return r;
+}
+
 - componentsSeparatedByString:separator
 {
     size_t i, si, sepsize = [separator size];
+    STR sepstr            = [separator str];
     id rset               = [OrdCltn new];
 
     for (i = 0, si = 0; i < value.count - sepsize; i++)
     {
-        if (!strncmp ((value.ptr + i), [separator str], sepsize))
+        if (!strncmp ((value.ptr + i), sepstr, sepsize))
         {
             [rset add:[self substringWithRange:MakeRange (si, i - si)]];
             i += sepsize - 1;

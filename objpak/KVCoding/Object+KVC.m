@@ -6,7 +6,7 @@
 #import "KVOStore.h"
 #import "OCString.h"
 #import "OrdCltn.h"
-#import "Obj+KVC.h"
+#import "KVC.h"
 #import "Pair.h"
 
 @implementation Object (KeyValueCoding)
@@ -74,10 +74,7 @@
     else
     {
         indirector$remainder.first  = first;
-        indirector$remainder.second = [String new];
-        [components do:
-                    { :each | [indirector$remainder.second concat:each];
-                    }];
+        indirector$remainder.second = [components componentsJoinedByString:@""];
     }
 
 #ifndef OBJC_REFCNT

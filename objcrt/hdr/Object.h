@@ -25,6 +25,7 @@
 
 #include "objcrt.h"
 #include <stdarg.h>
+#include <stdint.h>
 #include <string.h>
 
 #define __objcrt_revision__ "4.5"

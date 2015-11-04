@@ -22,6 +22,8 @@
 #include <stdio.h> /* FILE */
 #include "Object.h"
 
+@class String;
+
 @interface Cltn : Object
 {
 }
@@ -60,6 +62,8 @@
 
 - do:aBlock;
 - do:aBlock until:(BOOL *)flag;
+
+- (String *)componentsJoinedByString:aString;
 
 /* private */
 - eachElement;

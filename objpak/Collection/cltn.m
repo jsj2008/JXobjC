@@ -21,6 +21,7 @@
 #include "Set.h"
 #include "OrdCltn.h"
 #include "sequence.h"
+#include "OCString.h"
 #if OBJC_BLOCKS
 #include "Block.h"
 #endif
@@ -551,5 +552,20 @@
     return self;
 }
 #endif /* OBJC_BLOCKS */
+
+/* Miscellaneous */
+
+- (String *)componentsJoinedByString:aString
+{
+    String * newString;
+
+    newString = [String new];
+    [self do:
+          { :each | [newString concatSTR:[each str]];
+              [newString concat:aString];
+          }];
+
+    return newString;
+}
 
 @end
