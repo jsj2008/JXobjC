@@ -7,6 +7,10 @@
 {
 } :
 {
-    Dictionary * keysToObserverSets;
+    /* This is a dictionary of VolatileReferences corresponding to the objects
+     * that own the property represented in a keypath.
+     * It maps to another dictionary; a dictionary of property names mapped to
+     * a set of KPObservers. */
+    Dictionary * ownerRefToKPObserverDict;
 }
 @end

@@ -247,6 +247,16 @@ static int cmpstr (objstr_t a, char * b) { return str_cmp (a->ptr, b); }
     return (self == aStr) ? 0 : cmpstr ((&value), [aStr str]);
 }
 
+- (BOOL)endsWith:aStr
+{
+    size_t len = [aStr size];
+    if (len > value.count)
+        return NO;
+    else
+        return str_cmp (value.ptr + value.count - len, [aStr str]) == 0 ? YES
+                                                                        : NO;
+}
+
 - (int)compareSTR:(STR)aString { return cmpstr ((&value), aString); }
 
 static unsigned str_hash (char * s)

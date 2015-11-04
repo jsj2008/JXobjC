@@ -59,6 +59,7 @@ typedef struct objstr
 - (int)dictCompare:aStr;
 - (BOOL)isEqual:aStr;
 - (BOOL)isEqualSTR:(STR)aString;
+- (BOOL)endsWith:aStr;
 
 - (objstr_t)objstrvalue;
 - (unsigned)size;
