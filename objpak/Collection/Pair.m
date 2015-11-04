@@ -1,6 +1,7 @@
 /* Copyright (c) 2015 D. Mackay. All rights reserved. */
 
 #import "Pair.h"
+#import "OrdCltn.h"
 
 @implementation Pair
 
@@ -22,6 +23,17 @@
     first  = nil;
     second = nil;
     return [super ARC_dealloc];
+}
+
+- free
+{
+    if ([first respondsTo:@selector (freeContents)])
+        [first freeContents];
+    if ([second respondsTo:@selector (freeContents)])
+        [second freeContents];
+    [first free];
+    [second free];
+    return [super free];
 }
 
 @end

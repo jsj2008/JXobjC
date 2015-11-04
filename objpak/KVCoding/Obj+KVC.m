@@ -3,9 +3,11 @@
 #include <ctype.h>
 
 #import "Block.h"
+#import "KVOStore.h"
 #import "OCString.h"
 #import "OrdCltn.h"
 #import "Obj+KVC.h"
+#import "Pair.h"
 
 @implementation Object (KeyValueCoding)
 
@@ -58,30 +60,68 @@
 #endif
 }
 
-- valueForKeyPath:keyPath { return nil; }
-
-- (void)setValue:value forKeyPath:keyPath
+- (Pair *)resolveKeyPathFirst:keyPath
 {
-    id components = [keyPath componentsSeparatedByString:@"."], indirStr = nil,
-       indirector = nil;
+    id indirector$remainder = [Pair new];
+    id components = [keyPath componentsSeparatedByString:@"."], first = nil;
 
-    if ([components size] == 1)
-        [self setValue:value forKey:keyPath];
+    first = [components removeFirst];
+
+    if (![components size])
+    {
+        indirector$remainder.second = first;
+    }
     else
     {
-        id newPath = [String new];
-
-        indirStr = [components removeFirst];
+        indirector$remainder.first  = first;
+        indirector$remainder.second = [String new];
         [components do:
-                    { :each | [newPath concat:each];
+                    { :each | [indirector$remainder.second concat:each];
                     }];
-        indirector = [self valueForKey:indirStr];
-        [indirector setValue:value forKeyPath:newPath];
     }
 
 #ifndef OBJC_REFCNT
-    [indirStr free];
     [[components freeContents] free];
+#endif
+
+    return indirector$remainder;
+}
+
+- valueForKeyPath:keyPath
+{
+    id result = nil, indirector = nil;
+    Pair * resolved = [self resolveKeyPathFirst:keyPath];
+
+    if (!resolved.first)
+        result = [self valueForKey:resolved.second];
+    else
+    {
+        indirector = [self valueForKey:resolved.first];
+        result     = [indirector valueForKeyPath:resolved.second];
+    }
+
+#ifndef OBJC_REFCNT
+    [resolved free];
+#endif
+
+    return result;
+}
+
+- (void)setValue:value forKeyPath:keyPath
+{
+    id indirector   = nil;
+    Pair * resolved = [self resolveKeyPathFirst:keyPath];
+
+    if (!resolved.first)
+        [self setValue:value forKey:resolved.second];
+    else
+    {
+        indirector = [self valueForKey:resolved.first];
+        [indirector setValue:value forKeyPath:resolved.second];
+    }
+
+#ifndef OBJC_REFCNT
+    [resolved free];
 #endif
 }
 

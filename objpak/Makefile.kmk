@@ -11,9 +11,10 @@ objpak_SOURCES = $(wildcard $(PATH_ROOT)/objpak/*.m) \
 	$(wildcard $(PATH_ROOT)/objpak/Notification/*.m) \
 	$(wildcard $(PATH_ROOT)/objpak/Threads/*.m) \
 	$(wildcard $(PATH_ROOT)/objpak/RunLoop/*.m) \
-	$(wildcard $(PATH_ROOT)/objpak/IODevice/*.m)
+	$(wildcard $(PATH_ROOT)/objpak/IODevice/*.m) \
+	$(wildcard $(PATH_ROOT)/objpak/KVCoding/*.m)
 
-objpak_INCS = $(INTERNAL_INCS) Collection
+objpak_INCS = $(INTERNAL_INCS) Collection KVCoding
 
 objpak_s_EXTENDS = objpak
 objpak_s_EXTENDS_BY = appending
