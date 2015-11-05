@@ -1,4 +1,3 @@
-
 /*
  * Copyright (c) 1999,2014 David Stes.
  *
@@ -15,19 +14,13 @@
  * You should have received a copy of the GNU Library General Public License
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
- *
- * $Id: scalar.m,v 1.3 2014/03/04 09:03:32 stes Exp $
  */
 
-#include "config.h"
-#include <stdlib.h>
 #include <assert.h>
-#ifndef __OBJECT_INCLUDED__
-#define __OBJECT_INCLUDED__
-#include <stdio.h>  /* FILE */
-#include "Object.h" /* Stepstone Object.h assumes #import */
-#endif
-#include <OCString.h>
+#include <stdint.h>
+#include <stdlib.h>
+#include "Object.h"
+#include "OCString.h"
 #include "node.h"
 #include "type.h"
 #include "var.h"
@@ -56,7 +49,7 @@
     if (type == t_uns)
         return (int)u.un_uns;
     if (type == t_str)
-        return (int)u.un_str;
+        return (int)(intptr_t)u.un_str;
     if (type == t_double)
         return (int)u.un_double;
     [self errorconvert];
@@ -173,11 +166,11 @@
     if (type == t_str)
         return u.un_str;
     if (type == t_int)
-        return (char *)u.un_int;
+        return (char *)(uintptr_t)u.un_int;
     if (type == t_uns)
-        return (char *)u.un_uns;
+        return (char *)(uintptr_t)u.un_uns;
     if (type == t_long)
-        return (char *)u.un_long;
+        return (char *)(uintptr_t)u.un_long;
     [self errorconvert];
     return (char *)0;
 }
@@ -194,7 +187,7 @@
     if (type == t_str)
         return u.un_voidstar;
     if (type == t_int)
-        return (void *)u.un_int;
+        return (void *)(uintptr_t)u.un_int;
     [self errorconvert];
     return (void *)0;
 }
@@ -211,7 +204,7 @@
     if (type == t_str)
         return (FILE *)u.un_fp;
     if (type == t_int)
-        return (FILE *)u.un_int;
+        return (FILE *)(uintptr_t)u.un_int;
     [self errorconvert];
     return (FILE *)0;
 }

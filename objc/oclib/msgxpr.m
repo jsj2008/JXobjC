@@ -185,7 +185,7 @@ id msgwraps; /* VICI */
 
     if (curcompound)
     {
-        BOOL inm = (curdef && [curdef ismethdef]);
+        BOOL inm = (BOOL) (curdef && [curdef ismethdef]);
 
         /* in a function 'super' is ordinary */
         if (inm && [rcvr isKindOf:Expr] && [rcvr isidentexpr])

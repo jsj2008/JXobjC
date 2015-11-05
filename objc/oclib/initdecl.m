@@ -16,10 +16,8 @@
  * Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
  */
 
-#include "config.h"
 #include <stdlib.h>
 #include <assert.h>
-#include <stdio.h> /* FILE */
 #include "Object.h"
 #include "node.h"
 #include "decl.h"
@@ -31,6 +29,7 @@
 #include "binxpr.h"
 #include "arrowxpr.h"
 #include "dotxpr.h"
+#include "type.h"
 
 @implementation InitDecl
 
@@ -121,7 +120,7 @@
     {
         if (cast)
         {
-            gc ('(');
+            gs ("((");
             [cast genabstrtype];
             gc (')');
         }
@@ -129,6 +128,8 @@
             gs ("idincref((id)"); /* just like in assignment */
         [initializer gen];
         if (incref)
+            gc (')');
+        if (cast)
             gc (')');
     }
     return self;

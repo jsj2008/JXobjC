@@ -60,7 +60,7 @@ extern id curstruct;
     id allivarnames, allcvarnames;
     id fileinmethod, fileoutmethod;
     id decrefsmethod, increfsmethod, propmeths;
-    int offset;
+    long offset;
 }
 
 - (int)compare:c;

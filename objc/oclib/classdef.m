@@ -540,14 +540,15 @@ id curclassdef;
     [trlunit addgentype:s];
 
     /* keep this compatible with objcc's struct _SHARED */
-    gf ("struct %s {\n", shartypename);
+    gf ("struct %s\n{\n", shartypename);
     gs ("  id isa;\n");
     gs ("  unsigned int _refcnt;\n");
+    gs ("  void * _lock;\n");
     gs ("  id clsSuper;\n");
     gs ("  char *clsName;\n");
     gs ("  char *clsTypes;\n");
-    gs ("  short clsSizInstance;\n");
-    gs ("  short clsSizDict;\n");
+    gs ("  long clsSizInstance;\n");
+    gs ("  long clsSizDict;\n");
     gs ("  struct _SLT *clsDispTable;\n");
     gs ("  long clsStatus;\n");
     gs ("  struct modDescriptor *clsMod;\n");
@@ -662,6 +663,9 @@ id curclassdef;
     gs ("  1,");
     gcom ("/* _refcnt */");
 
+    gs ("  0,");
+    gcom ("/* _lock */");
+
     /* if no shareddata (DLL's), then this field is set at runtime */
     if (superc != nil && o_shareddata)
     {
@@ -748,6 +752,9 @@ id curclassdef;
 
     gs ("  1,");
     gcom ("/* _refcnt */");
+
+    gs ("  0,");
+    gcom ("/* _lock */");
 
     if (o_shareddata)
     {

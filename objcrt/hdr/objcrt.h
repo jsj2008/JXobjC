@@ -122,11 +122,12 @@ struct objcrt_shared
 {
     id isa;
     unsigned int _refcnt;
+    void * _lock;
     id clsSuper;
     char * clsName;
     char * clsTypes;
-    short clsSizInstance;
-    short clsSizDict;
+    long clsSizInstance;
+    long clsSizDict;
     struct objcrt_slt * clsDispTable;
     long clsStatus;
     struct objcrt_modDescriptor * clsMod;

@@ -267,7 +267,7 @@
 
 - checkagain
 {
-    id x = (ivar || cvar) ? s_self : identifier;
+    id x = ((ivar || cvar) ? s_self : identifier);
 
     if ([maybeheapvarblock isheapvar:x])
     {

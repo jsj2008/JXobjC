@@ -17,6 +17,7 @@
  */
 
 #include "assoc.h"
+#include "OrdCltn.h"
 
 @implementation Assoc
 

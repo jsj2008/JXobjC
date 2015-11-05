@@ -97,7 +97,7 @@ static void setisa (id anObject, id aClass)
 #endif
 }
 
-static short nstsize (id aClass) { return getcls (aClass)->clsSizInstance; }
+static long nstsize (id aClass) { return getcls (aClass)->clsSizInstance; }
 
 #define SIZEHASHTABLE 73 /* default initial size */
 
@@ -736,7 +736,7 @@ static PHASH hashNew (STR key, PHASH link)
     return obj;
 }
 
-static PHASH search (STR key, int * slot, PHASH * prev)
+static PHASH search (STR key, long * slot, PHASH * prev)
 {
     PHASH target;
 
@@ -753,7 +753,7 @@ static PHASH search (STR key, int * slot, PHASH * prev)
     return target;
 }
 
-static PHASH hashEnter (STR key, int slot)
+static PHASH hashEnter (STR key, long slot)
 {
     assert (key != NULL);
     if (minsel)
@@ -774,67 +774,16 @@ static PHASH hashEnter (STR key, int slot)
     return hashList[slot];
 }
 
-static PHASH hashLookup (STR key, int * slot)
+static PHASH hashLookup (STR key, long * slot)
 {
     PHASH prev;
     return search (key, slot, &prev);
 }
 
-#if 0
-
-static PHASH 
-hashLookupByUid (SEL uid)
-{
-  int n = 0;
-  PHASH target = NULL;
-
-  while (n < nHashLists)
-    {
-      target = hashList [n];
-      while (target)
-	{
-	  if (target->key != uid)
-	    {
-	      target = target->next;
-	    }
-	  else
-	    {
-	      return target;
-	    }
-	}
-      n++;
-    }
-
-  return target;
-}
-
-static PHASH 
-hashRemove (STR key)
-{
-  int slot;
-  PHASH prev, target;
-
-  if (target = search (key, &slot, &prev))
-    {
-      if (prev)
-	{
-	  prev->next = target->next;
-	}
-      else
-	{
-	  hashList [slot] = target->next;
-	}
-    }
-
-  return target;
-}
-
-#endif
-
 static void mapsels (PMOD info, SEL * sel)
 {
     PHASH ent;
-    int i, slot;
+    long i, slot;
 
     for (i = 0; i < info->modSelRef; i++)
     {
@@ -863,7 +812,7 @@ static void mapsels (PMOD info, SEL * sel)
 static void mapcls (Cls_t cls)
 {
     PHASH ent;
-    int i, slot;
+    long i, slot;
 
     for (i = 0; i < cls->clsSizDict; i++)
     {
@@ -1220,7 +1169,7 @@ STR EXPORT selName (SEL sel)
 
 SEL EXPORT selUid (STR sel)
 {
-    int slot;
+    long slot;
     PHASH retVal;
     if ((retVal = hashLookup (sel, &slot)))
         return (SEL)retVal->key;
@@ -1609,7 +1558,7 @@ static IMP _getImp (id cls, SEL sel, int index, IMP fwd)
 
     do
     {
-        int n;
+        long n;
         struct objcrt_slt * smt;
 
         wCls = getcls (ncls);
