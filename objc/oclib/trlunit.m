@@ -271,11 +271,11 @@ static char * mystrrchr (const char * s, int c)
     /* struct used in sharedType & defined by Stepstone objcc */
     if (o_cplus)
     {
-        gs ("struct _SLT {char *_cmd;id (*_imp)(...);};\n");
+        gs ("struct _SLT\n{\nchar *_cmd;\nchar *_typ;\nid (*_imp)(...);\n};\n");
     }
     else
     {
-        gs ("struct _SLT {char *_cmd;id (*_imp)();};\n");
+        gs ("struct _SLT\n{\nchar *_cmd;\nchar *_typ;\nid (*_imp)();\n};\n");
     }
 
     /* type for Objective C modules */

@@ -45,6 +45,7 @@
  */
 
 typedef char * SEL;          /* Uniqued String for Selector */
+typedef char * TYP;          /* Type description for a method */
 typedef char * STR;          /* C, NULL-terminated, String */
 typedef char BOOL;           /* Boolean */
 typedef FILE * IOD;          /* I/O Device */
@@ -171,6 +172,7 @@ typedef struct objcrt_shared * Cls_t; /* use only for impl */
 struct objcrt_slt
 {
     SEL _cmd;
+    TYP _typ;
     IMP _imp;
 };
 

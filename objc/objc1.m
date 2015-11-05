@@ -1,4 +1,3 @@
-
 /*
  * Copyright (c) 1998,99,2000,01,02,03,04,06,08,09,14 David Stes
  *
@@ -17,20 +16,17 @@
  * Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
  */
 
-#define OBJCVERSION "0.9a"
-#define OBJC1VERSION "ObjC4.5"
+#define OBJCVERSION "0.95"
+#define OBJC1VERSION "ObjC5.0"
 
-#include <string.h> /* strtok */
-#include <stdlib.h> /* getenv */
 #include <assert.h>
-#ifndef __OBJECT_INCLUDED__
-#define __OBJECT_INCLUDED__
-#include <stdio.h>  /* FILE */
-#include "Object.h" /* Stepstone Object.h assumes #import */
-#endif
-#include <OCString.h>
-#include <OrdCltn.h>
-#include <sequence.h>
+#include <stdio.h>
+#include <stdlib.h> /* getenv */
+#include <string.h> /* strtok */
+#include "Object.h"
+#include "OCString.h"
+#include "OrdCltn.h"
+#include "sequence.h"
 #include "node.h"
 #include "trlunit.h"
 #include "options.h"

@@ -566,12 +566,13 @@ id curclassdef;
 {
     if (o_cplus)
     {
-        gf ("\n{\"%s\",(id (*)(...))%s},", [methdef selname],
+        gf ("\n{\"%s\", 0,(id (*)(...))%s},", [methdef selname],
             [methdef impname]);
     }
     else
     {
-        gf ("\n{\"%s\",(id (*)())%s},", [methdef selname], [methdef impname]);
+        gf ("\n{\"%s\", 0, (id (*)())%s},", [methdef selname],
+            [methdef impname]);
     }
     return self;
 }
@@ -580,11 +581,11 @@ id curclassdef;
 {
     if (o_cplus)
     {
-        gs ("\n{(char*)0,(id (*)(...))0}");
+        gs ("\n{(char*)0, 0, (id (*)(...))0}");
     }
     else
     {
-        gs ("\n{(char*)0,(id (*)())0}");
+        gs ("\n{(char*)0, 0, (id (*)())0}");
     }
     return self;
 }

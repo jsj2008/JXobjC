@@ -1522,6 +1522,7 @@ id EXPORT _nilHandler (id self, SEL sel)
 
 static id clsCache[CACHESIZE];
 static SEL selCache[CACHESIZE];
+static TYP typCache[CACHESIZE];
 static IMP impCache[CACHESIZE];
 
 static void flushCache (void)
@@ -1576,8 +1577,10 @@ static IMP _getImp (id cls, SEL sel, int index, IMP fwd)
                 else
                 {
                     IMP imp = smt->_imp;
+                    TYP typ = smt->_typ;
                     CACHE_LOCK
                     selCache[index] = sel;
+                    typCache[index] = typ;
                     clsCache[index] = cls;
                     impCache[index] = imp;
                     CACHE_UNLOCK
@@ -1758,6 +1761,7 @@ static void copyDispTable (struct objcrt_slt * dst, struct objcrt_slt * src,
     while (n--)
     {
         dst->_imp = src->_imp;
+        dst->_typ = src->_typ;
         dst->_cmd = src->_cmd;
         dst++;
         src++;
