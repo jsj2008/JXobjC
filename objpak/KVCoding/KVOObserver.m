@@ -3,40 +3,43 @@
 
 @implementation KPObserver
 
-- initWithKeyPath:kp selector:(SEL)sel target:targ userInfo:arg
+- initWithKeyPath:kp selector:(SEL)sel observer:targ userInfo:arg
 {
     [self init];
     keyPath  = kp;
     selector = sel;
-    target   = targ;
+    observer = targ;
     userInfo = arg;
     return self;
 }
 
-- initWithKeyPath:kp block:blk target:targ userInfo:arg
+- initWithKeyPath:kp block:blk observer:targ userInfo:arg
 {
     [self init];
     keyPath  = kp;
-    target   = targ;
+    observer = targ;
     block    = blk;
     userInfo = arg;
     return self;
 }
 
-+ newWithKeyPath:kp selector:(SEL)sel target:targ userInfo:arg
++ newWithKeyPath:kp selector:(SEL)sel observer:targ userInfo:arg
 {
-    return
-        [[self alloc] initWithKeyPath:kp selector:sel target:targ userInfo:arg];
+    return [[self alloc] initWithKeyPath:kp
+                                selector:sel
+                                observer:targ
+                                userInfo:arg];
 }
 
-+ newWithKeyPath:kp block:blk target:targ userInfo:arg
++ newWithKeyPath:kp block:blk observer:targ userInfo:arg
 {
-    return [[self alloc] initWithKeyPath:kp block:blk target:targ userInfo:arg];
+    return
+        [[self alloc] initWithKeyPath:kp block:blk observer:targ userInfo:arg];
 }
 
 - ARC_dealloc
 {
-    target   = nil;
+    observer = nil;
     userInfo = nil;
     block    = nil;
     keyPath  = nil;
@@ -45,8 +48,8 @@
 
 - (unsigned)hash
 {
-    return selector ? [selector hash] % [target hash]
-                    : [block hash] % [target hash];
+    return selector ? [selector hash] % [observer hash]
+                    : [block hash] % [observer hash];
 }
 
 - (BOOL)isEqual:anObject
@@ -54,7 +57,7 @@
     if (![anObject isKindOf:KPObserver])
         return NO;
     else if (([anObject matchesSelector:selector
-                                 target:target
+                               observer:observer
                                userInfo:userInfo] ||
               [anObject matchesBlock:block userInfo:userInfo]) &&
              [keyPath isEqual:[anObject keyPath]])
@@ -63,11 +66,11 @@
         return NO;
 }
 
-- (BOOL)matchesSelector:(SEL)sel target:targ userInfo:arg
+- (BOOL)matchesSelector:(SEL)sel observer:targ userInfo:arg
 {
     if (!targ || !sel)
         return NO;
-    else if (target == targ && selector == sel && userInfo == arg)
+    else if (observer == targ && selector == sel && userInfo == arg)
         return YES;
     else
         return NO;
@@ -77,7 +80,7 @@
 {
     if (!targ)
         return NO;
-    else if (target == targ)
+    else if (observer == targ)
         return YES;
     else
         return NO;
@@ -110,11 +113,11 @@
 - (void)fire:info
 {
 
-    if (target)
+    if (selector)
     {
         [
             {
-                [target perform:selector with:info];
+                [observer perform:selector with:info];
             } ifError:
               { :msg :rcv | printf("Exception in KVO callback method.\n");
               }];

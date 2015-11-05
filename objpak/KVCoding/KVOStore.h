@@ -3,29 +3,37 @@
 #import "Object.h"
 #import "Dictionary.h"
 #import "OCString.h"
+#import "Set.h"
 
 @interface KPObserver : Object
 {
-    /* Perform a selector on a target. Note that target is also used to
-     * track the lifetime of an observer, by associating its 'originator'. */
+    /* The key paths that trigger a notification.
+     * For example, X.Y.Z will have X.Y, and Y.Z.
+     * The set contains Pair entries where .first is the object and .second is
+     * the property name - so it can be compared to entries in the
+     * observed-properties table with isEqual:. */
+    Set * pathTriggers;
+    String * keyPath;
+    id userInfo;
+
+    /* Perform a selector on a observer. Note that observer is also used to
+     * track the lifetime of an observer, by associating the observation's
+     * creator, even if they used a block instead. */
     SEL selector;
-    volatile id target;
+    volatile id observer;
 
     /* or, alternatively, a block: */
     id block;
-
-    id userInfo;
-    String * keyPath;
 }
 
-+ newWithKeyPath:kp selector:(SEL)sel target:targ userInfo:arg;
-+ newWithKeyPath:kp block:blk target:targ userInfo:arg;
++ newWithKeyPath:kp selector:(SEL)sel observer:targ userInfo:arg;
++ newWithKeyPath:kp block:blk observer:targ userInfo:arg;
 
-- initWithKeyPath:kp selector:(SEL)sel target:targ userInfo:arg;
-- initWithKeyPath:kp block:blk target:targ userInfo:arg;
+- initWithKeyPath:kp selector:(SEL)sel observer:targ userInfo:arg;
+- initWithKeyPath:kp block:blk observer:targ userInfo:arg;
 
-- (BOOL)matchesSelector:(SEL)sel target:targ userInfo:arg;
-- (BOOL)matchesTarget:targ;
+- (BOOL)matchesSelector:(SEL)sel observer:targ userInfo:arg;
+- (BOOL)matchesObserver:targ;
 - (BOOL)matchesBlock:blk userInfo:arg;
 - (BOOL)matchesBlock:blk;
 - (BOOL)matchesKeyPath:kp;

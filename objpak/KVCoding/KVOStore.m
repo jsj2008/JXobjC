@@ -70,7 +70,7 @@
 {
     id kpo = [KPObserver newWithKeyPath:keyPath
                                   block:blk
-                                 target:observer
+                               observer:observer
                                userInfo:ui];
     [self addObserverForKeyPath:keyPath ofObject:object withKPO:kpo];
 }
@@ -83,9 +83,11 @@
 {
     id kpo = [KPObserver newWithKeyPath:keyPath
                                selector:sel
-                                 target:observer
+                               observer:observer
                                userInfo:ui];
     [self addObserverForKeyPath:keyPath ofObject:object withKPO:kpo];
 }
+
+- removeObserver:observer forKeyPath:keyPath ofObject:object {}
 
 @end
