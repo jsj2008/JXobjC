@@ -290,7 +290,7 @@ static int size (objbbt_t self)
  *
  ****************************************************************************/
 
-- (unsigned)hash
+- (uintptr_t)hash
 {
     [self notImplemented:_cmd];
     return 0;

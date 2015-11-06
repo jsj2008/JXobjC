@@ -98,7 +98,7 @@
     return [super free];
 }
 
-- (unsigned)hash { return [string hash]; }
+- (uintptr_t)hash { return [string hash]; }
 
 - (BOOL)isEqual:aStr
 {

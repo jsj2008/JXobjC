@@ -56,7 +56,7 @@ id msgwraps; /* VICI */
 #endif
 }
 
-- (unsigned)hash
+- (uintptr_t)hash
 {
     id a;
 

@@ -136,7 +136,7 @@ typedef struct objcol
 - ARC_dealloc;
 
 - (objcol_t)objcolvalue;
-- (unsigned)hash;
+- (uintptr_t)hash;
 
 - addYourself;
 

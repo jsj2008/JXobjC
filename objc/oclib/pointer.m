@@ -45,7 +45,7 @@
 
 - abstrdecl { return self; }
 
-- (unsigned)hash { return [self numpointers]; }
+- (uintptr_t)hash { return [self numpointers]; }
 
 - (BOOL)isEqual:x { return [self numpointers] == [x numpointers]; }
 

@@ -118,7 +118,7 @@ typedef struct objbag
 
 - (objbag_t)objbagvalue;
 
-- (unsigned)hash;
+- (uintptr_t)hash;
 
 @end
 

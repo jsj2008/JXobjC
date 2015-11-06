@@ -85,7 +85,7 @@
  *
  ****************************************************************************/
 
-- (unsigned)hash { return [key hash]; }
+- (uintptr_t)hash { return [key hash]; }
 
 - self
 {

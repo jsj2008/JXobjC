@@ -59,7 +59,7 @@ typedef struct objbbt
 - (BOOL)isEmpty;
 - eachElement;
 
-- (unsigned)hash;
+- (uintptr_t)hash;
 - (BOOL)isEqual:aSort;
 
 - add:anObject;

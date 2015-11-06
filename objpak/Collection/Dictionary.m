@@ -15,7 +15,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
  */
-
+#include "Block.h"
 #include "Dictionary.h"
 #include "assoc.h"
 #include "keyseq.h"
@@ -116,7 +116,7 @@ static void setUp (id * associations) { *associations = [Set new]; }
  *
  ****************************************************************************/
 
-- (unsigned)hash { return [associations hash]; }
+- (uintptr_t)hash { return [associations hash]; }
 
 - (BOOL)isEqual:aDic
 {

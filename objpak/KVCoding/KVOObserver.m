@@ -50,10 +50,11 @@
     return [super ARC_dealloc];
 }
 
-- (unsigned)hash
+- (uintptr_t)hash
 {
-    return selector ? [selector hash] % [observer hash] % [keyPath hash]
-                    : [block hash] % [observer hash] % [keyPath hash];
+    return selector
+               ? ((uintptr_t)selector) % [observer hash] % [keyPath hash]
+               : [block hash] % ([observer hash] ?: 0x1234) % [keyPath hash];
 }
 
 - (BOOL)isEqual:anObject
@@ -180,5 +181,17 @@
 }
 
 - (unsigned int)pathIndex { return pathIndex; }
+
+- (uintptr_t)hash { return reference + pathIndex; }
+
+- (BOOL)isEqual:anObject
+{
+    printf ("Comparing...\n");
+    if (self == anObject)
+        return YES;
+    else if (![anObject isKindOf:KPObserverRef])
+        return NO;
+    return ([anObject pathIndex] == pathIndex) && [super isEqual:anObject];
+}
 
 @end

@@ -11,9 +11,15 @@
     return self;
 }
 
-- (unsigned)hash { return [reference hash]; }
+- (uintptr_t)hash { return [reference hash]; }
 
-- (BOOL)isEqual:anObject { return [reference isEqual:anObject]; }
+- (BOOL)isEqual:anObject
+{
+    if ([anObject isKindOf:VolatileReference])
+        return [reference isEqual:anObject.reference];
+    else
+        return [anObject isEqual:reference];
+}
 
 - reference { return reference; }
 

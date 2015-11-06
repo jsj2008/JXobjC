@@ -39,7 +39,7 @@
 - (BOOL)isEmpty;
 - (BOOL)includesKey:aKey;
 
-- (unsigned)hash;
+- (uintptr_t)hash;
 - (BOOL)isEqual:aDic;
 
 - atKey:aKey;

@@ -31,7 +31,7 @@
     id breakpt;
 }
 
-- (unsigned)hash;
+- (uintptr_t)hash;
 - (BOOL)isEqual:x;
 
 - (BOOL)factory;

@@ -53,7 +53,7 @@ typedef struct objstr
 
 - (int)compare:aStr;
 - (int)compareSTR:(STR)aString;
-- (unsigned)hash;
+- (uintptr_t)hash;
 - (int)dictCompare:aStr;
 - (BOOL)isEqual:aStr;
 - (BOOL)isEqualSTR:(STR)aString;

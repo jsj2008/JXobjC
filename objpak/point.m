@@ -66,7 +66,7 @@
  *
  ****************************************************************************/
 
-- (unsigned)hash { return xLoc ^ yLoc; }
+- (uintptr_t)hash { return xLoc ^ yLoc; }
 
 - (BOOL)isEqual:aPoint
 {

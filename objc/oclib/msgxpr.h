@@ -42,7 +42,7 @@ extern id msgwraps; /* VICI */
         hasSynthedForId; /* for re-synthing property dot accessors */
 }
 
-- (unsigned)hash;
+- (uintptr_t)hash;
 - (BOOL)isEqual:x;
 - indispatchfun:(BOOL)f;
 

@@ -16,9 +16,12 @@
 {
     Pair * key            = [Pair pairWithVolatileFirst:object second:propStr];
     KPObserverRef * value = [KPObserverRef kpoRefWithKPO:kpo pathIndex:index];
+    id obsSet;
 
     if (!keyToObservers)
         keyToObservers = [Dictionary new];
+    if (!(obsSet = [keyToObservers atKey:key]))
+        [keyToObservers atKey:key put:[Set new]];
     [[keyToObservers atKey:key] ?: [keyToObservers atKey:key put:[Set new]]
         add:value];
 }
@@ -28,20 +31,29 @@
                       withKPO:KPO
                     fromIndex:(unsigned int)index
 {
-    /* The following procedure must be followed for a key of X.Y.Z
-     * First, we set up an observer on self.X.
-     * Next, on X.Y
-     * Finally, on Y.Z */
     volatile OrdCltn * components = [KPO keyPathComponents];
-    printf ("+Add Observer\n");
 
-    /* Assuming 4 entries:
-     * [components size]: 4
-     * index for final: 2 (which is the owning object of the terminal property)
-     * because W.X.Y.Z decomposes into:
-     * 0 W.X
-     * 1 X.Y
-     * 2 Y.Z */
+    /**
+      * The following procedure must be followed for a key of X.Y.Z
+      * First, watch object.X. Next, X.Y. Finally, Y.Z.
+      *
+      * This is implemented through recursion, using an `index' parameter
+      * specifying the subcomponent of the path representing the current
+      * property we'd like to watch. We also specify at each call the current
+      * object we want to add a watch on; each call, we resolve the current
+      * index's mapping into the current object's property of that name. This
+      * is done before calling this method method so that this method can be
+      * more purely implemented, i.e. totally recursively.
+      *
+      * Let's consider that key's computation:
+      * [components size] would be 3
+      * The index for final would be 2 (which maps to the terminal property)
+      * idx|watch
+      *  0 |self.X
+      *  1 |X.Y
+      *  2 |Y.Z
+     **/
+
     if (!object)
         [Exception signal:"Keypath is broken"];
     if ([components size] - index == 1) /* just-a-key case */
@@ -49,34 +61,19 @@
                 forProperty:[components at:index]
                    ofObject:object
                   withIndex:index];
-    else if ([components size] - index == 2)
-        [self addKPObserver:KPO
-                forProperty:[components at:index + 1]
-                   ofObject:object
-                  withIndex:index];
     else
     {
-        id next = [object valueForKey:[components at:index + 1]];
+        id next = [object valueForKey:[components at:index]];
 
         [self addKPObserver:KPO
-                forProperty:[components at:index + 1]
+                forProperty:[components at:index]
                    ofObject:object
                   withIndex:index];
         [self addObserverForKeyPath:keyPath
                            ofObject:next
                             withKPO:KPO
-                          fromIndex:index++];
+                          fromIndex:++index];
     }
-}
-
-+ recreateKPOsFromIndex:i forObserver:observer
-{
-    /*id matchDetector = { :candidate |
-                          [candidate matchesRoot:object] &&
-                            [candidate matchesObserver:observer] &&
-                            [candidate matchesKeyPath:keyPath]
-                            };*/
-    return self;
 }
 
 /* Re-create the registrations for a keypath, starting with registration at
@@ -126,6 +123,24 @@
     return self;
 }
 
++ (void)sendKVOForObject:object
+                property:propStr
+                oldValue:oldValue
+                newValue:newValue
+{
+    Pair * key          = (Pair *)[Pair pairWithVolatileFirst:object second:propStr];
+    Dictionary * kToObs = keyToObservers;
+    id result;
+
+    [[keyToObservers atKey:key] do:
+                                { :each | [each.reference fireForOldValue:oldValue newValue:newValue];
+                                }];
+
+#ifndef OBJC_ARC
+    [key free];
+#endif
+}
+
 + (void)addObserver:observer
          forKeyPath:keyPath
            ofObject:object
@@ -161,30 +176,29 @@
 + (void)removeObserver:observer forKeyPath:keyPath ofObject:object
 {
     Dictionary * kToObs = keyToObservers;
-    id matchDetector    = { : cand | id candidate;
-    candidate           = [cand reference];
-    [candidate matchesRoot:object] && [candidate matchesObserver:observer] &&
-        [candidate matchesKeyPath:keyPath]
-};
-id subset = [observers detect:matchDetector];
+    id matchDetector    = { : c |
+        [c.reference matchesRoot:object] && [c.reference matchesObserver:observer] &&
+        [c.reference matchesKeyPath:keyPath]
+        };
+    id subset = [observers detect:matchDetector];
 
-[observers removeAll:subset];
-[kToObs do:
-        { :key | id val, intersect;
-            val       = [kToObs atKey:key];
-            intersect = [val detect:matchDetector];
-            [val removeAll:intersect];
+    [observers removeAll:subset];
+    [kToObs do:
+            { :key | id val, intersect;
+                val       = [kToObs atKey:key];
+                intersect = [val detect:matchDetector];
+                [val removeAll:intersect];
 
-            if (![val size])
-                [kToObs removeKey:key];
+                if (![val size])
+                    [kToObs removeKey:key];
 #ifndef OBJC_ARC
-            [[intersect freeContents] free];
-            [val free];
+                [[intersect freeContents] free];
+                [val free];
 #endif
-        }];
+            }];
 
 #ifndef OBJC_ARC
-[[subset freeContents] free];
+    [[subset freeContents] free];
 #endif
 }
 

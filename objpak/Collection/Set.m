@@ -301,7 +301,7 @@ static unsigned ptrhash (id * p, int n)
 
 static unsigned hashcontents (objset_t a) { return ptrhash (a->ptr, a->count); }
 
-- (unsigned)hash { return hashcontents (&value); }
+- (uintptr_t)hash { return hashcontents (&value); }
 
 - (BOOL)isEqual:set
 {

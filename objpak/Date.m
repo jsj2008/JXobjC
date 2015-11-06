@@ -116,7 +116,7 @@ struct timeval JXtimevalFromTimeInterval (TimeInterval ti)
 
 /* Interrogation */
 
-- (unsigned)hash { return (unsigned)seconds; }
+- (uintptr_t)hash { return (unsigned)seconds; }
 
 - (BOOL)isEqual:(id)otherObject
 {

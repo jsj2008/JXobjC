@@ -62,7 +62,7 @@
     }
 }
 
-- (unsigned)hash
+- (uintptr_t)hash
 {
     unsigned h = 0;
 

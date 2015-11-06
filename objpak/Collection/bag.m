@@ -281,7 +281,7 @@ static int size (objbag_t self)
  *
  ****************************************************************************/
 
-- (unsigned)hash { return [super hash]; /* would it pay to improve this? */ }
+- (uintptr_t)hash { return [super hash]; /* would it pay to improve this? */ }
 
 - (BOOL)isEqual:bag
 {

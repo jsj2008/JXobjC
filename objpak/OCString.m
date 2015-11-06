@@ -288,7 +288,7 @@ static unsigned str_hash (char * s)
 
 static unsigned hash (objstr_t self) { return str_hash (self->ptr); }
 
-- (unsigned)hash { return hash ((&value)); }
+- (uintptr_t)hash { return hash ((&value)); }
 
 static int str_dictcmp (char * s1, char * s2)
 {

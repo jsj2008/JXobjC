@@ -39,7 +39,7 @@
 - copy;
 - free;
 
-- (unsigned)hash;
+- (uintptr_t)hash;
 - (BOOL)isEqual:aStr;
 
 - string;

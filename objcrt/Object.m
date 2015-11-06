@@ -164,7 +164,7 @@
  *
  ****************************************************************************/
 
-- (unsigned)hash
+- (uintptr_t)hash
 {
     /* MIPSpro 64bit : cast a size_t to unsigned and avoid a warning
        * it is not incorrect for |hash| to ignore the upper 32bit

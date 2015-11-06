@@ -303,7 +303,7 @@ static unsigned ptrhash (id * p, int n)
 
 static unsigned hashcontents (objcol_t a) { return ptrhash (a->ptr, a->count); }
 
-- (unsigned)hash { return hashcontents (&value); }
+- (uintptr_t)hash { return hashcontents (&value); }
 
 static BOOL ptreq (id * p, id * q, int n)
 {

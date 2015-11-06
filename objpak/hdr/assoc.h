@@ -42,7 +42,7 @@
 - freeAll;
 - ARC_dealloc;
 
-- (unsigned)hash;
+- (uintptr_t)hash;
 - self;
 - (BOOL)isEqual:anAssoc;
 - (int)compare:anAssoc;

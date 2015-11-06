@@ -117,7 +117,7 @@ typedef struct objset
 - freeAll;
 - ARC_dealloc;
 
-- (unsigned)hash;
+- (uintptr_t)hash;
 @end
 
 #endif /* __OBJSET_H__ */

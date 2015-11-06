@@ -25,17 +25,14 @@
                second:two];
 }
 
-- (unsigned)hash
-{
-    return comparator ? comparator < 2 ? [first hash] : [second hash]
-                      : [first hash] && [second hash];
-}
+- (uintptr_t)hash { return [first hash] % ([second hash] ?: 0x1234); }
 
 - (BOOL)isEqual:anObject
 {
-    return (!comparator) ? [first isEqual:anObject] && [second isEqual:anObject]
-                         : (comparator < 2) ? [first isEqual:anObject]
-                                            : [second isEqual:anObject];
+    BOOL result;
+    result = ([first isEqual:anObject.first] || first == anObject.first) &&
+             ([second isEqual:anObject.second] || second == anObject.second);
+    return result;
 }
 
 - initWithFirst:one second:two

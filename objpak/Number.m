@@ -4,7 +4,7 @@
 
 @implementation Number
 
-- (unsigned)hash { return (type * 4) % value.I; }
+- (uintptr_t)hash { return (type * 4) % value.I; }
 
 - (BOOL)isEqual:anObject
 {

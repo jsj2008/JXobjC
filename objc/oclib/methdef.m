@@ -39,7 +39,7 @@
 
 @implementation MethodDef
 
-- (unsigned)hash { return [method typehash]; }
+- (uintptr_t)hash { return [method typehash]; }
 
 - (BOOL)isEqual:that /* in typeEqual: sense */
 {

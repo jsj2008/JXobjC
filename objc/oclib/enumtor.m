@@ -50,7 +50,7 @@
 
 - (STR)str { return [name str]; }
 
-- (unsigned)hash { return [name hash]; }
+- (uintptr_t)hash { return [name hash]; }
 
 - (BOOL)isEqual:x
 {

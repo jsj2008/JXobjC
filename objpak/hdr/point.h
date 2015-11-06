@@ -37,7 +37,7 @@
 - (int)x;
 - (int)y;
 
-- (unsigned)hash;
+- (uintptr_t)hash;
 - (BOOL)isEqual:aPoint;
 - (BOOL)isBelow:aPoint;
 - (BOOL)isAbove:aPoint;

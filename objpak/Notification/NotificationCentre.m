@@ -47,7 +47,7 @@
         return NO;
 }
 
-- (unsigned)hash { return ((uintptr_t)object ^ (uintptr_t)[name hash]); }
+- (uintptr_t)hash { return ((uintptr_t)object ^ (uintptr_t)[name hash]); }
 
 @end
 
@@ -104,7 +104,7 @@
         return NO;
 }
 
-- (unsigned)hash
+- (uintptr_t)hash
 {
     return block ? [block hash] : ((uintptr_t)object ^ (uintptr_t)selector);
 }

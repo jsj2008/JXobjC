@@ -67,7 +67,7 @@
 - (SEL)selOfSTR:(STR)name;
 - idOfSTR:(STR)aClassName;
 
-- (unsigned)hash;
+- (uintptr_t)hash;
 - (BOOL)isEqual:anObject;
 - (STR)str;
 - (unsigned)size;

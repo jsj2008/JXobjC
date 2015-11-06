@@ -117,7 +117,7 @@
            ([origin y] <= yLoc && yLoc <= [corner y]);
 }
 
-- (unsigned)hash { return [origin hash] ^ [corner hash]; }
+- (uintptr_t)hash { return [origin hash] ^ [corner hash]; }
 
 - (BOOL)isEqual:aRectangle
 {

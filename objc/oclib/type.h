@@ -61,7 +61,7 @@ extern id t_id;
 - genabstrtype;
 
 - max:aType;
-- (unsigned)hash;
+- (uintptr_t)hash;
 - (BOOL)isEqual:x;
 - filename;
 - (int)lineno;

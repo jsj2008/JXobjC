@@ -78,7 +78,7 @@ id curstruct;
     return self;
 }
 
-- (unsigned)hash { return [name hash]; }
+- (uintptr_t)hash { return [name hash]; }
 
 - (STR)str { return [name str]; }
 

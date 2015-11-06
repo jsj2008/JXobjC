@@ -47,7 +47,7 @@
 - corner:(int)x1:(int)y1;
 
 - (BOOL)contains:aPoint;
-- (unsigned)hash;
+- (uintptr_t)hash;
 - (BOOL)isEqual:aRectangle;
 
 - (int)left;
