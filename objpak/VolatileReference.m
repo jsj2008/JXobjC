@@ -4,8 +4,17 @@
 
 @implementation VolatileReference
 
-- (unsigned)hash { return [referredObject hash]; }
+- initWithReference:ref
+{
+    [super init];
+    reference = ref;
+    return self;
+}
 
-- (BOOL)isEqual:anObject { return [referredObject isEqual:anObject]; }
+- (unsigned)hash { return [reference hash]; }
+
+- (BOOL)isEqual:anObject { return [reference isEqual:anObject]; }
+
+- reference { return reference; }
 
 @end

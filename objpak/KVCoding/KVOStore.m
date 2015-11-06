@@ -9,7 +9,7 @@
 
 + (void)addKPObserver:kpo forProperty:propStr ofObject:object
 {
-    id propDict = [ownerRefToKPObserverDict atKey:object];
+    /*id propDict = [ownerRefToKPObserverDict atKey:object];
     id propKPOSet, tmpKPO;
 
     if (!propDict)
@@ -30,7 +30,7 @@
 
 #ifndef OBJC_REFCNT
     [tmpKPO free];
-#endif
+#endif*/
 }
 
 + (void)addObserverForKeyPath:keyPath ofObject:object withKPO:KPO
@@ -51,10 +51,10 @@
     {
         id indirector = [object valueForKey:resolved.first];
 
-        [self addKPObserver:KPO
+        /*[self addKPObserver:KPO
                 forProperty:[resolved.first copy]
                    ofObject:object];
-        [self addObserverForKeyPath:keyPath ofObject:indirector withKPO:KPO];
+        [self addObserverForKeyPath:keyPath ofObject:indirector withKPO:KPO];*/
     }
 
 #ifndef OBJC_REFCNT

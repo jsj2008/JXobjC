@@ -48,8 +48,8 @@
 
 - (unsigned)hash
 {
-    return selector ? [selector hash] % [observer hash]
-                    : [block hash] % [observer hash];
+    return selector ? [selector hash] % [observer hash] % [keyPath hash]
+                    : [block hash] % [observer hash] % [keyPath hash];
 }
 
 - (BOOL)isEqual:anObject

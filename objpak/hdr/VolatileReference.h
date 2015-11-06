@@ -3,7 +3,11 @@
 #import "Object.h"
 
 @interface VolatileReference : Object
+{
+    volatile id reference;
+}
 
-@property volatile id referredObject;
+- initWithReference:ref;
+- reference;
 
 @end

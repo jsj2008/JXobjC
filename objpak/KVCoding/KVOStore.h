@@ -4,15 +4,11 @@
 #import "Dictionary.h"
 #import "OCString.h"
 #import "Set.h"
+#import "VolatileReference.h"
 
 @interface KPObserver : Object
 {
-    /* The key paths that trigger a notification.
-     * For example, X.Y.Z will have X.Y, and Y.Z.
-     * The set contains Pair entries where .first is the object and .second is
-     * the property name - so it can be compared to entries in the
-     * observed-properties table with isEqual:. */
-    Set * pathTriggers;
+    /* The original key path. */
     String * keyPath;
     id userInfo;
 
@@ -43,15 +39,35 @@
 
 @end
 
+@interface KPObserverRef : VolatileReference
+{
+    /* This specifies the index within the components of a keypath that
+     * this entry represents.
+     * For example, if an instance is referenced for the Y.Z pair of the
+     * X.Y.Z keypath, then this number is 1. */
+    unsigned int pathIndex;
+}
+
++ kpoRefWithPathIndex:(unsigned int)anIndex;
+
+- (unsigned int)pathIndex;
+
+@end
+
 @interface KVOStore : Object
 {
 } :
 {
-    /* This is a dictionary of VolatileReferences corresponding to the objects
-     * that own the property represented in a keypath.
-     * It maps to another dictionary; a dictionary of property names mapped to
-     * a set of KPObservers. */
-    Dictionary * ownerRefToKPObserverDict;
+    /* This dictionary is keyed by Pairs; each Pair consists of a
+     * VolatileReference to an object, and a (nonvolatile) property name.
+     * These keys map to Sets of KPObserverRefs.*/
+    Dictionary * keyToObservers;
+
+    /* This is the owning set of the KPObservers.
+     * Its entries represent the event-independent component of an observation.
+     * The data stored therein is sufficient to reconstruct a broken tree
+     * corresponding to a keypath. */
+    Set * observers;
 }
 
 + (void)addObserver:observer
