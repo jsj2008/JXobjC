@@ -5,11 +5,13 @@
 #import "OCString.h"
 #import "Set.h"
 #import "VolatileReference.h"
+#import "OrdCltn.h"
 
 @interface KPObserver : Object
 {
     /* The original key path. */
     String * keyPath;
+    OrdCltn * keyPathComponents;
     id userInfo;
 
     /* Perform a selector on a observer. Note that observer is also used to
@@ -35,6 +37,7 @@
 - (BOOL)matchesKeyPath:kp;
 
 - (String *)keyPath;
+- (OrdCltn *)keyPathComponents;
 - (void)fire:information;
 
 @end
@@ -48,7 +51,7 @@
     unsigned int pathIndex;
 }
 
-+ kpoRefWithPathIndex:(unsigned int)anIndex;
++ kpoRefWithKPO:kpo pathIndex:(unsigned int)anIndex;
 
 - (unsigned int)pathIndex;
 

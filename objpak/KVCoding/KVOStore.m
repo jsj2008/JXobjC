@@ -7,59 +7,62 @@
 
 @implementation KVOStore
 
-+ (void)addKPObserver:kpo forProperty:propStr ofObject:object
++ (void)addKPObserver:kpo
+          forProperty:propStr
+             ofObject:object
+            withIndex:(unsigned int)index
 {
-    /*id propDict = [ownerRefToKPObserverDict atKey:object];
-    id propKPOSet, tmpKPO;
+    Pair * key = [Pair pairWithVolatileFirst:object second:propStr];
+    id value   = [KPObserverRef kpoRefWithKPO:kpo pathIndex:index];
 
-    if (!propDict)
-    {
-        id ref   = [[VolatileReference new] setReferredObject:object];
-        propDict = [Dictionary new];
-        [ownerRefToKPObserverDict atKey:ref put:propDict];
-    }
-
-    propKPOSet = [propDict atKey:propStr];
-    if (!propKPOSet)
-    {
-        propKPOSet = [Set new];
-        [propDict atKey:propStr put:propKPOSet];
-    }
-
-    tmpKPO = [propKPOSet replace:kpo];
-
-#ifndef OBJC_REFCNT
-    [tmpKPO free];
-#endif*/
+    if (!keyToObservers)
+        keyToObservers = [Dictionary new];
+    [[keyToObservers atKey:key] ?: [keyToObservers atKey:key put:[Set new]]
+        add:value];
 }
 
-+ (void)addObserverForKeyPath:keyPath ofObject:object withKPO:KPO
++ (void)addObserverForKeyPath:keyPath
+                     ofObject:object
+                      withKPO:KPO
+                    fromIndex:(unsigned int)index
 {
     /* The following procedure must be followed for a key of X.Y.Z
      * First, we set up an observer on self.X.
      * Next, on X.Y
-     * Finally, on Y.Z
-     */
-    Pair * resolved = [object resolveKeyPathFirst:[KPO keyPath]];
+     * Finally, on Y.Z */
+    volatile OrdCltn * components = [KPO keyPathComponents];
     printf ("+Add Observer\n");
 
-    if (!resolved.first)
+    /* Assuming 4 entries:
+     * [components size]: 4
+     * index for final: 2 (which is the owning object of the terminal property)
+     * because W.X.Y.Z decomposes into:
+     * 0 W.X
+     * 1 X.Y
+     * 2 Y.Z */
+    if ([components size] - index == 1) /* just-a-key case */
         [self addKPObserver:KPO
-                forProperty:[resolved.second copy]
-                   ofObject:object];
+                forProperty:[components at:index]
+                   ofObject:object
+                  withIndex:index];
+    else if ([components size] - index == 2)
+        [self addKPObserver:KPO
+                forProperty:[components at:index + 1]
+                   ofObject:object
+                  withIndex:index];
     else
     {
-        id indirector = [object valueForKey:resolved.first];
+        id next = [object valueForKey:[components at:index + 1]];
 
-        /*[self addKPObserver:KPO
-                forProperty:[resolved.first copy]
-                   ofObject:object];
-        [self addObserverForKeyPath:keyPath ofObject:indirector withKPO:KPO];*/
+        [self addKPObserver:KPO
+                forProperty:[components at:index + 1]
+                   ofObject:object
+                  withIndex:index];
+        [self addObserverForKeyPath:keyPath
+                           ofObject:next
+                            withKPO:KPO
+                          fromIndex:index++];
     }
-
-#ifndef OBJC_REFCNT
-    [resolved free];
-#endif
 }
 
 + (void)addObserver:observer
@@ -72,7 +75,10 @@
                                   block:blk
                                observer:observer
                                userInfo:ui];
-    [self addObserverForKeyPath:keyPath ofObject:object withKPO:kpo];
+    [self addObserverForKeyPath:keyPath
+                       ofObject:object
+                        withKPO:kpo
+                      fromIndex:0];
 }
 
 + (void)addObserver:observer
@@ -85,7 +91,10 @@
                                selector:sel
                                observer:observer
                                userInfo:ui];
-    [self addObserverForKeyPath:keyPath ofObject:object withKPO:kpo];
+    [self addObserverForKeyPath:keyPath
+                       ofObject:object
+                        withKPO:kpo
+                      fromIndex:0];
 }
 
 - removeObserver:observer forKeyPath:keyPath ofObject:object {}

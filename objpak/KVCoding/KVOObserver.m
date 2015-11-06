@@ -1,25 +1,28 @@
 #import "Block.h"
 #import "KVOStore.h"
+#import "OCString.h"
 
 @implementation KPObserver
 
 - initWithKeyPath:kp selector:(SEL)sel observer:targ userInfo:arg
 {
     [self init];
-    keyPath  = kp;
-    selector = sel;
-    observer = targ;
-    userInfo = arg;
+    keyPath           = kp;
+    keyPathComponents = [keyPath componentsSeparatedByString:@"."];
+    selector          = sel;
+    observer          = targ;
+    userInfo          = arg;
     return self;
 }
 
 - initWithKeyPath:kp block:blk observer:targ userInfo:arg
 {
     [self init];
-    keyPath  = kp;
-    observer = targ;
-    block    = blk;
-    userInfo = arg;
+    keyPath           = kp;
+    keyPathComponents = [keyPath componentsSeparatedByString:@"."];
+    observer          = targ;
+    block             = blk;
+    userInfo          = arg;
     return self;
 }
 
@@ -39,10 +42,11 @@
 
 - ARC_dealloc
 {
-    observer = nil;
-    userInfo = nil;
-    block    = nil;
-    keyPath  = nil;
+    observer          = nil;
+    userInfo          = nil;
+    block             = nil;
+    keyPath           = nil;
+    keyPathComponents = nil;
     return [super ARC_dealloc];
 }
 
@@ -108,7 +112,19 @@
 
 - (BOOL)matchesKeyPath:kp { return [keyPath isEqual:kp]; }
 
+- (BOOL)matchesObserver:obs
+{
+    if (!obs)
+        return NO;
+    else if (observer == obs)
+        return YES;
+    else
+        return NO;
+}
+
 - (String *)keyPath { return keyPath; }
+
+- (OrdCltn *)keyPathComponents { return keyPathComponents; }
 
 - (void)fire:info
 {
