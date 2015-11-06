@@ -112,39 +112,73 @@
 
 - (BOOL)matchesKeyPath:kp { return [keyPath isEqual:kp]; }
 
-- (BOOL)matchesObserver:obs
+- (BOOL)matchesObserver:obs { return !obs ? NO : obs == observer ? YES : NO; }
+
+- (BOOL)matchesRoot:aRoot { return !root ? NO : root == aRoot ? YES : NO; }
+
+- setRoot:aRoot
 {
-    if (!obs)
-        return NO;
-    else if (observer == obs)
-        return YES;
-    else
-        return NO;
+    root = aRoot;
+    return self;
 }
+- root { return root; }
 
 - (String *)keyPath { return keyPath; }
 
 - (OrdCltn *)keyPathComponents { return keyPathComponents; }
 
-- (void)fire:info
+- (void)fireForOldValue:oldValue newValue:newValue
 {
+    Dictionary * changeDic = (Dictionary *)[Dictionary new];
+
+    [changeDic atKey:@"keyPath" put:keyPath];
+    [changeDic atKey:@"newValue" put:newValue];
+    if (includeOldValue)
+        [changeDic atKey:@"oldValue" put:oldValue];
 
     if (selector)
     {
         [
             {
-                [observer perform:selector with:info];
+                [observer perform:selector with:(id)changeDic];
             } ifError:
               { :msg :rcv | printf("Exception in KVO callback method.\n");
               }];
     }
     else
     {
-        [block value:info
+        [block value:changeDic
              ifError:
              { :msg :rcv | printf("Exception in KVO callback block.\n");
              }];
     }
+
+#ifndef OBJC_REFCNT
+    if (includeOldValue)
+        [[changeDic removeKey:@"oldValue"] free];
+    [changeDic free];
+#endif
 }
+
+@end
+
+@implementation KPObserverRef
+{
+    /* This specifies the index within the components of a keypath that
+     * this entry represents.
+     * For example, if an instance is referenced for the Y.Z pair of the
+    * X.Y.Z keypath, then this number is 1. */
+    unsigned int pathIndex;
+}
+
++ (KPObserverRef *)kpoRefWithKPO:kpo pathIndex:(unsigned int)anIndex
+{
+    KPObserverRef * new =
+        (KPObserverRef *)[[super alloc] initWithReference:kpo];
+    new->pathIndex = anIndex;
+    return new;
+}
+
+- (unsigned int)pathIndex { return pathIndex; }
 
 @end

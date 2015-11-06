@@ -1,5 +1,7 @@
 /* Copyright (c) 2015 D. Mackay. All rights reserved. */
 
+#import "Block.h"
+#import "Exceptn.h"
 #import "KVOStore.h"
 #import "VolatileReference.h"
 #import "Set.h"
@@ -12,8 +14,8 @@
              ofObject:object
             withIndex:(unsigned int)index
 {
-    Pair * key = [Pair pairWithVolatileFirst:object second:propStr];
-    id value   = [KPObserverRef kpoRefWithKPO:kpo pathIndex:index];
+    Pair * key            = [Pair pairWithVolatileFirst:object second:propStr];
+    KPObserverRef * value = [KPObserverRef kpoRefWithKPO:kpo pathIndex:index];
 
     if (!keyToObservers)
         keyToObservers = [Dictionary new];
@@ -40,6 +42,8 @@
      * 0 W.X
      * 1 X.Y
      * 2 Y.Z */
+    if (!object)
+        [Exception signal:"Keypath is broken"];
     if ([components size] - index == 1) /* just-a-key case */
         [self addKPObserver:KPO
                 forProperty:[components at:index]
@@ -63,6 +67,63 @@
                             withKPO:KPO
                           fromIndex:index++];
     }
+}
+
++ recreateKPOsFromIndex:i forObserver:observer
+{
+    /*id matchDetector = { :candidate |
+                          [candidate matchesRoot:object] &&
+                            [candidate matchesObserver:observer] &&
+                            [candidate matchesKeyPath:keyPath]
+                            };*/
+    return self;
+}
+
+/* Re-create the registrations for a keypath, starting with registration at
+ * the specified index. */
++ recreateKPOsForKeyPath:keyPath
+                ofObject:object
+               fromIndex:(unsigned int)index
+             withNewRoot:newRoot
+{
+    volatile id tSelf   = self;
+    Dictionary * kToObs = keyToObservers;
+    id matchDetector    = {
+        : candidate | [candidate.reference matchesRoot:object] &&
+              [candidate.reference matchesKeyPath:keyPath] /* &&
+              candidate.reference.pathIndex >= index */
+    };
+    id KPOs = [observers detect:matchDetector];
+
+    if (newRoot)
+        [KPOs do:{ : each | [each setRoot:newRoot]}];
+
+    [kToObs do:
+            { :key | id val, intersect;
+                val       = [kToObs atKey:key];
+                intersect = [val detect:matchDetector];
+                [val removeAll:intersect];
+
+                if (![val size])
+                    [kToObs removeKey:key];
+                else
+                    val = nil; /* don't delete it if it isn't empty */
+#ifndef OBJC_ARC
+                [[intersect freeContents] free];
+                [val free];
+#endif
+            }];
+
+    /* Later, this should be invoked only from index downwards. */
+    if (newRoot)
+        [KPOs do:
+              { :each | [tSelf addObserverForKeyPath:keyPath
+                     ofObject:newRoot ? : object
+                      withKPO:each
+                    fromIndex:0];
+              }];
+
+    return self;
 }
 
 + (void)addObserver:observer
@@ -97,6 +158,34 @@
                       fromIndex:0];
 }
 
-- removeObserver:observer forKeyPath:keyPath ofObject:object {}
++ (void)removeObserver:observer forKeyPath:keyPath ofObject:object
+{
+    Dictionary * kToObs = keyToObservers;
+    id matchDetector    = { : cand | id candidate;
+    candidate           = [cand reference];
+    [candidate matchesRoot:object] && [candidate matchesObserver:observer] &&
+        [candidate matchesKeyPath:keyPath]
+};
+id subset = [observers detect:matchDetector];
+
+[observers removeAll:subset];
+[kToObs do:
+        { :key | id val, intersect;
+            val       = [kToObs atKey:key];
+            intersect = [val detect:matchDetector];
+            [val removeAll:intersect];
+
+            if (![val size])
+                [kToObs removeKey:key];
+#ifndef OBJC_ARC
+            [[intersect freeContents] free];
+            [val free];
+#endif
+        }];
+
+#ifndef OBJC_ARC
+[[subset freeContents] free];
+#endif
+}
 
 @end

@@ -13,12 +13,13 @@
     String * keyPath;
     OrdCltn * keyPathComponents;
     id userInfo;
+    BOOL includeOldValue;
 
     /* Perform a selector on a observer. Note that observer is also used to
      * track the lifetime of an observer, by associating the observation's
      * creator, even if they used a block instead. */
     SEL selector;
-    volatile id observer;
+    volatile id observer, root;
 
     /* or, alternatively, a block: */
     id block;
@@ -30,15 +31,19 @@
 - initWithKeyPath:kp selector:(SEL)sel observer:targ userInfo:arg;
 - initWithKeyPath:kp block:blk observer:targ userInfo:arg;
 
+- setRoot:aRoot;
+- root;
+
 - (BOOL)matchesSelector:(SEL)sel observer:targ userInfo:arg;
 - (BOOL)matchesObserver:targ;
 - (BOOL)matchesBlock:blk userInfo:arg;
 - (BOOL)matchesBlock:blk;
 - (BOOL)matchesKeyPath:kp;
+- (BOOL)matchesRoot:root;
 
 - (String *)keyPath;
 - (OrdCltn *)keyPathComponents;
-- (void)fire:information;
+- (void)fireForOldValue:oldValue newValue:newValue;
 
 @end
 
@@ -51,7 +56,7 @@
     unsigned int pathIndex;
 }
 
-+ kpoRefWithKPO:kpo pathIndex:(unsigned int)anIndex;
++ (KPObserverRef *)kpoRefWithKPO:kpo pathIndex:(unsigned int)anIndex;
 
 - (unsigned int)pathIndex;
 
@@ -83,5 +88,7 @@
            ofObject:object
        withSelector:(SEL)sel
            userInfo:ui;
+
++ (void)removeObserver:observer forKeyPath:keyPath ofObject:object;
 
 @end

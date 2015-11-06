@@ -122,7 +122,7 @@
         {
             gs ("((");
             [cast genabstrtype];
-            gc (')');
+            gs (")(");
         }
         if (incref)
             gs ("idincref((id)"); /* just like in assignment */
@@ -130,7 +130,7 @@
         if (incref)
             gc (')');
         if (cast)
-            gc (')');
+            gs ("))");
     }
     return self;
 }

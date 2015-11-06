@@ -558,11 +558,14 @@
 - (String *)componentsJoinedByString:aString
 {
     String * newString;
+    BOOL isAdd;
 
     newString = [String new];
     [self do:
           { :each | [newString concatSTR:[each str]];
-              [newString concat:aString];
+              if (isAdd)
+                  [newString concat:aString];
+              isAdd = YES;
           }];
 
     return newString;
