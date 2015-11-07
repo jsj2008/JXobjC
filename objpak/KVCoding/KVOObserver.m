@@ -1,6 +1,7 @@
 #import "Block.h"
 #import "KVOStore.h"
 #import "OCString.h"
+#import "Pair.h"
 
 @implementation KPObserver
 
@@ -172,7 +173,8 @@
     unsigned int pathIndex;
 }
 
-+ (KPObserverRef *)kpoRefWithKPO:kpo pathIndex:(unsigned int)anIndex
++ (KPObserverRef *)kpoRefWithKPO:(volatile id)kpo
+                       pathIndex:(unsigned int)anIndex
 {
     KPObserverRef * new =
         (KPObserverRef *)[[super alloc] initWithReference:kpo];
@@ -182,7 +184,10 @@
 
 - (unsigned int)pathIndex { return pathIndex; }
 
-- (uintptr_t)hash { return reference + pathIndex; }
+- (uintptr_t)hash
+{
+    return [Pair combineHash:[reference hash] withHash:(uintptr_t)pathIndex];
+}
 
 - (BOOL)isEqual:anObject
 {

@@ -56,7 +56,8 @@
     unsigned int pathIndex;
 }
 
-+ (KPObserverRef *)kpoRefWithKPO:kpo pathIndex:(unsigned int)anIndex;
++ (KPObserverRef *)kpoRefWithKPO:(volatile id)kpo
+                       pathIndex:(unsigned int)anIndex;
 
 - (unsigned int)pathIndex;
 

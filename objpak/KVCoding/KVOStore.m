@@ -14,8 +14,9 @@
              ofObject:object
             withIndex:(unsigned int)index
 {
-    Pair * key            = [Pair pairWithVolatileFirst:object second:propStr];
-    KPObserverRef * value = [KPObserverRef kpoRefWithKPO:kpo pathIndex:index];
+    Pair * key = [Pair pairWithVolatileFirst:object second:propStr];
+    KPObserverRef * value =
+        [KPObserverRef kpoRefWithKPO:(volatile id)kpo pathIndex:index];
     id obsSet;
 
     if (!keyToObservers)
@@ -24,6 +25,9 @@
         [keyToObservers atKey:key put:[Set new]];
     [[keyToObservers atKey:key] ?: [keyToObservers atKey:key put:[Set new]]
         add:value];
+    if (!observers)
+        observers = [Set new];
+    [observers add:kpo];
 }
 
 + (void)addObserverForKeyPath:keyPath
@@ -31,7 +35,7 @@
                       withKPO:KPO
                     fromIndex:(unsigned int)index
 {
-    volatile OrdCltn * components = [KPO keyPathComponents];
+    OrdCltn * components = [KPO keyPathComponents];
 
     /**
       * The following procedure must be followed for a key of X.Y.Z
@@ -83,7 +87,7 @@
                fromIndex:(unsigned int)index
              withNewRoot:newRoot
 {
-    volatile id tSelf   = self;
+    id tSelf            = self;
     Dictionary * kToObs = keyToObservers;
     id matchDetector    = {
         : candidate | [candidate.reference matchesRoot:object] &&
@@ -128,15 +132,13 @@
                 oldValue:oldValue
                 newValue:newValue
 {
-    Pair * key          = (Pair *)[Pair pairWithVolatileFirst:object second:propStr];
-    Dictionary * kToObs = keyToObservers;
-    id result;
+    Pair * key = (Pair *)[Pair pairWithVolatileFirst:object second:propStr];
 
     [[keyToObservers atKey:key] do:
                                 { :each | [each.reference fireForOldValue:oldValue newValue:newValue];
                                 }];
 
-#ifndef OBJC_ARC
+#ifndef OBJC_REFCNT
     [key free];
 #endif
 }

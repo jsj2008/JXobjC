@@ -332,14 +332,14 @@ id EXPORT idassign (id * lhs, id rhs)
         dbg ("%p --%i %p %i++\n", e, (e) ? _REFCNT (e) : 0, rhs,
              (rhs) ? _REFCNT (rhs) : 0);
     }
-    if (e)
-        decrefordealloc (e);
     if (rhs)
     {
         pthread_spin_lock (&rcLock);
         _REFCNT (rhs)++;
         pthread_spin_unlock (&rcLock);
     }
+    if (e)
+        decrefordealloc (e);
 #endif
     return (*lhs = rhs);
 }

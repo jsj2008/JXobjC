@@ -230,6 +230,10 @@
                 needscast = YES;
                 break;
             }
+            else
+            {
+                [[ksel at:i] cast:[[ksel at:i] type]];
+            }
         }
     }
     return self;
@@ -450,8 +454,20 @@
 
         for (i = 0; i < n; i++)
         {
+            BOOL idarg = [[ksel at:i] isid];
+
             gc (',');
+
+            if (idarg)
+            {
+                gs ("((");
+                [[ksel at:i] genabstrtype];
+                gc (')');
+            }
+
             [[ksel at:i] genarg];
+            if (idarg)
+                gc (')');
         }
     }
     return self;
@@ -465,8 +481,20 @@
 
         for (i = 0; i < n; i++)
         {
+            BOOL idarg = [[ksel at:i] isid];
+
             gc (',');
+
+            if (idarg)
+            {
+                gs ("((");
+                [[ksel at:i] genabstrtype];
+                gc (')');
+            }
+
             [[ksel at:i] gendisparg];
+            if (idarg)
+                gc (')');
         }
     }
     return self;

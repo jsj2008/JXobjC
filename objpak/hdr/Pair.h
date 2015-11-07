@@ -10,6 +10,10 @@
 + (Pair *)pairWithFirst:one second:two;
 + (Pair *)pairWithVolatileFirst:one volatileSecond:two;
 + (Pair *)pairWithVolatileFirst:one second:two;
+
 - initWithFirst:one second:two;
+
+/* Utility methods */
++ (uintptr_t)combineHash:(uintptr_t)first withHash:(uintptr_t)second;
 
 @end

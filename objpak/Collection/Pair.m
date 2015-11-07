@@ -25,7 +25,13 @@
                second:two];
 }
 
-- (uintptr_t)hash { return [first hash] % ([second hash] ?: 0x1234); }
+- (uintptr_t)hash
+{
+    return (!comparator)
+               ? [Pair combineHash:[first hash] withHash:[second hash]]
+               : (comparator == 1) ? [first hash] : /* comparator > 1 */
+                     [second hash];
+}
 
 - (BOOL)isEqual:anObject
 {
@@ -59,6 +65,19 @@
     [first free];
     [second free];
     return [super free];
+}
+
++ (uintptr_t)combineHash:(uintptr_t)first withHash:(uintptr_t)second
+{
+    /* Combine two hashes into one.
+     * This is based on the Jenkins One-at-a-Time algorithm. */
+    uintptr_t hash = first;
+    hash += (hash << 10);
+    hash ^= (hash >> 6);
+    hash += (second << 3);
+    hash ^= (second >> 11);
+    hash += (second << 15);
+    return hash;
 }
 
 @end

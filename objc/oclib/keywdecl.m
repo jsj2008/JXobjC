@@ -86,6 +86,8 @@
 {
     id x = (hide) ? hide : arg;
 
+    if ([[self type] isid])
+        cast = [self type];
     if (cast)
     {
         [cast gendef:x];
@@ -102,6 +104,8 @@
     gc (',');
     return [self genparm];
 }
+
+- type { return [arg type]; }
 
 - (BOOL)canforward { return (cast) ? [cast canforward] : YES; }
 

@@ -4,7 +4,7 @@
 
 @implementation VolatileReference
 
-- initWithReference:ref
+- initWithReference:(volatile id)ref
 {
     [super init];
     reference = ref;

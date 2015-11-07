@@ -7,7 +7,7 @@
     volatile id reference;
 }
 
-- initWithReference:ref;
+- initWithReference:(volatile id)ref;
 - reference;
 
 @end
