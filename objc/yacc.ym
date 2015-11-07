@@ -345,6 +345,8 @@ datadefspecs : storageclass
      { $$=mklist(nil,$1);$$ = mklist($$, $2);$$=mklist($$, $2);$$=mklist($$, $3);$$=mklist($$, $4); }
   | typespec
      { $$ = mklist(nil,$1); }
+  | storageclass gnuattribdecl gnuattribdecl typespec
+    { $$=mklist(nil,$1);$$ = mklist($$, $2);$$=mklist($$, $2);$$=mklist($$, $3);$$=mklist($$, $4); }
   | gnuattribdecl storageclass
      { $$ = mklist(nil,$1);$$=mklist($$,$2); /* FreeBSD */ }
   | gnuattribdecl typespec

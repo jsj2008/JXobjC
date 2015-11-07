@@ -203,9 +203,9 @@ do
                      ocargs="$ocargs $arg";
 		     objcrt=otbcrt;objpak=otbpak;cakit=cakitb;
 		     ;;
-    -boehm)    objcrt=objcrtgc;
+    -boehm)    objcrt=objcrtr;
                      cpargs="$cpargs -I$gcprefix/include";
-		     finlibs="$finlibs $gcprefix/lib/gc.a";
+		     finlibs="$finlibs -lgc";
 		     ;;
     -gc|-refcnt)	     cpargs="$cpargs -DOBJC_REFCNT=1";
                      ocargs="$ocargs $arg";

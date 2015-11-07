@@ -23,7 +23,7 @@ objpak_s_ORDERDEPS = $(objpak_1_TARGET)
 
 objpakr_EXTENDS = objpak
 objpakr_EXTENDS_BY = appending
-objpakr_OBJCFLAGS = -refcnt -DOBJC_REFCNT=1
+objpakr_OBJCFLAGS = -boehm -DOBJCRT_BOEHM=1
 objpakr_ORDERDEPS = $(objpak_s_1_TARGET)
 
 objpakhdr_INST = include/objpak/

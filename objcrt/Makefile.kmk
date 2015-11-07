@@ -14,7 +14,7 @@ objcrt_s_ORDERDEPS = $(objcrt_1_TARGET)
 
 objcrtr_EXTENDS = objcrt
 objcrtr_EXTENDS_BY = appending
-objcrtr_OBJCFLAGS = -refcnt -DOBJC_REFCNT=1
+objcrtr_OBJCFLAGS = -boehm -DOBJCRT_BOEHM=1
 objcrtr_ORDERDEPS = $(objcrt_s_1_TARGET)
 
 objcrthdr_INST = include/objcrt/

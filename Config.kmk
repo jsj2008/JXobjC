@@ -3,11 +3,11 @@ WARNFLAGS = -Wall -Wno-unused-function -Wno-format -Wno-switch -Wno-import
 ALLFLAGS = $(DBGFLAGS) $(WARNFLAGS) -Wno-deprecated
 PKGCONF ?= pkg-config
 
-INTERNAL_INCS = $(PATH_ROOT)/objcrt $(PATH_ROOT)/objpak \
-  $(PATH_ROOT)/objc/oclib
-INTERNAL_LIBS = $(objcrt_1_TARGET) $(objpak_1_TARGET)
-
 BOEHM_INCS = /usr/local
+
+INTERNAL_INCS = $(PATH_ROOT)/objcrt $(PATH_ROOT)/objpak \
+  $(PATH_ROOT)/objc/oclib $(BOEHM_INCS)
+INTERNAL_LIBS = $(objcrt_1_TARGET) $(objpak_1_TARGET)
 
 TEMPLATE_OBJC = Objective-C
 TEMPLATE_OBJC_TOOL = PCPP
