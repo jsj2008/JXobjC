@@ -9,6 +9,7 @@
 #include <stdlib.h>
 
 #include "automgr.h"
+#include "s16mem.h"
 #include "Object.h"
 
 #define ThrdMgr() ((Automgr *)pthread_getspecific (mgrForThread))
@@ -28,6 +29,7 @@ typedef struct _zoneTblEnt
 typedef struct _Automgr
 {
     BOOL enabled;
+    unsigned short aCnt;
     pthread_mutex_t lock;
     void *stkBegin, *stkEnd;
     zoneTblEnt * zoneTbl;
@@ -39,7 +41,7 @@ static pthread_mutexattr_t recursiveAttr;
 
 Automgr * AMGR_init (void * stkBegin)
 {
-    Automgr * mgr = malloc (sizeof *mgr);
+    Automgr * mgr = s16mem_alloc (sizeof (Automgr));
     pthread_mutex_init (&mgr->lock, &recursiveAttr);
     mgr->zoneTbl  = 0;
     mgr->stkBegin = stkBegin;
@@ -56,7 +58,7 @@ void * AMGR_init_pre_thrd (void * stkBegin)
     {
         if ((*it)->copy)
         {
-            zoneTblEnt * cpy = malloc (sizeof *cpy);
+            zoneTblEnt * cpy = s16mem_alloc (sizeof *cpy);
             *cpy             = **it;
             cpy->next        = mgr->zoneTbl;
             mgr->zoneTbl     = cpy;
@@ -86,7 +88,7 @@ void AMGR_add_zone (void * start, size_t length, BOOL isRoot, BOOL isCopy,
                     BOOL isObject)
 {
     Automgr * mgr         = ThrdMgr ();
-    zoneTblEnt * newEntry = malloc (sizeof *newEntry);
+    zoneTblEnt * newEntry = s16mem_alloc (sizeof (zoneTblEnt));
 
     newEntry->start  = start;
     newEntry->length = length;
@@ -110,7 +112,7 @@ void AMGR_remove_zone (void * location)
         {
             zoneTblEnt * toFree = *it;
             *it = toFree->next;
-            free (toFree);
+            s16mem_free (toFree);
         }
         else
             it = &(*it)->next;
@@ -129,12 +131,31 @@ zoneTblEnt * AMGR_find_zone (void * location)
     return 0;
 }
 
+void AMGR_remove_all_zones ()
+{
+    zoneTblEnt ** it = &((Automgr *)ThrdMgr ())->zoneTbl;
+    while (*it)
+    {
+        zoneTblEnt * toFree = *it;
+        *it = toFree->next;
+        s16mem_free (toFree);
+    }
+}
+
 /* CStdLib equivalents */
+
+inline void AMGR_checkCycle ()
+{
+    if (ThrdMgr ()->aCnt++ >= 48)
+    {
+        ThrdMgr ()->aCnt = 0;
+        AMGR_cycle ();
+    }
+}
 
 void * AMGR_alloc (size_t bytes)
 {
     void * ptr = malloc (bytes);
-    AMGR_cycle ();
     AMGR_add_zone (ptr, bytes, NO, NO, NO);
 
     return ptr;
@@ -143,7 +164,7 @@ void * AMGR_alloc (size_t bytes)
 void * AMGR_oalloc (size_t bytes)
 {
     void * ptr = calloc (1, bytes);
-
+    AMGR_checkCycle ();
     AMGR_add_zone (ptr, bytes, NO, NO, YES);
 
     return ptr;
@@ -289,19 +310,21 @@ void AMGR_sweep ()
     {
         if (!(*it)->marked && !(*it)->root)
         {
-            zoneTblEnt * toFree = *it;
-            *it = toFree->next;
-            if (toFree->object)
-                [(id)toFree->start ARC_dealloc];
+            if ((*it)->object)
+                [(id) (*it)->start ARC_dealloc];
             else
+            {
+                zoneTblEnt * toFree = *it;
+                *it = toFree->next;
                 free (toFree->start);
-            free (toFree);
+                s16mem_free (toFree);
+            }
         }
         else if ((*it)->freed)
         {
             zoneTblEnt * toFree = *it;
             *it = toFree->next;
-            free (toFree);
+            s16mem_free (toFree);
         }
         else
             it = &(*it)->next;

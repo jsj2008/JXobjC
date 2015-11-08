@@ -651,6 +651,12 @@ void setfirstlinetag (void)
         definebuiltinvar ("gnu_scanf");
         definebuiltinvar ("gnu_printf");
 
+        /* dlmalloc */
+        definebuiltinfun ("__builtin_clz");
+        definebuiltinfun ("__builtin_ctz");
+        definebuiltinfun ("__sync_lock_release");
+        definebuiltinfun ("__sync_lock_test_and_set");
+
         /* the following are not really gnu, they're SUN headers */
         definebuiltinvar ("__builtin_va_alist");
         definebuiltinfun ("__builtin_va_arg_incr");

@@ -6,7 +6,7 @@ INSTALLS += objcrthdr
 
 objcrt_TEMPLATE = OBJC
 objcrt_SOURCES = Block.m Exceptn.m Message.m Object.m OutOfMem.m Proxy.m \
-	crt.m automgr.m
+	crt.m automgr.m s16mem.m
 
 objcrt_s_EXTENDS = objcrt
 objcrt_s_EXTENDS_BY = appending

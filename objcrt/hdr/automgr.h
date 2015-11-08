@@ -18,6 +18,7 @@ void AMGR_disable ();
 void AMGR_add_zone (void * start, size_t length, BOOL isRoot, BOOL isCopy,
                     BOOL isObject);
 void AMGR_remove_zone (void * location);
+void AMGR_remove_all_zones ();
 
 void * AMGR_alloc (size_t bytes);
 void * AMGR_oalloc (size_t bytes);
