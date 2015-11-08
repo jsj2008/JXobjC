@@ -279,7 +279,7 @@ void AMGR_sweep ()
     zoneTblEnt ** it = &((Automgr *)ThrdMgr ())->zoneTbl;
     while (*it)
     {
-        if (!(*it)->marked)
+        if (!(*it)->marked && !(*it)->root)
         {
             zoneTblEnt * toFree = *it;
             *it = toFree->next;

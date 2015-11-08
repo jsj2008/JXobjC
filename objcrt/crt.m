@@ -20,8 +20,9 @@
 #include <stdlib.h>
 #include <string.h> /* memset */
 
-#include "Object.h" /* Stepstone Object.h assumes #import */
+#include "automgr.h"
 
+#include "Object.h"
 #include "Block.h"    /* blockRaise */
 #include "Exceptn.h"  /* signal exceptions */
 #include "OutOfMem.h" /* signal exceptions */
@@ -166,11 +167,13 @@ static modnode_t newmodnode (Mentry_t me, modnode_t next)
     r              = (modnode_t)OC_Malloc (sizeof (struct modnode));
     r->next        = next;
     r->objcmodules = me;
+    AMGR_add_zone (r, sizeof (struct modnode), 1, 1, 0);
     return r;
 }
 
 static void freemodnode (modnode_t * n, modnode_t m)
 {
+    AMGR_remove_zone (m);
     *n = m->next;
     OC_Free (m);
 }
@@ -875,6 +878,8 @@ static void traverse (struct objcrt_useDescriptor * desc)
     /*  Mark this one as processed to break any cycles */
     desc->processed = 1;
 
+    AMGR_add_zone (desc, sizeof (struct objcrt_useDescriptor), 1, 1, 0);
+
     /* process each of the pointers in turn */
     for (nxt = desc->uses; *nxt; nxt++)
     {
@@ -973,6 +978,8 @@ static void initcls (id cls)
 
     if (initlzd (aCls))
         return;
+
+    AMGR_add_zone (aCls, getmeta (aCls)->clsSizInstance, 1, 1, 0);
 
 #ifdef OBJC_REFCNT
     if (!isrefcntclass (aCls))
