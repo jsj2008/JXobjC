@@ -131,6 +131,15 @@ void * AMGR_alloc (size_t bytes)
     return ptr;
 }
 
+void * AMGR_oalloc (size_t bytes)
+{
+    void * ptr = malloc (bytes);
+
+    AMGR_add_zone (ptr, bytes, NO, NO, YES);
+
+    return ptr;
+}
+
 void * AMGR_calloc (size_t num, size_t bytes)
 {
     void * ptr = calloc (num, bytes);
@@ -262,7 +271,27 @@ void AMGR_trace ()
     AMGR_trace_roots ();
 }
 
-void AMGR_sweep () {}
+/* Sweeping */
+
+void AMGR_sweep ()
+{
+    zoneTblEnt ** it = &((Automgr *)ThrdMgr ())->zoneTbl;
+    while (*it)
+    {
+        if (!(*it)->marked)
+        {
+            zoneTblEnt * toFree = *it;
+            *it = toFree->next;
+            if (toFree->object)
+                [(id)toFree->start free];
+            else
+                free (toFree->start);
+            free (toFree);
+        }
+        else
+            it = &(*it)->next;
+    }
+}
 
 void AMGR_cycle ()
 {

@@ -69,24 +69,16 @@
 
 - free
 {
-#ifdef OBJC_REFCNT
-    return [self shouldNotImplement]; /* mixing the two models is a pain */
-#else
     isa = nil;
     return (JX_dealloc) ? (*JX_dealloc) (self) : nil;
-#endif
 }
 
 - decrefs { return nil; }
 
 - ARC_dealloc
 {
-#ifndef OBJC_REFCNT
-    return [self shouldNotImplement]; /* mixing the two models is a pain */
-#else
     [self decrefs];
     return (*JX_dealloc) (self);
-#endif
 }
 
 + free { return nil; }

@@ -14,6 +14,13 @@ void AMGR_main_init (void * stkBegin);
 void AMGR_add_zone (void * start, size_t length, BOOL isRoot, BOOL isCopy,
                     BOOL isObject);
 void AMGR_remove_zone (void * location);
+
+void * AMGR_alloc (size_t bytes);
+void * AMGR_oalloc (size_t bytes);
+void * AMGR_calloc (size_t num, size_t bytes);
+void * AMGR_realloc (void * location, size_t newBytes);
+void AMGR_free (void * location);
+
 void AMGR_cycle ();
 
 #endif
