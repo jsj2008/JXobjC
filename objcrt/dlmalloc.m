@@ -338,34 +338,6 @@ static FORCEINLINE int win32munmap (void * ptr, size_t size)
 
 /* --------------------------- Lock preliminaries ------------------------ */
 
-/*
-  When locks are defined, there is one global lock, plus
-  one per-mspace lock.
-
-  The global lock_ensures that mparams.magic and other unique
-  mparams values are initialized only once. It also protects
-  sequences of calls to MORECORE.  In many cases sys_alloc requires
-  two calls, that should not be interleaved with calls by other
-  threads.  This does not protect against direct calls to MORECORE
-  by other threads not using this lock, so there is still code to
-  cope the best we can on interference.
-
-  Per-mspace locks surround calls to malloc, free, etc.
-  By default, locks are simple non-reentrant mutexes.
-
-  Because lock-protected regions generally have bounded times, it is
-  OK to use the supplied simple spinlocks. Spinlocks are likely to
-  improve performance for lightly contended applications, but worsen
-  performance under heavy contention.
-
-  If USE_LOCKS is > 1, the definitions of lock routines here are
-  bypassed, in which case you will need to define the type MLOCK_T,
-  and at least INITIAL_LOCK, DESTROY_LOCK, ACQUIRE_LOCK, RELEASE_LOCK
-  and TRY_LOCK.  You must also declare a
-    static MLOCK_T malloc_global_mutex = { initialization values };.
-
-*/
-
 #if USE_SPIN_LOCKS
 
 /* First, define CAS_LOCK and CLEAR_LOCK on ints */
@@ -1133,17 +1105,6 @@ static int has_segment_link (mstate m, msegmentptr ss)
 
 /* ----------------------- Runtime Check Support ------------------------- */
 
-/*
-  For security, the main invariant is that malloc/free/etc never
-  writes to a static address other than malloc_state, unless static
-  malloc_state itself has been corrupted, which cannot occur via
-  malloc (because of these checks). In essence this means that we
-  believe all pointers, sizes, maps etc held in malloc_state, but
-  check all of those linked or offsetted from other embedded data
-  structures.  These checks are interspersed with main code in a way
-  that tends to minimize their run-time cost.
-*/
-
 #if !INSECURE
 /* Check if address a is at least as high as any from MORECORE or MMAP */
 #define ok_address(M, a) ((char *)(a) >= (M)->least_addr)
@@ -1342,13 +1303,6 @@ static void internal_malloc_stats (mstate m)
 #endif /* NO_MALLOC_STATS */
 
 /* ----------------------- Operations on smallbins ----------------------- */
-
-/*
-  Various forms of linking and unlinking are defined as macros.  Even
-  the ones for trees, which are very long but have very short typical
-  paths.  This is ugly but reduces reliance on inlining support of
-  compilers.
-*/
 
 /* Link a free chunk into a smallbin  */
 #define insert_small_chunk(M, P, S)                                            \
@@ -2581,124 +2535,6 @@ static void * internal_memalign (mstate m, size_t alignment, size_t bytes)
     return mem;
 }
 
-/*
-  Common support for independent_X routines, handling
-    all of the combinations that can result.
-  The opts arg has:
-    bit 0 set if all elements are same size (using sizes[0])
-    bit 1 set if elements should be zeroed
-*/
-static void ** ialloc (mstate m, size_t n_elements, size_t * sizes, int opts,
-                       void * chunks[])
-{
-
-    size_t element_size;   /* chunksize of each element, if all same */
-    size_t contents_size;  /* total size of elements */
-    size_t array_size;     /* request size of pointer array */
-    void * mem;            /* malloced aggregate space */
-    mchunkptr p;           /* corresponding chunk */
-    size_t remainder_size; /* remaining bytes while splitting */
-    void ** marray;        /* either "chunks" or malloced ptr array */
-    mchunkptr array_chunk; /* chunk for malloced ptr array */
-    flag_t was_enabled;    /* to disable mmap */
-    size_t size;
-    size_t i;
-
-    ensure_initialization ();
-    /* compute array length, if needed */
-    if (chunks != 0)
-    {
-        if (n_elements == 0)
-            return chunks; /* nothing to do */
-        marray     = chunks;
-        array_size = 0;
-    }
-    else
-    {
-        /* if empty req, must still return chunk representing empty array */
-        if (n_elements == 0)
-            return (void **)internal_malloc (m, 0);
-        marray     = 0;
-        array_size = request2size (n_elements * (sizeof (void *)));
-    }
-
-    /* compute total element size */
-    if (opts & 0x1)
-    { /* all-same-size */
-        element_size  = request2size (*sizes);
-        contents_size = n_elements * element_size;
-    }
-    else
-    { /* add up all the sizes */
-        element_size  = 0;
-        contents_size = 0;
-        for (i = 0; i != n_elements; ++i)
-            contents_size += request2size (sizes[i]);
-    }
-
-    size = contents_size + array_size;
-
-    /*
-       Allocate the aggregate chunk.  First disable direct-mmapping so
-       malloc won't use it, since we would not be able to later
-       free/realloc space internal to a segregated mmap region.
-    */
-    was_enabled = use_mmap (m);
-    disable_mmap (m);
-    mem = internal_malloc (m, size - CHUNK_OVERHEAD);
-    if (was_enabled)
-        enable_mmap (m);
-    if (mem == 0)
-        return 0;
-
-    if (PREACTION (m))
-        return 0;
-    p              = mem2chunk (mem);
-    remainder_size = chunksize (p);
-
-    assert (!is_mmapped (p));
-
-    if (opts & 0x2)
-    { /* optionally clear the elements */
-        memset ((size_t *)mem, 0, remainder_size - SIZE_T_SIZE - array_size);
-    }
-
-    /* If not provided, allocate the pointer array as final part of chunk */
-    if (marray == 0)
-    {
-        size_t array_chunk_size;
-        array_chunk      = chunk_plus_offset (p, contents_size);
-        array_chunk_size = remainder_size - contents_size;
-        marray = (void **)(chunk2mem (array_chunk));
-        set_size_and_pinuse_of_inuse_chunk (m, array_chunk, array_chunk_size);
-        remainder_size = contents_size;
-    }
-
-    /* split out elements */
-    for (i = 0;; ++i)
-    {
-        marray[i] = chunk2mem (p);
-        if (i != n_elements - 1)
-        {
-            if (element_size != 0)
-                size = element_size;
-            else
-                size = request2size (sizes[i]);
-            remainder_size -= size;
-            set_size_and_pinuse_of_inuse_chunk (m, p, size);
-            p = chunk_plus_offset (p, size);
-        }
-        else
-        { /* the final element absorbs any overallocation slop */
-            set_size_and_pinuse_of_inuse_chunk (m, p, remainder_size);
-            break;
-        }
-    }
-
-    POSTACTION (m);
-    return marray;
-}
-
 /* Try to free all pointers in the given array.
    Note: this could be made faster, by delaying consolidation,
    at the price of disabling some user integrity checks, We
@@ -3227,31 +3063,6 @@ void * mspace_memalign (mspace msp, size_t alignment, size_t bytes)
     return internal_memalign (ms, alignment, bytes);
 }
 
-void ** mspace_independent_calloc (mspace msp, size_t n_elements,
-                                   size_t elem_size, void * chunks[])
-{
-    size_t sz = elem_size; /* serves as 1-element array */
-    mstate ms = (mstate)msp;
-    if (!ok_magic (ms))
-    {
-        USAGE_ERROR_ACTION (ms, ms);
-        return 0;
-    }
-    return ialloc (ms, n_elements, &sz, 3, chunks);
-}
-
-void ** mspace_independent_comalloc (mspace msp, size_t n_elements,
-                                     size_t sizes[], void * chunks[])
-{
-    mstate ms = (mstate)msp;
-    if (!ok_magic (ms))
-    {
-        USAGE_ERROR_ACTION (ms, ms);
-        return 0;
-    }
-    return ialloc (ms, n_elements, sizes, 0, chunks);
-}
-
 size_t mspace_bulk_free (mspace msp, void * array[], size_t nelem)
 {
     return internal_bulk_free ((mstate)msp, array, nelem);
@@ -3367,7 +3178,7 @@ size_t mspace_set_footprint_limit (mspace msp, size_t bytes)
     {
         if (bytes == 0)
             result = granularity_align (1); /* Use minimal size */
-        if (bytes == MAX_SIZE_T)
+        else if (bytes == MAX_SIZE_T)
             result = 0; /* disable */
         else
             result          = granularity_align (bytes);

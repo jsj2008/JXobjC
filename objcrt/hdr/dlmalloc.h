@@ -209,22 +209,14 @@ typedef void * mspace;
 
 /*
     create_mspace creates and returns a new independent space with the
-    given initial capacity, or, if 0, the default granularity size.  It
-    returns null if there is no system memory available to create the
-    space.  If argument locked is non-zero, the space uses a separate
-    lock to control access. The capacity of the space will grow
-    dynamically as needed to service mspace_malloc requests.  You can
-    control the sizes of incremental increases of this space by
-    compiling with a different DEFAULT_GRANULARITY or dynamically
-    setting with mallopt(M_GRANULARITY, value).
+    given initial capacity, or, if 0, the default granularity size.
 */
 DLMALLOC_EXPORT mspace create_mspace (size_t capacity, int locked);
 
 /*
     destroy_mspace destroys the given space, and attempts to return all
     of its memory back to the system, returning the total number of
-    bytes freed. After destruction, the results of access to all memory
-    used by the space become undefined.
+    bytes freed.
 */
 DLMALLOC_EXPORT size_t destroy_mspace (mspace msp);
 
@@ -262,21 +254,12 @@ DLMALLOC_EXPORT void * mspace_malloc (mspace msp, size_t bytes);
 /*
     mspace_free behaves as free, but operates within
     the given space.
-
-    If compiled with FOOTERS==1, mspace_free is not actually needed.
-    free may be called instead of mspace_free because freed chunks from
-    any space are handled by their originating spaces.
 */
 DLMALLOC_EXPORT void mspace_free (mspace msp, void * mem);
 
 /*
     mspace_realloc behaves as realloc, but operates within
     the given space.
-
-    If compiled with FOOTERS==1, mspace_realloc is not actually
-    needed.  realloc may be called instead of mspace_realloc because
-    realloced chunks from any space are handled by their originating
-    spaces.
 */
 DLMALLOC_EXPORT void * mspace_realloc (mspace msp, void * mem, size_t newsize);
 
@@ -293,24 +276,6 @@ DLMALLOC_EXPORT void * mspace_calloc (mspace msp, size_t n_elements,
 */
 DLMALLOC_EXPORT void * mspace_memalign (mspace msp, size_t alignment,
                                         size_t bytes);
-
-/*
-    mspace_independent_calloc behaves as independent_calloc, but
-    operates within the given space.
-*/
-DLMALLOC_EXPORT void ** mspace_independent_calloc (mspace msp,
-                                                   size_t n_elements,
-                                                   size_t elem_size,
-                                                   void * chunks[]);
-
-/*
-    mspace_independent_comalloc behaves as independent_comalloc, but
-    operates within the given space.
-*/
-DLMALLOC_EXPORT void ** mspace_independent_comalloc (mspace msp,
-                                                     size_t n_elements,
-                                                     size_t sizes[],
-                                                     void * chunks[]);
 
 /*
     mspace_footprint() returns the number of bytes obtained from the
