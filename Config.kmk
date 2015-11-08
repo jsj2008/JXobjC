@@ -1,6 +1,6 @@
 DBGFLAGS = -ggdb
 WARNFLAGS = -Wall -Wno-unused-function -Wno-format -Wno-switch -Wno-import
-ALLFLAGS = $(DBGFLAGS) $(WARNFLAGS) -Wno-deprecated
+ALLFLAGS = $(DBGFLAGS) $(WARNFLAGS) -Wno-deprecated -pthread
 PKGCONF ?= pkg-config
 
 BOEHM_INCS = /usr/local
