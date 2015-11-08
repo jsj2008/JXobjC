@@ -9,7 +9,7 @@
 #include <stdlib.h>
 
 #include "automgr.h"
-#include "s16mem.h"
+#include "dlmalloc.h"
 #include "Object.h"
 
 #define ThrdMgr() ((Automgr *)pthread_getspecific (mgrForThread))
@@ -38,10 +38,14 @@ typedef struct _Automgr
 static size_t wordSize = sizeof (uintptr_t);
 static pthread_key_t mgrForThread;
 static pthread_mutexattr_t recursiveAttr;
+static mspace AMGRmspace;
+
+#define AM_alloc(bytes) mspace_malloc (AMGRmspace, bytes)
+#define AM_free(addr) mspace_free (AMGRmspace, addr)
 
 Automgr * AMGR_init (void * stkBegin)
 {
-    Automgr * mgr = s16mem_alloc (sizeof (Automgr));
+    Automgr * mgr = AM_alloc (sizeof (Automgr));
     pthread_mutex_init (&mgr->lock, &recursiveAttr);
     mgr->zoneTbl  = 0;
     mgr->stkBegin = stkBegin;
@@ -58,7 +62,7 @@ void * AMGR_init_pre_thrd (void * stkBegin)
     {
         if ((*it)->copy)
         {
-            zoneTblEnt * cpy = s16mem_alloc (sizeof *cpy);
+            zoneTblEnt * cpy = AM_alloc (sizeof *cpy);
             *cpy             = **it;
             cpy->next        = mgr->zoneTbl;
             mgr->zoneTbl     = cpy;
@@ -75,6 +79,7 @@ void AMGR_init_post_thrd (void * mgr)
 
 void AMGR_main_init (void * stkBegin)
 {
+    AMGRmspace = create_mspace (0, 0);
     pthread_mutexattr_settype (&recursiveAttr, PTHREAD_MUTEX_RECURSIVE);
     pthread_key_create (&mgrForThread, 0);
     pthread_setspecific (mgrForThread, AMGR_init (stkBegin));
@@ -88,7 +93,7 @@ void AMGR_add_zone (void * start, size_t length, BOOL isRoot, BOOL isCopy,
                     BOOL isObject)
 {
     Automgr * mgr         = ThrdMgr ();
-    zoneTblEnt * newEntry = s16mem_alloc (sizeof (zoneTblEnt));
+    zoneTblEnt * newEntry = AM_alloc (sizeof (zoneTblEnt));
 
     newEntry->start  = start;
     newEntry->length = length;
@@ -112,7 +117,7 @@ void AMGR_remove_zone (void * location)
         {
             zoneTblEnt * toFree = *it;
             *it = toFree->next;
-            s16mem_free (toFree);
+            AM_free (toFree);
         }
         else
             it = &(*it)->next;
@@ -138,7 +143,7 @@ void AMGR_remove_all_zones ()
     {
         zoneTblEnt * toFree = *it;
         *it = toFree->next;
-        s16mem_free (toFree);
+        AM_free (toFree);
     }
 }
 
@@ -317,14 +322,14 @@ void AMGR_sweep ()
                 zoneTblEnt * toFree = *it;
                 *it = toFree->next;
                 free (toFree->start);
-                s16mem_free (toFree);
+                AM_free (toFree);
             }
         }
         else if ((*it)->freed)
         {
             zoneTblEnt * toFree = *it;
             *it = toFree->next;
-            s16mem_free (toFree);
+            AM_free (toFree);
         }
         else
             it = &(*it)->next;
