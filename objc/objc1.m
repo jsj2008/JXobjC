@@ -23,6 +23,7 @@
 #include <stdio.h>
 #include <stdlib.h> /* getenv */
 #include <string.h> /* strtok */
+#include "automgr.h"
 #include "Object.h"
 #include "OCString.h"
 #include "OrdCltn.h"
@@ -692,6 +693,8 @@ void closeoutfile (void)
 
 int main (int argc, char * argv[])
 {
+    AMGR_disable ();
+
     /* define early since setoptions() modifies this object */
     o_mainfun = "main";
     trlunit   = [TranslationUnit new];

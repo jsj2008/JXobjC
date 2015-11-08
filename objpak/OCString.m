@@ -206,16 +206,6 @@ static void clear (objstr_t self)
     return [super free];
 }
 
-- ARC_dealloc
-{
-#ifdef OBJC_REFCNT
-    clear ((&value));
-    return [super ARC_dealloc];
-#else
-    return [self notImplemented:_cmd];
-#endif
-}
-
 /*****************************************************************************
  *
  * Comparison

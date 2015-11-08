@@ -49,7 +49,6 @@ typedef struct objstr
 - copy;
 - deepCopy;
 - free;
-- ARC_dealloc;
 
 - (int)compare:aStr;
 - (int)compareSTR:(STR)aString;

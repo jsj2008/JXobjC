@@ -11,22 +11,23 @@
 #include "automgr.h"
 #include "Object.h"
 
-#define ThrdMgr() pthread_getspecific (mgrForThread)
+#define ThrdMgr() ((Automgr *)pthread_getspecific (mgrForThread))
 
 typedef struct _zoneTblEnt
 {
     void * start;
-    size_t length;
+    size_t length : 26;
     /* If it is root, then it is never un-marked.
     * If it is copy, then it is copied for new threads.
     * If it is object, we call its ARC_dealloc routine. */
-    BOOL marked, traced, root, copy, object;
+    BOOL marked : 1, traced : 1, freed : 1, root : 1, copy : 1, object : 1;
 
     struct _zoneTblEnt * next;
 } zoneTblEnt;
 
 typedef struct _Automgr
 {
+    BOOL enabled;
     pthread_mutex_t lock;
     void *stkBegin, *stkEnd;
     zoneTblEnt * zoneTbl;
@@ -42,6 +43,7 @@ Automgr * AMGR_init (void * stkBegin)
     pthread_mutex_init (&mgr->lock, &recursiveAttr);
     mgr->zoneTbl  = 0;
     mgr->stkBegin = stkBegin;
+    mgr->enabled  = NO;
     return mgr;
 }
 
@@ -66,6 +68,7 @@ void * AMGR_init_pre_thrd (void * stkBegin)
 void AMGR_init_post_thrd (void * mgr)
 {
     pthread_setspecific (mgrForThread, mgr);
+    AMGR_enable (mgr);
 }
 
 void AMGR_main_init (void * stkBegin)
@@ -74,6 +77,10 @@ void AMGR_main_init (void * stkBegin)
     pthread_key_create (&mgrForThread, 0);
     pthread_setspecific (mgrForThread, AMGR_init (stkBegin));
 }
+
+void AMGR_enable () { ThrdMgr ()->enabled = YES; }
+
+void AMGR_disable () { ThrdMgr ()->enabled = NO; }
 
 void AMGR_add_zone (void * start, size_t length, BOOL isRoot, BOOL isCopy,
                     BOOL isObject)
@@ -88,6 +95,7 @@ void AMGR_add_zone (void * start, size_t length, BOOL isRoot, BOOL isCopy,
     newEntry->object = isObject;
     newEntry->marked = NO;
     newEntry->traced = NO;
+    newEntry->freed  = NO;
 
     newEntry->next = mgr->zoneTbl;
     mgr->zoneTbl   = newEntry;
@@ -95,17 +103,17 @@ void AMGR_add_zone (void * start, size_t length, BOOL isRoot, BOOL isCopy,
 
 void AMGR_remove_zone (void * location)
 {
-    zoneTblEnt ** it;
-
-    for (it = &((Automgr *)ThrdMgr ())->zoneTbl; *it; it = &(*it)->next)
+    zoneTblEnt ** it = &((Automgr *)ThrdMgr ())->zoneTbl;
+    while (*it)
     {
         if ((*it)->start == location)
         {
             zoneTblEnt * toFree = *it;
             *it = toFree->next;
             free (toFree);
-            break;
         }
+        else
+            it = &(*it)->next;
     }
 }
 
@@ -126,7 +134,7 @@ zoneTblEnt * AMGR_find_zone (void * location)
 void * AMGR_alloc (size_t bytes)
 {
     void * ptr = malloc (bytes);
-
+    AMGR_cycle ();
     AMGR_add_zone (ptr, bytes, NO, NO, NO);
 
     return ptr;
@@ -134,7 +142,7 @@ void * AMGR_alloc (size_t bytes)
 
 void * AMGR_oalloc (size_t bytes)
 {
-    void * ptr = malloc (bytes);
+    void * ptr = calloc (1, bytes);
 
     AMGR_add_zone (ptr, bytes, NO, NO, YES);
 
@@ -284,9 +292,15 @@ void AMGR_sweep ()
             zoneTblEnt * toFree = *it;
             *it = toFree->next;
             if (toFree->object)
-                [(id)toFree->start free];
+                [(id)toFree->start ARC_dealloc];
             else
                 free (toFree->start);
+            free (toFree);
+        }
+        else if ((*it)->freed)
+        {
+            zoneTblEnt * toFree = *it;
+            *it = toFree->next;
             free (toFree);
         }
         else
@@ -296,6 +310,8 @@ void AMGR_sweep ()
 
 void AMGR_cycle ()
 {
+    if (!ThrdMgr ()->enabled)
+        return;
     AMGR_trace ();
     AMGR_sweep ();
 }

@@ -9,8 +9,12 @@
 
 #import "objcrt.h"
 
-void AMGR_init_thrd (void * stkBegin);
+void * AMGR_init_pre_thrd (void * stkBegin);
+void AMGR_init_post_thrd (void * mgr);
 void AMGR_main_init (void * stkBegin);
+void AMGR_enable ();
+void AMGR_disable ();
+
 void AMGR_add_zone (void * start, size_t length, BOOL isRoot, BOOL isCopy,
                     BOOL isObject);
 void AMGR_remove_zone (void * location);

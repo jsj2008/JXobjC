@@ -2,7 +2,7 @@ SUB_DEPTH = ..
 include $(KBUILD_PATH)/subheader.kmk
 
 INSTALLS += objpakhdr objpakhdr2
-LIBRARIES += objpak objpakr objpak_s
+LIBRARIES += objpak objpak_s
 
 objpak_TEMPLATE = OBJC
 objpak_SOURCES = $(wildcard $(PATH_ROOT)/objpak/*.m) \

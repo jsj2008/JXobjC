@@ -75,11 +75,7 @@
 
 - decrefs { return nil; }
 
-- ARC_dealloc
-{
-    [self decrefs];
-    return (*JX_dealloc) (self);
-}
+- ARC_dealloc { return (*JX_dealloc) (self); }
 
 + free { return nil; }
 

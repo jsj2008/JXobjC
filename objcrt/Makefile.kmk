@@ -1,7 +1,7 @@
 SUB_DEPTH = ..
 include $(KBUILD_PATH)/subheader.kmk
 
-LIBRARIES += objcrt objcrt_s objcrtr
+LIBRARIES += objcrt objcrt_s
 INSTALLS += objcrthdr
 
 objcrt_TEMPLATE = OBJC

@@ -39,7 +39,7 @@ static pthread_mutexattr_t recursiveAttr;
 
 static pthread_mutex_t * allocMtx ()
 {
-    pthread_mutex_t * mutx = OC_Malloc (sizeof (pthread_mutex_t));
+    pthread_mutex_t * mutx = malloc (sizeof (pthread_mutex_t));
 
     pthread_mutexattr_settype (&recursiveAttr, PTHREAD_MUTEX_RECURSIVE);
 #if 0
@@ -199,7 +199,7 @@ void EXPORT * OC_Malloc (size_t nBytes)
 #if OBJCRT_BOEHM
     data = GC_malloc (nBytes);
 #else
-    data               = malloc (nBytes);
+    data               = AMGR_alloc (nBytes);
 #endif
 
     /* signal the OutOfMemory exception */
@@ -220,7 +220,7 @@ void EXPORT * OC_MallocAtomic (size_t nBytes)
 #if OBJCRT_BOEHM
     data = GC_malloc_atomic (nBytes);
 #else
-    data               = malloc (nBytes);
+    data               = AMGR_alloc (nBytes);
 #endif
 
     /* signal the OutOfMemory exception */
@@ -233,9 +233,7 @@ void EXPORT * OC_Calloc (size_t nBytes)
 {
     char * p;
 
-    p = (char *)OC_Malloc (nBytes);
-
-    memset (p, 0, nBytes);
+    p = (char *)AMGR_calloc (1, nBytes);
 
     return (void *)p;
 }
@@ -251,7 +249,7 @@ void EXPORT * OC_Realloc (void * data, size_t nBytes)
 #if OBJCRT_BOEHM
     data = GC_realloc (data, nBytes);
 #else
-    data = realloc (data, nBytes);
+    data = AMGR_realloc (data, nBytes);
 #endif
 
     /* signal the OutOfMemory exception */
@@ -265,7 +263,7 @@ void EXPORT * OC_Free (void * data)
 #if OBJCRT_BOEHM
 /* do not call GC_free */
 #else
-    free (data);
+    AMGR_free (data);
 #endif
     return NULL;
 }
@@ -387,7 +385,7 @@ static id nstalloc (id aClass, unsigned int nBytes)
     aSize = nstsize (aClass) + nBytes;
 
 #ifndef OTBCRT
-    anObject = (id)OC_Calloc (aSize);
+    anObject = (id)AMGR_oalloc (aSize);
 #else
     anObject      = (id)OC_Malloc (sizeof (struct OTB));
     anObject->ptr = (struct _PRIVATE *)OC_Calloc (aSize);
@@ -410,7 +408,7 @@ static id nstcopy (id anObject, unsigned int nBytes)
     aSize = nstsize (aClass) + nBytes;
 
 #ifndef OTBCRT
-    newObject = (id)OC_Malloc (aSize);
+    newObject = (id)AMGR_oalloc (aSize);
     p         = (char *)newObject;
     q         = (char *)anObject;
 #else
@@ -436,7 +434,7 @@ static id nstdealloc (id anObject)
     OC_Free (_LOCK (anObject));
 
 #ifndef OTBCRT
-    OC_Free (anObject);
+    AMGR_free (anObject);
 #else
     unlinkotb (anObject);
     OC_Free (anObject->ptr);
@@ -720,7 +718,7 @@ static void hashInit ()
     int i;
     nHashLists = SIZEHASHTABLE;
 
-    hashList = (PHASH *)OC_Malloc (nHashLists * sizeof (PHASH));
+    hashList = (PHASH *)malloc (nHashLists * sizeof (PHASH));
 
     for (i = 0; i < nHashLists; i++)
         hashList[i] = 0;
@@ -731,10 +729,10 @@ static PHASH hashNew (STR key, PHASH link)
     int n;
     PHASH obj;
     assert (key != NULL);
-    obj       = (PHASH)OC_Malloc (sizeof (HASH));
+    obj       = (PHASH)malloc (sizeof (HASH));
     obj->next = link;
     n         = strlen (key);
-    obj->key = (STR)OC_Malloc (n + 1);
+    obj->key = (STR)malloc (n + 1);
     strcpy (obj->key, key);
     return obj;
 }
@@ -1105,6 +1103,7 @@ int EXPORT JX_objcInitNoShared (Mentry_t _objcModules,
     }
     else
     {
+        AMGR_disable ();
 
         msgiods ();
 
@@ -1139,6 +1138,8 @@ int EXPORT JX_objcInitNoShared (Mentry_t _objcModules,
          */
 
         objcinitflag = YES;
+
+        AMGR_enable ();
 
         /* Stepstone objcc returns maxSelector, probably not used */
         return 0;
