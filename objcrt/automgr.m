@@ -9,6 +9,7 @@
 #include <stdlib.h>
 
 #include "automgr.h"
+#include "Object.h"
 
 #define ThrdMgr() pthread_getspecific (mgrForThread)
 

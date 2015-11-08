@@ -1,4 +1,3 @@
-
 /*
  * Copyright (c) 1998 David Stes.
  *
@@ -15,21 +14,14 @@
  * You should have received a copy of the GNU Library General Public License
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
- *
- * $Id: fundef.m,v 1.2 2000/09/08 15:07:57 stes Exp $
  */
 
-#include "config.h"
 #include <stdlib.h>
 #include <assert.h>
 #include <string.h>
-#ifndef __OBJECT_INCLUDED__
-#define __OBJECT_INCLUDED__
-#include <stdio.h>  /* FILE */
-#include "Object.h" /* Stepstone Object.h assumes #import */
-#endif
-#include <OCString.h>
-#include <OrdCltn.h>
+#include "Object.h"
+#include "OCString.h"
+#include "OrdCltn.h"
 #include "node.h"
 #include "def.h"
 #include "symbol.h"
@@ -165,6 +157,9 @@
         fatal ("no initialization call defined (use -init)");
     }
 
+    gs ((o_cplus) ? "extern \"C\"" : "extern");
+    gs ("void AMGR_main_init (void * stkBegin);\n");
+
     if (o_filer)
     {
         gs ((o_cplus) ? "extern \"C\"" : "extern");
@@ -179,7 +174,10 @@
     if (datadefspecs)
         [datadefspecs elementsPerform:@selector (gen)];
     [decl gen];
-    gs ("{\n");
+    gs ("\n{\n");
+
+    gs ("void * iGetStackBase = (void *)0;\n");
+    gs ("AMGR_main_init(&iGetStackBase);\n");
 
     if (o_filer)
     {
