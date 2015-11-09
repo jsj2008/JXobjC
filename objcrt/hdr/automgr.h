@@ -21,6 +21,7 @@ void AMGR_remove_zone (void * location);
 void AMGR_remove_all_zones ();
 
 void * AMGR_alloc (size_t bytes);
+void * AMGR_ralloc (size_t bytes);
 void * AMGR_oalloc (size_t bytes);
 void * AMGR_calloc (size_t num, size_t bytes);
 void * AMGR_realloc (void * location, size_t newBytes);

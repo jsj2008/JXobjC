@@ -7,7 +7,7 @@
 
 - initWithKeyPath:kp selector:(SEL)sel observer:targ userInfo:arg
 {
-    [self init];
+    self              = [self init];
     keyPath           = kp;
     keyPathComponents = [keyPath componentsSeparatedByString:@"."];
     selector          = sel;
@@ -18,7 +18,7 @@
 
 - initWithKeyPath:kp block:blk observer:targ userInfo:arg
 {
-    [self init];
+    self              = [self init];
     keyPath           = kp;
     keyPathComponents = [keyPath componentsSeparatedByString:@"."];
     observer          = targ;
@@ -84,7 +84,7 @@
         return NO;
 }
 
-- (BOOL)matchesTarget:targ
+- (BOOL)matchesObserver:targ
 {
     if (!targ)
         return NO;
@@ -116,8 +116,6 @@
 
 - (BOOL)matchesKeyPath:kp { return [keyPath isEqual:kp]; }
 
-- (BOOL)matchesObserver:obs { return !obs ? NO : obs == observer ? YES : NO; }
-
 - (BOOL)matchesRoot:aRoot { return !root ? NO : root == aRoot ? YES : NO; }
 
 - setRoot:aRoot
@@ -130,6 +128,8 @@
 - (String *)keyPath { return keyPath; }
 
 - (OrdCltn *)keyPathComponents { return keyPathComponents; }
+
+- observer { return observer; }
 
 - (void)fireForOldValue:oldValue newValue:newValue
 {
@@ -145,16 +145,11 @@
         [
             {
                 [observer perform:selector with:(id)changeDic];
-            } ifError:
-              { :msg :rcv | printf("Exception in KVO callback method.\n");
-              }];
+            } value];
     }
     else
     {
-        [block value:changeDic
-             ifError:
-             { :msg :rcv | printf("Exception in KVO callback block.\n");
-             }];
+        [block value:changeDic];
     }
 
 #ifndef OBJC_REFCNT
@@ -193,7 +188,6 @@
 
 - (BOOL)isEqual:anObject
 {
-    printf ("Comparing...\n");
     if (self == anObject)
         return YES;
     else if (![anObject isKindOf:KPObserverRef])

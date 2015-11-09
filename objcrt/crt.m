@@ -164,10 +164,12 @@ static modnode_t modnodelist;
 static modnode_t newmodnode (Mentry_t me, modnode_t next)
 {
     modnode_t r;
-    r              = (modnode_t)OC_Malloc (sizeof (struct modnode));
+    r              = (modnode_t)AMGR_ralloc (sizeof (struct modnode));
     r->next        = next;
     r->objcmodules = me;
-    AMGR_add_zone (r, sizeof (struct modnode), 1, 1, 0);
+    AMGR_add_zone (r, sizeof (*r), 1, 1, 0);
+    AMGR_add_zone (&r->objcmodules, sizeof (Mentry_t), 1, 1, 0);
+    AMGR_add_zone (&r->objcmodules, sizeof (Mentry_t), 1, 1, 0);
     return r;
 }
 
@@ -1019,6 +1021,8 @@ static void initmods (Mentry_t modPtr)
     for (; modPtr->modInfo; modPtr++)
     {
         id * cls = modPtr->modInfo->modClsLst;
+
+        AMGR_add_zone (modPtr->modInfo, sizeof (*modPtr->modInfo), 1, 1, 0);
 
         if (morethanone (modPtr->modInfo))
         {

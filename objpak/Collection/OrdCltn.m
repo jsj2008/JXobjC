@@ -242,16 +242,14 @@ static void clear (objcol_t self)
     return [super free];
 }
 
-- ARC_dealloc
+- finalise
 {
-#ifdef OBJC_REFCNT
     empty ((&value));
     clear ((&value));
-    return [super ARC_dealloc];
-#else
-    return [self notImplemented:_cmd];
-#endif
+    return [super finalise];
 }
+
+- ARC_dealloc { return [super finalise]; }
 
 /*****************************************************************************
  *

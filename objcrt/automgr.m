@@ -166,6 +166,14 @@ void * AMGR_alloc (size_t bytes)
     return ptr;
 }
 
+void * AMGR_ralloc (size_t bytes)
+{
+    void * ptr = malloc (bytes);
+    AMGR_add_zone (ptr, bytes, YES, YES, NO);
+
+    return ptr;
+}
+
 void * AMGR_oalloc (size_t bytes)
 {
     void * ptr = calloc (1, bytes);

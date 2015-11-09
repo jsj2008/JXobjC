@@ -106,7 +106,9 @@
                 [val removeAll:intersect];
 
                 if (![val size])
+                {
                     [kToObs removeKey:key];
+                }
                 else
                     val = nil; /* don't delete it if it isn't empty */
 #ifndef OBJC_ARC
@@ -133,10 +135,11 @@
                 newValue:newValue
 {
     Pair * key = (Pair *)[Pair pairWithVolatileFirst:object second:propStr];
+    Set * obs  = [keyToObservers atKey:key];
 
-    [[keyToObservers atKey:key] do:
-                                { :each | [each.reference fireForOldValue:oldValue newValue:newValue];
-                                }];
+    [obs do:
+         { :each | [each.reference fireForOldValue:oldValue newValue:newValue];
+         }];
 
 #ifndef OBJC_REFCNT
     [key free];
@@ -153,6 +156,8 @@
                                   block:blk
                                observer:observer
                                userInfo:ui];
+    [kpo setRoot:object];
+
     [self addObserverForKeyPath:keyPath
                        ofObject:object
                         withKPO:kpo
@@ -169,39 +174,48 @@
                                selector:sel
                                observer:observer
                                userInfo:ui];
+    [kpo setRoot:object];
     [self addObserverForKeyPath:keyPath
                        ofObject:object
                         withKPO:kpo
                       fromIndex:0];
 }
 
-+ (void)removeObserver:observer forKeyPath:keyPath ofObject:object
++ (void)removeObserversByObserverFilter:aBlk
 {
     Dictionary * kToObs = keyToObservers;
-    id matchDetector    = { : c |
-        [c.reference matchesRoot:object] && [c.reference matchesObserver:observer] &&
-        [c.reference matchesKeyPath:keyPath]
-        };
-    id subset = [observers detect:matchDetector];
+    id subset;
 
+    subset = [observers select:{ : c | [aBlk value:c]}];
     [observers removeAll:subset];
-    [kToObs do:
+
+    [kToObs keysDo:
             { :key | id val, intersect;
                 val       = [kToObs atKey:key];
-                intersect = [val detect:matchDetector];
-                [val removeAll:intersect];
+                intersect = [val select:{ : c | [aBlk value:c.reference]}];
 
+                [val removeAll:intersect];
                 if (![val size])
+                {
                     [kToObs removeKey:key];
+                    [val free];
+                }
 #ifndef OBJC_ARC
                 [[intersect freeContents] free];
-                [val free];
 #endif
             }];
 
 #ifndef OBJC_ARC
     [[subset freeContents] free];
 #endif
+}
+
++ (void)removeObserver:observer forKeyPath:keyPath ofObject:object
+{
+    [self removeObserversByObserverFilter:{ : c |
+        [c matchesRoot:object] && [c matchesObserver:observer] &&
+        [c matchesKeyPath:keyPath]
+        }];
 }
 
 @end

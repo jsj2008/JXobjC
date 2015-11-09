@@ -89,7 +89,10 @@
            ofObject:object
        withSelector:(SEL)sel
            userInfo:ui;
+
 + (void)removeObserver:observer forKeyPath:keyPath ofObject:object;
++ (void)removeObserver:observer;
++ (void)removeObserversForObject:object;
 
 + (void)sendKVOForObject:object
                 property:propStr
