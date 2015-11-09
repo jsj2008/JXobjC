@@ -167,8 +167,6 @@
 #define M_GRANULARITY (-2)
 #define M_MMAP_THRESHOLD (-3)
 
-/* ------------------------ Mallinfo declarations ------------------------ */
-
 /*
   Try to persuade compilers to inline. The most critical functions for
   inlining are defined as macros, so these aren't used for them.

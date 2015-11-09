@@ -123,4 +123,5 @@ id mkfileoutmeth (id classdef, id ivarnames, id ivartypes);
 id mkincrefsmeth (id classdef, id ivarnames, id ivartypes);
 id mkdecrefsmeth (id classdef, id ivarnames, id ivartypes);
 
+id mkinstringlit (id string);
 id mkpcstringlit (id string);

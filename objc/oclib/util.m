@@ -731,6 +731,19 @@ id mkpropdef (id compdec)
     return r;
 }
 
+id mkkvonotice (id name, id old, id new)
+{
+    id ksel = [OrdCltn new];
+
+    [ksel
+        add:mkkeywarg ([Symbol str:"sendKVOForProperty"],
+                       mkinstringlit ([Symbol sprintf:"\"%s\"", [name str]]))];
+    [ksel add:mkkeywarg ([Symbol str:"oldValue"], old)];
+    [ksel add:mkkeywarg ([Symbol str:"newValue"], new)];
+
+    return mkexprstmtx (mkmesgexpr (e_self, mkmethproto (nil, nil, ksel, NO)));
+}
+
 id mkpropsetmeth (id compdec, id type, id name, int ispointer)
 {
     id d, b, r;
@@ -752,14 +765,30 @@ id mkpropsetmeth (id compdec, id type, id name, int ispointer)
     [r prototype];
     if ((b = [CompoundStmt new]))
     {
-        id s        = [OrdCltn new];
-        id vartoset = [mkarrowexpr (s_self, name) type:type];
+        id s = [OrdCltn new], dd = [OrdCltn new];
+        id vartoset = [mkarrowexpr ([[e_self copy] lhsself:1], name) type:type];
+        id rdecl    = [type decl];
+        id tmpsym   = [Symbol sprintf:"%s_s", [name str]];
+        id decl     = rdecl
+                      ? [rdecl isKindOf:Pointer]
+                            ? mkstardecl (rdecl, mkdecl (tmpsym))
+                            : [[rdecl copy] identifier:tmpsym]
+                      : mkdecl (tmpsym);
+        id datadef = mkdatadef (nil, [type specs], decl, nil);
+        id tassign =
+            mkexprstmtx (mkassignexpr (mkidentexpr (tmpsym), "=", vartoset));
+
+        [dd add:datadef];
 
         [s add:mklockmesg (e_self)];
+        [s add:tassign];
         [s add:mkexprstmtx (mkassignexpr (
                    vartoset, "=", mkidentexpr ([Symbol str:"valset"])))];
+        [s add:mkkvonotice (name, tmpsym, vartoset)];
         [s add:mkunlockmesg (e_self)];
         [s add:mkreturnx (e_self)];
+
+        [b datadefs:dd];
         [b stmts:s];
         [r body:b];
     }
@@ -1498,6 +1527,15 @@ id mkdecrefsmeth (id classdef, id ivarnames, id ivartypes)
 {
     return mkrefmeth (classdef, ivarnames, ivartypes, s_decrefs, s_iddecref);
 }
+
+id mkinstringlit (id string)
+{
+    id arg  = mkkeywarg ([IdentifierExpr str:@selector (str)], string);
+    id args = mklist (nil, arg);
+    id msg  = mkmethproto (nil, nil, args, NO);
+
+    return mkmesgexpr ([IdentifierExpr str:"String"], msg);
+};
 
 id mkpcstringlit (id string)
 {

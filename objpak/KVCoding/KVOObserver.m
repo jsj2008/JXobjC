@@ -54,8 +54,10 @@
 - (uintptr_t)hash
 {
     return selector
-               ? ((uintptr_t)selector) % [observer hash] % [keyPath hash]
-               : [block hash] % ([observer hash] ?: 0x1234) % [keyPath hash];
+               ? ((uintptr_t)selector) %
+                     [Pair combineHash:[observer hash] withHash:[keyPath hash]]
+               : [block hash] % [Pair combineHash:([observer hash] ?: 0x1234)
+                                         withHash:[keyPath hash]];
 }
 
 - (BOOL)isEqual:anObject

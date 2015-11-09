@@ -4,6 +4,14 @@
 
 @interface Object (KeyValueObserving)
 
-- (void)addObserver:observer forKeyPath:keyPath;
+- (void)addObserver:observer forKeyPath:keyPath selector:(SEL)sel userInfo:ui;
+- (void)addObserver:observer forKeyPath:keyPath selector:(SEL)sel;
+
+- (void)addObserver:observer forKeyPath:keyPath block:blk userInfo:ui;
+- (void)addObserver:observer forKeyPath:keyPath block:blk;
+
+- (void)removeObserver:observer forKeyPath:keyPath;
+
+- (void)sendKVOForProperty:propStr oldValue:oldValue newValue:newValue;
 
 @end
