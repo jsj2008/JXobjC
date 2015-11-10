@@ -1,6 +1,7 @@
 /* Copyright (c) 2015 D. Mackay. All rights reserved. */
 
 #import "Object.h"
+#import "OCString.h"
 
 @interface Object (KeyValueObserving)
 

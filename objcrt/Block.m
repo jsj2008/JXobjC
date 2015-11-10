@@ -29,6 +29,7 @@
 
 #include "Block.h"
 #include "Exceptn.h"
+#include "automgr.h"
 
 @implementation Block
 

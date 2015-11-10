@@ -16,6 +16,7 @@ struct timeval
 #endif
 
 #import "Object.h"
+#import "KVO.h"
 
 @interface Date : Object
 

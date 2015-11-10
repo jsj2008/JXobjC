@@ -1,6 +1,7 @@
 /* Copyright (c) 2015 D. Mackay. All rights reserved. */
 
 #import "Pair.h"
+#import "OCString.h"
 #import "OrdCltn.h"
 #import "VolatileReference.h"
 

@@ -135,7 +135,7 @@
                 newValue:newValue
 {
     Pair * key = (Pair *)[Pair pairWithVolatileFirst:object second:propStr];
-    Set * obs  = [keyToObservers atKey:key];
+    Set * obs  = (Set *)[keyToObservers atKey:key];
 
     [obs do:
          { :each | [each.reference fireForOldValue:oldValue newValue:newValue];

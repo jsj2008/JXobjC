@@ -51,9 +51,11 @@ typedef enum number_type_e
         float f;
         double d;
     } value;
+    number_type_t type;
 }
 
-@property number_type_t type;
+- (number_type_t)type;
+- setType:(number_type_t)aType;
 
 #define NumFrom(typ, nam)                                                      \
     +numberWith##nam : (typ)val;                                               \

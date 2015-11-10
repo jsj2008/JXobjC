@@ -13,6 +13,7 @@ if [ "$CC" = "`basename $0`" ]; then
   cc="gcc";
 else
   cc=${CC-"gcc"}
+  CPPFLAGS=-Wno-deprecated
 fi
 
 set - $OBJCOPT "$@"
@@ -31,7 +32,7 @@ cxx=${CCPLUS-"c++"}
 cpp=${CPP-"gcc -E"}
 cppwantsdotc=1
 cxxpp="$cxx -E"
-cpargs="-D__PORTABLE_OBJC__ -Wno-import "
+cpargs="${CPPFLAGS} -D__PORTABLE_OBJC__ -Wno-import "
 ocargs="-gnu -shortTags"
 ccargs=""
 ldargs=""

@@ -579,4 +579,7 @@ static BOOL inherits (Cls_t aCls, STR name)
 
 - awakeFrom:aFiler { return [self awake]; }
 
+/* KVO stub */
+- (void)sendKVOForProperty:prop oldValue:oldVal newValue:newVal {}
+
 @end

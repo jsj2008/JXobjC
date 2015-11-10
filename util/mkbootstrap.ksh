@@ -2,7 +2,7 @@
 
 OBJCOPT="-C -noFwd -noFiler -postlink -noI -noTags"
 OBJCOPT="${OBJCOPT} -init oc_objcInit -nostdinc -I../util/hdr -I./ -I."
-export OBJCOPT="${OBJCOPT} -I../../util/hdr -D__dead2="
+export OBJCOPT="${OBJCOPT} -I../../util/hdr -Wno-deprecated -D__dead2="
 
 OBJC="objc ${OBJCOPT}"
 

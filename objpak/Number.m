@@ -13,6 +13,14 @@
     return [anObject doubleValue] == [self doubleValue];
 }
 
+- (number_type_t)type { return type; }
+
+- setType:(number_type_t)aType
+{
+    type = aType;
+    return self;
+}
+
 #define NumSet(typ, nam, ch, te)                                               \
     -initWith##nam : (typ)val                                                  \
     {                                                                          \

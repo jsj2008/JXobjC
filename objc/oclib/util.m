@@ -766,6 +766,7 @@ id mkpropsetmeth (id compdec, id type, id name, int ispointer)
     if ((b = [CompoundStmt new]))
     {
         id s = [OrdCltn new], dd = [OrdCltn new];
+        BOOL doKVO  = [type isid];
         id vartoset = [mkarrowexpr ([[e_self copy] lhsself:1], name) type:type];
         id rdecl    = [type decl];
         id tmpsym   = [Symbol sprintf:"%s_s", [name str]];
@@ -778,13 +779,17 @@ id mkpropsetmeth (id compdec, id type, id name, int ispointer)
         id tassign =
             mkexprstmtx (mkassignexpr (mkidentexpr (tmpsym), "=", vartoset));
 
-        [dd add:datadef];
+        if (doKVO)
+            [dd add:datadef];
 
         [s add:mklockmesg (e_self)];
-        [s add:tassign];
+        if (doKVO)
+            [s add:tassign];
         [s add:mkexprstmtx (mkassignexpr (
                    vartoset, "=", mkidentexpr ([Symbol str:"valset"])))];
-        [s add:mkkvonotice (name, tmpsym, vartoset)];
+        if (doKVO)
+            [s add:mkkvonotice (name, tmpsym, vartoset)];
+
         [s add:mkunlockmesg (e_self)];
         [s add:mkreturnx (e_self)];
 

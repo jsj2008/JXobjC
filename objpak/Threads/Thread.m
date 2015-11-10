@@ -3,6 +3,7 @@
 #import "Block.h"
 #import "Exceptn.h"
 #import "Thread.h"
+#import "OCString.h"
 
 @implementation Thread
 
