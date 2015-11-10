@@ -29,7 +29,11 @@ mkdir objc
 mkdir plink
 
 ${OBJC} -I../objcrt/hdr ../objcrt/*.m
-${OBJC} -I../objcrt/hdr -I../objpak -I../objpak/hdr ../objpak/*.m
+${OBJC} -I../objcrt/hdr -I../objpak -I../objpak/hdr -I../objpak/Collection \
+        -I../objpak/KVCoding \
+    ../objpak/*.m \
+    ../objpak/Collection/*.m ../objpak/Exception/*.m ../objpak/IODevice/*.m \
+    ../objpak/KVCoding/*.m ../objpak/Notification/*.m
 ${OBJC} -I../objcrt/hdr -I../objpak/hdr -I../objc/oclib ${OCLIB_SRCS}
 
 cd objc
@@ -51,11 +55,11 @@ cat <<'EOF' > build.sh
 CC="gcc -x c"
 
 ${CC} -c *.i
-cd objc && ${CC} -c *.i *.c && cd ../plink
-${CC} -c *.i *.c && cd ../
+cd objc && ${CC} -pthread -c *.i *.c && cd ../plink
+${CC} -c *.i *.c -pthread && cd ../
 
-gcc *.o objc/*.o -o objc1
-gcc *.o plink/*.o -o postlink
+gcc *.o objc/*.o -lm -lpthread -o objc1
+gcc *.o plink/*.o -lm -lpthread -o postlink
 
 EOF
 

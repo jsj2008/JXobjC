@@ -13,10 +13,12 @@
 #define sockclose(socket) closesocket (socket)
 #else
 #include <errno.h>
+#include <fcntl.h>
 #include <netdb.h>
 #include <netinet/in.h>
 #include <netinet/tcp.h>
 #include <sys/socket.h>
+#include <sys/types.h>
 #include <unistd.h>
 #define sockclose(socket) close (socket)
 #endif
