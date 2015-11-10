@@ -28,18 +28,18 @@ PLINK_SRCS="../../objc/postlink.m"
 mkdir objc
 mkdir plink
 
-${OBJC} -I../objcrt ../objcrt/*.m
-${OBJC} -I../include/objcrt -I../objpak -I../objpak/hdr ../objpak/*.m
-${OBJC} -I../include/objcrt -I../objpak/hdr -I../objc/oclib ${OCLIB_SRCS}
+${OBJC} -I../objcrt/hdr ../objcrt/*.m
+${OBJC} -I../objcrt/hdr -I../objpak -I../objpak/hdr ../objpak/*.m
+${OBJC} -I../objcrt/hdr -I../objpak/hdr -I../objc/oclib ${OCLIB_SRCS}
 
 cd objc
 
 byacc -dtv -o yacc.m ../../objc/yacc.ym
 flex -o lex.m ../../objc/lex.lm
-${OBJC} -I../../objc/oclib -I../../objcrt -I../../objpak/hdr ${OBJC_SRCS}
+${OBJC} -I../../objc/oclib -I../../objcrt/hdr -I../../objpak/hdr ${OBJC_SRCS}
 
 cd ../plink
-${OBJC} -I../../objc/oclib -I../../objpak/hdr -I../../objpak -I../../objcrt ${PLINK_SRCS}
+${OBJC} -I../../objc/oclib -I../../objpak/hdr  -I../../objcrt/hdr ${PLINK_SRCS}
 cd ../
 
 cp ../util/_objc1.c ./objc
