@@ -1,4 +1,3 @@
-
 /*
  * Copyright (c) 1998,2000 David Stes.
  *
@@ -15,20 +14,13 @@
  * You should have received a copy of the GNU Library General Public License
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
- *
- * $Id: symbol.m,v 1.4 2011/06/15 19:06:42 stes Exp $
  */
 
-#include "config.h"
 #include <stdlib.h>
-#include <stdio.h> /* FILE */
 #include <string.h>
 #include <assert.h>
-#ifndef __OBJECT_INCLUDED__
-#define __OBJECT_INCLUDED__
-#include "Object.h" /* Stepstone Object.h assumes #import */
-#endif
-#include <OCString.h>
+#include "Object.h"
+#include "OCString.h"
 #include "symbol.h"
 #include "node.h"
 #include "options.h"

@@ -1,16 +1,14 @@
 /* Copyright (c) 2015 D. Mackay. All rights reserved. */
 
-#include "config.h"
 #include <stdlib.h>
 #include <assert.h>
 #include <string.h>
-#include <stdio.h> /* FILE */
 #include "Object.h"
 #include "Block.h"
-#include <OCString.h>
-#include <OrdCltn.h>
-#include <Set.h>
-#include <Dictionary.h>
+#include "OCString.h"
+#include "OrdCltn.h"
+#include "Set.h"
+#include "Dictionary.h"
 #include "node.h"
 #include "symbol.h"
 #include "selector.h"

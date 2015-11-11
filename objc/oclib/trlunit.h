@@ -14,8 +14,6 @@
  * You should have received a copy of the GNU Library General Public License
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
- *
- * $Id: trlunit.h,v 1.2 2000/08/13 14:00:49 stes Exp $
  */
 
 extern id trlunit;

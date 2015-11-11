@@ -1,4 +1,3 @@
-
 /*
  * Portable Object Compiler - PreLink Source File
  * (c) 1997 David Stes. All rights reserved.

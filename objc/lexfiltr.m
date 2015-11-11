@@ -104,7 +104,7 @@
 #include <stdio.h>
 #include <string.h>
 
-#include <objc.h>
+#include "objc.h"
 
 #include "util.h"
 #include "options.h"

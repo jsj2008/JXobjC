@@ -21,7 +21,7 @@
 #include <string.h>
 #include <stdio.h>
 
-#include "Object.h" /* Stepstone Object.h assumes #import */
+#include "Object.h"
 
 #ifndef EXPORT
 #define EXPORT /* empty */

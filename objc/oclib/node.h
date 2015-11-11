@@ -18,6 +18,9 @@
 
 #import "Object.h"
 
+#ifndef NODE__H__
+#define NODE__H__
+
 extern FILE * gfile;
 extern int inlineno;
 extern id infilename;
@@ -59,3 +62,5 @@ void fatalat (id sym, char * fmt, ...);
 - (BOOL)isgnuattrib;
 
 @end
+
+#endif

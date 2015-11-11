@@ -47,8 +47,8 @@ OBJC_SOURCES = drv/jxobjc
 
 LINKFILES_INST = lib/
 LINKFILES_IFFLAGS = -m 644
-LINKFILES_SOURCES = ld/objcdlso.ld ld/objcdlnt.wat $(PATH_OUT)/_prelink.o \
-    $(PATH_OUT)/_predll.o
+LINKFILES_SOURCES = ld/objcdlso.ld ld/objcdlnt.wat objchelp.txt \
+    $(PATH_OUT)/_prelink.o $(PATH_OUT)/_predll.o
 
 INSTALLS += LINKFILES OBJC
 

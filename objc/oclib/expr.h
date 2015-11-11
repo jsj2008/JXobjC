@@ -1,4 +1,3 @@
-
 /*
  * Copyright (c) 1998 David Stes.
  *
@@ -17,7 +16,10 @@
  * Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
  */
 
-#import "node.h"
+#ifndef EXPR__H__
+#define EXPR__H__
+
+#include "node.h"
 
 extern id e_nil;
 extern id e_self;
@@ -43,3 +45,5 @@ extern id e_ft_id;
 - identifier;
 
 @end
+
+#endif

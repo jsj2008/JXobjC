@@ -18,9 +18,8 @@
 
 #include <stdlib.h>
 #include <assert.h>
-#include <stdio.h> /* FILE */
 #include "Object.h"
-#include <OCString.h>
+#include "OCString.h"
 #include "node.h"
 #include "symbol.h"
 #include "expr.h"

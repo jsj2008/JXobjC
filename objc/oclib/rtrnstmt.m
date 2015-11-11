@@ -19,7 +19,6 @@
 
 #include <stdlib.h>
 #include <assert.h>
-#include <stdio.h> /* FILE */
 #include "Object.h"
 #include "node.h"
 #include "stmt.h"

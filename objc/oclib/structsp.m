@@ -16,16 +16,14 @@
  * Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
  */
 
-#include "config.h"
 #include <stdlib.h>
 #include <assert.h>
 #include <string.h>
-#include <stdio.h> /* FILE */
 #include "Object.h"
-#include <Block.h>
-#include <OCString.h>
-#include <OrdCltn.h>
-#include <Dictionary.h>
+#include "Block.h"
+#include "OCString.h"
+#include "OrdCltn.h"
+#include "Dictionary.h"
 #include "node.h"
 #include "structsp.h"
 #include "decl.h"

@@ -17,7 +17,6 @@
  */
 
 /*
- *
  * Input  : .P file, WATCOM wcc -pl output
  * Output : .P file without line continuation (\) characters
  * to be used as input for objc1.
@@ -28,7 +27,6 @@
  * where the WATCOM -pl preserves (doesn't expand) the line continuation.
  *
  * Also needed for WATCOM 10.0
- *
  */
 
 #include <stdio.h>

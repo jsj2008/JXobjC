@@ -1,4 +1,3 @@
-
 /*
  * Copyright (c) 1998 David Stes.
  *
@@ -15,23 +14,16 @@
  * You should have received a copy of the GNU Library General Public License
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
- *
- * $Id: node.m,v 1.3 2011/06/15 19:06:42 stes Exp $
  */
 
-#include "config.h"
 #include <stddef.h>
 #include <stdlib.h>
 #include <ctype.h>
 #include <assert.h>
 #include <string.h>
-#ifndef __OBJECT_INCLUDED__
-#define __OBJECT_INCLUDED__
-#include <stdio.h>  /* FILE */
-#include "Object.h" /* Stepstone Object.h assumes #import */
-#endif
-#include <OCString.h>
-#include <OrdCltn.h>
+#include "Object.h"
+#include "OCString.h"
+#include "OrdCltn.h"
 #include "node.h"
 #include "symbol.h"
 #include "options.h"

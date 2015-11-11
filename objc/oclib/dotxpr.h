@@ -16,12 +16,17 @@
  * Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
  */
 
+#ifndef DOTXPR__H__
+#define DOTXPR__H__
+
+#include "binxpr.h"
+
 @interface DotExpr : BinaryExpr
-{
-}
 
 @property id possibleMsg;
 
 + new;
 
 @end
+
+#endif

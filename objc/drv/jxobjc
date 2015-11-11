@@ -195,9 +195,6 @@ do
     -xstr)           runxstr=y; shift; xstrdb="$1" ;;
     -noSelTbl)	     ocargs="$ocargs $arg" ;;
     -inlinecache|-inlineCache)    ocargs="$ocargs -inlinecache";;
-    -opt)            shift;ccargs="$ccargs -opt $1";; # mwc
-    -sym)            shift;ccargs="$ccargs -sym $1";; # mwc
-    -xm)             shift;ccargs="$ccargs -xm $1";; # mwc
     -oneperfile)     ocargs="$ocargs $arg";;
     -pthreads)       objcrt=objcrtth;finlibs="$finlibs -lpthread";;
     -otb)            cpargs="$cpargs -DOTBCRT=1";
@@ -208,9 +205,6 @@ do
                      cpargs="$cpargs -I$gcprefix/include";
 		     finlibs="$finlibs -lgc";
 		     ;;
-    -gc|-refcnt)	     cpargs="$cpargs -DOBJC_REFCNT=1";
-                     ocargs="$ocargs $arg";
-                     objcrt=objcrtr;objpak=objpakr;cakit=cakitr;;
     -postlink|-postLink) postlink=1;;
     -noPostlink|-noPostLink) postlink=0;;
     -nolinetags|-noTags) ocargs="$ocargs -nolinetags";;
@@ -347,11 +341,7 @@ ocargs="$ocargs -init $initcall"
 
 case $include in
   # for cross compiles we compile with -noI to use the target config.h
-  y) cpargs="$cpargs $sqlinc -I$hdrdir/objcrt -I$hdrdir/objpak -I$hdrdir/cakit -I$hdrdir";;
-esac
-
-case $ppi in
-  1) cpargs="$cpargs -I$hdrdir/ppi";;
+  y) cpargs="$cpargs $sqlinc -I$hdrdir/objcrt -I$hdrdir/objpak -I$hdrdir";;
 esac
 
 case $blocks in

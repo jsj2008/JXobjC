@@ -1,6 +1,9 @@
 /* Copyright (c) 2015 D. Mackay. All rights reserved. */
 
-#import "msgxpr.h"
+#ifndef PRDOTXPR__H__
+#define PRDOTXPR__H__
+
+#include "msgxpr.h"
 
 @interface DotPropertyExpr : MesgExpr
 
@@ -11,3 +14,5 @@
 - forcegen;
 
 @end
+
+#endif

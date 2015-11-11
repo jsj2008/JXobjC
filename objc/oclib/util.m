@@ -15,23 +15,17 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
  */
-
 /* Copyright (c) 2015 D. Mackay. All rights reserved. */
 
-#include "config.h"
 #include <ctype.h>
 #include <string.h>
 #include <assert.h>
 #include <stdlib.h>
-#ifndef __OBJECT_INCLUDED__
-#define __OBJECT_INCLUDED__
-#include <stdio.h>  /* FILE */
-#include "Object.h" /* Stepstone Object.h assumes #import */
-#endif
+#include "Object.h"
 #include "Block.h"
 #include "node.h"
-#include <OrdCltn.h>
-#include <OCString.h>
+#include "OrdCltn.h"
+#include "OCString.h"
 #include "symbol.h"
 #include "cppdirec.h"
 #include "util.h"

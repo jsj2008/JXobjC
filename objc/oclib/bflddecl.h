@@ -1,4 +1,3 @@
-
 /*
  * Copyright (c) 1998 David Stes.
  *
@@ -15,9 +14,12 @@
  * You should have received a copy of the GNU Library General Public License
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
- *
- * $Id: bflddecl.h,v 1.1.1.1 2000/06/07 21:09:25 stes Exp $
  */
+
+#ifndef BFLDDECL__H__
+#define BFLDDECL__H__
+
+#include "decl.h"
 
 @interface BitfieldDecl : Decl
 {
@@ -29,3 +31,5 @@
 - gen;
 
 @end
+
+#endif

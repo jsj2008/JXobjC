@@ -21,7 +21,7 @@ OCLIB_SRCS="../objc/oclib/addrof.m ../objc/oclib/classdef.m ../objc/oclib/def.m 
 ../objc/oclib/btincall.m ../objc/oclib/dasmstmt.m ../objc/oclib/exprstmt.m ../objc/oclib/gotostmt.m ../objc/oclib/msgxpr.m ../objc/oclib/propdef.m ../objc/oclib/stmt.m
 ../objc/oclib/casestmt.m ../objc/oclib/datadef.m ../objc/oclib/forstmt.m ../objc/oclib/identxpr.m ../objc/oclib/namedecl.m ../objc/oclib/relxpr.m ../objc/oclib/structsp.m
 ../objc/oclib/castxpr.m ../objc/oclib/decl.m ../objc/oclib/funbody.m ../objc/oclib/ifstmt.m ../objc/oclib/node.m ../objc/oclib/rtrnstmt.m ../objc/oclib/switstmt.m
-../objc/oclib/propdef.m ../objc/oclib/protodef.m"
+../objc/oclib/propdef.m ../objc/oclib/protodef.m ../objc/oclib/prdotxpr.m"
 OBJC_SRCS="../../objc/objc1.m ../../objc/lexfiltr.m yacc.m lex.m"
 PLINK_SRCS="../../objc/postlink.m"
 

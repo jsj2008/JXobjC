@@ -1,4 +1,3 @@
-
 /*
  * Portable Object Compiler - Postlink Auxiliary File
  * (c) 1997 David Stes. All rights reserved.

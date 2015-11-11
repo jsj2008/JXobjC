@@ -17,9 +17,9 @@
  */
 
 %{
+
 #include <assert.h>
-#include <stdio.h> /* FILE */
-#include "Object.h" /* Stepstone Object.h assumes #import */
+#include "Object.h"
 #include "OCString.h"
 
 #include "symbol.h"

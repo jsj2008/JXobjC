@@ -1,7 +1,5 @@
-
 /*
  * Portable Object Compiler - PreLink Source File
- * $Id: _predll.c,v 1.1.1.1 2000/06/07 21:09:25 stes Exp $
  */
 
 /*

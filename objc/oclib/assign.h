@@ -1,4 +1,3 @@
-
 /*
  * Copyright (c) 1998 David Stes.
  *
@@ -15,9 +14,12 @@
  * You should have received a copy of the GNU Library General Public License
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
- *
- * $Id: assign.h,v 1.1.1.1 2000/06/07 21:09:25 stes Exp $
  */
+
+#ifndef ASSIGN__H__
+#define ASSIGN__H__
+
+#include "binxpr.h"
 
 @interface Assignment : BinaryExpr
 {
@@ -31,3 +33,5 @@
 - typesynth;
 
 @end
+
+#endif
