@@ -1106,9 +1106,9 @@ propdecl
     ;
 
 syncstmt
-	: atsynchronised '(' identifier ')' compoundstmt
-	{ $$ = mksyncstmt($3, $5); }
-	;
+    : atsynchronised '(' identifier ')' compoundstmt
+    { $$ = mksyncstmt($3, $5); }
+    ;
 
  /* C++ */
 

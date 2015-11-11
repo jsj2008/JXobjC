@@ -167,9 +167,9 @@ static modnode_t newmodnode (Mentry_t me, modnode_t next)
     r              = (modnode_t)AMGR_ralloc (sizeof (struct modnode));
     r->next        = next;
     r->objcmodules = me;
-    AMGR_add_zone (r, sizeof (*r), 1, 1, 0);
-    AMGR_add_zone (&r->objcmodules, sizeof (Mentry_t), 1, 1, 0);
-    AMGR_add_zone (&r->objcmodules, sizeof (Mentry_t), 1, 1, 0);
+    AMGR_add_zone (r, sizeof (*r), YES, YES, NO, NO);
+    AMGR_add_zone (&r->objcmodules, sizeof (Mentry_t), 1, 1, NO, NO);
+    AMGR_add_zone (&r->objcmodules, sizeof (Mentry_t), 1, 1, NO, NO);
     return r;
 }
 
@@ -878,7 +878,7 @@ static void traverse (struct objcrt_useDescriptor * desc)
     /*  Mark this one as processed to break any cycles */
     desc->processed = 1;
 
-    AMGR_add_zone (desc, sizeof (struct objcrt_useDescriptor), 1, 1, 0);
+    AMGR_add_zone (desc, sizeof (struct objcrt_useDescriptor), 1, 1, NO, NO);
 
     /* process each of the pointers in turn */
     for (nxt = desc->uses; *nxt; nxt++)
@@ -979,7 +979,7 @@ static void initcls (id cls)
     if (initlzd (aCls))
         return;
 
-    AMGR_add_zone (aCls, getmeta (aCls)->clsSizInstance, 1, 1, 0);
+    AMGR_add_zone (aCls, getmeta (aCls)->clsSizInstance, 1, 1, NO, NO);
 
 #ifdef OBJC_REFCNT
     if (!isrefcntclass (aCls))
@@ -1021,7 +1021,8 @@ static void initmods (Mentry_t modPtr)
     {
         id * cls = modPtr->modInfo->modClsLst;
 
-        AMGR_add_zone (modPtr->modInfo, sizeof (*modPtr->modInfo), 1, 1, 0);
+        AMGR_add_zone (modPtr->modInfo, sizeof (*modPtr->modInfo), 1, 1, NO,
+                       NO);
 
         if (morethanone (modPtr->modInfo))
         {

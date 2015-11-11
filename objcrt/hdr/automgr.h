@@ -16,9 +16,11 @@ void AMGR_enable ();
 void AMGR_disable ();
 
 void AMGR_add_zone (void * start, size_t length, BOOL isRoot, BOOL isCopy,
-                    BOOL isObject);
+                    BOOL isObject, BOOL isTLS);
 void AMGR_remove_zone (void * location);
 void AMGR_remove_all_zones ();
+
+int AMGR_tss_create (void * tssKey, BOOL isRoot, BOOL isCopy, BOOL isObject);
 
 void * AMGR_alloc (size_t bytes);
 void * AMGR_ralloc (size_t bytes);
