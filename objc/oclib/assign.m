@@ -130,7 +130,6 @@
         gc (')');
         return self;
     }
-    // this does not work, due to expr.m:82 (type == nil is sometimes true)
     else if (rcast)
     {
         [lhs gen];

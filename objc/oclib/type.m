@@ -50,6 +50,47 @@ id t_str;
 id t_sel;
 id t_id;
 
+typedef enum _BASIC_TYPESPECS
+{
+    T_NO,
+    T_VOID,
+    T_CHAR,
+    T_BOOL,
+    T_INT,
+    T_UNS,
+    T_LONG,
+    T_DOUBLE,
+    T_STR,
+    T_SEL,
+    T_ID,
+} BASIC_TYPESPECS;
+
+BASIC_TYPESPECS basicSpecForSpec (id spec)
+{
+
+    if ([spec isEqual:s_void])
+        return T_VOID;
+    else if ([spec isEqual:s_char])
+        return T_CHAR;
+    else if ([spec isEqual:s_bool])
+        return T_BOOL;
+    else if ([spec isEqual:s_int])
+        return T_INT;
+    else if ([spec isEqual:s_uns])
+        return T_UNS;
+    else if ([spec isEqual:s_long])
+        return T_LONG;
+    else if ([spec isEqual:s_double])
+        return T_DOUBLE;
+    else if ([spec isEqual:s_str])
+        return T_STR;
+    else if ([spec isEqual:s_sel])
+        return T_SEL;
+    else if ([spec isEqual:s_id])
+        return T_ID;
+    return T_NO;
+}
+
 @implementation Type
 
 + commontypes
@@ -175,6 +216,29 @@ id t_id;
 }
 
 - decl:aDecl { return [self abstrdecl:(aDecl) ? [aDecl abstrdecl] : nil]; }
+
+- encode
+{
+    id result = [String new];
+    short ptrCount, i, n;
+    BOOL unsignedMod = NO;
+
+    if (decl && [decl isKindOf:Pointer])
+        for (ptrCount = 0; ptrCount < [decl numpointers]; ptrCount++)
+            [result concatSTR:"^"];
+
+    for (i = 0, n = [specs size]; i < n; i++)
+    {
+        id each = [specs at:i];
+        if ([each isKindOf:Symbol])
+        {
+            if (1)
+                ;
+        }
+    }
+
+    return self;
+}
 
 - (BOOL)haslistinit { return haslistinit; }
 
