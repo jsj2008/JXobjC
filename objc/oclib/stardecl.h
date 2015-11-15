@@ -22,7 +22,9 @@
 }
 
 - pointer:aPointer;
+- pointer;
 - decl:aDecl;
+- decl;
 - gen;
 
 @end

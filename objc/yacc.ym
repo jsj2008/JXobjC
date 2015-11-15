@@ -18,13 +18,12 @@
 
 %{
 
-#include <stdlib.h>
 #include <assert.h>
+#include <stdlib.h>
 #include <string.h>
 #include "Object.h"
 #include "Block.h"
 #include "OCString.h"
-
 #include "options.h"
 #include "node.h"
 #include "util.h"
@@ -45,10 +44,8 @@ int yylex() ;
 %token storageclass typedefkeyw typequal externlang
 
 %token cppdirect 
-/* cppdirectives such as c pragmas. unlike poc 1.x we handle this in 2.x */
-/* at the yacc level (instead of dealing with it in the linetag code) */
-/* theoretically, this limits where unrecognized #pragma's may appear */
- 
+/* cppdirectives such as c pragmas. */
+
 %token enumkeyw structkeyw ifkeyw elsekeyw whilekeyw dokeyw forkeyw
 %token switchkeyw casekeyw
 %token defaultkeyw breakkeyw continuekeyw returnkeyw gotokeyw

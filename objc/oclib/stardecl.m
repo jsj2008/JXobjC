@@ -53,6 +53,8 @@
     return self;
 }
 
+- pointer { return pointer; }
+
 - identifier:aName
 {
     [decl identifier:aName];
@@ -64,6 +66,8 @@
     decl = aDecl;
     return self;
 }
+
+- decl { return decl; }
 
 - identifier { return (decl) ? [decl identifier] : nil; }
 

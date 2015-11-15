@@ -14,11 +14,12 @@
  * You should have received a copy of the GNU Library General Public License
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
- *
  */
+/* Copyright (c) 2015 D. Mackay. All rights reserved. */
 
-#include <stdlib.h>
 #include <assert.h>
+#include <ctype.h>
+#include <stdlib.h>
 #include <string.h>
 #include "Object.h"
 #include "Block.h"
@@ -56,9 +57,12 @@ typedef enum _BASIC_TYPESPECS
     T_VOID,
     T_CHAR,
     T_BOOL,
+    T_SHORT,
     T_INT,
     T_UNS,
     T_LONG,
+    T_LONGLONG,
+    T_FLOAT,
     T_DOUBLE,
     T_STR,
     T_SEL,
@@ -220,20 +224,53 @@ BASIC_TYPESPECS basicSpecForSpec (id spec)
 - encode
 {
     id result = [String new];
+    id d      = decl;
+    // clang-format off
+    id p = [decl isKindOf:Pointer] ? decl
+         : [decl isKindOf:StarDecl] ? (d = [decl decl], [decl pointer])
+         : /*_*/ nil;
+    // clang-format on
     short ptrCount, i, n;
     BOOL unsignedMod = NO;
 
-    if (decl && [decl isKindOf:Pointer])
-        for (ptrCount = 0; ptrCount < [decl numpointers]; ptrCount++)
-            [result concatSTR:"^"];
+    printf ("d: %s, p = %s\n", [d str], [p str]);
+
+    for (ptrCount = 0; ptrCount < [p numpointers]; ptrCount++)
+        [result concatSTR:"^"];
 
     for (i = 0, n = [specs size]; i < n; i++)
     {
         id each = [specs at:i];
+        printf ("Each: %s\n", [each str]);
+
         if ([each isKindOf:Symbol])
         {
-            if (1)
-                ;
+            if (basicSpecForSpec (each) == T_UNS)
+            {
+                unsignedMod = YES;
+                continue;
+            }
+
+            switch (basicSpecForSpec (each))
+            {
+            case T_VOID: [result concatSTR:"v"]; break;
+            case T_CHAR: [result concatSTR:"c"]; break;
+            case T_SHORT: [result concatSTR:"s"]; break;
+            case T_INT: [result concatSTR:"i"]; break;
+            case T_LONG: [result concatSTR:"l"]; break;
+            case T_LONGLONG: [result concatSTR:"q"]; break;
+            case T_FLOAT: [result concatSTR:"f"]; break;
+            case T_DOUBLE: [result concatSTR:"d"]; break;
+            case T_STR: [result concatSTR:"*"]; break;
+            case T_ID: [result concatSTR:"@"]; break;
+            case T_SEL: [result concatSTR:":"]; break;
+            }
+
+            if (unsignedMod)
+            {
+                short endLoc = [result size] - 1;
+                [result charAt:endLoc put:toupper ([result charAt:endLoc])];
+            }
         }
     }
 
@@ -457,6 +494,8 @@ BASIC_TYPESPECS basicSpecForSpec (id spec)
 
 - gen
 {
+    [self encode];
+
     if (specs)
         [specs elementsPerform:@selector (gen)];
     if (decl)
@@ -468,6 +507,7 @@ BASIC_TYPESPECS basicSpecForSpec (id spec)
 
 - gendef:sym
 {
+    [self encode];
     o_nolinetags++;
     if (specs)
         [specs elementsPerform:@selector (gen)];
