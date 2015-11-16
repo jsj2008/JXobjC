@@ -554,6 +554,30 @@ static void assign (objstr_t self, char * s, int n)
     return self;
 }
 
+- vsprintf:(STR)format:(OC_VA_LIST *)ap
+{
+    char aBuffer[SPRINTF_BUFSIZE];
+
+    if (vsnprintf (aBuffer, SPRINTF_BUFSIZE, format, *ap) >= SPRINTF_BUFSIZE)
+    {
+        [OutOfBounds signal];
+        return nil;
+    }
+
+    return [self concatSTR:aBuffer];
+}
+
+- sprintf:(STR)format, ...
+{
+    id newString;
+
+    OC_VA_LIST ap;
+    OC_VA_START (ap, format);
+    newString = [self vsprintf:format:&ap];
+    OC_VA_END (ap);
+    return newString;
+}
+
 /*****************************************************************************
  *
  * Format Conversions

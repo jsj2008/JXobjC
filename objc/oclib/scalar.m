@@ -232,39 +232,29 @@
     return self;
 }
 
+- (STR)str
+{
+    static char buffer[255] = {0};
+
+    if (type == t_int)
+        sprintf (buffer, "%i", u.un_int);
+    if (type == t_char)
+        sprintf (buffer, "%c", u.un_char);
+    if (type == t_long)
+        sprintf (buffer, "%li", u.un_long);
+    if (type == t_uns)
+        sprintf (buffer, "%u", u.un_uns);
+    if (type == t_double)
+        sprintf (buffer, "%g", u.un_double);
+    if (type == t_str)
+        sprintf (buffer, "%s", u.un_str);
+
+    return buffer ?: ([self error:"don't know how to format scalar"], 0);
+}
+
 - printOn:(IOD)x
 {
-    if (type == t_int)
-    {
-        fprintf (x, "%i", u.un_int);
-        return self;
-    }
-    if (type == t_char)
-    {
-        fprintf (x, "%c", u.un_char);
-        return self;
-    }
-    if (type == t_long)
-    {
-        fprintf (x, "%li", u.un_long);
-        return self;
-    }
-    if (type == t_uns)
-    {
-        fprintf (x, "%u", u.un_uns);
-        return self;
-    }
-    if (type == t_double)
-    {
-        fprintf (x, "%g", u.un_double);
-        return self;
-    }
-    if (type == t_str)
-    {
-        fprintf (x, "%s", u.un_str);
-        return self;
-    }
-    [self error:"don't know how to print scalar"];
+    fprintf (x, "%s", [self str]);
     return self;
 }
 

@@ -231,9 +231,15 @@ BASIC_TYPESPECS basicSpecForSpec (id spec)
          : /*_*/ nil;
     // clang-format on
     short ptrCount, i, n;
-    BOOL unsignedMod = NO;
+    BOOL unsignedMod = NO, array = NO;
 
     printf ("d: %s, p = %s\n", [d str], [p str]);
+
+    if ([d isKindOf:ArrayDecl])
+        array = YES;
+
+    if (array)
+        [result sprintf:"[%d", [[d expr] asInt]];
 
     for (ptrCount = 0; ptrCount < [p numpointers]; ptrCount++)
         [result concatSTR:"^"];
@@ -273,6 +279,11 @@ BASIC_TYPESPECS basicSpecForSpec (id spec)
             }
         }
     }
+
+    if (array)
+        [result concatSTR:"]"];
+
+    printf ("Result: <%s>\n", [result str]);
 
     return self;
 }
