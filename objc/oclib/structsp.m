@@ -138,6 +138,18 @@ id curstruct;
 
 - (BOOL)isselptr { return NO; }
 
+- encode
+{
+    if (comptypes)
+    {
+        id result = [String sprintf:"{%s=", [name str]];
+        [comptypes do:{ : each | [result concat:[each encode]]}];
+        return [result concatSTR:"}"];
+    }
+    else
+        return [[trlunit lookupstruct:self] encode];
+}
+
 - lookupcomp:c { return (compdic) ? [compdic atKey:c] : nil; }
 
 - defcomp:sym astype:t

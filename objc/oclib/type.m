@@ -233,8 +233,6 @@ BASIC_TYPESPECS basicSpecForSpec (id spec)
     short ptrCount, i, n;
     BOOL unsignedMod = NO, array = NO;
 
-    printf ("d: %s, p = %s\n", [d str], [p str]);
-
     if ([d isKindOf:ArrayDecl])
         array = YES;
 
@@ -247,10 +245,12 @@ BASIC_TYPESPECS basicSpecForSpec (id spec)
     for (i = 0, n = [specs size]; i < n; i++)
     {
         id each = [specs at:i];
-        printf ("Each: %s\n", [each str]);
 
         if ([each isKindOf:Symbol])
         {
+            BOOL found = NO;
+            id potentialType;
+
             if (basicSpecForSpec (each) == T_UNS)
             {
                 unsignedMod = YES;
@@ -259,18 +259,54 @@ BASIC_TYPESPECS basicSpecForSpec (id spec)
 
             switch (basicSpecForSpec (each))
             {
-            case T_VOID: [result concatSTR:"v"]; break;
-            case T_CHAR: [result concatSTR:"c"]; break;
-            case T_SHORT: [result concatSTR:"s"]; break;
-            case T_INT: [result concatSTR:"i"]; break;
-            case T_LONG: [result concatSTR:"l"]; break;
-            case T_LONGLONG: [result concatSTR:"q"]; break;
-            case T_FLOAT: [result concatSTR:"f"]; break;
-            case T_DOUBLE: [result concatSTR:"d"]; break;
-            case T_STR: [result concatSTR:"*"]; break;
-            case T_ID: [result concatSTR:"@"]; break;
-            case T_SEL: [result concatSTR:":"]; break;
+            case T_VOID:
+                [result concatSTR:"v"];
+                found = YES;
+                break;
+            case T_CHAR:
+                [result concatSTR:"c"];
+                found = YES;
+                break;
+            case T_SHORT:
+                [result concatSTR:"s"];
+                found = YES;
+                break;
+            case T_INT:
+                [result concatSTR:"i"];
+                found = YES;
+                break;
+            case T_LONG:
+                [result concatSTR:"l"];
+                found = YES;
+                break;
+            case T_LONGLONG:
+                [result concatSTR:"q"];
+                found = YES;
+                break;
+            case T_FLOAT:
+                [result concatSTR:"f"];
+                found = YES;
+                break;
+            case T_DOUBLE:
+                [result concatSTR:"d"];
+                found = YES;
+                break;
+            case T_STR:
+                [result concatSTR:"*"];
+                found = YES;
+                break;
+            case T_ID:
+                [result concatSTR:"@"];
+                found = YES;
+                break;
+            case T_SEL:
+                [result concatSTR:":"];
+                found = YES;
+                break;
             }
+
+            if (!found && (potentialType = [trlunit lookuptype:each]))
+                [result concat:[potentialType encode]];
 
             if (unsignedMod)
             {
@@ -278,14 +314,16 @@ BASIC_TYPESPECS basicSpecForSpec (id spec)
                 [result charAt:endLoc put:toupper ([result charAt:endLoc])];
             }
         }
+        else if ([each isKindOf:StructSpec])
+        {
+            [result concat:[each encode]];
+        }
     }
 
     if (array)
         [result concatSTR:"]"];
 
-    printf ("Result: <%s>\n", [result str]);
-
-    return self;
+    return result;
 }
 
 - (BOOL)haslistinit { return haslistinit; }
@@ -505,8 +543,6 @@ BASIC_TYPESPECS basicSpecForSpec (id spec)
 
 - gen
 {
-    [self encode];
-
     if (specs)
         [specs elementsPerform:@selector (gen)];
     if (decl)
@@ -518,7 +554,6 @@ BASIC_TYPESPECS basicSpecForSpec (id spec)
 
 - gendef:sym
 {
-    [self encode];
     o_nolinetags++;
     if (specs)
         [specs elementsPerform:@selector (gen)];
