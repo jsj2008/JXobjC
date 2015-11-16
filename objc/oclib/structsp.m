@@ -138,17 +138,26 @@ id curstruct;
 
 - (BOOL)isselptr { return NO; }
 
-- encode
+- encode:nested
 {
-    if (comptypes)
+    if (nested &&
+        ([nested isEqual:self] || [[trlunit lookupstruct:self] isEqual:nested]))
+    {
+        return [String sprintf:"{%s}", [name str]];
+    }
+    else if (comptypes)
     {
         id result = [String sprintf:"{%s=", [name str]];
-        [comptypes do:{ : each | [result concat:[each encode]]}];
+
+        [comptypes do:{ : each | [result concat:[each encode:self]]}];
+
         return [result concatSTR:"}"];
     }
     else
-        return [[trlunit lookupstruct:self] encode];
+        return [[trlunit lookupstruct:self] encode:self];
 }
+
+- encode { return [self encode:nil]; }
 
 - lookupcomp:c { return (compdic) ? [compdic atKey:c] : nil; }
 

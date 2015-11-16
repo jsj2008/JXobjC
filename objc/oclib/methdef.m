@@ -107,6 +107,8 @@
     return self;
 }
 
+- encode { return [method encode]; }
+
 - prototype
 {
     if (!curclassdef)

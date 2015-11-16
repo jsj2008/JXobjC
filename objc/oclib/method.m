@@ -16,14 +16,13 @@
  * Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
  */
 
+#include <assert.h>
 #include <stdlib.h>
 #include <string.h>
-#include <assert.h>
 #include "Block.h"
 #include "Object.h"
 #include "OCString.h"
 #include "OrdCltn.h"
-#include "node.h"
 #include "decl.h"
 #include "keywdecl.h"
 #include "method.h"
@@ -361,6 +360,38 @@
         if (ksel)
             [[ksel lastElement] warnforwithmethod];
     }
+    return self;
+}
+
+- encode
+{
+    id result = [String new];
+
+    if (restype)
+    {
+        [result concat:[restype encode]];
+    }
+    else
+    {
+        [result concatSTR:"@"];
+    }
+
+    if (ksel)
+    {
+        int i, n;
+
+        for (i = 0, n = [ksel size]; i < n; i++)
+        {
+            [result concat:[[ksel at:i] encode]];
+        }
+    }
+
+    return result;
+}
+
+- gentypeencoding
+{
+    gf ("\"%s\"", [[self encode] str]);
     return self;
 }
 

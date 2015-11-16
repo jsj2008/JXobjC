@@ -445,9 +445,9 @@ static void concat_self (objstr_t self)
 - concat:aString
 {
     if (aString == self)
-    {
         concat_self (&value);
-    }
+    else if (!aString)
+        return self;
     else
     {
         [self concatSTR:[aString str]];

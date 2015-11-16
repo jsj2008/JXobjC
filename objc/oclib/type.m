@@ -38,6 +38,8 @@
 #include "var.h"
 #include "scalar.h"
 #include "trlunit.h"
+#include "identxpr.h"
+#include "constxpr.h"
 
 id t_unknown;
 id t_void;
@@ -221,7 +223,7 @@ BASIC_TYPESPECS basicSpecForSpec (id spec)
 
 - decl:aDecl { return [self abstrdecl:(aDecl) ? [aDecl abstrdecl] : nil]; }
 
-- encode
+- encode:nested
 {
     id result = [String new];
     id d      = decl;
@@ -233,11 +235,18 @@ BASIC_TYPESPECS basicSpecForSpec (id spec)
     short ptrCount, i, n;
     BOOL unsignedMod = NO, array = NO;
 
+    if ([self isid] || [self isrefcounted])
+        return [result sprintf:"@"];
+
     if ([d isKindOf:ArrayDecl])
         array = YES;
 
-    if (array)
+    if (array && [[d expr] isKindOf:ConstantExpr])
         [result sprintf:"[%d", [[d expr] asInt]];
+    else if (array && [[d expr] isKindOf:IdentifierExpr])
+        [result sprintf:"[%s", [[d expr] str]];
+    else
+        [result sprintf:"[1"];
 
     for (ptrCount = 0; ptrCount < [p numpointers]; ptrCount++)
         [result concatSTR:"^"];
@@ -325,6 +334,8 @@ BASIC_TYPESPECS basicSpecForSpec (id spec)
 
     return result;
 }
+
+- encode { return [self encode:nil]; }
 
 - (BOOL)haslistinit { return haslistinit; }
 

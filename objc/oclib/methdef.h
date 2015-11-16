@@ -45,6 +45,7 @@
 - method;
 - selector;
 
+- encode;
 - prototype;
 - synth;
 - gen;

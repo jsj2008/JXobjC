@@ -103,6 +103,7 @@
 #include "gatrdecl.h"
 #include "propdef.h"
 #include "protodef.h"
+#include "encxpr.h"
 
 void procextdef (id def)
 {
@@ -1160,7 +1161,12 @@ id mkdatadef (id datadef, id specs, id decl, id initializer)
     return datadef;
 }
 
-id mkencodeexpr (id name) { return nil; }
+id mkencodeexpr (id name)
+{
+    id r = [Encode new];
+    [r setTypeForEncoding:name];
+    return r;
+}
 
 id mkenumspec (id keyw, id name, id lb, id list, id rb)
 {

@@ -82,6 +82,8 @@
     return self;
 }
 
+- encode { return [[self type] ?: t_id encode]; }
+
 - genparm
 {
     id x = (hide) ? hide : arg;
