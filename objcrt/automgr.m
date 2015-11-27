@@ -18,10 +18,10 @@ typedef struct _zoneTblEnt
 {
     void * start;
     size_t length : 26;
-    /* If it is root, then it is never un-marked.
-    * If it is copy, then it is copied for new threads.
-    * If it is object, we call its ARC_dealloc routine. */
-    BOOL marked : 1, traced : 1, tls : 1, root : 1, copy : 1, object : 1;
+    /* If it is root, then it is treated as always being marked.
+     * As such, it will be assumed to be visible to all threads.
+     * If it is object, we call its ARC_dealloc routine instead of free(). */
+    BOOL marked : 1, traced : 1, tls : 1, root : 1, object : 1;
 
     struct _zoneTblEnt * next;
 } zoneTblEnt;
@@ -34,6 +34,8 @@ typedef struct _Automgr
     void *stkBegin, *stkEnd;
     zoneTblEnt * zoneTbl;
 } Automgr;
+
+static zoneTblEnt * globalZoneTbl = 0;
 
 static size_t wordSize = sizeof (uintptr_t);
 static pthread_key_t mgrForThread;
@@ -55,26 +57,9 @@ Automgr * AMGR_init (void * stkBegin)
     return mgr;
 }
 
-void * AMGR_init_pre_thrd (void * stkBegin)
+void AMGR_init_thrd (void * stkBegin)
 {
     Automgr * mgr = AMGR_init (stkBegin);
-    zoneTblEnt ** it;
-
-    for (it = &((Automgr *)ThrdMgr ())->zoneTbl; *it != 0; it = &(*it)->next)
-    {
-        if ((*it)->copy)
-        {
-            zoneTblEnt * cpy = AM_alloc (sizeof *cpy);
-            *cpy             = **it;
-            cpy->next        = mgr->zoneTbl;
-            mgr->zoneTbl     = cpy;
-        }
-    }
-    return mgr;
-}
-
-void AMGR_init_post_thrd (void * mgr)
-{
     pthread_setspecific (mgrForThread, mgr);
     AMGR_enable (mgr);
 }
@@ -100,7 +85,6 @@ void AMGR_add_zone (void * start, size_t length, BOOL isRoot, BOOL isCopy,
     newEntry->start  = start;
     newEntry->length = length;
     newEntry->root   = isRoot;
-    newEntry->copy   = isCopy;
     newEntry->object = isObject;
     newEntry->tls    = isTLS;
     newEntry->marked = NO;
@@ -165,12 +149,12 @@ void _AMGR_tss_destructor (void * location)
     AMGR_remove_zone (location);
 }
 
-int AMGR_tss_create (void * tssKey, BOOL isRoot, BOOL isCopy, BOOL isObject)
+int AMGR_tss_create (void * tssKey, BOOL isRoot)
 {
     int result = pthread_key_create (tssKey, _AMGR_tss_destructor);
     if (!result)
     {
-        AMGR_add_zone (tssKey, sizeof *tssKey, isRoot, isCopy, isObject, YES);
+        AMGR_add_zone (tssKey, sizeof *tssKey, isRoot, NO, NO, YES);
     }
     return result;
 }
@@ -238,13 +222,19 @@ void AMGR_free (void * location)
 }
 
 /* This method will, if `location' matches the address of a zone,
- * mark it.
- * Should this check if location falls within the range of a zone, or
- * just equality? */
+ * mark it. */
 zoneTblEnt * AMGR_ptr_for_address (uintptr_t location)
 {
     zoneTblEnt ** it;
 
+    for (it = &globalZoneTbl; *it != 0; it = &(*it)->next)
+    {
+        if ((*it)->start == (void *)location)
+        {
+            (*it)->marked = YES;
+            return *it;
+        }
+    }
     for (it = &((Automgr *)ThrdMgr ())->zoneTbl; *it != 0; it = &(*it)->next)
     {
         if ((*it)->start == (void *)location)
@@ -253,6 +243,7 @@ zoneTblEnt * AMGR_ptr_for_address (uintptr_t location)
             return *it;
         }
     }
+
     return 0;
 }
 
@@ -358,10 +349,7 @@ void AMGR_delete (zoneTblEnt * toFree)
 {
     void * loc;
 
-    if (toFree->tls)
-        loc = pthread_getspecific (*(pthread_key_t *)toFree->start);
-    else
-        loc = toFree->start;
+    loc = toFree->start;
 
     if (toFree->object)
     {
@@ -372,8 +360,6 @@ void AMGR_delete (zoneTblEnt * toFree)
 
         free (loc);
     }
-    if (toFree->tls)
-        free (toFree->start);
 }
 
 void AMGR_sweep ()

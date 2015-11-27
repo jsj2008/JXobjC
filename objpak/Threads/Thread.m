@@ -1,5 +1,6 @@
 /* Copyright (c) 2015 D. Mackay. All rights reserved. */
 
+#import "automgr.h"
 #import "Block.h"
 #import "Exceptn.h"
 #import "Thread.h"
@@ -10,7 +11,7 @@
 + initialize
 {
     [super initialize];
-    pthread_key_create (&currentThread, 0);
+    AMGR_tss_create (&currentThread, 1);
     mainThread = [[Thread alloc] _initAsMainThread];
     pthread_setspecific (currentThread, mainThread);
     return self;
@@ -68,8 +69,9 @@
     pthread_setspecific (currentThread, thrd);
 }
 
-static void * _threadStart (Thread * thread)
+static void * _threadStart2 (Thread * thread)
 {
+
     [Thread _setCurrentThread:thread];
     [thread setIsExecuting:YES];
     [
@@ -83,6 +85,14 @@ static void * _threadStart (Thread * thread)
     iddecref ((id)thread);
     thread = nil;
     return 0;
+}
+
+static void * _threadStart (Thread * thread)
+{
+    void * iGetStackBase = (void *)0;
+
+    AMGR_init_thrd (&iGetStackBase);
+    return _threadStart2 (thread);
 }
 
 - (void)start
