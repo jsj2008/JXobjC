@@ -1785,7 +1785,7 @@ static void freeDispTable (struct objcrt_slt * self)
     /* in any case, don't free the statically (compiler) allocated ones */
 }
 
-static void addnstmeth (Cls_t src, Cls_t dst)
+static void addnstmeths (Cls_t src, Cls_t dst)
 {
     struct objcrt_slt * n = newDispTable (dst->clsSizDict + src->clsSizDict);
     copyDispTable (n, dst->clsDispTable, dst->clsSizDict);
@@ -1825,11 +1825,28 @@ void addMethods (id isrc, id idst)
                     dstName];
     }
 
-    addnstmeth (src, dst);
-    addnstmeth (getmeta (src), getmeta (dst));
+    addnstmeths (src, dst);
+    addnstmeths (getmeta (src), getmeta (dst));
 
     /* flush message caches */
     flushCache ();
+}
+
+void replaceMethod (id destn, SEL sel, IMP imp, TYP typ)
+{
+    Cls_t cls = (Cls_t)destn;
+    long n;
+    struct objcrt_slt * smt = cls->clsDispTable;
+
+    for (n = 0; n < cls->clsSizDict; n++, smt++)
+    {
+        /* selectors can be compared with '==' */
+        if (smt->_cmd == sel)
+        {
+            smt->_imp = imp;
+            smt->_typ = typ;
+        }
+    }
 }
 
 /*****************************************************************************
