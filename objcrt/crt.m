@@ -33,6 +33,10 @@ static pthread_spinlock_t rcLock;
 static pthread_mutex_t cLock;
 static pthread_mutexattr_t recursiveAttr;
 
+@protocol FinalisableObject
+- finalise;
+@end
+
 #define OBJCRT_BOEHM 1
 
 #ifdef OBJCRT_BOEHM
@@ -1734,6 +1738,31 @@ void EXPORT dbg (char * fmt, ...)
     }
 }
 
+ocMethod getInstanceMethod (id cls, SEL sel)
+{
+    Cls_t wCls;
+    id ncls = cls; /* working class */
+
+    do
+    {
+        long n;
+        ocMethod methDesc;
+
+        wCls     = getcls (ncls);
+        methDesc = wCls->clsDispTable;
+
+        for (n = 0; n < wCls->clsSizDict; n++, methDesc++)
+        {
+            if (sel == methDesc->_cmd)
+            {
+                return methDesc;
+            }
+        }
+    } while ((ncls = wCls->clsSuper));
+
+    return 0;
+}
+
 /*****************************************************************************
  *
  * Adding Methods (as for Categories)
@@ -1810,9 +1839,9 @@ void addMethods (id isrc, id idst)
     flushCache ();
 }
 
-void replaceMethod (id destn, SEL sel, IMP imp, TYP typ)
+int replaceMethod (id destn, SEL sel, IMP imp, TYP typ)
 {
-    Cls_t cls = (Cls_t)destn;
+    Cls_t cls = getcls (destn);
     long n;
     struct objcrt_slt * smt = cls->clsDispTable;
 
@@ -1823,8 +1852,17 @@ void replaceMethod (id destn, SEL sel, IMP imp, TYP typ)
         {
             smt->_imp = imp;
             smt->_typ = typ;
+            return 0;
         }
     }
+    return 1;
+}
+
+void exchangeImplementations (ocMethod one, ocMethod two)
+{
+    IMP tmp   = two->_imp;
+    two->_imp = one->_imp;
+    one->_imp = tmp;
 }
 
 /*****************************************************************************

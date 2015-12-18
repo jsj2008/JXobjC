@@ -169,12 +169,12 @@ typedef struct objcrt_shared * Cls_t; /* use only for impl */
  * Must match what the compiler (objc or objcc) is emitting
  */
 
-struct objcrt_slt
+typedef struct objcrt_slt
 {
     SEL _cmd;
     TYP _typ;
     IMP _imp;
-};
+} * ocMethod;
 
 /* Use Descriptor for automatic initialization (as opposed to postLink).
  * Should match struct useDescriptor emitted by compiler.
@@ -316,6 +316,9 @@ void linkclass (id aclass);
 void unlinkclass (id aclass);
 
 void addMethods (id src, id dst);
+ocMethod getInstanceMethod (id cls, SEL sel);
+int replaceMethod (id destn, SEL sel, IMP imp, TYP typ);
+void exchangeImplementations (ocMethod one, ocMethod two);
 
 void poseAs (id posing, id target);
 id swapclass (id self, id target);

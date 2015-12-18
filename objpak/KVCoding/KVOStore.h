@@ -92,7 +92,7 @@
 
 + (void)removeObserver:observer forKeyPath:keyPath ofObject:object;
 + (void)removeObserver:observer;
-+ (void)removeObserversForObject:object;
++ (void)removeObserversOfObject:object;
 
 + (void)sendKVOForObject:object
                 property:propStr

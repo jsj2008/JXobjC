@@ -51,6 +51,7 @@
 - free;
 - increfs;
 - decrefs;
+- finalise;
 
 - self;
 - yourself;

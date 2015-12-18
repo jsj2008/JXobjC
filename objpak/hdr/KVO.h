@@ -13,6 +13,4 @@
 
 - (void)removeObserver:observer forKeyPath:keyPath;
 
-- (void)sendKVOForProperty:propStr oldValue:oldValue newValue:newValue;
-
 @end

@@ -218,4 +218,15 @@
         }];
 }
 
++ (void)removeObserversOfObject:object
+{
+    [self removeObserversByObserverFilter:{ : c | [c matchesRoot:object]}];
+}
+
++ (void)removeObserver:observer
+{
+    [self
+        removeObserversByObserverFilter:{ : c | [c matchesObserver:observer]}];
+}
+
 @end
