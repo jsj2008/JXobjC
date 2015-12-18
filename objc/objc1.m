@@ -34,6 +34,8 @@
 #include "util.h"
 #include "symbol.h"
 
+extern int GC_dont_gc;
+
 void printversion (void)
 {
     printf ("%s\n", OBJCVERSION);
@@ -699,7 +701,7 @@ void closeoutfile (void)
 
 int main (int argc, char * argv[])
 {
-    AMGR_disable ();
+    GC_dont_gc = 1;
 
     /* define early since setoptions() modifies this object */
     o_mainfun = "main";

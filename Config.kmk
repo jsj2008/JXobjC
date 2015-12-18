@@ -7,7 +7,7 @@ BOEHM_INCS = /usr/local
 
 INTERNAL_INCS = $(PATH_ROOT)/objcrt $(PATH_ROOT)/objpak \
   $(PATH_ROOT)/objc/oclib $(BOEHM_INCS)
-INTERNAL_LIBS = $(objcrt_1_TARGET) $(objpak_1_TARGET)
+INTERNAL_LIBS = $(objcrt_1_TARGET) $(objpak_1_TARGET) gc
 
 TEMPLATE_OBJC = Objective-C
 TEMPLATE_OBJC_TOOL = PCPP

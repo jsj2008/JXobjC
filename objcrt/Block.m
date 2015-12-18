@@ -120,8 +120,8 @@ static id defaultHandler;
 {
     if (!defaultHandler)
     {
-        AMGR_add_zone (&errorHandler, sizeof (id), YES, YES, NO, NO);
-        AMGR_add_zone (&defaultHandler, sizeof (id), YES, YES, NO, NO);
+        // AMGR_add_zone (&errorHandler, sizeof (id), YES, YES, NO, NO);
+        // AMGR_add_zone (&defaultHandler, sizeof (id), YES, YES, NO, NO);
         defaultHandler = newBlock (2, (IMP)err_fun, NULL, NULL);
     }
     if (errorHandler)

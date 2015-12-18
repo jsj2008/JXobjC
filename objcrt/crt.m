@@ -33,7 +33,9 @@ static pthread_spinlock_t rcLock;
 static pthread_mutex_t cLock;
 static pthread_mutexattr_t recursiveAttr;
 
-#if OBJCRT_BOEHM
+#define OBJCRT_BOEHM 1
+
+#ifdef OBJCRT_BOEHM
 #include <gc.h> /* _alloc vectors to use Hans-J. Boehm gc */
 #endif
 
@@ -142,11 +144,7 @@ static BOOL isminmaxsel (SEL s) { return (minsel <= s) && (s <= maxsel); }
  */
 
 #ifndef OBJCRT_NOSHARED
-//#if OBJCRT_SCOPE_OBJCMODULES_EXTERN
 extern Mentry_t _objcModules;
-//#else
-// Mentry_t _objcModules;
-//#endif
 #endif
 
 /* list for when loading shared objects (using dlopen() or similar)
@@ -164,18 +162,14 @@ static modnode_t modnodelist;
 static modnode_t newmodnode (Mentry_t me, modnode_t next)
 {
     modnode_t r;
-    r              = (modnode_t)AMGR_ralloc (sizeof (struct modnode));
+    r              = (modnode_t)OC_Malloc (sizeof (struct modnode));
     r->next        = next;
     r->objcmodules = me;
-    AMGR_add_zone (r, sizeof (*r), YES, YES, NO, NO);
-    AMGR_add_zone (&r->objcmodules, sizeof (Mentry_t), 1, 1, NO, NO);
-    AMGR_add_zone (&r->objcmodules, sizeof (Mentry_t), 1, 1, NO, NO);
     return r;
 }
 
 static void freemodnode (modnode_t * n, modnode_t m)
 {
-    AMGR_remove_zone (m);
     *n = m->next;
     OC_Free (m);
 }
@@ -198,11 +192,7 @@ void EXPORT * OC_Malloc (size_t nBytes)
     if (nBytes > 32 * 1024)
         dbg ("OC_Malloc call for %i bytes\n", nBytes);
 
-#if OBJCRT_BOEHM
-    data = GC_malloc (nBytes);
-#else
-    data               = AMGR_alloc (nBytes);
-#endif
+    data = GC_MALLOC (nBytes);
 
     /* signal the OutOfMemory exception */
     if (!data)
@@ -219,11 +209,7 @@ void EXPORT * OC_MallocAtomic (size_t nBytes)
     if (nBytes > 32 * 1024)
         dbg ("OC_MallocAtomic call for %i bytes\n", nBytes);
 
-#if OBJCRT_BOEHM
     data = GC_malloc_atomic (nBytes);
-#else
-    data               = AMGR_alloc (nBytes);
-#endif
 
     /* signal the OutOfMemory exception */
     if (!data)
@@ -235,7 +221,7 @@ void EXPORT * OC_Calloc (size_t nBytes)
 {
     char * p;
 
-    p = (char *)AMGR_calloc (1, nBytes);
+    p = (char *)GC_MALLOC (nBytes);
 
     return (void *)p;
 }
@@ -248,11 +234,7 @@ void EXPORT * OC_Realloc (void * data, size_t nBytes)
     if (nBytes > 32 * 1024)
         dbg ("OC_Realloc call for %i bytes\n", nBytes);
 
-#if OBJCRT_BOEHM
-    data = GC_realloc (data, nBytes);
-#else
-    data = AMGR_realloc (data, nBytes);
-#endif
+    data = GC_REALLOC (data, nBytes);
 
     /* signal the OutOfMemory exception */
     if (!data)
@@ -262,10 +244,8 @@ void EXPORT * OC_Realloc (void * data, size_t nBytes)
 
 void EXPORT * OC_Free (void * data)
 {
-#if OBJCRT_BOEHM
+#ifdef OBJCRT_BOEHM
 /* do not call GC_free */
-#else
-    AMGR_free (data);
 #endif
     return NULL;
 }
@@ -377,6 +357,15 @@ id EXPORT iddecref (id e)
     return nil;
 }
 
+static void gcfinalise (GC_PTR obj, GC_PTR env) { [(id)obj finalise]; }
+
+static void * gcoalloc (unsigned int aSize)
+{
+    id ptr = GC_malloc (aSize);
+    GC_register_finalizer (ptr, gcfinalise, 0, 0, 0);
+    return ptr;
+}
+
 static id nstalloc (id aClass, unsigned int nBytes)
 {
     id anObject;
@@ -387,9 +376,10 @@ static id nstalloc (id aClass, unsigned int nBytes)
     aSize = nstsize (aClass) + nBytes;
 
 #ifndef OTBCRT
-    anObject = (id)AMGR_oalloc (aSize);
+
+    anObject = gcoalloc (aSize);
 #else
-    anObject      = (id)OC_Malloc (sizeof (struct OTB));
+    anObject           = (id)OC_Malloc (sizeof (struct OTB));
     anObject->ptr = (struct _PRIVATE *)OC_Calloc (aSize);
     linkotb (aClass, anObject, aClass->nextinst);
 #endif
@@ -410,7 +400,7 @@ static id nstcopy (id anObject, unsigned int nBytes)
     aSize = nstsize (aClass) + nBytes;
 
 #ifndef OTBCRT
-    newObject = (id)AMGR_oalloc (aSize);
+    newObject = gcoalloc (aSize);
     p         = (char *)newObject;
     q         = (char *)anObject;
 #else
@@ -433,10 +423,12 @@ static id nstdealloc (id anObject)
 {
     setisa (anObject, nil);
     pthread_mutex_destroy (_LOCK (anObject));
-    OC_Free (_LOCK (anObject));
+    free (_LOCK (anObject));
 
 #ifndef OTBCRT
-    AMGR_free (anObject);
+
+/* AMGR_free (anObject); */
+
 #else
     unlinkotb (anObject);
     OC_Free (anObject->ptr);
@@ -448,11 +440,7 @@ static id nstdealloc (id anObject)
 
 id (*JX_alloc) (id, unsigned int) = nstalloc;
 id (*JX_copy) (id, unsigned int) = nstcopy;
-#if OBJCRT_BOEHM
-id (*JX_dealloc) (id); /* NULL, nothing to call */
-#else
 id (*JX_dealloc) (id) = nstdealloc;
-#endif
 #if 0
 id (*JX_realloc) (id, unsigned int);	/* clash IRIX 6.2 and not used */
 #endif
@@ -878,8 +866,6 @@ static void traverse (struct objcrt_useDescriptor * desc)
     /*  Mark this one as processed to break any cycles */
     desc->processed = 1;
 
-    AMGR_add_zone (desc, sizeof (struct objcrt_useDescriptor), 1, 1, NO, NO);
-
     /* process each of the pointers in turn */
     for (nxt = desc->uses; *nxt; nxt++)
     {
@@ -979,8 +965,6 @@ static void initcls (id cls)
     if (initlzd (aCls))
         return;
 
-    AMGR_add_zone (aCls, getmeta (aCls)->clsSizInstance, 1, 1, NO, NO);
-
 #ifdef OBJC_REFCNT
     if (!isrefcntclass (aCls))
     {
@@ -1020,9 +1004,6 @@ static void initmods (Mentry_t modPtr)
     for (; modPtr->modInfo; modPtr++)
     {
         id * cls = modPtr->modInfo->modClsLst;
-
-        AMGR_add_zone (modPtr->modInfo, sizeof (*modPtr->modInfo), 1, 1, NO,
-                       NO);
 
         if (morethanone (modPtr->modInfo))
         {
@@ -1107,7 +1088,6 @@ int EXPORT JX_objcInitNoShared (Mentry_t _objcModules,
     }
     else
     {
-        AMGR_disable ();
 
         msgiods ();
 
@@ -1142,8 +1122,6 @@ int EXPORT JX_objcInitNoShared (Mentry_t _objcModules,
          */
 
         objcinitflag = YES;
-
-        AMGR_enable ();
 
         /* Stepstone objcc returns maxSelector, probably not used */
         return 0;

@@ -157,9 +157,6 @@
         fatal ("no initialization call defined (use -init)");
     }
 
-    gs ((o_cplus) ? "extern \"C\"" : "extern");
-    gs ("void AMGR_main_init (void * stkBegin);\n");
-
     if (o_filer)
     {
         gs ((o_cplus) ? "extern \"C\"" : "extern");
@@ -175,9 +172,6 @@
         [datadefspecs elementsPerform:@selector (gen)];
     [decl gen];
     gs ("\n{\n");
-
-    gs ("void * iGetStackBase = (void *)0;\n");
-    gs ("AMGR_main_init(&iGetStackBase);\n");
 
     if (o_filer)
     {

@@ -11,7 +11,7 @@
 + initialize
 {
     [super initialize];
-    AMGR_tss_create (&currentThread, 1);
+    pthread_key_create (&currentThread, 0);
     mainThread = [[Thread alloc] _initAsMainThread];
     pthread_setspecific (currentThread, mainThread);
     return self;
@@ -78,20 +78,17 @@ static void * _threadStart2 (Thread * thread)
         {
             thread->_return = [thread main];
         } ifError:
-          { :msg :rcv | printf("Exception in thread main method.\n");
+          { :rcv :err | printf("Exception in thread main method!\n");
           }];
     [thread setIsExecuting:NO];
     [thread setIsFinished:YES];
-    iddecref ((id)thread);
     thread = nil;
     return 0;
 }
 
 static void * _threadStart (Thread * thread)
 {
-    void * iGetStackBase = (void *)0;
-
-    AMGR_init_thrd (&iGetStackBase);
+    /* void * iGetStackBase = (void *)0; */
     return _threadStart2 (thread);
 }
 

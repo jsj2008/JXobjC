@@ -77,7 +77,11 @@
 
 - ARC_dealloc { return (*JX_dealloc) (self); }
 
-- finalise { return (*JX_dealloc) (self); }
+- finalise
+{
+    printf ("\n\n\n\nFINALISED\n\n\n\n");
+    return (*JX_dealloc) (self);
+}
 
 + free { return nil; }
 
