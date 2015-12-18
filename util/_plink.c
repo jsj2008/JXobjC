@@ -7,10 +7,8 @@ struct modDescriptor
 
 extern struct modDescriptor * _OBJCBIND_postlink ();
 extern struct modDescriptor * _OBJCBIND_unknownt ();
-extern struct modDescriptor * _OBJCBIND_automgr ();
 extern struct modDescriptor * _OBJCBIND_crt ();
 extern struct modDescriptor * _OBJCBIND_cltn ();
-extern struct modDescriptor * _OBJCBIND_dlmalloc ();
 extern struct modDescriptor * _OBJCBIND_outofbnd ();
 extern struct modDescriptor * _OBJCBIND_badvers ();
 extern struct modDescriptor * _OBJCBIND_Exceptn ();
@@ -34,15 +32,17 @@ static struct modEntry
 {
     struct modDescriptor * (*modLink) ();
     struct modDescriptor * modInfo;
-} _msgControl[] = {
-    {_OBJCBIND_postlink, 0}, {_OBJCBIND_unknownt, 0}, {_OBJCBIND_automgr, 0},
-    {_OBJCBIND_crt, 0},      {_OBJCBIND_cltn, 0},     {_OBJCBIND_dlmalloc, 0},
-    {_OBJCBIND_outofbnd, 0}, {_OBJCBIND_badvers, 0},  {_OBJCBIND_Exceptn, 0},
-    {_OBJCBIND_Message, 0},  {_OBJCBIND_Set, 0},      {_OBJCBIND_cltnseq, 0},
-    {_OBJCBIND_notfound, 0}, {_OBJCBIND_setseq, 0},   {_OBJCBIND_Object, 0},
-    {_OBJCBIND_typeinc, 0},  {_OBJCBIND_OCString, 0}, {_OBJCBIND_OrdCltn, 0},
-    {_OBJCBIND_OutOfMem, 0}, {_OBJCBIND_sequence, 0}, {_OBJCBIND_Block, 0},
-    {_OBJCBIND_ascfiler, 0}, {_OBJCBIND_array, 0},    {0, 0}};
+} _msgControl[] = {{_OBJCBIND_postlink, 0}, {_OBJCBIND_unknownt, 0},
+                   {_OBJCBIND_crt, 0},      {_OBJCBIND_cltn, 0},
+                   {_OBJCBIND_outofbnd, 0}, {_OBJCBIND_badvers, 0},
+                   {_OBJCBIND_Exceptn, 0},  {_OBJCBIND_Message, 0},
+                   {_OBJCBIND_Set, 0},      {_OBJCBIND_cltnseq, 0},
+                   {_OBJCBIND_notfound, 0}, {_OBJCBIND_setseq, 0},
+                   {_OBJCBIND_Object, 0},   {_OBJCBIND_typeinc, 0},
+                   {_OBJCBIND_OCString, 0}, {_OBJCBIND_OrdCltn, 0},
+                   {_OBJCBIND_OutOfMem, 0}, {_OBJCBIND_sequence, 0},
+                   {_OBJCBIND_Block, 0},    {_OBJCBIND_ascfiler, 0},
+                   {_OBJCBIND_array, 0},    {0, 0}};
 
 /* non-NULL _objcModules disables auto-init */
 struct modEntry * _objcModules = _msgControl;
