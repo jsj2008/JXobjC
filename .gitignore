@@ -36,4 +36,5 @@ out/*
 bld/*
 tmp/*
 *.tar.gz
+BootDist/*
 1

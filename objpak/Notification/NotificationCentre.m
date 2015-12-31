@@ -7,18 +7,15 @@
 #import "Set.h"
 
 @interface _ObserverDictEntry : Object
-{
-    /* The name of the notification. */
-    String * name;
-    /* The object that sent the notification. */
-    volatile id object;
-}
+
+@property String * dictEntryName;
+@property id object;
 
 - _initWithName:_name object:_object
 {
     [self init];
-    name   = _name;
-    object = _object;
+    dictEntryName = _name;
+    object        = _object;
     return self;
 }
 
@@ -29,8 +26,8 @@
 
 - ARC_dealloc
 {
-    name   = nil;
-    object = nil;
+    dictEntryName = nil;
+    object        = nil;
     return [super ARC_dealloc];
 }
 
@@ -40,14 +37,18 @@
     if (![anObject isKindOf:_ObserverDictEntry])
         return NO;
     otherObject = anObject;
-    if ((otherObject->name == name || [otherObject->name isEqual:(id)name]) &&
-        otherObject->object == object)
+    if (((id)otherObject.dictEntryName == (id)dictEntryName ||
+         [otherObject.dictEntryName isEqual:(id)dictEntryName]) &&
+        otherObject.object == object)
         return YES;
     else
         return NO;
 }
 
-- (uintptr_t)hash { return ((uintptr_t)object ^ (uintptr_t)[name hash]); }
+- (uintptr_t)hash
+{
+    return ((uintptr_t)object ^ (uintptr_t)[dictEntryName hash]);
+}
 
 @end
 
