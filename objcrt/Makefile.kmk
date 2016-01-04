@@ -5,8 +5,9 @@ LIBRARIES += objcrt objcrt_s
 INSTALLS += objcrthdr
 
 objcrt_TEMPLATE = OBJC
-objcrt_SOURCES = Block.m Exceptn.m Message.m Object.m OutOfMem.m Proxy.m \
-	crt.m
+objcrt_SOURCES = Object/Block.m Object/Exceptn.m Object/Message.m \
+	Object/Object.m Object/OutOfMem.m Object/Proxy.m \
+	crt.m stktrace.m memory.m
 
 objcrt_s_EXTENDS = objcrt
 objcrt_s_EXTENDS_BY = appending

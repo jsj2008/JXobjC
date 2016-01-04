@@ -45,7 +45,7 @@ void printversion (void)
 void printcopyright (void)
 {
     printf ("JX Objective-C Object Compiler Version %s\n", OBJCVERSION);
-    printf ("Copyright (c) 2015 D. Mackay. All Rights Reserved.\n");
+    printf ("Copyright (c) 2015-2016 D. Mackay. All Rights Reserved.\n");
     printf ("Portions Copyright (c) 1997-2014 D. Stes. All Rights Reserved.\n");
     printf ("Use is subject to licence terms.\n");
 }

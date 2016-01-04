@@ -146,7 +146,6 @@ typedef struct objcrt_shared * Cls_t; /* use only for impl */
 #define CLS_INITIALIZED 0x4L
 #define CLS_POSING 0x8L /* unused, but present in, Stepstn. */
 #define CLS_MAPPED 0x10L
-/* POC extensions */
 #define CLS_CATS 0x20L   /* obsoleted, will go away */
 #define CLS_CAT 0x40L    /* new category implementation 10/97 */
 #define CLS_REFCNT 0x80L /* refcnt classes 1/99 */
@@ -302,6 +301,9 @@ void EXPORT setfilein (id (*f) (FILE *));
 void EXPORT setfileout (BOOL (*f) (FILE *, id));
 
 extern id (*JX_showOn) (id, unsigned);
+
+extern pthread_spinlock_t rcLock;
+pthread_mutex_t EXPORT * allocMtx ();
 
 void EXPORT * OC_Malloc (size_t);
 void EXPORT * OC_MallocAtomic (size_t);
