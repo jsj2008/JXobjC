@@ -25,6 +25,9 @@
 #ifdef OBJCRT_BOEHM
 #include <gc.h>
 #endif
+#ifdef OBJC_REFCNT
+#pragma OCRefCnt 0 /* if compiled with -refcnt, turn of refcnt now */
+#endif
 
 #include "Object.h"
 #include "Exceptn.h"

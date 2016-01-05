@@ -17,6 +17,10 @@
  * Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
  */
 
+#ifdef OBJC_REFCNT
+#pragma OCRefCnt 0 /* if compiled with -refcnt, turn of refcnt now */
+#endif
+
 #include "objcrt.h"
 
 /*****************************************************************************
