@@ -242,7 +242,13 @@ struct objcrt_methodDescriptor
 #define MOD_MAPPED 0x2L    /* marked after selectors mapped */
 #define MOD_MORETHANONE 0x4L
 
-/* C Messenger interface - try to be compatible */
+extern pthread_spinlock_t rcLock;
+extern pthread_mutex_t cLock;
+pthread_mutex_t EXPORT * allocMtx ();
+id report (id self, STR fmt, ...);
+void flushCache (void);
+
+/* C Messenger Interface */
 
 /* msg tracing */
 extern BOOL msgFlag;     /* message tracing */
@@ -301,9 +307,6 @@ void EXPORT setfilein (id (*f) (FILE *));
 void EXPORT setfileout (BOOL (*f) (FILE *, id));
 
 extern id (*JX_showOn) (id, unsigned);
-
-extern pthread_spinlock_t rcLock;
-pthread_mutex_t EXPORT * allocMtx ();
 
 void EXPORT * OC_Malloc (size_t);
 void EXPORT * OC_MallocAtomic (size_t);
