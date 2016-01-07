@@ -28,6 +28,7 @@
 #include "objc-memory.h"
 #include "access.h"
 #include "seltab.h"
+#include "mod.h"
 
 #include "OutOfMem.h"
 
@@ -59,10 +60,9 @@ static BOOL morethanone (struct objcrt_modDescriptor * aMod)
 extern Mentry_t _objcModules;
 #endif
 
-/* list for when loading shared objects (using dlopen() or similar)
- * and then calling loadobjc() on that _objcModules array
+/* List for when loading shared objects (using dlopen() or similar)
+ * and then calling loadobjc() on that _objcModules array.
  */
-
 typedef struct modnode
 {
     Mentry_t objcmodules;
@@ -159,12 +159,11 @@ static BOOL objcinitflag; /* YES after initialization */
 BOOL _objcinitflag () { return objcinitflag; }
 
 /*
- *  modlist is the handle of a linked list of modules with _BIND
+ *  Modlist is the handle of a linked list of modules with _BIND
  *  entries found so far.  Since the order of entries is not
  *  important, it can be maintained efficiently with only a single
  *  pointer.
  */
-
 static struct objcrt_useDescriptor * modlist = 0;
 static int bindcnt                           = 0; /* _BIND entries found so far */
 
@@ -195,7 +194,6 @@ static void traverse (struct objcrt_useDescriptor * desc)
      *  list of modules with bind entries and increment the count of
      *  modules with bind entries that have been processed.
      */
-
     if (desc->bind)
     {
         desc->next = modlist;
@@ -220,7 +218,6 @@ static Mentry_t findmods (struct objcrt_useDescriptor * desc)
     /*
      *  initialize it with the entries we have just found
      */
-
     for (md = modlist, tmp = theModules; md; md = md->next, tmp++)
     {
         tmp->modLink = md->bind;
@@ -241,7 +238,6 @@ static void initsels (Mentry_t modPtr)
     /* we can get here from _objcInit() or from loadobjc()
      * for some shared library that gets loaded _before_ the main()
      */
-
     if (needHashInit)
     {
         hashInit ();
@@ -294,7 +290,6 @@ void initcls (id cls)
     /* force initialization of superclasses first */
     /* if we're a category, this will also force initialization of class */
     /* (which is just the superclass) */
-
     if (aCls->clsSuper)
     {
         initcls (aCls->clsSuper);
@@ -304,15 +299,16 @@ void initcls (id cls)
      * from its 'initialize' method, which has caused me to get
      * initlzd! Check again.
      */
-
     if (initlzd (aCls))
         return;
+
     markinitlzd (aCls);
 
     if (iscatgry (aCls))
     {
         addMethods (cls, aCls->clsSuper);
     }
+
     [cls initialize];
 }
 
@@ -351,7 +347,6 @@ static void initmods (Mentry_t modPtr)
  * _objcModules.  In the NOSHARED case, we use the _objcInitNoShared() call
  * instead.
  */
-
 static void msgiods (void)
 {
     STR s;
@@ -407,20 +402,19 @@ int EXPORT JX_objcInitNoShared (Mentry_t _objcModules,
         pthread_mutex_init (&cLock, NULL);
         pthread_spin_init (&rcLock, PTHREAD_PROCESS_SHARED);
 
-        /* Do auto-initialize if _objcModules is zero.  Otherwise,
-           * assume that it is the list of all bind functions to be called
+        /* Do auto-initialisation if _objcModules is zero.  Otherwise,
+         * assume that it is the list of all bind functions to be called.
          */
-
         if (!_objcModules)
             _objcModules = findmods (OCU_main);
+
         loadobjc (_objcModules);
 
-        /* do initialize of modules that were already registered
-         * via shlibs that got loaded before _objcInit()
-         * first call all BIND functions (including OBJCBIND_objcrt!)
+        /* Do initialisation of modules that were already registered
+         * via shlibs that got loaded before _objcInit().
+         * First, call all BIND functions (including OBJCBIND_objcrt!)
          * then start sending +initialize messages.
          */
-
         for (m = modnodelist; m; m = m->next)
             initsels (m->objcmodules);
         for (m = modnodelist; m; m = m->next)
@@ -430,13 +424,11 @@ int EXPORT JX_objcInitNoShared (Mentry_t _objcModules,
            * them when we run out of memory !
            * This must be done after initializing the runtime
          */
-
         outOfMem = [OutOfMemory new];
 
         /* finished _objcInit(). it's now safe for loadobjc() to
          * call initobjc()
          */
-
         objcinitflag = YES;
 
         /* Stepstone objcc returns maxSelector, probably not used */

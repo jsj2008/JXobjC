@@ -22,6 +22,9 @@
 #include <assert.h>
 #include <stdlib.h>
 
+#include "objc-memory.h"
+#include "objc-vector.h"
+
 #include "ascfiler.h"
 #include "OrdCltn.h"
 #include "unknownt.h"

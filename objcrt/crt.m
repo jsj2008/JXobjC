@@ -26,13 +26,15 @@
 #include <string.h> /* memset */
 #include <pthread.h>
 
+#include "objc-vector.h"
+#include "objc-memory.h"
+
 #include "Object.h"
 #include "Block.h"    /* blockRaise */
 #include "Exceptn.h"  /* signal exceptions */
 #include "OutOfMem.h" /* signal exceptions */
 #include "Message.h"  /* selector:args: */
 
-#include "objc-memory.h"
 #include "access.h"
 #include "seltab.h"
 #include "mod.h"

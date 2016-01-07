@@ -16,6 +16,8 @@
  * Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
  */
 
+#include "objc-vector.h"
+
 #include "Object.h"
 #include "Block.h"   /* ifError: stuff */
 #include "Message.h" /* doesNotUnderstand: stuff */

@@ -16,6 +16,8 @@
  * Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
  */
 
+#include "objc-vector.h"
+
 #include "Object.h"
 #include "Proxy.h"
 #include "Message.h" /* doesNotUnderstand: stuff */
