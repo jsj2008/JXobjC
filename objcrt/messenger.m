@@ -22,7 +22,7 @@
 #endif
 
 #include "objcrt.h"
-#include "objc-access.h"
+#include "access.h"
 #include "mod.h"
 
 #include "Object.h"

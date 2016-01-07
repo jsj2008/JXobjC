@@ -25,9 +25,9 @@
 #include <string.h>
 
 #include "objcrt.h"
-#include "seltab.h"
-#include "objc-access.h"
 #include "objc-memory.h"
+#include "access.h"
+#include "seltab.h"
 
 #include "OutOfMem.h"
 
@@ -649,6 +649,57 @@ void unlinkclass (id aclass)
         }
     }
 }
+
+void _mod_poseAs (id iposing, id itarget)
+{
+    modnode_t m;
+    Mentry_t modPtr;
+    Cls_t posing = getcls (iposing);
+
+    /* Now patch the hierarchy;  look for subclasses of 'target'
+     * and (if != posing) make their clsSuper point to posing.
+     */
+    for (m = modnodelist; m; m = m->next)
+    {
+        for (modPtr = m->objcmodules; modPtr && modPtr->modLink; modPtr++)
+        {
+            id * cls;
+            Cls_t aCls;
+
+            cls = modPtr->modInfo->modClsLst;
+
+            if (morethanone (modPtr->modInfo))
+            {
+                while (*cls)
+                {
+                    aCls = getcls (*cls++);
+                    if (aCls == posing)
+                        continue;
+                    if (aCls->clsSuper == itarget)
+                    {
+                        aCls->clsSuper = iposing;
+                        getmeta (aCls)->clsSuper = posing->isa;
+                    }
+                }
+            }
+            else
+            {
+                if (cls)
+                {
+                    aCls = getcls (*cls);
+                    if (aCls == posing)
+                        continue;
+                    if (aCls->clsSuper == itarget)
+                    {
+                        aCls->clsSuper = iposing;
+                        getmeta (aCls)->clsSuper = posing->isa;
+                    }
+                }
+            }
+        }
+    }
+}
+
 /*
  * This function can be called to add/remove modules to the runtime.
  * (dynamically loaded modules for instance)

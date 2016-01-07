@@ -32,8 +32,8 @@
 #include "OutOfMem.h" /* signal exceptions */
 #include "Message.h"  /* selector:args: */
 
-#include "objc-access.h"
 #include "objc-memory.h"
+#include "access.h"
 #include "seltab.h"
 #include "mod.h"
 
@@ -386,8 +386,6 @@ id swapclass (id self, id other)
 
 void poseAs (id iposing, id itarget)
 {
-    // modnode_t m;
-    // Mentry_t modPtr;
     STR newName, posingName, targetName;
     Cls_t posing = getcls (iposing);
     Cls_t target = getcls (itarget);
@@ -400,7 +398,6 @@ void poseAs (id iposing, id itarget)
      * has subclass C, and [C poseAs:A] then B will inherit from both
      * C and A
      */
-
     posingName = posing->clsName;
     targetName = target->clsName;
 
@@ -425,7 +422,6 @@ void poseAs (id iposing, id itarget)
      * the posing class in the future; the old class can still be
      * obtained as "_%<classname>".
      */
-
     newName = (char *)OC_Malloc (strlen (targetName) + 2 + 1);
     strcpy (newName, "_%");
     strcpy (newName + 2, targetName);
@@ -435,49 +431,7 @@ void poseAs (id iposing, id itarget)
     target->clsName = newName + 1;
     getmeta (target)->clsName = newName;
 
-    /* now "patch" the hierarchy.  look for subclasses of 'target'
-     * and (if != posing) make their clsSuper point to posing.
-     */
-
-    /*for (m = modnodelist; m; m = m->next)
-    {
-        for (modPtr = m->objcmodules; modPtr && modPtr->modLink; modPtr++)
-        {
-            id * cls;
-            Cls_t aCls;
-
-            cls = modPtr->modInfo->modClsLst;
-
-            if (morethanone (modPtr->modInfo))
-            {
-                while (*cls)
-                {
-                    aCls = getcls (*cls++);
-                    if (aCls == posing)
-                        continue;
-                    if (aCls->clsSuper == itarget)
-                    {
-                        aCls->clsSuper = iposing;
-                        getmeta (aCls)->clsSuper = posing->isa;
-                    }
-                }
-            }
-            else
-            {
-                if (cls)
-                {
-                    aCls = getcls (*cls);
-                    if (aCls == posing)
-                        continue;
-                    if (aCls->clsSuper == itarget)
-                    {
-                        aCls->clsSuper = iposing;
-                        getmeta (aCls)->clsSuper = posing->isa;
-                    }
-                }
-            }
-        }
-    }*/
+    _mod_poseAs (iposing, itarget);
 
     /* finally, assign the class external */
     assert (hasposing (target));

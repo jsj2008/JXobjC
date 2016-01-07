@@ -6,4 +6,6 @@
 BOOL _objcinitflag ();
 void initcls (id cls);
 
+void _mod_poseAs (id iposing, id itarget);
+
 #endif

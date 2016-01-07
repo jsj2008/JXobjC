@@ -31,7 +31,7 @@
 
 #include "Object.h"
 #include "Exceptn.h"
-#include "objc-access.h"
+#include "access.h"
 
 /*****************************************************************************
  *
