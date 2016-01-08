@@ -162,24 +162,15 @@
 @end
 
 @implementation KPObserverRef
-{
-    /* This specifies the index within the components of a keypath that
-     * this entry represents.
-     * For example, if an instance is referenced for the Y.Z pair of the
-    * X.Y.Z keypath, then this number is 1. */
-    unsigned int pathIndex;
-}
 
 + (KPObserverRef *)kpoRefWithKPO:(volatile id)kpo
                        pathIndex:(unsigned int)anIndex
 {
     KPObserverRef * new =
         (KPObserverRef *)[[super alloc] initWithReference:kpo];
-    new->pathIndex = anIndex;
+    new.pathIndex = anIndex;
     return new;
 }
-
-- (unsigned int)pathIndex { return pathIndex; }
 
 - (uintptr_t)hash
 {

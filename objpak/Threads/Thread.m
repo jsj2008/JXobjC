@@ -76,7 +76,7 @@ static void * _threadStart2 (Thread * thread)
     [thread setIsExecuting:YES];
     [
         {
-            thread->_return = [thread main];
+            thread._return = [thread main];
         } ifError:
           { :rcv :err | printf("Exception in thread main method!\n");
           }];

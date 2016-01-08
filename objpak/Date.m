@@ -97,7 +97,7 @@ struct timeval JXtimevalFromTimeInterval (TimeInterval ti)
 - initWithTimeInterval:(TimeInterval)secsToBeAdded sinceDate:(Date *)anotherDate
 {
     [super init];
-    seconds = anotherDate->seconds + secsToBeAdded;
+    seconds = anotherDate.seconds + secsToBeAdded;
     return self;
 }
 

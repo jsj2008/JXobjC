@@ -12,12 +12,13 @@
     pthread_attr_t _thrd_attr;
     SEL _selector;
     volatile id _object, _parameter;
-    id _return;
 } :
 {
     id mainThread;
     pthread_key_t currentThread;
 }
+
+@property id _return;
 
 @property BOOL isMainThread, isCancelled, isExecuting, isFinished;
 @property Dictionary * threadDictionary;

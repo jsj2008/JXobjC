@@ -123,14 +123,14 @@ id curclassdef;
         otbtypename = [[String sprintf:"%s_OTB", s] strCopy];
     }
 
-    gf ("typedef struct %s %s;\n", privtypename, s);
+    gf ("typedef struct _PRIVATE %s;\n", s);
 
     if ([trlunit lookupstruct:[Symbol sprintf:"%s", privtypename]] == nil)
     {
         id r = [StructSpec new];
 
         [r keyw:[Symbol sprintf:"struct"]];
-        [r name:[Symbol sprintf:"%s", privtypename]];
+        [r name:[Symbol sprintf:"_PRIVATE", privtypename]];
         [trlunit defstruct:r];
         [trlunit def:[String str:s]
               astype:[[[Type new] addspec:r] setIsobject:YES]];

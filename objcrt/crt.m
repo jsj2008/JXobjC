@@ -443,3 +443,5 @@ void poseAs (id iposing, id itarget)
     /* flush message caches */
     flushCache ();
 }
+
+int AMGR_main_init () { return 1; }

@@ -8,11 +8,9 @@
 /* This class defines a TCP socket. */
 
 @interface TCPSocket : AbstractSocket
-{
-    struct sockaddr * addr;
-    socklen_t addrlen;
-}
 
+@property struct sockaddr * addr;
+@property socklen_t addrlen;
 @property /* (readonly) */ BOOL listening;
 @property BOOL keepAlive;
 

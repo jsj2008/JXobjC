@@ -218,8 +218,8 @@ id msgwraps; /* VICI */
 
     printf("Receiver type: %s\n", [[[rcvr type] decl] str]);
 
-    [[[rcvr type] specs] do: {:each | printf("Spec: %s\n", [each str]) }];
-    msg      = [msg synth];*/
+    [[[rcvr type] specs] do: {:each | printf("Spec: %s\n", [each str]) }];*/
+    msg = [msg synth];
 
     if (o_refcnt && [[self type] isid] && !hasSynthedForId)
     {

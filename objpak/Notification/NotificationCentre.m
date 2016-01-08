@@ -61,6 +61,10 @@
     id block;
 }
 
+- object { return object; }
+- (SEL)selector { return selector; }
+- block { return block; }
+
 - initWithObject:_object selector:(SEL)_selector
 {
     [super init];
@@ -96,10 +100,10 @@
     if (![anObject isKindOf:_ObserverDictValue])
         return NO;
     otherObject = anObject;
-    if (object && otherObject->object == object &&
-        otherObject->selector == selector)
+    if (object && otherObject.object == object &&
+        otherObject.selector == selector)
         return YES;
-    else if (block && otherObject->block == block)
+    else if (block && otherObject.block == block)
         return YES;
     else
         return NO;

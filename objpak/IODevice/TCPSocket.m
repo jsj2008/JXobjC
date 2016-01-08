@@ -150,21 +150,22 @@
 
 - accept
 {
-    TCPSocket * cl = (TCPSocket *)[[self class] new];
+    TCPSocket * cl = [[self class] new];
+    socklen_t alen;
 
-    cl->addr    = malloc (sizeof (struct sockaddr_storage));
-    cl->addrlen = (socklen_t)sizeof (struct sockaddr_storage);
+    cl.addr    = malloc (sizeof (struct sockaddr_storage));
+    cl.addrlen = (socklen_t)sizeof (struct sockaddr_storage);
 
 #if defined(SOCK_NOCLOEXEC)
-    [cl _setDescriptor:accept (descriptor, cl->addr, &cl->addrlen)];
+    [cl _setDescriptor:accept (descriptor, cl.addr, &cl->addrlen)];
     if ([cl _descriptor] == -1)
         [Exception signal:"Failed to accept connection: accept() returned -1"];
 
     fcntl ([cl _descriptor], F_SETFD,
            fcntl ([cl _descriptor], F_GETFD, 0) | FD_CLOEXEC);
 #else
-    [cl _setDescriptor:accept4 (descriptor, cl->addr, &cl->addrlen,
-                                SOCK_CLOEXEC)];
+    [cl _setDescriptor:accept4 (descriptor, cl.addr, &alen, SOCK_CLOEXEC)];
+    cl.addrlen = alen;
     if ([cl _descriptor] == -1)
         [Exception signal:"Failed to accept connection: accept4() returned -1"];
 #endif
