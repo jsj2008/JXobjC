@@ -1,3 +1,4 @@
+/* Copyright (c) 2016 D. Mackay. All rights reserved. */
 /*
  * Portable Object Compiler (c) 1997,98,99,2000,03,14.  All Rights Reserved.
  *
@@ -16,17 +17,15 @@
  * Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
  */
 
-#ifndef __PORTABLE_OBJC__
-#error Portable Object Compiler Object.h should not be used with another compiler.
-#else
-
 #ifndef __OBJECT_H__
 #define __OBJECT_H__
 
-#include "objcrt.h"
 #include <stdarg.h>
+#include <stddef.h>
 #include <stdint.h>
 #include <string.h>
+
+#include "objcrt.h"
 
 #define __objcrt_revision__ "4.5"
 
@@ -34,6 +33,12 @@
 #define Object OCObject /* remap Object class - cant use Xt Object */
 #endif
 
+/*!
+ Object is the primary root class in JX Objective-C.
+ It provides objects inheriting from it - which most do - with a reasonable
+ set of behaviour. Other root classes used by the user may include
+ @link Proxy @/link
+*/
 @interface Object
 {
     id isa;
@@ -161,5 +166,3 @@
 @end
 
 #endif /* __OBJECT_H__ */
-
-#endif /* __PORTABLE_OBJC__ */

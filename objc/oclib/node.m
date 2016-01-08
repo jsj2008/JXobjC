@@ -28,6 +28,17 @@
 #include "symbol.h"
 #include "options.h"
 
+#define KNRM "\x1B[0m"
+#define KBLD "\x1B[1m"
+#define KULN "\x1B[4m"
+#define KRED "\x1B[31m"
+#define KGRN "\x1B[32m"
+#define KYEL "\x1B[33m"
+#define KBLU "\x1B[34m"
+#define KMAG "\x1B[35m"
+#define KCYN "\x1B[36m"
+#define KWHT "\x1B[37m"
+
 FILE * gfile;
 id infilename;
 char * outfilename;
@@ -203,7 +214,6 @@ void gl (int no, char * fn)
 void vwarn (char * s, OC_VA_LIST ap)
 {
     int n;
-
     vfprintf (stderr, s, ap);
     if ((n = strlen (s)) && s[n - 1] != '\n')
         fprintf (stderr, "\n");
@@ -218,9 +228,11 @@ void warnat (id sym, char * s, ...)
         char * fn = [[sym filename] str];
 
         OC_VA_START (ap, s);
+        fprintf (stderr, KBLD);
         if (no != 0 && fn != NULL)
-            fprintf (stderr, "%s:%d: warning: ", fn, no);
+            fprintf (stderr, "%s:%d: " KYEL "warning: " KNRM KBLD, fn, no);
         vwarn (s, ap);
+        fprintf (stderr, KNRM);
         OC_VA_END (ap);
     }
 }
@@ -232,8 +244,10 @@ void warn (char * s, ...)
         OC_VA_LIST ap;
 
         OC_VA_START (ap, s);
-        fprintf (stderr, "%s:%d: warning: ", [infilename str], inlineno);
+        fprintf (stderr, KBLD "%s:%d: " KYEL "warning: " KNRM KBLD,
+                 [infilename str], inlineno);
         vwarn (s, ap);
+        fprintf (stderr, KNRM);
         OC_VA_END (ap);
     }
 }
@@ -253,8 +267,10 @@ void fatal (char * s, ...)
     OC_VA_LIST ap;
 
     OC_VA_START (ap, s);
-    fprintf (stderr, "%s:%d: fatal: ", [infilename str], inlineno);
+    fprintf (stderr, KBLD "%s:%d: " KRED "error: " KNRM KBLD, [infilename str],
+             inlineno);
     vfatal (s, ap);
+    fprintf (stderr, KNRM);
     OC_VA_END (ap);
 }
 
@@ -265,9 +281,11 @@ void fatalat (id sym, char * s, ...)
     char * fn = [[sym filename] str];
 
     OC_VA_START (ap, s);
+    fprintf (stderr, KBLD);
     if (no != 0 && fn != NULL)
-        fprintf (stderr, "%s:%d: fatal: ", fn, no);
+        fprintf (stderr, "%s:%d: " KRED "error: " KNRM KBLD, fn, no);
     vfatal (s, ap);
+    fprintf (stderr, KNRM);
     OC_VA_END (ap);
 }
 
