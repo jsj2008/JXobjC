@@ -20,6 +20,7 @@
 #include <stdlib.h>
 #include <assert.h>
 #include <string.h>
+#include "Block.h"
 #include "Object.h"
 #include "OCString.h"
 #include "Set.h"
@@ -210,7 +211,15 @@ id msgwraps; /* VICI */
 
     if (rcvr)
         rcvr = [rcvr synth];
-    msg      = [msg synth];
+
+    /* This will be a good place to put the optional-typing to use.
+     * We should lookup the class according to type and scan it (along
+     * with its parents and any categories) for the selector.
+
+    printf("Receiver type: %s\n", [[[rcvr type] decl] str]);
+
+    [[[rcvr type] specs] do: {:each | printf("Spec: %s\n", [each str]) }];
+    msg      = [msg synth];*/
 
     if (o_refcnt && [[self type] isid] && !hasSynthedForId)
     {
