@@ -55,7 +55,7 @@ int yylex() ;
 
 /* Objective C */
 %token atdefs atselector atinterface atend atencode atprotocol atproperty
-%token atprotocol atblkreturn atsynchronised atclass
+%token atprotocol atblkreturn atsynchronised atclass nosuper
 %token blockbegin
 %token pcstringlit
 %token propreadonly
@@ -281,6 +281,11 @@ identorclass
     | classname
     ;
 
+classornil
+    : classname
+    | nosuper { $$ = nil; }
+    ;
+
 classdef
     : atbegin identorclass optprotoreflist ivardef
     { $$ = mkclassdef($1,$2,nil,$3,$4,nil,0); }
@@ -288,11 +293,11 @@ classdef
     { $$ = mkclassdef($1,$2,nil,$3,$4,$6,0); }
     | atbegin identorclass optprotoreflist
     { $$ = mkclassdef($1,$2,nil,$3,nil,nil,0); }
-    | atbegin identorclass  ':' classname optprotoreflist
+    | atbegin identorclass  ':' classornil optprotoreflist
     { $$ = mkclassdef($1,$2,$4,$5,nil,nil,0); }
-    | atbegin identorclass ':' classname optprotoreflist ivardef
+    | atbegin identorclass ':' classornil optprotoreflist ivardef
     { $$ = mkclassdef($1,$2,$4,$5,$6,nil,0); }
-    | atbegin identorclass ':' classname optprotoreflist ivardef  ':' ivardef
+    | atbegin identorclass ':' classornil optprotoreflist ivardef  ':' ivardef
     { $$ = mkclassdef($1,$2,$4,$5,$6,$8,0); }
     | atbegin identorclass '(' identifier ')' optprotoreflist
     { $$ = mkclassdef($1, $4, $2, $6, nil, nil, 1); }
@@ -331,8 +336,6 @@ datadef
     | datadefx ';'
     { $$ = $1; }
     | cppdirect
-    { $$ = $1; }
-    | requiresclause /* Objective C 3.3 */
     { $$ = $1; }
     | usingdecl ';'
     {
