@@ -273,17 +273,81 @@ function disclosure_triangle(elt) {
 These couple a method with the environment in which it was defined. They can
 be used to similar effect to function pointers, but with a great deal more
 flexibility and simplicity.
+</p>
+<p>You may implement a block accepting two <em>id</em>-type parameters and
+returning the answer to the <a href="../../../RtObject_h/Classes/RtObject/index.html#//apple_ref/occ/instm/RtObject/self" logicalPath="//apple_ref/occ/instm/RtObject/self" target="_top">self</a> message sent to the second
+in this way:
+<tt>
+Block * aBlock = {:first :second | [second self]};
+</tt>
 <!-- headerDoc=discussion;uid=//apple_ref/occ/cl/Block;name=end --><!-- end discussion -->
 </p>
 <hr class="afterClassOrHeaderInfo">
 <br><a name="HeaderDoc_methods"></a>
 <h2 class="h2tight">Methods</h2>
 <dl>
+<dt><tt><a href="index.html#//apple_ref/occ/instm/Block/atExit" target="_top">-atExit</a></tt></dt>
+<dd></dd>
+<dt><tt><a href="index.html#//apple_ref/occ/instm/Block/ifError:" target="_top">-ifError:</a></tt></dt>
+<dd></dd>
 <dt><tt><a href="index.html#//apple_ref/occ/instm/Block/intvalue" target="_top">-intvalue</a></tt></dt>
+<dd></dd>
+<dt><tt><a href="index.html#//apple_ref/occ/instm/Block/intvalue:" target="_top">-intvalue:</a></tt></dt>
+<dd></dd>
+<dt><tt><a href="index.html#//apple_ref/occ/instm/Block/intvalue:value:" target="_top">-intvalue:value:</a></tt></dt>
+<dd></dd>
+<dt><tt><a href="index.html#//apple_ref/occ/instm/Block/on:do:" target="_top">-on:do:</a></tt></dt>
 <dd></dd>
 <dt><tt><a href="index.html#//apple_ref/occ/instm/Block/value" target="_top">-value</a></tt></dt>
 <dd></dd>
+<dt><tt><a href="index.html#//apple_ref/occ/instm/Block/value:" target="_top">-value:</a></tt></dt>
+<dd></dd>
+<dt><tt><a href="index.html#//apple_ref/occ/instm/Block/value:ifError:" target="_top">-value:ifError:</a></tt></dt>
+<dd></dd>
+<dt><tt><a href="index.html#//apple_ref/occ/instm/Block/value:on:do:" target="_top">-value:on:do:</a></tt></dt>
+<dd></dd>
+<dt><tt><a href="index.html#//apple_ref/occ/instm/Block/value:value:" target="_top">-value:value:</a></tt></dt>
+<dd></dd>
 </dl>
+<hr class="betweenAPIEntries">
+<!-- headerDoc=instm;  uid=//apple_ref/occ/instm/Block/atExit;  indexgroup=JX Runtime ;   name=Block::atExit --><a name="//apple_ref/occ/instm/Block/atExit"></a>
+<h3><a name="atExit">atExit</a></h3>
+<hr class="afterName">
+<div class="declaration_indent">
+<pre><!-- headerDoc=declaration;uid=//apple_ref/occ/instm/Block/atExit;name=start -->- <!-- a logicalPath="//apple_ref/occ/econst/atExit //apple_ref/occ/data/Block/atExit //apple_ref/occ/data/atExit //apple_ref/occ/clconst/Block/atExit " machineGenerated="true" --><span class="var">atExit</span><!-- /a -->; <!-- headerDoc=declaration;uid=//apple_ref/occ/instm/Block/atExit;name=end --></pre>
+</div>
+<h5 class="tight"><font face="Lucida Grande,Helvetica,Arial">Discussion</font></h5>
+<!-- begin discussion --><!-- headerDoc=discussion;uid=//apple_ref/occ/instm/Block/atExit;name=start --><p>Schedules a call into the block for just before programme exit. <!-- headerDoc=discussion;uid=//apple_ref/occ/instm/Block/atExit;name=end --><!-- end discussion -->
+</p>
+<hr class="betweenAPIEntries">
+<!-- headerDoc=instm;  uid=//apple_ref/occ/instm/Block/ifError:;  indexgroup=JX Runtime ;   name=Block::ifError: --><a name="//apple_ref/occ/instm/Block/ifError:"></a>
+<h3><a name="ifError:">ifError:</a></h3>
+<hr class="afterName">
+<div class="declaration_indent">
+<pre><!-- headerDoc=declaration;uid=//apple_ref/occ/instm/Block/ifError:;name=start -->- <a machinegenerated="true" href="index.html#//apple_ref/occ/instm/Block/ifError:" logicalPath="//apple_ref/occ/instm/Block/ifError" target="_top"><span class="function">ifError</span></a>:<!-- a logicalPath="//apple_ref/occ/econst/aHandler //apple_ref/occ/data/Block/aHandler //apple_ref/occ/data/aHandler //apple_ref/occ/clconst/Block/aHandler " machineGenerated="true" --><span class="var">aHandler</span><!-- /a -->; <!-- headerDoc=declaration;uid=//apple_ref/occ/instm/Block/ifError:;name=end --></pre>
+</div>
+<h5 class="tight"><font face="Lucida Grande,Helvetica,Arial">Parameters</font></h5>
+<div class="param_indent">
+<dl>
+<dt>
+<!-- headerDoc=methodparam;  uid=//apple_ref/doc/methodparam/Block/ifError:/aHandler;  indexgroup=JX Runtime ;   name=ifError:::aHandler -->
+<a name="//apple_ref/doc/methodparam/Block/ifError:/aHandler"></a>
+<code>aHandler</code>
+</dt>
+<dd><p>Block taking two arguments (:msg and :rcv) for handling the
+exception.</p></dd>
+</dl>
+</div>
+<h5 class="tight"><font face="Lucida Grande,Helvetica,Arial">Return Value</font></h5>
+<p><!-- begin return value --></p>
+<p>The <em>id</em>-type return value of the block. 
+<!-- end return value --></p>
+<h5 class="tight"><font face="Lucida Grande,Helvetica,Arial">Discussion</font></h5>
+<!-- begin discussion --><!-- headerDoc=discussion;uid=//apple_ref/occ/instm/Block/ifError:;name=start --><p>Calls into the block. If an exception is raised, deploys a handler block with
+two arguments (the <a href="../../../Message_h/Classes/Message/index.html#//apple_ref/occ/cl/Message" logicalPath="//apple_ref/occ/cl/Message" target="_top">Message</a> first, and then the object to which
+the sent message triggered an exception.)
+<!-- headerDoc=discussion;uid=//apple_ref/occ/instm/Block/ifError:;name=end --><!-- end discussion -->
+</p>
 <hr class="betweenAPIEntries">
 <!-- headerDoc=instm;  uid=//apple_ref/occ/instm/Block/intvalue;  indexgroup=JX Runtime ;   name=Block::intvalue --><a name="//apple_ref/occ/instm/Block/intvalue"></a>
 <h3><a name="intvalue">intvalue</a></h3>
@@ -300,6 +364,101 @@ flexibility and simplicity.
 <!-- headerDoc=discussion;uid=//apple_ref/occ/instm/Block/intvalue;name=end --><!-- end discussion -->
 </p>
 <hr class="betweenAPIEntries">
+<!-- headerDoc=instm;  uid=//apple_ref/occ/instm/Block/intvalue:;  indexgroup=JX Runtime ;   name=Block::intvalue: --><a name="//apple_ref/occ/instm/Block/intvalue:"></a>
+<h3><a name="intvalue:">intvalue:</a></h3>
+<hr class="afterName">
+<div class="declaration_indent">
+<pre><!-- headerDoc=declaration;uid=//apple_ref/occ/instm/Block/intvalue:;name=start -->- (<!-- a logicalPath="//apple_ref/occ/cl/int //apple_ref/occ/tdef/int //apple_ref/occ/tag/int //apple_ref/occ/struct/int //apple_ref/occ/intf/int //apple_ref/doc/anysymbol/int" machineGenerated="true" --><span class="type">int</span><!-- /a -->)<a machinegenerated="true" href="index.html#//apple_ref/occ/instm/Block/intvalue:" logicalPath="//apple_ref/occ/instm/Block/intvalue" target="_top"><span class="function">intvalue</span></a>:<!-- a logicalPath="//apple_ref/occ/econst/anObject //apple_ref/occ/data/Block/anObject //apple_ref/occ/data/anObject //apple_ref/occ/clconst/Block/anObject " machineGenerated="true" --><span class="var">anObject</span><!-- /a -->; <!-- headerDoc=declaration;uid=//apple_ref/occ/instm/Block/intvalue:;name=end --></pre>
+</div>
+<h5 class="tight"><font face="Lucida Grande,Helvetica,Arial">Parameters</font></h5>
+<div class="param_indent">
+<dl>
+<dt>
+<!-- headerDoc=methodparam;  uid=//apple_ref/doc/methodparam/Block/intvalue:/anObject;  indexgroup=JX Runtime ;   name=intvalue:::anObject -->
+<a name="//apple_ref/doc/methodparam/Block/intvalue:/anObject"></a>
+<code>anObject</code>
+</dt>
+<dd><p>An <em>id</em>-type parameter to the block.</p></dd>
+</dl>
+</div>
+<h5 class="tight"><font face="Lucida Grande,Helvetica,Arial">Return Value</font></h5>
+<p><!-- begin return value --></p>
+<p>The <em>int</em>-type return value of the block. 
+<!-- end return value --></p>
+<h5 class="tight"><font face="Lucida Grande,Helvetica,Arial">Discussion</font></h5>
+<!-- begin discussion --><!-- headerDoc=discussion;uid=//apple_ref/occ/instm/Block/intvalue:;name=start --><p>Calls into the block with a parameter.
+<!-- headerDoc=discussion;uid=//apple_ref/occ/instm/Block/intvalue:;name=end --><!-- end discussion -->
+</p>
+<hr class="betweenAPIEntries">
+<!-- headerDoc=instm;  uid=//apple_ref/occ/instm/Block/intvalue:value:;  indexgroup=JX Runtime ;   name=Block::intvalue:value: --><a name="//apple_ref/occ/instm/Block/intvalue:value:"></a>
+<h3><a name="intvalue:value:">intvalue:value:</a></h3>
+<hr class="afterName">
+<div class="declaration_indent">
+<pre><!-- headerDoc=declaration;uid=//apple_ref/occ/instm/Block/intvalue:value:;name=start -->- (<!-- a logicalPath="//apple_ref/occ/cl/int //apple_ref/occ/tdef/int //apple_ref/occ/tag/int //apple_ref/occ/struct/int //apple_ref/occ/intf/int //apple_ref/doc/anysymbol/int" machineGenerated="true" --><span class="type">int</span><!-- /a -->)<a machinegenerated="true" href="index.html#//apple_ref/occ/instm/Block/intvalue:" logicalPath="//apple_ref/occ/instm/Block/intvalue" target="_top"><span class="function">intvalue</span></a>:<span class="param">firstObject</span> <a machinegenerated="true" href="index.html#//apple_ref/occ/instm/Block/value:value:" logicalPath="//apple_ref/occ/instm/Block/value" target="_top"><span class="function">value</span></a>:<!-- a logicalPath="//apple_ref/occ/econst/secondObject //apple_ref/occ/data/Block/secondObject //apple_ref/occ/data/secondObject //apple_ref/occ/clconst/Block/secondObject " machineGenerated="true" --><span class="var">secondObject</span><!-- /a -->; <!-- headerDoc=declaration;uid=//apple_ref/occ/instm/Block/intvalue:value:;name=end --></pre>
+</div>
+<h5 class="tight"><font face="Lucida Grande,Helvetica,Arial">Parameters</font></h5>
+<div class="param_indent">
+<dl>
+<dt>
+<!-- headerDoc=methodparam;  uid=//apple_ref/doc/methodparam/Block/intvalue:value:/firstObject;  indexgroup=JX Runtime ;   name=intvalue:value:::firstObject -->
+<a name="//apple_ref/doc/methodparam/Block/intvalue:value:/firstObject"></a>
+<code>firstObject</code>
+</dt>
+<dd><p>The first <em>id</em>-type parameter to the block.</p></dd>
+<dt>
+<!-- headerDoc=methodparam;  uid=//apple_ref/doc/methodparam/Block/intvalue:value:/secondObject;  indexgroup=JX Runtime ;   name=intvalue:value:::secondObject -->
+<a name="//apple_ref/doc/methodparam/Block/intvalue:value:/secondObject"></a>
+<code>secondObject</code>
+</dt>
+<dd><p>The second parameter.</p></dd>
+</dl>
+</div>
+<h5 class="tight"><font face="Lucida Grande,Helvetica,Arial">Return Value</font></h5>
+<p><!-- begin return value --></p>
+<p>The <em>int</em>-type return value of the block. 
+<!-- end return value --></p>
+<h5 class="tight"><font face="Lucida Grande,Helvetica,Arial">Discussion</font></h5>
+<!-- begin discussion --><!-- headerDoc=discussion;uid=//apple_ref/occ/instm/Block/intvalue:value:;name=start --><p>Calls into the block with two parameters.
+<!-- headerDoc=discussion;uid=//apple_ref/occ/instm/Block/intvalue:value:;name=end --><!-- end discussion -->
+</p>
+<hr class="betweenAPIEntries">
+<!-- headerDoc=instm;  uid=//apple_ref/occ/instm/Block/on:do:;  indexgroup=JX Runtime ;   name=Block::on:do: --><a name="//apple_ref/occ/instm/Block/on:do:"></a>
+<h3><a name="on:do:">on:do:</a></h3>
+<hr class="afterName">
+<div class="declaration_indent">
+<pre><!-- headerDoc=declaration;uid=//apple_ref/occ/instm/Block/on:do:;name=start -->- <a machinegenerated="true" href="index.html#//apple_ref/occ/instm/Block/on:do:" logicalPath="//apple_ref/occ/instm/Block/on" target="_top"><span class="function">on</span></a>:<span class="param">aClassOfExceptions</span> <!-- a logicalPath="//apple_ref/occ/instm/Block/do //apple_ref/occ/clm/Block/do //apple_ref/occ/intfcm/Block/do //apple_ref/occ/intfm/Block/do //apple_ref/occ/func/do //apple_ref/occ/ftmplt/Block/do //apple_ref/occ/defn/do //apple_ref/occ/macro/do //apple_ref/doc/anysymbol/do" machineGenerated="true" --><span class="function">do</span><!-- /a -->:<!-- a logicalPath="//apple_ref/occ/econst/aHandler //apple_ref/occ/data/Block/aHandler //apple_ref/occ/data/aHandler //apple_ref/occ/clconst/Block/aHandler " machineGenerated="true" --><span class="var">aHandler</span><!-- /a -->; <!-- headerDoc=declaration;uid=//apple_ref/occ/instm/Block/on:do:;name=end --></pre>
+</div>
+<h5 class="tight"><font face="Lucida Grande,Helvetica,Arial">Parameters</font></h5>
+<div class="param_indent">
+<dl>
+<dt>
+<!-- headerDoc=methodparam;  uid=//apple_ref/doc/methodparam/Block/on:do:/aClassOfExceptions;  indexgroup=JX Runtime ;   name=on:do:::aClassOfExceptions -->
+<a name="//apple_ref/doc/methodparam/Block/on:do:/aClassOfExceptions"></a>
+<code>aClassOfExceptions</code>
+</dt>
+<dd><p>The <a href="../../../Exceptn_h/Classes/Exception/index.html#//apple_ref/occ/cl/Exception" logicalPath="//apple_ref/occ/cl/Exception" target="_top">Exception</a> class, or one of its
+subclasses.</p></dd>
+<dt>
+<!-- headerDoc=methodparam;  uid=//apple_ref/doc/methodparam/Block/on:do:/aHandler;  indexgroup=JX Runtime ;   name=on:do:::aHandler -->
+<a name="//apple_ref/doc/methodparam/Block/on:do:/aHandler"></a>
+<code>aHandler</code>
+</dt>
+<dd><p>Block taking an argument (:except) for handling the
+exception.</p></dd>
+</dl>
+</div>
+<h5 class="tight"><font face="Lucida Grande,Helvetica,Arial">Return Value</font></h5>
+<p><!-- begin return value --></p>
+<p>The <em>id</em>-type return value of the block. 
+<!-- end return value --></p>
+<h5 class="tight"><font face="Lucida Grande,Helvetica,Arial">Discussion</font></h5>
+<!-- begin discussion --><!-- headerDoc=discussion;uid=//apple_ref/occ/instm/Block/on:do:;name=start --><p>Calls into the block. If an exception is raised and matches the specified
+class of exceptions (the exception is an instance of the class, or of one of
+its subclasses,) a handler block is called with its single argument being
+the instance of the exception raised.
+<!-- headerDoc=discussion;uid=//apple_ref/occ/instm/Block/on:do:;name=end --><!-- end discussion -->
+</p>
+<hr class="betweenAPIEntries">
 <!-- headerDoc=instm;  uid=//apple_ref/occ/instm/Block/value;  indexgroup=JX Runtime ;   name=Block::value --><a name="//apple_ref/occ/instm/Block/value"></a>
 <h3><a name="value">value</a></h3>
 <hr class="afterName">
@@ -313,6 +472,133 @@ flexibility and simplicity.
 <h5 class="tight"><font face="Lucida Grande,Helvetica,Arial">Discussion</font></h5>
 <!-- begin discussion --><!-- headerDoc=discussion;uid=//apple_ref/occ/instm/Block/value;name=start --><p>Calls into the block.
 <!-- headerDoc=discussion;uid=//apple_ref/occ/instm/Block/value;name=end --><!-- end discussion -->
+</p>
+<hr class="betweenAPIEntries">
+<!-- headerDoc=instm;  uid=//apple_ref/occ/instm/Block/value:;  indexgroup=JX Runtime ;   name=Block::value: --><a name="//apple_ref/occ/instm/Block/value:"></a>
+<h3><a name="value:">value:</a></h3>
+<hr class="afterName">
+<div class="declaration_indent">
+<pre><!-- headerDoc=declaration;uid=//apple_ref/occ/instm/Block/value:;name=start -->- <a machinegenerated="true" href="index.html#//apple_ref/occ/instm/Block/value:value:" logicalPath="//apple_ref/occ/instm/Block/value" target="_top"><span class="function">value</span></a>:<!-- a logicalPath="//apple_ref/occ/econst/anObject //apple_ref/occ/data/Block/anObject //apple_ref/occ/data/anObject //apple_ref/occ/clconst/Block/anObject " machineGenerated="true" --><span class="var">anObject</span><!-- /a -->; <!-- headerDoc=declaration;uid=//apple_ref/occ/instm/Block/value:;name=end --></pre>
+</div>
+<h5 class="tight"><font face="Lucida Grande,Helvetica,Arial">Parameters</font></h5>
+<div class="param_indent">
+<dl>
+<dt>
+<!-- headerDoc=methodparam;  uid=//apple_ref/doc/methodparam/Block/value:/anObject;  indexgroup=JX Runtime ;   name=value:::anObject -->
+<a name="//apple_ref/doc/methodparam/Block/value:/anObject"></a>
+<code>anObject</code>
+</dt>
+<dd><p>An <em>id</em>-type parameter to the block.</p></dd>
+</dl>
+</div>
+<h5 class="tight"><font face="Lucida Grande,Helvetica,Arial">Return Value</font></h5>
+<p><!-- begin return value --></p>
+<p>The <em>id</em>-type return value of the block. 
+<!-- end return value --></p>
+<h5 class="tight"><font face="Lucida Grande,Helvetica,Arial">Discussion</font></h5>
+<!-- begin discussion --><!-- headerDoc=discussion;uid=//apple_ref/occ/instm/Block/value:;name=start --><p>Calls into the block with a parameter.
+<!-- headerDoc=discussion;uid=//apple_ref/occ/instm/Block/value:;name=end --><!-- end discussion -->
+</p>
+<hr class="betweenAPIEntries">
+<!-- headerDoc=instm;  uid=//apple_ref/occ/instm/Block/value:ifError:;  indexgroup=JX Runtime ;   name=Block::value:ifError: --><a name="//apple_ref/occ/instm/Block/value:ifError:"></a>
+<h3><a name="value:ifError:">value:ifError:</a></h3>
+<hr class="afterName">
+<div class="declaration_indent">
+<pre><!-- headerDoc=declaration;uid=//apple_ref/occ/instm/Block/value:ifError:;name=start -->- <a machinegenerated="true" href="index.html#//apple_ref/occ/instm/Block/value:value:" logicalPath="//apple_ref/occ/instm/Block/value" target="_top"><span class="function">value</span></a>:<span class="param">anObject</span> <a machinegenerated="true" href="index.html#//apple_ref/occ/instm/Block/ifError:" logicalPath="//apple_ref/occ/instm/Block/ifError" target="_top"><span class="function">ifError</span></a>:<!-- a logicalPath="//apple_ref/occ/econst/aHandler //apple_ref/occ/data/Block/aHandler //apple_ref/occ/data/aHandler //apple_ref/occ/clconst/Block/aHandler " machineGenerated="true" --><span class="var">aHandler</span><!-- /a -->; <!-- headerDoc=declaration;uid=//apple_ref/occ/instm/Block/value:ifError:;name=end --></pre>
+</div>
+<h5 class="tight"><font face="Lucida Grande,Helvetica,Arial">Parameters</font></h5>
+<div class="param_indent">
+<dl>
+<dt>
+<!-- headerDoc=methodparam;  uid=//apple_ref/doc/methodparam/Block/value:ifError:/anObject;  indexgroup=JX Runtime ;   name=value:ifError:::anObject -->
+<a name="//apple_ref/doc/methodparam/Block/value:ifError:/anObject"></a>
+<code>anObject</code>
+</dt>
+<dd><p><em>id</em>-type argument to the block.</p></dd>
+<dt>
+<!-- headerDoc=methodparam;  uid=//apple_ref/doc/methodparam/Block/value:ifError:/aHandler;  indexgroup=JX Runtime ;   name=value:ifError:::aHandler -->
+<a name="//apple_ref/doc/methodparam/Block/value:ifError:/aHandler"></a>
+<code>aHandler</code>
+</dt>
+<dd><p>Block handling any exception raised.</p></dd>
+</dl>
+</div>
+<h5 class="tight"><font face="Lucida Grande,Helvetica,Arial">Return Value</font></h5>
+<p><!-- begin return value --></p>
+<p>The <em>id</em>-type return value of the block. 
+<!-- end return value --></p>
+<h5 class="tight"><font face="Lucida Grande,Helvetica,Arial">Discussion</font></h5>
+<!-- begin discussion --><!-- headerDoc=discussion;uid=//apple_ref/occ/instm/Block/value:ifError:;name=start --><p>Calls into the block with an <em>id</em>-type parameter. If an exception is
+raised, deploys a handler block.
+<!-- headerDoc=discussion;uid=//apple_ref/occ/instm/Block/value:ifError:;name=end --><!-- end discussion -->
+</p>
+<hr class="betweenAPIEntries">
+<!-- headerDoc=instm;  uid=//apple_ref/occ/instm/Block/value:on:do:;  indexgroup=JX Runtime ;   name=Block::value:on:do: --><a name="//apple_ref/occ/instm/Block/value:on:do:"></a>
+<h3><a name="value:on:do:">value:on:do:</a></h3>
+<hr class="afterName">
+<div class="declaration_indent">
+<pre><!-- headerDoc=declaration;uid=//apple_ref/occ/instm/Block/value:on:do:;name=start -->- <a machinegenerated="true" href="index.html#//apple_ref/occ/instm/Block/value:value:" logicalPath="//apple_ref/occ/instm/Block/value" target="_top"><span class="function">value</span></a>:<span class="param">anObject</span> <a machinegenerated="true" href="index.html#//apple_ref/occ/instm/Block/on:do:" logicalPath="//apple_ref/occ/instm/Block/on" target="_top"><span class="function">on</span></a>:<span class="param">aClassOfExceptions</span> <!-- a logicalPath="//apple_ref/occ/instm/Block/do //apple_ref/occ/clm/Block/do //apple_ref/occ/intfcm/Block/do //apple_ref/occ/intfm/Block/do //apple_ref/occ/func/do //apple_ref/occ/ftmplt/Block/do //apple_ref/occ/defn/do //apple_ref/occ/macro/do //apple_ref/doc/anysymbol/do" machineGenerated="true" --><span class="function">do</span><!-- /a -->:<!-- a logicalPath="//apple_ref/occ/econst/aHandler //apple_ref/occ/data/Block/aHandler //apple_ref/occ/data/aHandler //apple_ref/occ/clconst/Block/aHandler " machineGenerated="true" --><span class="var">aHandler</span><!-- /a -->; <!-- headerDoc=declaration;uid=//apple_ref/occ/instm/Block/value:on:do:;name=end --></pre>
+</div>
+<h5 class="tight"><font face="Lucida Grande,Helvetica,Arial">Parameters</font></h5>
+<div class="param_indent">
+<dl>
+<dt>
+<!-- headerDoc=methodparam;  uid=//apple_ref/doc/methodparam/Block/value:on:do:/aClassOfExceptions;  indexgroup=JX Runtime ;   name=value:on:do:::aClassOfExceptions -->
+<a name="//apple_ref/doc/methodparam/Block/value:on:do:/aClassOfExceptions"></a>
+<code>aClassOfExceptions</code>
+</dt>
+<dd><p>The <a href="../../../Exceptn_h/Classes/Exception/index.html#//apple_ref/occ/cl/Exception" logicalPath="//apple_ref/occ/cl/Exception" target="_top">Exception</a> class, or one of its
+subclasses.</p></dd>
+<dt>
+<!-- headerDoc=methodparam;  uid=//apple_ref/doc/methodparam/Block/value:on:do:/aHandler;  indexgroup=JX Runtime ;   name=value:on:do:::aHandler -->
+<a name="//apple_ref/doc/methodparam/Block/value:on:do:/aHandler"></a>
+<code>aHandler</code>
+</dt>
+<dd><p>Block taking an argument (:except) for handling the
+exception.</p></dd>
+</dl>
+</div>
+<h5 class="tight"><font face="Lucida Grande,Helvetica,Arial">Return Value</font></h5>
+<p><!-- begin return value --></p>
+<p>The <em>id</em>-type return value of the block. 
+<!-- end return value --></p>
+<h5 class="tight"><font face="Lucida Grande,Helvetica,Arial">Discussion</font></h5>
+<!-- begin discussion --><!-- headerDoc=discussion;uid=//apple_ref/occ/instm/Block/value:on:do:;name=start --><p>Calls into the block with an <em>id</em>-type parameter. If an exception is
+raised and matches the specified class of exceptions, deploys a handler
+block.
+<!-- headerDoc=discussion;uid=//apple_ref/occ/instm/Block/value:on:do:;name=end --><!-- end discussion -->
+</p>
+<hr class="betweenAPIEntries">
+<!-- headerDoc=instm;  uid=//apple_ref/occ/instm/Block/value:value:;  indexgroup=JX Runtime ;   name=Block::value:value: --><a name="//apple_ref/occ/instm/Block/value:value:"></a>
+<h3><a name="value:value:">value:value:</a></h3>
+<hr class="afterName">
+<div class="declaration_indent">
+<pre><!-- headerDoc=declaration;uid=//apple_ref/occ/instm/Block/value:value:;name=start -->- <a machinegenerated="true" href="index.html#//apple_ref/occ/instm/Block/value:value:" logicalPath="//apple_ref/occ/instm/Block/value" target="_top"><span class="function">value</span></a>:<span class="param">firstObject</span> <a machinegenerated="true" href="index.html#//apple_ref/occ/instm/Block/value:value:" logicalPath="//apple_ref/occ/instm/Block/value" target="_top"><span class="function">value</span></a>:<!-- a logicalPath="//apple_ref/occ/econst/secondObject //apple_ref/occ/data/Block/secondObject //apple_ref/occ/data/secondObject //apple_ref/occ/clconst/Block/secondObject " machineGenerated="true" --><span class="var">secondObject</span><!-- /a -->; <!-- headerDoc=declaration;uid=//apple_ref/occ/instm/Block/value:value:;name=end --></pre>
+</div>
+<h5 class="tight"><font face="Lucida Grande,Helvetica,Arial">Parameters</font></h5>
+<div class="param_indent">
+<dl>
+<dt>
+<!-- headerDoc=methodparam;  uid=//apple_ref/doc/methodparam/Block/value:value:/firstObject;  indexgroup=JX Runtime ;   name=value:value:::firstObject -->
+<a name="//apple_ref/doc/methodparam/Block/value:value:/firstObject"></a>
+<code>firstObject</code>
+</dt>
+<dd><p>The first <em>id</em>-type parameter to the block.</p></dd>
+<dt>
+<!-- headerDoc=methodparam;  uid=//apple_ref/doc/methodparam/Block/value:value:/secondObject;  indexgroup=JX Runtime ;   name=value:value:::secondObject -->
+<a name="//apple_ref/doc/methodparam/Block/value:value:/secondObject"></a>
+<code>secondObject</code>
+</dt>
+<dd><p>The second parameter.</p></dd>
+</dl>
+</div>
+<h5 class="tight"><font face="Lucida Grande,Helvetica,Arial">Return Value</font></h5>
+<p><!-- begin return value --></p>
+<p>The <em>id</em>-type return value of the block. 
+<!-- end return value --></p>
+<h5 class="tight"><font face="Lucida Grande,Helvetica,Arial">Discussion</font></h5>
+<!-- begin discussion --><!-- headerDoc=discussion;uid=//apple_ref/occ/instm/Block/value:value:;name=start --><p>Calls into the block with two parameters.
+<!-- headerDoc=discussion;uid=//apple_ref/occ/instm/Block/value:value:;name=end --><!-- end discussion -->
 </p>
 <p class="gapBeforeFooter">&nbsp;</p>
 <hr class="afterFooter">
