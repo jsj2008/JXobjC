@@ -13,6 +13,7 @@
  could expect.
 
  Users should inherit instead from a primary or secondary root class.
+ @indexgroup JX Runtime
  */
 @interface RtObject : nosuper
 {

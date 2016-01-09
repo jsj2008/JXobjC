@@ -13,6 +13,7 @@
  It is designed for use with classes that will act as proxies to other
  objects, whether they be instance variables of it or even on a remote
  server.
+ @indexgroup JX Runtime
 */
 @interface Proxy : RtObject
 @end

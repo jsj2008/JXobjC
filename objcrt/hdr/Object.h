@@ -39,8 +39,9 @@
  @class Object
  Object is the primary root class in JX Objective-C.
  It provides objects inheriting from it - which most do - with a reasonable
- set of behaviour. Other root classes used by the user may include
- @link Proxy @/link
+ set of behaviour.
+ @seealso Proxy
+ @indexgroup JX Runtime
  */
 @interface Object : RtObject
 
