@@ -37,4 +37,4 @@ bld/*
 tmp/*
 *.tar.gz
 BootDist/*
-1
+doc/olddocs
