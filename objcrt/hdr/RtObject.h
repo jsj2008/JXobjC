@@ -33,6 +33,7 @@
   It is equivalent to [[class @link alloc @/link] @link init @/link];
  */
 + new;
+
 /*!
   Allocates a new instance of the class.
   The object may be unusable until init or a delegated initialiser method
@@ -42,16 +43,20 @@
 
 /*! Initialises an allocated instance of the class. */
 - init;
+
 /*!
   Copies the instance, but may not copy all internal data-structures.
   The copied object includes byte-for-byte copies of all its instance
   variables, whereas (for example) recursive copying of <em>id</em> (object
   identifier) variables. */
 - copy;
+
 /*! Deep-copies the instance, copying any internal data-structures. */
 - deepCopy;
+
 /*! Frees the instance. */
 - free;
+
 - increfs;
 - decrefs;
 /*! Finalises an instance due to be freed by the garbage collector. */
@@ -74,6 +79,7 @@
   was not understood.
  */
 - doesNotUnderstand:aMessage;
+
 /*!
   Invoked when a message is not recognised by @link doesNotUnderstand: @/link.
   Terminates programme by default.
@@ -83,9 +89,12 @@
 
 /*! @group Retrieving information about messages */
 
-/*! Returns the IMP of a selector for this object. */
+/*! Look up a message with the object by selector.
+    @param aSelector The SEL to be looked up. */
 - (IMP)methodFor:(SEL)aSelector;
-/*! Returns the IMP of a selector for an instance of this class. */
+
+/*! Look up the IMP of a method for an instance of this class, by selector.
+     @param aSelector The SEL to be looked up. */
 + (IMP)instanceMethodFor:(SEL)aSelector;
 
 /* private */

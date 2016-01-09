@@ -20,9 +20,18 @@
 #define __EXCEPTN_H__
 
 #include <stdio.h>
-#include "objcrt.h"
 #include "Object.h"
 
+/*!
+ Used to handle exceptions. An Exception may be signalled using:
+ @code
+ [[[Exception alloc] init] signal:"This is an exception message."];
+ @endcode
+ A handler @link Block @/link for classes of exceptions is passed the
+ signalling instance of Exception (or an instance one of its subclasses) as its
+ single parameter.
+ @indexgroup JX Runtime
+ */
 @interface Exception : Object
 {
     id messageText;
@@ -33,7 +42,11 @@
   id handler;
 }
 
+/*! Signals a new exception. */
 + signal;
+
+/*! Signals a new exception with an STR message.
+    @param message Exception message STR. */
 + signal:(STR)message;
 - free;
 
@@ -44,6 +57,8 @@
 - messageText:message;
 - str:(STR)message;
 
+/*! Resignals a new exception with another Exception instance.
+    @param replacementException Exception message STR. */
 - resignalAs:replacementException;
 - resume;
 

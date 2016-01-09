@@ -47,18 +47,33 @@
 
 /*! @group Comparison */
 
-/*! Returns the unique hash of an object. By default, returns the object's
-   address. */
+/*!
+  Retrieve the unique hash of an object.
+  @return The object's unique hash.
+ */
 - (uintptr_t)hash;
-/*! Compares an object to another object. By default, returns YES if the
-    objects have the same address. Otherwise, returns NO. */
+
+/*!
+  Checks if two objects are equal.
+  @param anObject The object to compare with.
+  @return By default, YES if pointer addresses are equal; NO if not.
+ */
 - (BOOL)isEqual:anObject;
-/*! Compares a class to another class. By default, returns YES if the
-    classes have the same address. Otherwise, returns NO. */
+
+/*!
+  Checks if two classes are the same.
+  @param anObject The class to compare with.
+  @return By default, YES if pointer addresses are equal; NO if not.
+ */
 + (BOOL)isEqual:anObject;
-/*! Checks if two objects are the same. Returns YES if their addresses are
-    are equal. */
+
+/*!
+  Checks if two objects are the same.
+  @param anObject The object to compare with.
+  @return YES if pointer addresses are equal; NO if not.
+ */
 - (BOOL)isSame:anObject;
+
 - (BOOL)notEqual:anObject;
 - (BOOL)notSame:anObject;
 - (int)compare:anObject;
@@ -68,17 +83,21 @@
 
 /*! Returns the class of the object. */
 - myClass;
+
 /*! Returns the superclass of the object. */
 - superclass;
 /*! Compatibility alias for @link superclass @/link. */
 - superClass;
+
 /*! Returns the class of a class. In fact, this always returns <em>self</em> by
     tradition. */
 + myClass;
+
 /*! Returns the superclass of this class (its parent class). */
 + superclass;
 /*! Compatibility alias for @link superclass @/link. */
 + superClass;
+
 /*! Returns the name of this object. By default, returns the name of its
     class. */
 - (STR)name;
@@ -89,14 +108,17 @@
     nil.
     @param name The STR containing a classes' name. */
 - (id)findClass:(STR)name;
+
 /*! Returns the SEL corresponding to an STR. If no SEL is found, returns NULL.
     @param name The SEL containing a selector string. */
 - (SEL)findSel:(STR)name;
+
 - (SEL)selOfSTR:(STR)name;
 - (id)idOfSTR:(STR)aClassName;
 /*! Returns the STR representation of an object. By default, returns the name
     of the object's class. */
 - (STR)str;
+
 /*! Returns the size of the object. */
 - (unsigned)size;
 
@@ -104,11 +126,13 @@
     @return YES if the object responds to the selector, NO if not.
     @param aSelector Which selector to test the object's response to. */
 - (BOOL)respondsTo:(SEL)aSelector;
+
 /*! Checks if the object is an instance of a class.
     @param aClass Which class to test the object's membership of.
     @return YES if the object is a direct instance of the class, NO if it an
     instance of a subclass or otherwise. */
 - (BOOL)isMemberOf:aClass;
+
 /*! Checks if the object is an instance of a kind of class.
     @param aClass Which class to test the object's belonging to.
     @return YES if the object is a direct or subclass instance of the class, NO
@@ -123,12 +147,15 @@
 
 /*! Returns an @link OrdCltn @/link of this class' subclasses. */
 + subclasses;
+
 /*! Have this subclass substitute for a parent class.
     @param superClass The class to be substituted with this class. */
 + poseAs:superClass;
+
 /*! Add this class' methods to a parent class.
     @param superClass The class to have this class' methods added to. */
 + addMethodsTo:superClass;
+
 /*!
   Create a new subclass of this class.
   @param name The STR representing the newly-created subclass' name.
@@ -136,6 +163,7 @@
   programme.
  */
 + (id)subclass:(STR)name;
+
 /*!
   Create a new subclass of this class.
   @param name An STR representing the newly-created subclass' name.
@@ -147,14 +175,17 @@
   programme.
  */
 + (id)subclass:(STR)name:(int)ivars:(int)cvars;
+
 /*! Load this class into the running programme. */
 + load;
 /*! Unload this class from the running programme. */
 + unload;
+
 /*! Find out whether this class inherits from another class.
     @param aClass The class to test this classes' inheritance from.
     @return YES if class inherits from aClass, NO if not. */
 + (BOOL)inheritsFrom:aClass;
+
 /*! Compatibility alias for @link inheritsFrom: @/link. */
 + (BOOL)isSubclassOf:aClass;
 
