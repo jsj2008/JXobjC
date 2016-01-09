@@ -1,91 +1,131 @@
-<HTML>
-<TITLE>intarray Specification Sheet</TITLE>
-<H1>intarray Specification Sheet</H1>
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN" "http://www.w3.org/TR/REC-html40/loose.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=ascii">
+<title>intarray Specification Sheet</title>
+</head>
+<body>
+<h1>intarray Specification Sheet</h1>
 
-<HR>
-Portable Object Compiler (c) 1998.  All Rights Reserved.<P>
-<H1>IntArray</H1>
-<B>Inherits from:</B> Array<P>
-<H2>Class Description</H2>
-<B>IntArray</B> instances are used to hold regular, small, C integers (of type <B>int</B>).  This class is somewhat similar to <B>String</B>, the difference being that a String is an Array of bytes, while this class provides a somewhat similar API to <I>strings of int</I>.<P>
-<H2>Method types</H2>
-<H3><B>Creation</B></H3>
-<UL>
-<LI><A HREF="#0">new</A></LI>
-<LI><A HREF="#1">new:</A></LI>
-<LI><A HREF="#2">with:</A></LI>
-<LI><A HREF="#3">copy</A></LI>
-<LI><A HREF="#4">deepCopy</A></LI>
-<LI><A HREF="#5">free</A></LI>
-</UL>
-<H3><B>Interrogation</B></H3>
-<UL>
-<LI><A HREF="#7">size</A></LI>
-<LI><A HREF="#8">intAt:</A></LI>
-<LI><A HREF="#9">intAt:put:</A></LI>
-</UL>
-<H3><B>Resizing</B></H3>
-<UL>
-<LI><A HREF="#10">capacity</A></LI>
-<LI><A HREF="#11">capacity:</A></LI>
-<LI><A HREF="#12">packContents</A></LI>
-</UL>
-<H3><B>Printing</B></H3>
-<UL>
-<LI><A HREF="#13">printOn:</A></LI>
-</UL>
-<H3><B>Archiving</B></H3>
-<UL>
-<LI><A HREF="#14">fileOutOn:</A></LI>
-<LI><A HREF="#15">fileInFrom:</A></LI>
-</UL>
-<H2>Methods</H2>
-<H3><A NAME="0">new</A></H3>
-<BLOCKQUOTE>+<B>new</B></BLOCKQUOTE>
-Creates an instance whose value is set to the empty array.<P>
-<H3><A NAME="1">new:</A></H3>
-<BLOCKQUOTE>+<B>new</B>:(unsigned)<I>n</I></BLOCKQUOTE>
-Creates an instance of <I>n</I> zeroes.<P>
-<H3><A NAME="2">with:</A></H3>
-<BLOCKQUOTE>+<B>with</B>:(int)<I>nArgs,...</I></BLOCKQUOTE>
-Creates an instance of <I>nArgs</I> objects, using a variable number of <I>int</I> arguments.<P>
-<BLOCKQUOTE><PRE>
+<hr>
+Portable Object Compiler (c) 1998.  All Rights Reserved.<p>
+</p>
+<h1>IntArray</h1>
+<b>Inherits from:</b> Array<p>
+</p>
+<h2>Class Description</h2>
+<b>IntArray</b> instances are used to hold regular, small, C integers (of type <b>int</b>).  This class is somewhat similar to <b>String</b>, the difference being that a String is an Array of bytes, while this class provides a somewhat similar API to <i>strings of int</i>.<p>
+</p>
+<h2>Method types</h2>
+<h3><b>Creation</b></h3>
+<ul>
+<li><a href="#0">new</a></li>
+<li><a href="#1">new:</a></li>
+<li><a href="#2">with:</a></li>
+<li><a href="#3">copy</a></li>
+<li><a href="#4">deepCopy</a></li>
+<li><a href="#5">free</a></li>
+</ul>
+<h3><b>Interrogation</b></h3>
+<ul>
+<li><a href="#7">size</a></li>
+<li><a href="#8">intAt:</a></li>
+<li><a href="#9">intAt:put:</a></li>
+</ul>
+<h3><b>Resizing</b></h3>
+<ul>
+<li><a href="#10">capacity</a></li>
+<li><a href="#11">capacity:</a></li>
+<li><a href="#12">packContents</a></li>
+</ul>
+<h3><b>Printing</b></h3>
+<ul>
+<li><a href="#13">printOn:</a></li>
+</ul>
+<h3><b>Archiving</b></h3>
+<ul>
+<li><a href="#14">fileOutOn:</a></li>
+<li><a href="#15">fileInFrom:</a></li>
+</ul>
+<h2>Methods</h2>
+<h3><a name="0">new</a></h3>
+<blockquote>+<b>new</b>
+</blockquote>
+Creates an instance whose value is set to the empty array.<p>
+</p>
+<h3><a name="1">new:</a></h3>
+<blockquote>+<b>new</b>:(unsigned)<i>n</i>
+</blockquote>
+Creates an instance of <i>n</i> zeroes.<p>
+</p>
+<h3><a name="2">with:</a></h3>
+<blockquote>+<b>with</b>:(int)<i>nArgs,...</i>
+</blockquote>
+Creates an instance of <i>nArgs</i> objects, using a variable number of <i>int</i> arguments.<p>
+</p>
+<blockquote><pre>
 id myArray = [IntArray with:3,0,1,2];
-</PRE></BLOCKQUOTE>
-<H3><A NAME="3">copy</A></H3>
-<BLOCKQUOTE>-<B>copy</B></BLOCKQUOTE>
-Returns a copy of the receiver with its internal C array copied as well.<P>
-<B>See also:</B> - strCopy<P>
-<H3><A NAME="4">deepCopy</A></H3>
-<BLOCKQUOTE>-<B>deepCopy</B></BLOCKQUOTE>
-For this class, this method acts as <B>copy</B>.<P>
-<H3><A NAME="5">free</A></H3>
-<BLOCKQUOTE>-<B>free</B></BLOCKQUOTE>
-Frees the receiver and its internal C array as well.<P>
-<H3><A NAME="7">size</A></H3>
-<BLOCKQUOTE>- (unsigned)<B>size</B></BLOCKQUOTE>
-Returns the number of integers in the array.  For this class, <B>size</B> is equivalent to <B>capacity</B>.<P>
-<H3><A NAME="8">intAt:</A></H3>
-<BLOCKQUOTE>- (int)<B>intAt</B>:(unsigned)<I>anOffset</I></BLOCKQUOTE>
-Returns the integer at <I>anOffset</I> or signals the <B>OutOutBounds</B> exception if <I>anOffset</I> is greater than the length of the C array.<P>
-<H3><A NAME="9">intAt:put:</A></H3>
-<BLOCKQUOTE>- (int)<B>intAt</B>:(unsigned)<I>anOffset</I><B>put</B>:(int)<I>anInt</I></BLOCKQUOTE>
-Replaces the integer at <I>anOffset</I> with <I>anInt</I> and returns the old integer which was in that location.  Generates an out of bounds exception if <I>anOffset</I> is greater than the length of the array.<P>
-<H3><A NAME="10">capacity</A></H3>
-<BLOCKQUOTE>- (unsigned)<B>capacity</B></BLOCKQUOTE>
-Returns the number of integers in the array.  For this class, <B>capacity</B> is equivalent to <B>size</B>.<P>
-<H3><A NAME="11">capacity:</A></H3>
-<BLOCKQUOTE>-<B>capacity</B>:(unsigned)<I>nSlots</I></BLOCKQUOTE>
-Changes the capacity to <I>nSlots</I>.  If <I>nSlots</I> is larger than the current capacity, the memory added at the end will be zero-filled.  If <I>nSlots</I> is less than the current capacity, the array is truncated.<P>
-<H3><A NAME="12">packContents</A></H3>
-<BLOCKQUOTE>-<B>packContents</B></BLOCKQUOTE>
-Removes zero elements while preserving the order of elements in the <B>IntArray</B>.  Used to eliminate the 'hole' left by a <B>at:put:</B> message with a zero argument.<P>
-<H3><A NAME="13">printOn:</A></H3>
-<BLOCKQUOTE>-<B>printOn</B>:(IOD)<I>aFile</I></BLOCKQUOTE>
-Prints the array to <I>aFile</I> without appending a newline.  Returns the receiver.<P>
-<H3><A NAME="14">fileOutOn:</A></H3>
-<BLOCKQUOTE>-<B>fileOutOn</B>:<I>aFiler</I></BLOCKQUOTE>
-Writes the array on <I>aFiler</I>.  Returns the receiver.<P>
-<H3><A NAME="15">fileInFrom:</A></H3>
-<BLOCKQUOTE>-<B>fileInFrom</B>:<I>aFiler</I></BLOCKQUOTE>
-Reads a array object from <I>aFiler</I>.  Returns the receiver.<P>
+</pre></blockquote>
+<h3><a name="3">copy</a></h3>
+<blockquote>-<b>copy</b>
+</blockquote>
+Returns a copy of the receiver with its internal C array copied as well.<p>
+<b>See also:</b> - strCopy</p>
+<p>
+</p>
+<h3><a name="4">deepCopy</a></h3>
+<blockquote>-<b>deepCopy</b>
+</blockquote>
+For this class, this method acts as <b>copy</b>.<p>
+</p>
+<h3><a name="5">free</a></h3>
+<blockquote>-<b>free</b>
+</blockquote>
+Frees the receiver and its internal C array as well.<p>
+</p>
+<h3><a name="7">size</a></h3>
+<blockquote>- (unsigned)<b>size</b>
+</blockquote>
+Returns the number of integers in the array.  For this class, <b>size</b> is equivalent to <b>capacity</b>.<p>
+</p>
+<h3><a name="8">intAt:</a></h3>
+<blockquote>- (int)<b>intAt</b>:(unsigned)<i>anOffset</i>
+</blockquote>
+Returns the integer at <i>anOffset</i> or signals the <b>OutOutBounds</b> exception if <i>anOffset</i> is greater than the length of the C array.<p>
+</p>
+<h3><a name="9">intAt:put:</a></h3>
+<blockquote>- (int)<b>intAt</b>:(unsigned)<i>anOffset</i><b>put</b>:(int)<i>anInt</i>
+</blockquote>
+Replaces the integer at <i>anOffset</i> with <i>anInt</i> and returns the old integer which was in that location.  Generates an out of bounds exception if <i>anOffset</i> is greater than the length of the array.<p>
+</p>
+<h3><a name="10">capacity</a></h3>
+<blockquote>- (unsigned)<b>capacity</b>
+</blockquote>
+Returns the number of integers in the array.  For this class, <b>capacity</b> is equivalent to <b>size</b>.<p>
+</p>
+<h3><a name="11">capacity:</a></h3>
+<blockquote>-<b>capacity</b>:(unsigned)<i>nSlots</i>
+</blockquote>
+Changes the capacity to <i>nSlots</i>.  If <i>nSlots</i> is larger than the current capacity, the memory added at the end will be zero-filled.  If <i>nSlots</i> is less than the current capacity, the array is truncated.<p>
+</p>
+<h3><a name="12">packContents</a></h3>
+<blockquote>-<b>packContents</b>
+</blockquote>
+Removes zero elements while preserving the order of elements in the <b>IntArray</b>.  Used to eliminate the 'hole' left by a <b>at:put:</b> message with a zero argument.<p>
+</p>
+<h3><a name="13">printOn:</a></h3>
+<blockquote>-<b>printOn</b>:(IOD)<i>aFile</i>
+</blockquote>
+Prints the array to <i>aFile</i> without appending a newline.  Returns the receiver.<p>
+</p>
+<h3><a name="14">fileOutOn:</a></h3>
+<blockquote>-<b>fileOutOn</b>:<i>aFiler</i>
+</blockquote>
+Writes the array on <i>aFiler</i>.  Returns the receiver.<p>
+</p>
+<h3><a name="15">fileInFrom:</a></h3>
+<blockquote>-<b>fileInFrom</b>:<i>aFiler</i>
+</blockquote>
+Reads a array object from <i>aFiler</i>.  Returns the receiver.<p></p>
+</body>
+</html>

@@ -1,164 +1,234 @@
-<HTML>
-<TITLE>octext Specification Sheet</TITLE>
-<H1>octext Specification Sheet</H1>
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN" "http://www.w3.org/TR/REC-html40/loose.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=ascii">
+<title>octext Specification Sheet</title>
+</head>
+<body>
+<h1>octext Specification Sheet</h1>
 
-<HR>
-Portable Object Compiler (c) 1997,98,99,2003.  All Rights Reserved.<P>
-<H1>Text</H1>
-<B>Inherits from:</B> Object<P>
-<B>Maturity Index:</B> Experimental<P>
-<H2>Class Description</H2>
-The <B>Text</B> class associates to a <B>String</B> instance a <B>RunArray</B>.  The runs for a string, consist of string segments that have the same text attributes, such as font, boldface, fontsize etc.<P>
-<P>
-<H2>Method types</H2>
-<H3><B>Creation</B></H3>
-<UL>
-<LI><A HREF="#1">new</A></LI>
-<LI><A HREF="#2">new:</A></LI>
-<LI><A HREF="#4">str:</A></LI>
-<LI><A HREF="#5">sprintf:</A></LI>
-<LI><A HREF="#6">fromString:</A></LI>
-<LI><A HREF="#7">string:attribute:</A></LI>
-<LI><A HREF="#9">copy</A></LI>
-<LI><A HREF="#10">free</A></LI>
-</UL>
-<H3><B>Comparison</B></H3>
-<UL>
-<LI><A HREF="#11">hash</A></LI>
-<LI><A HREF="#12">isEqual:</A></LI>
-</UL>
-<H3><B>Accessing</B></H3>
-<UL>
-<LI><A HREF="#13">string</A></LI>
-<LI><A HREF="#14">runs</A></LI>
-<LI><A HREF="#15">str</A></LI>
-<LI><A HREF="#16">size</A></LI>
-<LI><A HREF="#17">charAt:</A></LI>
-<LI><A HREF="#18">charAt:put:</A></LI>
-<LI><A HREF="#19">at:insert:</A></LI>
-<LI><A HREF="#20">at:insert:count:</A></LI>
-<LI><A HREF="#21">deleteFrom:to:</A></LI>
-<LI><A HREF="#22">concat:</A></LI>
-<LI><A HREF="#23">concatSTR:</A></LI>
-</UL>
-<H3><B>Emphasis</B></H3>
-<UL>
-<LI><A HREF="#24">allBold</A></LI>
-<LI><A HREF="#25">makeBoldFrom:to:</A></LI>
-<LI><A HREF="#26">addAttribute:</A></LI>
-<LI><A HREF="#27">addAttribute:from:to:</A></LI>
-<LI><A HREF="#28">attributesAt:</A></LI>
-<LI><A HREF="#29">runLengthFor:</A></LI>
-</UL>
-<H3><B>Format Conversions</B></H3>
-<UL>
-<LI><A HREF="#32">asString</A></LI>
-<LI><A HREF="#33">asText</A></LI>
-<LI><A HREF="#34">asParagraph</A></LI>
-</UL>
-<H3><B>Printing</B></H3>
-<UL>
-<LI><A HREF="#35">printOn:</A></LI>
-</UL>
-<H2>Methods</H2>
-<H3><A NAME="1">new</A></H3>
-<BLOCKQUOTE>+<B>new</B></BLOCKQUOTE>
-Creates an instance whose value is set to the empty string.<P>
-<H3><A NAME="2">new:</A></H3>
-<BLOCKQUOTE>+<B>new</B>:(unsigned)<I>nChars</I></BLOCKQUOTE>
-Creates an instance whose value is set to the empty string, can hold at least <I>nChars</I> without having to expand.<P>
-<H3><A NAME="4">str:</A></H3>
-<BLOCKQUOTE>+<B>str</B>:(STR)<I>aString</I></BLOCKQUOTE>
-Creates an instance whose value is set to a copy of <I>aString</I>.  If <I>aString</I> is NULL, creates an instance whose value is set to the empty string. <P>
-<H3><A NAME="5">sprintf:</A></H3>
-<BLOCKQUOTE>+<B>sprintf</B>:(STR)<I>format,...</I></BLOCKQUOTE>
-Returns a new instace initialized just as the standard C library <I>sprintf()</I>.  See the documentation on <I>sprintf()</I> for the formats and variable declarations.<P>
-<H3><A NAME="6">fromString:</A></H3>
-<BLOCKQUOTE>+<B>fromString</B>:<I>aString</I></BLOCKQUOTE>
-Creates an instance whose value is set to <I>aString</I>.<P>
-<H3><A NAME="7">string:attribute:</A></H3>
-<BLOCKQUOTE>+<B>string</B>:<I>aString</I><B>attribute</B>:<I>attrib</I></BLOCKQUOTE>
-Creates an instance whose value is set to <I>aString</I> and then sends itself an <B>addAttribute:</B> message.<P>
-<H3><A NAME="9">copy</A></H3>
-<BLOCKQUOTE>-<B>copy</B></BLOCKQUOTE>
-Returns a copy of the receiver with its internal C string copied as well.<P>
-<H3><A NAME="10">free</A></H3>
-<BLOCKQUOTE>-<B>free</B></BLOCKQUOTE>
-Frees the receiver and its internal C string as well.<P>
-<H3><A NAME="11">hash</A></H3>
-<BLOCKQUOTE>- (unsigned)<B>hash</B></BLOCKQUOTE>
-Returns a hash value based upon the contents of the string held in the receiver.<P>
-<H3><A NAME="12">isEqual:</A></H3>
-<BLOCKQUOTE>- (BOOL)<B>isEqual</B>:<I>aStr</I></BLOCKQUOTE>
-Returns YES if the string and runarray contained by <I>aStr</I> is equal to the contents of the receiver.<P>
-<H3><A NAME="13">string</A></H3>
-<BLOCKQUOTE>-<B>string</B></BLOCKQUOTE>
-Returns the String instance for this Text object.<P>
-<H3><A NAME="14">runs</A></H3>
-<BLOCKQUOTE>-<B>runs</B></BLOCKQUOTE>
-Returns the RunArray instance for this Text object.<P>
-<H3><A NAME="15">str</A></H3>
-<BLOCKQUOTE>- (STR)<B>str</B></BLOCKQUOTE>
-Returns a pointer to the NULL-terminated C string stored in the receiver.<P>
-<H3><A NAME="16">size</A></H3>
-<BLOCKQUOTE>- (unsigned)<B>size</B></BLOCKQUOTE>
-Returns the size of the String instance for this Text object.  The following all return the same value :<P>
-<BLOCKQUOTE><PRE>
+<hr>
+Portable Object Compiler (c) 1997,98,99,2003.  All Rights Reserved.<p>
+</p>
+<h1>Text</h1>
+<b>Inherits from:</b> Object<p>
+<b>Maturity Index:</b> Experimental</p>
+<p>
+</p>
+<h2>Class Description</h2>
+The <b>Text</b> class associates to a <b>String</b> instance a <b>RunArray</b>.  The runs for a string, consist of string segments that have the same text attributes, such as font, boldface, fontsize etc.<p>
+</p>
+<p>
+</p>
+<h2>Method types</h2>
+<h3><b>Creation</b></h3>
+<ul>
+<li><a href="#1">new</a></li>
+<li><a href="#2">new:</a></li>
+<li><a href="#4">str:</a></li>
+<li><a href="#5">sprintf:</a></li>
+<li><a href="#6">fromString:</a></li>
+<li><a href="#7">string:attribute:</a></li>
+<li><a href="#9">copy</a></li>
+<li><a href="#10">free</a></li>
+</ul>
+<h3><b>Comparison</b></h3>
+<ul>
+<li><a href="#11">hash</a></li>
+<li><a href="#12">isEqual:</a></li>
+</ul>
+<h3><b>Accessing</b></h3>
+<ul>
+<li><a href="#13">string</a></li>
+<li><a href="#14">runs</a></li>
+<li><a href="#15">str</a></li>
+<li><a href="#16">size</a></li>
+<li><a href="#17">charAt:</a></li>
+<li><a href="#18">charAt:put:</a></li>
+<li><a href="#19">at:insert:</a></li>
+<li><a href="#20">at:insert:count:</a></li>
+<li><a href="#21">deleteFrom:to:</a></li>
+<li><a href="#22">concat:</a></li>
+<li><a href="#23">concatSTR:</a></li>
+</ul>
+<h3><b>Emphasis</b></h3>
+<ul>
+<li><a href="#24">allBold</a></li>
+<li><a href="#25">makeBoldFrom:to:</a></li>
+<li><a href="#26">addAttribute:</a></li>
+<li><a href="#27">addAttribute:from:to:</a></li>
+<li><a href="#28">attributesAt:</a></li>
+<li><a href="#29">runLengthFor:</a></li>
+</ul>
+<h3><b>Format Conversions</b></h3>
+<ul>
+<li><a href="#32">asString</a></li>
+<li><a href="#33">asText</a></li>
+<li><a href="#34">asParagraph</a></li>
+</ul>
+<h3><b>Printing</b></h3>
+<ul>
+<li><a href="#35">printOn:</a></li>
+</ul>
+<h2>Methods</h2>
+<h3><a name="1">new</a></h3>
+<blockquote>+<b>new</b>
+</blockquote>
+Creates an instance whose value is set to the empty string.<p>
+</p>
+<h3><a name="2">new:</a></h3>
+<blockquote>+<b>new</b>:(unsigned)<i>nChars</i>
+</blockquote>
+Creates an instance whose value is set to the empty string, can hold at least <i>nChars</i> without having to expand.<p>
+</p>
+<h3><a name="4">str:</a></h3>
+<blockquote>+<b>str</b>:(STR)<i>aString</i>
+</blockquote>
+Creates an instance whose value is set to a copy of <i>aString</i>.  If <i>aString</i> is NULL, creates an instance whose value is set to the empty string. <p>
+</p>
+<h3><a name="5">sprintf:</a></h3>
+<blockquote>+<b>sprintf</b>:(STR)<i>format,...</i>
+</blockquote>
+Returns a new instace initialized just as the standard C library <i>sprintf()</i>.  See the documentation on <i>sprintf()</i> for the formats and variable declarations.<p>
+</p>
+<h3><a name="6">fromString:</a></h3>
+<blockquote>+<b>fromString</b>:<i>aString</i>
+</blockquote>
+Creates an instance whose value is set to <i>aString</i>.<p>
+</p>
+<h3><a name="7">string:attribute:</a></h3>
+<blockquote>+<b>string</b>:<i>aString</i><b>attribute</b>:<i>attrib</i>
+</blockquote>
+Creates an instance whose value is set to <i>aString</i> and then sends itself an <b>addAttribute:</b> message.<p>
+</p>
+<h3><a name="9">copy</a></h3>
+<blockquote>-<b>copy</b>
+</blockquote>
+Returns a copy of the receiver with its internal C string copied as well.<p>
+</p>
+<h3><a name="10">free</a></h3>
+<blockquote>-<b>free</b>
+</blockquote>
+Frees the receiver and its internal C string as well.<p>
+</p>
+<h3><a name="11">hash</a></h3>
+<blockquote>- (unsigned)<b>hash</b>
+</blockquote>
+Returns a hash value based upon the contents of the string held in the receiver.<p>
+</p>
+<h3><a name="12">isEqual:</a></h3>
+<blockquote>- (BOOL)<b>isEqual</b>:<i>aStr</i>
+</blockquote>
+Returns YES if the string and runarray contained by <i>aStr</i> is equal to the contents of the receiver.<p>
+</p>
+<h3><a name="13">string</a></h3>
+<blockquote>-<b>string</b>
+</blockquote>
+Returns the String instance for this Text object.<p>
+</p>
+<h3><a name="14">runs</a></h3>
+<blockquote>-<b>runs</b>
+</blockquote>
+Returns the RunArray instance for this Text object.<p>
+</p>
+<h3><a name="15">str</a></h3>
+<blockquote>- (STR)<b>str</b>
+</blockquote>
+Returns a pointer to the NULL-terminated C string stored in the receiver.<p>
+</p>
+<h3><a name="16">size</a></h3>
+<blockquote>- (unsigned)<b>size</b>
+</blockquote>
+Returns the size of the String instance for this Text object.  The following all return the same value :<p>
+</p>
+<blockquote><pre>
 [text size];
 [[text string] size];
 [[text runs] size];
-</PRE></BLOCKQUOTE>
-<H3><A NAME="17">charAt:</A></H3>
-<BLOCKQUOTE>- (char)<B>charAt</B>:(unsigned)<I>anOffset</I></BLOCKQUOTE>
-Returns the character at <I>anOffset</I> or <B>zero</B> if <I>anOffset</I> is greater than the length of the C string.<P>
-<H3><A NAME="18">charAt:put:</A></H3>
-<BLOCKQUOTE>- (char)<B>charAt</B>:(unsigned)<I>anOffset</I><B>put</B>:(char)<I>aChar</I></BLOCKQUOTE>
-Replaces the character at <I>anOffset</I> with <I>aChar</I> and returns the old character which was in that location.  Returns <B>zero</B> if <I>anOffset</I> is greater than the length of the C string.<P>
-<H3><A NAME="19">at:insert:</A></H3>
-<BLOCKQUOTE>-<B>at</B>:(unsigned)<I>anOffset</I><B>insert</B>:<I>aString</I></BLOCKQUOTE>
-<H3><A NAME="20">at:insert:count:</A></H3>
-<BLOCKQUOTE>-<B>at</B>:(unsigned)<I>anOffset</I><B>insert</B>:(char*)<I>aString</I><B>count</B>:(int)<I>size</I></BLOCKQUOTE>
-<H3><A NAME="21">deleteFrom:to:</A></H3>
-<BLOCKQUOTE>-<B>deleteFrom</B>:(unsigned)<I>p</I><B>to</B>:(unsigned)<I>q</I></BLOCKQUOTE>
-<H3><A NAME="22">concat:</A></H3>
-<BLOCKQUOTE>-<B>concat</B>:<I>b</I></BLOCKQUOTE>
-<H3><A NAME="23">concatSTR:</A></H3>
-<BLOCKQUOTE>-<B>concatSTR</B>:(STR)<I>b</I></BLOCKQUOTE>
-<H3><A NAME="24">allBold</A></H3>
-<BLOCKQUOTE>-<B>allBold</B></BLOCKQUOTE>
-This message is equivalent to,<P>
-<BLOCKQUOTE><PRE>
+</pre></blockquote>
+<h3><a name="17">charAt:</a></h3>
+<blockquote>- (char)<b>charAt</b>:(unsigned)<i>anOffset</i>
+</blockquote>
+Returns the character at <i>anOffset</i> or <b>zero</b> if <i>anOffset</i> is greater than the length of the C string.<p>
+</p>
+<h3><a name="18">charAt:put:</a></h3>
+<blockquote>- (char)<b>charAt</b>:(unsigned)<i>anOffset</i><b>put</b>:(char)<i>aChar</i>
+</blockquote>
+Replaces the character at <i>anOffset</i> with <i>aChar</i> and returns the old character which was in that location.  Returns <b>zero</b> if <i>anOffset</i> is greater than the length of the C string.<p>
+</p>
+<h3><a name="19">at:insert:</a></h3>
+<blockquote>-<b>at</b>:(unsigned)<i>anOffset</i><b>insert</b>:<i>aString</i>
+</blockquote>
+<h3><a name="20">at:insert:count:</a></h3>
+<blockquote>-<b>at</b>:(unsigned)<i>anOffset</i><b>insert</b>:(char*)<i>aString</i><b>count</b>:(int)<i>size</i>
+</blockquote>
+<h3><a name="21">deleteFrom:to:</a></h3>
+<blockquote>-<b>deleteFrom</b>:(unsigned)<i>p</i><b>to</b>:(unsigned)<i>q</i>
+</blockquote>
+<h3><a name="22">concat:</a></h3>
+<blockquote>-<b>concat</b>:<i>b</i>
+</blockquote>
+<h3><a name="23">concatSTR:</a></h3>
+<blockquote>-<b>concatSTR</b>:(STR)<i>b</i>
+</blockquote>
+<h3><a name="24">allBold</a></h3>
+<blockquote>-<b>allBold</b>
+</blockquote>
+This message is equivalent to,<p>
+</p>
+<blockquote><pre>
 [self makeBoldFrom:0 to:[self size] - 1].
-</PRE></BLOCKQUOTE>
-Returns <B>self</B> (the text object).<P>
-<H3><A NAME="25">makeBoldFrom:to:</A></H3>
-<BLOCKQUOTE>-<B>makeBoldFrom</B>:(unsigned)<I>p</I><B>to</B>:(unsigned)<I>q</I></BLOCKQUOTE>
-Adds a boldface <B>TextAttribute</B> for the characters from index <I>p</I> to <I>q</I> (including the characters at offset <I>p</I> and <I>q</I>).  A boldface attribute has <B>emphasiscode</B> equal to 1.<P>
-<H3><A NAME="26">addAttribute:</A></H3>
-<BLOCKQUOTE>-<B>addAttribute</B>:<I>attribute</I></BLOCKQUOTE>
-This message is equivalent to,<P>
-<BLOCKQUOTE><PRE>
+</pre></blockquote>
+Returns <b>self</b> (the text object).<p>
+</p>
+<h3><a name="25">makeBoldFrom:to:</a></h3>
+<blockquote>-<b>makeBoldFrom</b>:(unsigned)<i>p</i><b>to</b>:(unsigned)<i>q</i>
+</blockquote>
+Adds a boldface <b>TextAttribute</b> for the characters from index <i>p</i> to <i>q</i> (including the characters at offset <i>p</i> and <i>q</i>).  A boldface attribute has <b>emphasiscode</b> equal to 1.<p>
+</p>
+<h3><a name="26">addAttribute:</a></h3>
+<blockquote>-<b>addAttribute</b>:<i>attribute</i>
+</blockquote>
+This message is equivalent to,<p>
+</p>
+<blockquote><pre>
 [self addAttribute:attribute from:0 to:[self size] - 1].
-</PRE></BLOCKQUOTE>
-Returns <B>self</B> (the text object).<P>
-<H3><A NAME="27">addAttribute:from:to:</A></H3>
-<BLOCKQUOTE>-<B>addAttribute</B>:<I>attribute</I><B>from</B>:(unsigned)<I>p</I><B>to</B>:(unsigned)<I>q</I></BLOCKQUOTE>
-Adds <I>attribute</I> to the string segments between <I>p</I> and <I>q</I>.<P>
-<H3><A NAME="28">attributesAt:</A></H3>
-<BLOCKQUOTE>-<B>attributesAt</B>:(unsigned)<I>i</I></BLOCKQUOTE>
-Returns an <B>OrdCltn</B> of TextAttribute instances for the character at index <I>i</I>.<P>
-<H3><A NAME="29">runLengthFor:</A></H3>
-<BLOCKQUOTE>- (unsigned)<B>runLengthFor</B>:(unsigned)<I>i</I></BLOCKQUOTE>
-Returns the number of remaining characters in the string segment to which the character at position <I>i</I> belongs.  If <I>i</I> is the first character of a run, this method returns the size of the run.  Otherwise it returns the size minus the index of character in the run.<P>
-<H3><A NAME="32">asString</A></H3>
-<BLOCKQUOTE>-<B>asString</B></BLOCKQUOTE>
-Equivalent to <B>string</B>.<P>
-<H3><A NAME="33">asText</A></H3>
-<BLOCKQUOTE>-<B>asText</B></BLOCKQUOTE>
-Returns the object itself.<P>
-<H3><A NAME="34">asParagraph</A></H3>
-<BLOCKQUOTE>-<B>asParagraph</B></BLOCKQUOTE>
-Returns a paragraph for this text object.<P>
-<H3><A NAME="35">printOn:</A></H3>
-<BLOCKQUOTE>-<B>printOn</B>:(IOD)<I>aFile</I></BLOCKQUOTE>
-Prints the Text for the string contained by this instance.  Returns the receiver.<P>
+</pre></blockquote>
+Returns <b>self</b> (the text object).<p>
+</p>
+<h3><a name="27">addAttribute:from:to:</a></h3>
+<blockquote>-<b>addAttribute</b>:<i>attribute</i><b>from</b>:(unsigned)<i>p</i><b>to</b>:(unsigned)<i>q</i>
+</blockquote>
+Adds <i>attribute</i> to the string segments between <i>p</i> and <i>q</i>.<p>
+</p>
+<h3><a name="28">attributesAt:</a></h3>
+<blockquote>-<b>attributesAt</b>:(unsigned)<i>i</i>
+</blockquote>
+Returns an <b>OrdCltn</b> of TextAttribute instances for the character at index <i>i</i>.<p>
+</p>
+<h3><a name="29">runLengthFor:</a></h3>
+<blockquote>- (unsigned)<b>runLengthFor</b>:(unsigned)<i>i</i>
+</blockquote>
+Returns the number of remaining characters in the string segment to which the character at position <i>i</i> belongs.  If <i>i</i> is the first character of a run, this method returns the size of the run.  Otherwise it returns the size minus the index of character in the run.<p>
+</p>
+<h3><a name="32">asString</a></h3>
+<blockquote>-<b>asString</b>
+</blockquote>
+Equivalent to <b>string</b>.<p>
+</p>
+<h3><a name="33">asText</a></h3>
+<blockquote>-<b>asText</b>
+</blockquote>
+Returns the object itself.<p>
+</p>
+<h3><a name="34">asParagraph</a></h3>
+<blockquote>-<b>asParagraph</b>
+</blockquote>
+Returns a paragraph for this text object.<p>
+</p>
+<h3><a name="35">printOn:</a></h3>
+<blockquote>-<b>printOn</b>:(IOD)<i>aFile</i>
+</blockquote>
+Prints the Text for the string contained by this instance.  Returns the receiver.<p></p>
+</body>
+</html>

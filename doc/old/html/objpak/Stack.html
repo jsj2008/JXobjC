@@ -1,103 +1,147 @@
-<HTML>
-<TITLE>stack Specification Sheet</TITLE>
-<H1>stack Specification Sheet</H1>
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN" "http://www.w3.org/TR/REC-html40/loose.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=ascii">
+<title>stack Specification Sheet</title>
+</head>
+<body>
+<h1>stack Specification Sheet</h1>
 
-<HR>
-Portable Object Compiler (c) 1998.  All Rights Reserved.<P>
-<H1>Stack</H1>
-<B>Inherits from:</B> Cltn<P>
-<H2>Class Description</H2>
-<B>Stack</B> instances are collections that maintain their entries in LIFO (last in first out) order.  Although Stacks are most often controlled by the <B>push:</B> and <B>pop</B> methods, the class also provides for random access of the stack, through the <B>at:</B> and <B>removeAt:</B> methods.  Note that the indices are relative to the top (last added) item on the stack, which is the opposite of how the <B>OrdCltn</B> class works.<P>
-<H2>Method types</H2>
-<H3><B>Creation</B></H3>
-<UL>
-<LI><A HREF="#0">new</A></LI>
-<LI><A HREF="#3">new:</A></LI>
-<LI><A HREF="#4">copy</A></LI>
-<LI><A HREF="#5">deepCopy</A></LI>
-<LI><A HREF="#6">emptyYourself</A></LI>
-<LI><A HREF="#7">freeContents</A></LI>
-<LI><A HREF="#8">free</A></LI>
-</UL>
-<H3><B>Interrogation</B></H3>
-<UL>
-<LI><A HREF="#10">depth</A></LI>
-<LI><A HREF="#11">isEmpty</A></LI>
-<LI><A HREF="#12">eachElement</A></LI>
-<LI><A HREF="#13">topElement</A></LI>
-</UL>
-<H3><B>Adding</B></H3>
-<UL>
-<LI><A HREF="#14">push:</A></LI>
-<LI><A HREF="#16">pop</A></LI>
-<LI><A HREF="#17">swap</A></LI>
-<LI><A HREF="#18">at:</A></LI>
-<LI><A HREF="#19">removeAt:</A></LI>
-</UL>
-<H3><B>Printing</B></H3>
-<UL>
-<LI><A HREF="#20">printOn:</A></LI>
-</UL>
-<H2>Methods</H2>
-<H3><A NAME="0">new</A></H3>
-<BLOCKQUOTE>+<B>new</B></BLOCKQUOTE>
-Returns a new empty stack.<P>
-<H3><A NAME="3">new:</A></H3>
-<BLOCKQUOTE>+<B>new</B>:(unsigned)<I>n</I></BLOCKQUOTE>
-Returns a new empty stack, that can hold <I>n</I> objects.<P>
-<H3><A NAME="4">copy</A></H3>
-<BLOCKQUOTE>-<B>copy</B></BLOCKQUOTE>
-Returns a new copy of the stack.<P>
-<H3><A NAME="5">deepCopy</A></H3>
-<BLOCKQUOTE>-<B>deepCopy</B></BLOCKQUOTE>
-Returns a new copy of the stack.  The members in the new stack are deep copies of the members in the original stack.<P>
-<H3><A NAME="6">emptyYourself</A></H3>
-<BLOCKQUOTE>-<B>emptyYourself</B></BLOCKQUOTE>
-Removes all the members of the stack (without freeing them).  Returns the receiver.<P>
-<H3><A NAME="7">freeContents</A></H3>
-<BLOCKQUOTE>-<B>freeContents</B></BLOCKQUOTE>
-Removes and frees all the members of the receiver, but doesn't free the receiver itself.  Returns the receiver.<P>
-<H3><A NAME="8">free</A></H3>
-<BLOCKQUOTE>-<B>free</B></BLOCKQUOTE>
-Frees the stack, but not its contents.  Returns <B>nil</B>.  Do :<P>
-<BLOCKQUOTE><PRE>
+<hr>
+Portable Object Compiler (c) 1998.  All Rights Reserved.<p>
+</p>
+<h1>Stack</h1>
+<b>Inherits from:</b> Cltn<p>
+</p>
+<h2>Class Description</h2>
+<b>Stack</b> instances are collections that maintain their entries in LIFO (last in first out) order.  Although Stacks are most often controlled by the <b>push:</b> and <b>pop</b> methods, the class also provides for random access of the stack, through the <b>at:</b> and <b>removeAt:</b> methods.  Note that the indices are relative to the top (last added) item on the stack, which is the opposite of how the <b>OrdCltn</b> class works.<p>
+</p>
+<h2>Method types</h2>
+<h3><b>Creation</b></h3>
+<ul>
+<li><a href="#0">new</a></li>
+<li><a href="#3">new:</a></li>
+<li><a href="#4">copy</a></li>
+<li><a href="#5">deepCopy</a></li>
+<li><a href="#6">emptyYourself</a></li>
+<li><a href="#7">freeContents</a></li>
+<li><a href="#8">free</a></li>
+</ul>
+<h3><b>Interrogation</b></h3>
+<ul>
+<li><a href="#10">depth</a></li>
+<li><a href="#11">isEmpty</a></li>
+<li><a href="#12">eachElement</a></li>
+<li><a href="#13">topElement</a></li>
+</ul>
+<h3><b>Adding</b></h3>
+<ul>
+<li><a href="#14">push:</a></li>
+<li><a href="#16">pop</a></li>
+<li><a href="#17">swap</a></li>
+<li><a href="#18">at:</a></li>
+<li><a href="#19">removeAt:</a></li>
+</ul>
+<h3><b>Printing</b></h3>
+<ul>
+<li><a href="#20">printOn:</a></li>
+</ul>
+<h2>Methods</h2>
+<h3><a name="0">new</a></h3>
+<blockquote>+<b>new</b>
+</blockquote>
+Returns a new empty stack.<p>
+</p>
+<h3><a name="3">new:</a></h3>
+<blockquote>+<b>new</b>:(unsigned)<i>n</i>
+</blockquote>
+Returns a new empty stack, that can hold <i>n</i> objects.<p>
+</p>
+<h3><a name="4">copy</a></h3>
+<blockquote>-<b>copy</b>
+</blockquote>
+Returns a new copy of the stack.<p>
+</p>
+<h3><a name="5">deepCopy</a></h3>
+<blockquote>-<b>deepCopy</b>
+</blockquote>
+Returns a new copy of the stack.  The members in the new stack are deep copies of the members in the original stack.<p>
+</p>
+<h3><a name="6">emptyYourself</a></h3>
+<blockquote>-<b>emptyYourself</b>
+</blockquote>
+Removes all the members of the stack (without freeing them).  Returns the receiver.<p>
+</p>
+<h3><a name="7">freeContents</a></h3>
+<blockquote>-<b>freeContents</b>
+</blockquote>
+Removes and frees all the members of the receiver, but doesn't free the receiver itself.  Returns the receiver.<p>
+</p>
+<h3><a name="8">free</a></h3>
+<blockquote>-<b>free</b>
+</blockquote>
+Frees the stack, but not its contents.  Returns <b>nil</b>.  Do :<p>
+</p>
+<blockquote><pre>
 aCltn = [[aCltn freeContents] free];
-</PRE></BLOCKQUOTE>
-if you want to free the collection and its contents.<P>
-<H3><A NAME="10">depth</A></H3>
-<BLOCKQUOTE>- (unsigned)<B>depth</B></BLOCKQUOTE>
-Returns the number of objects on the stack.<P>
-<H3><A NAME="11">isEmpty</A></H3>
-<BLOCKQUOTE>- (BOOL)<B>isEmpty</B></BLOCKQUOTE>
-Whether the number of objects on the stack is equal to zero.<P>
-<H3><A NAME="12">eachElement</A></H3>
-<BLOCKQUOTE>-<B>eachElement</B></BLOCKQUOTE>
-Returns a sequence of the elements in the collection.<P>
-<BLOCKQUOTE><PRE>
+</pre></blockquote>
+if you want to free the collection and its contents.<p>
+</p>
+<h3><a name="10">depth</a></h3>
+<blockquote>- (unsigned)<b>depth</b>
+</blockquote>
+Returns the number of objects on the stack.<p>
+</p>
+<h3><a name="11">isEmpty</a></h3>
+<blockquote>- (BOOL)<b>isEmpty</b>
+</blockquote>
+Whether the number of objects on the stack is equal to zero.<p>
+</p>
+<h3><a name="12">eachElement</a></h3>
+<blockquote>-<b>eachElement</b>
+</blockquote>
+Returns a sequence of the elements in the collection.<p>
+</p>
+<blockquote><pre>
 aSeq = [myStack eachElement];
 while ((anElement = [aSeq next])) {
     /* do something */
 }
 aSeq = [aSeq free];
-</PRE></BLOCKQUOTE>
-<H3><A NAME="13">topElement</A></H3>
-<BLOCKQUOTE>-<B>topElement</B></BLOCKQUOTE>
-Returns the top element on the stack, without removing it.  Returns <B>nil</B> if there are no elements on the stack.<P>
-<H3><A NAME="14">push:</A></H3>
-<BLOCKQUOTE>-<B>push</B>:<I>anObject</I></BLOCKQUOTE>
-Pushes <I>anObject</I> on the stack, so that it becomes the top of the stack.  Returns <B>self</B>.<P>
-<H3><A NAME="16">pop</A></H3>
-<BLOCKQUOTE>-<B>pop</B></BLOCKQUOTE>
-Pops the top of the stack and returns it.  Returns <B>nil</B> if the stack is empty.<P>
-<H3><A NAME="17">swap</A></H3>
-<BLOCKQUOTE>-<B>swap</B></BLOCKQUOTE>
-Exchanges the top two stack items and returns the receiver.  Generates an exception if the stack is not at least two items deep.<P>
-<H3><A NAME="18">at:</A></H3>
-<BLOCKQUOTE>-<B>at</B>:(unsigned )<I>anOffset</I></BLOCKQUOTE>
-Returns the object at <I>anOffset</I>.  Note that the top of the stack is at offset 0.<P>
-<H3><A NAME="19">removeAt:</A></H3>
-<BLOCKQUOTE>-<B>removeAt</B>:(unsigned )<I>anOffset</I></BLOCKQUOTE>
-Removes the object at <I>anOffset</I>.  Note that the top of the stack is at offset 0.<P>
-<H3><A NAME="20">printOn:</A></H3>
-<BLOCKQUOTE>-<B>printOn</B>:(IOD)<I>aFile</I></BLOCKQUOTE>
-Prints a list of the objects in the objects by sending each individual object a <B>printOn:</B> message.  Returns the receiver.<P>
+</pre></blockquote>
+<h3><a name="13">topElement</a></h3>
+<blockquote>-<b>topElement</b>
+</blockquote>
+Returns the top element on the stack, without removing it.  Returns <b>nil</b> if there are no elements on the stack.<p>
+</p>
+<h3><a name="14">push:</a></h3>
+<blockquote>-<b>push</b>:<i>anObject</i>
+</blockquote>
+Pushes <i>anObject</i> on the stack, so that it becomes the top of the stack.  Returns <b>self</b>.<p>
+</p>
+<h3><a name="16">pop</a></h3>
+<blockquote>-<b>pop</b>
+</blockquote>
+Pops the top of the stack and returns it.  Returns <b>nil</b> if the stack is empty.<p>
+</p>
+<h3><a name="17">swap</a></h3>
+<blockquote>-<b>swap</b>
+</blockquote>
+Exchanges the top two stack items and returns the receiver.  Generates an exception if the stack is not at least two items deep.<p>
+</p>
+<h3><a name="18">at:</a></h3>
+<blockquote>-<b>at</b>:(unsigned )<i>anOffset</i>
+</blockquote>
+Returns the object at <i>anOffset</i>.  Note that the top of the stack is at offset 0.<p>
+</p>
+<h3><a name="19">removeAt:</a></h3>
+<blockquote>-<b>removeAt</b>:(unsigned )<i>anOffset</i>
+</blockquote>
+Removes the object at <i>anOffset</i>.  Note that the top of the stack is at offset 0.<p>
+</p>
+<h3><a name="20">printOn:</a></h3>
+<blockquote>-<b>printOn</b>:(IOD)<i>aFile</i>
+</blockquote>
+Prints a list of the objects in the objects by sending each individual object a <b>printOn:</b> message.  Returns the receiver.<p></p>
+</body>
+</html>

@@ -1,62 +1,85 @@
-<HTML>
-<TITLE>paragrph Specification Sheet</TITLE>
-<H1>paragrph Specification Sheet</H1>
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN" "http://www.w3.org/TR/REC-html40/loose.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=ascii">
+<title>paragrph Specification Sheet</title>
+</head>
+<body>
+<h1>paragrph Specification Sheet</h1>
 
-<HR>
-Portable Object Compiler (c) 1997,98.  All Rights Reserved.<P>
-<H1>Paragraph</H1>
-<B>Inherits from:</B> Object<P>
-<B>Maturity Index:</B> Experimental<P>
-<H2>Class Description</H2>
-A <B>Paragraph</B> associates a <I>text</I> instance with a <I>text style</I>.  <P>
-<H2>Method types</H2>
-<H3><B>Creation</B></H3>
-<UL>
-<LI><A HREF="#0">new</A></LI>
-<LI><A HREF="#1">withText:</A></LI>
-<LI><A HREF="#2">withText:style:</A></LI>
-<LI><A HREF="#4">copy</A></LI>
-<LI><A HREF="#5">free</A></LI>
-</UL>
-<H3><B>Accessing </B></H3>
-<UL>
-<LI><A HREF="#6">text</A></LI>
-<LI><A HREF="#7">textStyle</A></LI>
-<LI><A HREF="#8">text:</A></LI>
-<LI><A HREF="#9">textStyle:</A></LI>
-</UL>
-<H3><B>Format Conversions</B></H3>
-<UL>
-<LI><A HREF="#10">asString</A></LI>
-<LI><A HREF="#11">asText</A></LI>
-</UL>
-<H3><B>Printing</B></H3>
-<UL>
-<LI><A HREF="#12">printOn:</A></LI>
-</UL>
-<H2>Methods</H2>
-<H3><A NAME="0">new</A></H3>
-<BLOCKQUOTE>+<B>new</B></BLOCKQUOTE>
-<H3><A NAME="1">withText:</A></H3>
-<BLOCKQUOTE>+<B>withText</B>:<I>aText</I></BLOCKQUOTE>
-<H3><A NAME="2">withText:style:</A></H3>
-<BLOCKQUOTE>+<B>withText</B>:<I>aText</I><B>style</B>:<I>aStyle</I></BLOCKQUOTE>
-<H3><A NAME="4">copy</A></H3>
-<BLOCKQUOTE>-<B>copy</B></BLOCKQUOTE>
-<H3><A NAME="5">free</A></H3>
-<BLOCKQUOTE>-<B>free</B></BLOCKQUOTE>
-<H3><A NAME="6">text</A></H3>
-<BLOCKQUOTE>-<B>text</B></BLOCKQUOTE>
-<H3><A NAME="7">textStyle</A></H3>
-<BLOCKQUOTE>-<B>textStyle</B></BLOCKQUOTE>
-<H3><A NAME="8">text:</A></H3>
-<BLOCKQUOTE>-<B>text</B>:<I>v</I></BLOCKQUOTE>
-<H3><A NAME="9">textStyle:</A></H3>
-<BLOCKQUOTE>-<B>textStyle</B>:<I>v</I></BLOCKQUOTE>
-<H3><A NAME="10">asString</A></H3>
-<BLOCKQUOTE>-<B>asString</B></BLOCKQUOTE>
-<H3><A NAME="11">asText</A></H3>
-<BLOCKQUOTE>-<B>asText</B></BLOCKQUOTE>
-<H3><A NAME="12">printOn:</A></H3>
-<BLOCKQUOTE>-<B>printOn</B>:(IOD)<I>aFile</I></BLOCKQUOTE>
-Prints the Text for this instance.  Returns the receiver.<P>
+<hr>
+Portable Object Compiler (c) 1997,98.  All Rights Reserved.<p>
+</p>
+<h1>Paragraph</h1>
+<b>Inherits from:</b> Object<p>
+<b>Maturity Index:</b> Experimental</p>
+<p>
+</p>
+<h2>Class Description</h2>
+A <b>Paragraph</b> associates a <i>text</i> instance with a <i>text style</i>.  <p>
+</p>
+<h2>Method types</h2>
+<h3><b>Creation</b></h3>
+<ul>
+<li><a href="#0">new</a></li>
+<li><a href="#1">withText:</a></li>
+<li><a href="#2">withText:style:</a></li>
+<li><a href="#4">copy</a></li>
+<li><a href="#5">free</a></li>
+</ul>
+<h3><b>Accessing </b></h3>
+<ul>
+<li><a href="#6">text</a></li>
+<li><a href="#7">textStyle</a></li>
+<li><a href="#8">text:</a></li>
+<li><a href="#9">textStyle:</a></li>
+</ul>
+<h3><b>Format Conversions</b></h3>
+<ul>
+<li><a href="#10">asString</a></li>
+<li><a href="#11">asText</a></li>
+</ul>
+<h3><b>Printing</b></h3>
+<ul>
+<li><a href="#12">printOn:</a></li>
+</ul>
+<h2>Methods</h2>
+<h3><a name="0">new</a></h3>
+<blockquote>+<b>new</b>
+</blockquote>
+<h3><a name="1">withText:</a></h3>
+<blockquote>+<b>withText</b>:<i>aText</i>
+</blockquote>
+<h3><a name="2">withText:style:</a></h3>
+<blockquote>+<b>withText</b>:<i>aText</i><b>style</b>:<i>aStyle</i>
+</blockquote>
+<h3><a name="4">copy</a></h3>
+<blockquote>-<b>copy</b>
+</blockquote>
+<h3><a name="5">free</a></h3>
+<blockquote>-<b>free</b>
+</blockquote>
+<h3><a name="6">text</a></h3>
+<blockquote>-<b>text</b>
+</blockquote>
+<h3><a name="7">textStyle</a></h3>
+<blockquote>-<b>textStyle</b>
+</blockquote>
+<h3><a name="8">text:</a></h3>
+<blockquote>-<b>text</b>:<i>v</i>
+</blockquote>
+<h3><a name="9">textStyle:</a></h3>
+<blockquote>-<b>textStyle</b>:<i>v</i>
+</blockquote>
+<h3><a name="10">asString</a></h3>
+<blockquote>-<b>asString</b>
+</blockquote>
+<h3><a name="11">asText</a></h3>
+<blockquote>-<b>asText</b>
+</blockquote>
+<h3><a name="12">printOn:</a></h3>
+<blockquote>-<b>printOn</b>:(IOD)<i>aFile</i>
+</blockquote>
+Prints the Text for this instance.  Returns the receiver.<p></p>
+</body>
+</html>

@@ -1,77 +1,115 @@
-<HTML>
-<TITLE>runarray Specification Sheet</TITLE>
-<H1>runarray Specification Sheet</H1>
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN" "http://www.w3.org/TR/REC-html40/loose.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=ascii">
+<title>runarray Specification Sheet</title>
+</head>
+<body>
+<h1>runarray Specification Sheet</h1>
 
-<HR>
-Portable Object Compiler (c) 1997,98,99,03.  All Rights Reserved.<P>
-<H1>RunArray</H1>
-<B>Inherits from:</B> Cltn<P>
-<B>Maturity Index:</B> Experimental<P>
-<H2>Class Description</H2>
-This class is used by the <B>Text</B> class, to associate lists of <B>TextAttribute</B> instances, to segments of characters in a string (slices of text with the same formatting properties, called <I>runs</I>).<P>
-<H2>Accessing</H2>
-A <B>RunArray</B> is <I>not</I> indexed by segment number.<P>
-Rather, it is indexed by character offsets : the message <B>at:</B> or <B>runLengthAt:</B> takes a character offset as argument, and translates this offset to a segment offset (the segment to which the character belongs) and returns the attributes or segment length, for that segment.<P>
-The <B>size</B> of a <B>RunArray</B> is the largest character offset plus one;it is not the number of segments.<P>
-<H2>Method types</H2>
-<H3><B>Creation</B></H3>
-<UL>
-<LI><A HREF="#2">new</A></LI>
-<LI><A HREF="#3">free</A></LI>
-</UL>
-<H3><B>Accessing</B></H3>
-<UL>
-<LI><A HREF="#4">values</A></LI>
-<LI><A HREF="#5">runs</A></LI>
-<LI><A HREF="#7">at:</A></LI>
-<LI><A HREF="#8">runLengthAt:</A></LI>
-<LI><A HREF="#9">size</A></LI>
-<LI><A HREF="#14">addAttribute:from:size:</A></LI>
-<LI><A HREF="#16">at:insert:count:</A></LI>
-<LI><A HREF="#17">deleteFrom:to:</A></LI>
-<LI><A HREF="#18">concat:</A></LI>
-<LI><A HREF="#19">coalesce</A></LI>
-</UL>
-<H3><B>Printing</B></H3>
-<UL>
-<LI><A HREF="#20">printOn:</A></LI>
-</UL>
-<H2>Methods</H2>
-<H3><A NAME="2">new</A></H3>
-<BLOCKQUOTE>+<B>new</B></BLOCKQUOTE>
-Creates an empty RunArray collection.<P>
-<H3><A NAME="3">free</A></H3>
-<BLOCKQUOTE>-<B>free</B></BLOCKQUOTE>
-<H3><A NAME="4">values</A></H3>
-<BLOCKQUOTE>-<B>values</B></BLOCKQUOTE>
-Returns a collection of OrdCltn instances (each element being a list of <B>TextAttribute</B> instances).<P>
-<H3><A NAME="5">runs</A></H3>
-<BLOCKQUOTE>-<B>runs</B></BLOCKQUOTE>
-Returns the run array (array of <I>int</I>).<P>
-<H3><A NAME="7">at:</A></H3>
-<BLOCKQUOTE>-<B>at</B>:(unsigned)<I>i</I></BLOCKQUOTE>
-Returns a collection of TextAttributes for the <I>i</I>-th character.<P>
-This method translates a character offset into a segment number.  The segment number is cached so that a subsequent call to <B>at:</B> or <B>runLengthAt:</B> doesn't have to recompute it.<P>
-<H3><A NAME="8">runLengthAt:</A></H3>
-<BLOCKQUOTE>- (unsigned)<B>runLengthAt</B>:(unsigned)<I>i</I></BLOCKQUOTE>
-Returns the number of remaining characters in the string segment to which the character at position <I>i</I> belongs.  If <I>i</I> is the first character of a run, this method returns the size of the run.  Otherwise it returns the size minus the index of character in the run.<P>
-<H3><A NAME="9">size</A></H3>
-<BLOCKQUOTE>- (unsigned)<B>size</B></BLOCKQUOTE>
-Returns the size of the RunArray, which is the same as the size of the String instance for this RunArray object.<P>
-The number of runs can be obtained by sending a <B>size</B> message to the object returned by <B>values</B>.<P>
-<H3><A NAME="14">addAttribute:from:size:</A></H3>
-<BLOCKQUOTE>-<B>addAttribute</B>:<I>attrib</I><B>from</B>:(unsigned)<I>p</I><B>size</B>:(unsigned)<I>s</I></BLOCKQUOTE>
-Adds <I>attrib</I> to the attribute lists for the <I>s</I> characters from position <I>p</I>.<P>
-<B>Note:</B> This method is optimized for adding at the end of the RunArray.<P>
-<H3><A NAME="16">at:insert:count:</A></H3>
-<BLOCKQUOTE>-<B>at</B>:(unsigned)<I>anOffset</I><B>insert</B>:(char*)<I>aString</I><B>count</B>:(int)<I>n</I></BLOCKQUOTE>
-<H3><A NAME="17">deleteFrom:to:</A></H3>
-<BLOCKQUOTE>-<B>deleteFrom</B>:(unsigned)<I>p</I><B>to</B>:(unsigned)<I>q</I></BLOCKQUOTE>
-<H3><A NAME="18">concat:</A></H3>
-<BLOCKQUOTE>-<B>concat</B>:<I>b</I></BLOCKQUOTE>
-<H3><A NAME="19">coalesce</A></H3>
-<BLOCKQUOTE>-<B>coalesce</B></BLOCKQUOTE>
-Merges adjacent lists of TextAttribute instances, by testing whether they are equal (in the sense of <B>TextAttribute</B>'s <B>isEqual</B> method).<P>
-<H3><A NAME="20">printOn:</A></H3>
-<BLOCKQUOTE>-<B>printOn</B>:(IOD)<I>aFile</I></BLOCKQUOTE>
-Prints the RunArray values.<P>
+<hr>
+Portable Object Compiler (c) 1997,98,99,03.  All Rights Reserved.<p>
+</p>
+<h1>RunArray</h1>
+<b>Inherits from:</b> Cltn<p>
+<b>Maturity Index:</b> Experimental</p>
+<p>
+</p>
+<h2>Class Description</h2>
+This class is used by the <b>Text</b> class, to associate lists of <b>TextAttribute</b> instances, to segments of characters in a string (slices of text with the same formatting properties, called <i>runs</i>).<p>
+</p>
+<h2>Accessing</h2>
+A <b>RunArray</b> is <i>not</i> indexed by segment number.<p>
+Rather, it is indexed by character offsets : the message <b>at:</b> or <b>runLengthAt:</b> takes a character offset as argument, and translates this offset to a segment offset (the segment to which the character belongs) and returns the attributes or segment length, for that segment.</p>
+<p>
+The <b>size</b> of a <b>RunArray</b> is the largest character offset plus one;it is not the number of segments.</p>
+<p>
+</p>
+<h2>Method types</h2>
+<h3><b>Creation</b></h3>
+<ul>
+<li><a href="#2">new</a></li>
+<li><a href="#3">free</a></li>
+</ul>
+<h3><b>Accessing</b></h3>
+<ul>
+<li><a href="#4">values</a></li>
+<li><a href="#5">runs</a></li>
+<li><a href="#7">at:</a></li>
+<li><a href="#8">runLengthAt:</a></li>
+<li><a href="#9">size</a></li>
+<li><a href="#14">addAttribute:from:size:</a></li>
+<li><a href="#16">at:insert:count:</a></li>
+<li><a href="#17">deleteFrom:to:</a></li>
+<li><a href="#18">concat:</a></li>
+<li><a href="#19">coalesce</a></li>
+</ul>
+<h3><b>Printing</b></h3>
+<ul>
+<li><a href="#20">printOn:</a></li>
+</ul>
+<h2>Methods</h2>
+<h3><a name="2">new</a></h3>
+<blockquote>+<b>new</b>
+</blockquote>
+Creates an empty RunArray collection.<p>
+</p>
+<h3><a name="3">free</a></h3>
+<blockquote>-<b>free</b>
+</blockquote>
+<h3><a name="4">values</a></h3>
+<blockquote>-<b>values</b>
+</blockquote>
+Returns a collection of OrdCltn instances (each element being a list of <b>TextAttribute</b> instances).<p>
+</p>
+<h3><a name="5">runs</a></h3>
+<blockquote>-<b>runs</b>
+</blockquote>
+Returns the run array (array of <i>int</i>).<p>
+</p>
+<h3><a name="7">at:</a></h3>
+<blockquote>-<b>at</b>:(unsigned)<i>i</i>
+</blockquote>
+Returns a collection of TextAttributes for the <i>i</i>-th character.<p>
+This method translates a character offset into a segment number.  The segment number is cached so that a subsequent call to <b>at:</b> or <b>runLengthAt:</b> doesn't have to recompute it.</p>
+<p>
+</p>
+<h3><a name="8">runLengthAt:</a></h3>
+<blockquote>- (unsigned)<b>runLengthAt</b>:(unsigned)<i>i</i>
+</blockquote>
+Returns the number of remaining characters in the string segment to which the character at position <i>i</i> belongs.  If <i>i</i> is the first character of a run, this method returns the size of the run.  Otherwise it returns the size minus the index of character in the run.<p>
+</p>
+<h3><a name="9">size</a></h3>
+<blockquote>- (unsigned)<b>size</b>
+</blockquote>
+Returns the size of the RunArray, which is the same as the size of the String instance for this RunArray object.<p>
+The number of runs can be obtained by sending a <b>size</b> message to the object returned by <b>values</b>.</p>
+<p>
+</p>
+<h3><a name="14">addAttribute:from:size:</a></h3>
+<blockquote>-<b>addAttribute</b>:<i>attrib</i><b>from</b>:(unsigned)<i>p</i><b>size</b>:(unsigned)<i>s</i>
+</blockquote>
+Adds <i>attrib</i> to the attribute lists for the <i>s</i> characters from position <i>p</i>.<p>
+<b>Note:</b> This method is optimized for adding at the end of the RunArray.</p>
+<p>
+</p>
+<h3><a name="16">at:insert:count:</a></h3>
+<blockquote>-<b>at</b>:(unsigned)<i>anOffset</i><b>insert</b>:(char*)<i>aString</i><b>count</b>:(int)<i>n</i>
+</blockquote>
+<h3><a name="17">deleteFrom:to:</a></h3>
+<blockquote>-<b>deleteFrom</b>:(unsigned)<i>p</i><b>to</b>:(unsigned)<i>q</i>
+</blockquote>
+<h3><a name="18">concat:</a></h3>
+<blockquote>-<b>concat</b>:<i>b</i>
+</blockquote>
+<h3><a name="19">coalesce</a></h3>
+<blockquote>-<b>coalesce</b>
+</blockquote>
+Merges adjacent lists of TextAttribute instances, by testing whether they are equal (in the sense of <b>TextAttribute</b>'s <b>isEqual</b> method).<p>
+</p>
+<h3><a name="20">printOn:</a></h3>
+<blockquote>-<b>printOn</b>:(IOD)<i>aFile</i>
+</blockquote>
+Prints the RunArray values.<p></p>
+</body>
+</html>

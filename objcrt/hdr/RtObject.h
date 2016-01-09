@@ -35,13 +35,17 @@
 /*!
   Allocates a new instance of the class.
   The object may be unusable until init or a delegated initialiser method
-  is called.
+  is called. The default alloc simply zeroes all instance variables.
  */
 + alloc;
 
 /*! Initialises an allocated instance of the class. */
 - init;
-/*! Copies the instance, but may not copy all internal data-structures. */
+/*!
+  Copies the instance, but may not copy all internal data-structures.
+  The copied object includes byte-for-byte copies of all its instance
+  variables, whereas (for example) recursive copying of <em>id</em> (object
+  identifier) variables. */
 - copy;
 /*! Deep-copies the instance, copying any internal data-structures. */
 - deepCopy;
@@ -61,12 +65,19 @@
 
 /*! @group Message forwarding */
 
-/*! Invoked when a message is not understood. The message may be sent onwards
-    to another object, or treated as desired. By default, invokes
-    @link doesNotRecognize: @/link. */
+/*!
+  Invoked when a message is not understood. The message may be sent onwards
+  to another object, or treated as desired. By default, invokes
+  @link doesNotRecognize: @/link.
+  @param aMessage A @link Message @/link object representing the message that
+  was not understood.
+ */
 - doesNotUnderstand:aMessage;
-/*! Invoked when a message is not recognised by @link doesNotUnderstand: @/link.
-    Terminates programme by default. */
+/*!
+  Invoked when a message is not recognised by @link doesNotUnderstand: @/link.
+  Terminates programme by default.
+  @param aSelector The selector that was not understood.
+ */
 - (id)doesNotRecognize:(SEL)aSelector;
 
 /*! @group Retrieving information about messages */
