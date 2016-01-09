@@ -29,8 +29,6 @@
  *
  ****************************************************************************/
 
-+ initialize { return self; }
-
 - initialize { return self; }
 
 /*****************************************************************************
@@ -41,50 +39,6 @@
 
 - str:(STR)s { return [self shouldNotImplement]; /* dummy def. Stepstn */ }
 
-+ new { return [[self alloc] init]; }
-
-+ alloc
-{
-    id newObject = (*JX_alloc) (self, 0);
-    return newObject;
-}
-
-- init { return self; }
-
-- new { return [self shouldNotImplement]; }
-
-- increfs { return nil; }
-
-- copy
-{
-    id newObject = (*JX_copy) (self, 0);
-    [newObject increfs];
-    return newObject;
-}
-
-- deepCopy
-{
-    id newObject = (*JX_copy) (self, 0);
-    [newObject increfs];
-    return newObject;
-}
-
-- free
-{
-    isa = nil;
-    return (JX_dealloc) ? (*JX_dealloc) (self) : nil;
-}
-
-- decrefs { return nil; }
-
-- ARC_dealloc { return (*JX_dealloc) (self); }
-
-- finalise
-{
-    printf ("\n\n\n\nFINALISED\n\n\n\n");
-    return (*JX_dealloc) (self);
-}
-
 + free { return nil; }
 
 + ARC_dealloc { return nil; }
@@ -94,10 +48,6 @@
  * Identity
  *
  ****************************************************************************/
-
-- self { return self; }
-
-- yourself { return self; }
 
 - class
 {
@@ -414,32 +364,6 @@ static BOOL inherits (Cls_t aCls, STR name)
 
 /*****************************************************************************
  *
- * Unknown Messages
- *
- ****************************************************************************/
-
-- doesNotRecognize:(SEL)aSelector
-{
-    return [self error:"(%s): Message not recognized by this class (%s).",
-                       aSelector, [self str]];
-}
-- doesNotUnderstand:aMessage
-{
-    return [self doesNotRecognize:[aMessage selector]];
-}
-
-/*****************************************************************************
- *
- * Method Implemenation Lookup
- *
- ****************************************************************************/
-
-- (IMP)methodFor:(SEL)aSelector { return _imp (self, aSelector); }
-
-+ (IMP)instanceMethodFor:(SEL)aSelector { return _impSuper (self, aSelector); }
-
-/*****************************************************************************
- *
  * Method Performing
  *
  ****************************************************************************/
@@ -510,24 +434,6 @@ static BOOL inherits (Cls_t aCls, STR name)
 }
 
 - printOn:(IOD)anIOD { return self; }
-
-/*****************************************************************************
- *
- * Synchronisation
- *
- ****************************************************************************/
-
-- _lock
-{
-    pthread_mutex_lock (_lock);
-    return self;
-}
-
-- _unlock
-{
-    pthread_mutex_unlock (_lock);
-    return self;
-}
 
 /*****************************************************************************
  *

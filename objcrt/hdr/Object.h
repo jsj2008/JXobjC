@@ -1,4 +1,3 @@
-/* Copyright (c) 2016 D. Mackay. All rights reserved. */
 /*
  * Portable Object Compiler (c) 1997,98,99,2000,03,14.  All Rights Reserved.
  *
@@ -16,6 +15,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
  */
+/* Copyright (c) 2016 D. Mackay. All rights reserved. */
 
 #ifndef __OBJECT_H__
 #define __OBJECT_H__
@@ -26,6 +26,7 @@
 #include <string.h>
 
 #include "objcrt.h"
+#include "RtObject.h"
 
 #define __objcrt_revision__ "4.5"
 
@@ -39,27 +40,7 @@
  set of behaviour. Other root classes used by the user may include
  @link Proxy @/link
 */
-@interface Object
-{
-    id isa;
-    unsigned int _refcnt;
-    void * _lock;
-}
-
-+ initialize;
-
-+ new;
-+ alloc;
-- init;
-- copy;
-- deepCopy;
-- free;
-- increfs;
-- decrefs;
-- finalise;
-
-- self;
-- yourself;
+@interface Object : RtObject
 - class;
 - superclass;
 - superClass;
@@ -112,12 +93,6 @@
 - error:(STR)format, ...;
 - halt:message;
 
-- doesNotRecognize:(SEL)aSelector;
-- doesNotUnderstand:aMessage;
-
-- (IMP)methodFor:(SEL)aSelector;
-+ (IMP)instanceMethodFor:(SEL)aSelector;
-
 - perform:(SEL)aSelector;
 - perform:(SEL)aSelector with:anObject;
 - perform:(SEL)aSelector with:anObject with:otherObject;
@@ -143,7 +118,6 @@
 - awakeFrom:aFiler;
 
 /* private */
-/* 'incorrect' */
 - new;
 - initialize;
 + free;
@@ -162,7 +136,6 @@
 - fileInIdsFrom:aFiler;
 - fileOutIdsFor;
 - fileInIdsFrom;
-
 @end
 
 #endif /* __OBJECT_H__ */
