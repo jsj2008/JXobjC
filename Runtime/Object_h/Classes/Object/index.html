@@ -1,0 +1,943 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN" "http://www.w3.org/TR/1998/REC-html40-19980424/loose.dtd">
+<html>
+<head>
+<title>Object</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="generator" content="HeaderDoc">
+<meta name="xcode-display" content="render">
+<style type="text/css"><!--.char {background: #ffffff; color:#0000ff;}.comment {background:#ffffff; color:#236e25}.function {background:#ffffff; color:#000000;}.keyword {background:#ffffff; color:#761550;}.number {background: #ffffff; color:#0000ff;}.param {background:#ffffff; color:#000000;}.preprocessor {background:#ffffff; color:#236e25}.string {background: #ffffff; color:#891315;}.template {background:#ffffff; color:#761550;}.type {background:#ffffff; color:#761550;}.var {background:#ffffff; color:#000000;}body {border: 0px; margin: 0px;}div {font-size: 10pt; text-decoration: none; font-family: lucida grande, geneva, helvetica, arial, sans-serif; color: #000000;}td {font-size: 10pt; text-decoration: none; font-family: lucida grande, geneva, helvetica, arial, sans-serif; color: #000000;}span.hd_tocAccessSpace { display: block; font-size: 1px; height: 3px; min-height: 3px; }span.hd_tocGroupSpace { display: block; font-size: 1px; height: 3px; min-height: 3px; }span.hd_tocGroup { display: block; font-weight: bold; font-size: 10pt; text-decoration: none; font-family: lucida grande, geneva, helvetica, arial, sans-serif; color: #000000; margin-left: 0px; padding-left: 40px; }span.hd_tocGroup + span.hd_tocAccess { padding-top: 5px; }td.toc_contents_text {font-size: 11pt; text-decoration: none; font-family: lucida grande, geneva, helvetica, arial, sans-serif; color: #000000; }li.tocSubEntry {font-size: 11pt; text-decoration: none; font-family: lucida grande, geneva, helvetica, arial, sans-serif; color: #000000;}p {font-size: 10pt; text-decoration: none; font-family: lucida grande, geneva, helvetica, arial, sans-serif; color: #000000;}a:link {text-decoration: none; font-family: lucida grande, geneva, helvetica, arial, sans-serif; color: #36c;}a:visited {text-decoration: none; font-family: lucida grande, geneva, helvetica, arial, sans-serif; color: #36c;}a:visited:hover {text-decoration: underline; font-family: lucida grande, geneva, helvetica, arial, sans-serif; color: #36c;}a:active {text-decoration: none; font-family: lucida grande, geneva, helvetica, arial, sans-serif; color: #36c;}a:hover {text-decoration: underline; font-family: lucida grande, geneva, helvetica, arial, sans-serif; color: #36c;}h2.h2tight { margin-top: 0px; padding-top: 0px; }h1 { margin-top: 13px; padding-top: 0px; }h4 {text-decoration: none; font-family: lucida grande, geneva, helvetica, arial, sans-serif; font-size: tiny; font-weight: bold;}h5 {text-decoration: none; font-family: lucida grande, geneva, helvetica, arial, sans-serif; font-size: 10.1pt; font-weight: bold;}pre {text-decoration: none; font-family: Courier, Consolas, monospace; color: #666; font-size: 10pt;}pre a { font-family: Courier, Consolas, monospace; color: #666;font-size: 10pt;}pre a:link { font-family: Courier, Consolas, monospace; color: #36c;font-size: 10pt;}pre a:visited { font-family: Courier, Consolas, monospace; color: #36c;font-size: 10pt;}pre a:visited:hover { font-family: Courier, Consolas, monospace; color: #36c;font-size: 10pt;}pre a:active { font-family: Courier, Consolas, monospace; color: #36c;font-size: 10pt;}pre a:hover { font-family: Courier, Consolas, monospace; color: #36c;font-size: 10pt;}code {text-decoration: none; font-family: Courier, Consolas, monospace; color: #666;font-size: 10pt;}code a { font-family: Courier, Consolas, monospace; color: #666;font-size: 10pt;}code a:link { font-family: Courier, Consolas, monospace; color: #36c;font-size: 10pt;}code a:visited { font-family: Courier, Consolas, monospace; color: #36c;font-size: 10pt;}code a:visited:hover { font-family: Courier, Consolas, monospace; color: #36c;font-size: 10pt;}code a:active { font-family: Courier, Consolas, monospace; color: #36c;font-size: 10pt;}code a:hover { font-family: Courier, Consolas, monospace; color: #36c;font-size: 10pt;}tt {text-decoration: none; font-family: Courier, Consolas, monospace; color: #666;font-size: 10pt;}tt a { font-family: Courier, Consolas, monospace; color: #666;font-size: 10pt;}tt a:link { font-family: Courier, Consolas, monospace; color: #36c;font-size: 10pt;}tt a:visited { font-family: Courier, Consolas, monospace; color: #36c;font-size: 10pt;}tt a:visited:hover { font-family: Courier, Consolas, monospace; color: #36c;font-size: 10pt;}tt a:active { font-family: Courier, Consolas, monospace; color: #36c;font-size: 10pt;}tt a:hover { font-family: Courier, Consolas, monospace; color: #36c;font-size: 10pt;}body  {text-decoration: none; font-family: Courier, Consolas, monospace; color: #666;font-size: 10pt; padding-left: 0px; padding-top: 0px; margin-left: 0px; margin-top: 0px; border: none; }#hd_outermost_table { margin-left: 0px; border-spacing: 0px; margin-top: 0px; padding-left: 0px; padding-top: 0px; border: none; }#hd_outermost_table > tr { border-spacing: 0px; margin-left: 0px; margin-top: 0px; padding-left: 0px; padding-top: 0px; border: none; }#hd_outermost_table > tr > td { border-spacing: 0px; margin-left: 0px; margin-top: 0px; }#hd_outermost_table > tbody > tr { border-spacing: 0px; margin-left: 0px; margin-top: 0px; padding-left: 0px; padding-top: 0px; border: none; }#hd_outermost_table > tbody > tr > td { border-spacing: 0px; margin-left: 0px; margin-top: 0px; padding-top: 3px; }.afterName { display: none; }.list_indent { margin-left: 40px; }.declaration_indent { margin-left: 40px; margin-top: 0px; margin-bottom: 0px; padding-top: 0px; padding-bottom: 0px; min-height: 12px; vertical-align: middle; }.declaration_indent pre { margin-top: 20px; padding-top: 0px; margin-bottom: 20px; padding-bottom: 0px; }.gapBeforeFooter { display: none; }hr { height: 0px; min-height: 0px; border-top: none; border-left: none; border-right: none; border-bottom: 1px solid #909090;}hr.afterHeader { display: none }.param_group_indent { margin-left: 25px; }.param_indent { margin-left: 40px; margin-top: 0px; padding-top: 0px; }.param_indent dl { margin-top: 4px; padding-top: 0px; }dl dd > p:first-child { margin-top: 2px; padding-top: 0px; }.param_indent dl dd > p:first-child { margin-top: 2px; padding-top: 0px; }.group_indent { margin-left: 40px; }.group_desc_indent { margin-left: 20px; }.warning_indent { margin-left: 40px; }.important_indent { margin-left: 40px; }.note_indent { margin-left: 40px; }h3 {       color: #3C4C6C;}.tight {       margin-top: 2px; margin-bottom: 0px;       padding-top: 0px; padding-bottom: 0px;}h3 a {       color: #3C4C6C;	font-size: 16px;	font-style: normal;	font-variant: normal;	font-weight: bold;	height: 0px;	line-height: normal;}.hd_tocAccess { display: block; margin-left: 40px; font-style: italic; font-size: 10px; font-weight: normal; color: #303030; }.tocSubheading { margin-bottom: 4px; }--></style>
+<style><!--
+body {
+    padding: 0px;
+    margin: 0px;
+    border: 0px;
+}
+.toc_contents_text {
+    padding-left: 1em;
+    text-indent: -1em;
+}
+
+ul.tocSubEntryList li.tocSubEntry {
+    list-style: none;
+}
+
+#colorbox {
+		display: none;
+}
+.spec_sheet_line {
+		margin-bottom: 1px;
+}
+.collapsible {
+		display: none;
+}
+.toc_leadspace {
+		width: 10; min-width: 10;
+}
+.disclosure_triangle_td {
+		width: 14; min-width: 14;
+		font-size: 10px;
+		vertical-align: middle;
+}
+.specbox td {
+		font-size: 13px;
+}
+.specbox td a {
+		font-size: 13px;
+}
+.specbox td code {
+		font-size: 13px;
+}
+.specbox td tt {
+		font-size: 13px;
+}
+.specbox td pre {
+		font-size: 13px;
+}
+.specbox a {
+		font-size: 12px;
+}
+.disclosure_triangle_td a {
+		text-decoration: none;
+}
+.disclosure_triangle_td a:link {
+		text-decoration: none;
+}
+.disclosure_triangle_td a:active {
+		text-decoration: none;
+}
+.disclosure_triangle_td a:visited:hover {
+		text-decoration: none;
+}
+.disclosure_triangle_td a:hover {
+		text-decoration: none;
+}
+.hd_toc_box {
+		padding-top: 10px;
+		padding-right: 15px;
+}.tocSeparator {
+		margin-top: 15px;
+		padding-bottom: 0px;
+		margin-bottom: 0px;
+}
+.tocSubEntryList {
+		margin-left: 0px;
+		padding-left: 40px;
+		padding-top: 0px;
+		margin-top: 2px;
+		padding-bottom: 0px;
+		margin-bottom: 8px;
+}
+.hd_toc_heading_table {
+		margin-top: 2px;
+		margin-bottom: 2px;
+}
+.hd_toc_entry_table {
+		margin-top: 2px;
+		margin-bottom: 2px;
+}
+.tocSubEntry {
+		margin-left: 0px;
+		padding-left: 0px;
+		margin-top: 0px;
+		margin-bottom: 1px;
+}
+.tocSubEntry a {
+		font-size: 10pt;
+}
+.tocSubheading {
+		padding-left: 14px;
+		margin-left: 0px;
+		margin-top: 5px;
+		padding-top: 0px;
+		font-size: 16px;
+		color: #808080;
+}
+
+#hd_outermost_table { margin-left: 0px; border-spacing: 0px; margin-top: 0px; padding-left: 0px; padding-top: 0px; border: none; }
+#hd_outermost_table > tr { border-spacing: 0px; margin-left: 0px; margin-top: 0px; padding-left: 0px; padding-top: 0px; border: none; }
+#hd_outermost_table > tr > td { border-spacing: 0px; margin-left: 0px; margin-top: 0px; }
+#hd_outermost_table > tbody > tr { border-spacing: 0px; margin-left: 0px; margin-top: 0px; padding-left: 0px; padding-top: 0px; border: none; }
+#hd_outermost_table > tbody > tr > td { border-spacing: 0px; margin-left: 0px; margin-top: 0px; padding-top: 3px; }
+
+#tocMenu {
+		border-right: 1px solid #c0c0c0;
+		background-color: #f4f4ff;
+		top:0px;
+		left:0px;
+		width:230px;
+		height:100%;
+}
+#bodyContents {
+		width: auto;
+		padding-left: 15px;
+}
+--></style>
+<style id="disable_before_iOS_5"><!--
+#tocMenu {
+		position: fixed;
+		height: 100%;
+		overflow: auto;
+}
+#bodyContents {
+		width: auto;
+		left: 235px;
+		right: 0;
+		padding-left: 15px;
+		position: fixed;
+		height: 100%;
+		overflow-y: scroll;
+}
+--></style>
+<script language="JavaScript" type="text/javascript"><!--
+    if (navigator.platform && (navigator.platform.match(/iPad/) || navigator.platform.match(/iPhone/) || navigator.platform.match(/iPod/))) {
+        if (navigator.userAgent.match(/OS 1(_\d)+/) ||
+            navigator.userAgent.match(/OS 2(_\d)+/) ||
+            navigator.userAgent.match(/OS 3(_\d)+/) ||
+            navigator.userAgent.match(/OS 4(_\d)+/)) {
+                /* Earlier iOS versions require different scrolling gestures with position: fixed. */
+                var del_style_elt = document.getElementById("disable_before_iOS_5");
+                if (del_style_elt) del_style_elt.parentNode.removeChild(del_style_elt);
+        }
+    }
+// --></script><script language="JavaScript" type="text/javascript"><!--
+function getNewHTTPObject()
+{
+        var xmlhttp;
+
+        /** Special IE only code ... */
+        /*@cc_on
+          @if (@_jscript_version >= 5)
+              try
+              {
+                  xmlhttp = new ActiveXObject('Msxml2.XMLHTTP');
+              }
+              catch (e)
+              {
+                  try
+                  {
+                      xmlhttp = new ActiveXObject('Microsoft.XMLHTTP');
+                  }
+                  catch (E)
+                  {
+                      xmlhttp = false;
+                  }
+             }
+          @else
+             xmlhttp = false;
+        @end @*/
+
+        /** Every other browser on the planet */
+        if (!xmlhttp && typeof XMLHttpRequest != 'undefined')
+        {
+            try
+            {
+                xmlhttp = new XMLHttpRequest();
+            }
+            catch (e)
+            {
+                xmlhttp = false;
+            }
+        }
+
+        return xmlhttp;
+}
+
+function hidetoc() {
+	var toc = document.getElementById('tocMenu');
+	var src = toc.getAttribute('src');
+	var xhr = getNewHTTPObject();
+	xhr.open('GET', src, true);
+	xhr.onreadystatechange = function() {
+		if(xhr.readyState == 4) {
+			var toc = document.getElementById('tocMenu');
+			toc.innerHTML = xhr.responseText;
+		}
+	}
+	xhr.send(null);
+	var origURL = parent.document.URL;
+	var contentURL = origURL.substring(origURL.indexOf('?')+1, origURL.length);
+	if (contentURL.length == origURL.length) {
+		jumpPos = origURL.substring(origURL.indexOf('#')+1, origURL.length);
+	}
+	if (contentURL == "hidetoc") {
+		var body = document.getElementById('bodyContents');
+		if (toc && body) {
+			toc.style.display = 'none';
+			body.style.marginLeft = '0px';
+		}
+	}
+}
+
+function disclosure_triangle(elt) {
+   var linkelt = elt;
+   while (elt && elt.tagName != 'TABLE') { elt = elt.parentNode;}
+   if (!elt) { return; }
+   while (elt && elt.tagName != 'DIV') { elt = elt.nextSibling;}
+   if (!elt) { return; }
+   if (parseInt(linkelt.getAttribute('state'))) {
+      // It's open.  Close it
+      linkelt.innerHTML = '&#x25B7;';
+      linkelt.setAttribute('state', 0);
+      linkelt.setAttribute('class', 'closed_disclosure_triangle');
+      elt.style.display = 'none';
+   } else {
+      // It's closed.  Open it
+      linkelt.innerHTML = '&#x25BC;';
+      linkelt.setAttribute('state', 1);
+      linkelt.setAttribute('class', 'open_disclosure_triangle');
+      elt.style.display = 'block';
+   }
+}
+--></script><style type="text/css"><!--.char {background: #ffffff; color:#0000ff;}.comment {background:#ffffff; color:#236e25}.function {background:#ffffff; color:#000000;}.keyword {background:#ffffff; color:#761550;}.number {background: #ffffff; color:#0000ff;}.param {background:#ffffff; color:#000000;}.preprocessor {background:#ffffff; color:#236e25}.string {background: #ffffff; color:#891315;}.template {background:#ffffff; color:#761550;}.type {background:#ffffff; color:#761550;}.var {background:#ffffff; color:#000000;}body {border: 0px; margin: 0px;}div {font-size: 10pt; text-decoration: none; font-family: lucida grande, geneva, helvetica, arial, sans-serif; color: #000000;}td {font-size: 10pt; text-decoration: none; font-family: lucida grande, geneva, helvetica, arial, sans-serif; color: #000000;}span.hd_tocAccessSpace { display: block; font-size: 1px; height: 3px; min-height: 3px; }span.hd_tocGroupSpace { display: block; font-size: 1px; height: 3px; min-height: 3px; }span.hd_tocGroup { display: block; font-weight: bold; font-size: 10pt; text-decoration: none; font-family: lucida grande, geneva, helvetica, arial, sans-serif; color: #000000; margin-left: 0px; padding-left: 40px; }span.hd_tocGroup + span.hd_tocAccess { padding-top: 5px; }td.toc_contents_text {font-size: 11pt; text-decoration: none; font-family: lucida grande, geneva, helvetica, arial, sans-serif; color: #000000; }li.tocSubEntry {font-size: 11pt; text-decoration: none; font-family: lucida grande, geneva, helvetica, arial, sans-serif; color: #000000;}p {font-size: 10pt; text-decoration: none; font-family: lucida grande, geneva, helvetica, arial, sans-serif; color: #000000;}a:link {text-decoration: none; font-family: lucida grande, geneva, helvetica, arial, sans-serif; color: #36c;}a:visited {text-decoration: none; font-family: lucida grande, geneva, helvetica, arial, sans-serif; color: #36c;}a:visited:hover {text-decoration: underline; font-family: lucida grande, geneva, helvetica, arial, sans-serif; color: #36c;}a:active {text-decoration: none; font-family: lucida grande, geneva, helvetica, arial, sans-serif; color: #36c;}a:hover {text-decoration: underline; font-family: lucida grande, geneva, helvetica, arial, sans-serif; color: #36c;}h2.h2tight { margin-top: 0px; padding-top: 0px; }h1 { margin-top: 13px; padding-top: 0px; }h4 {text-decoration: none; font-family: lucida grande, geneva, helvetica, arial, sans-serif; font-size: tiny; font-weight: bold;}h5 {text-decoration: none; font-family: lucida grande, geneva, helvetica, arial, sans-serif; font-size: 10.1pt; font-weight: bold;}pre {text-decoration: none; font-family: Courier, Consolas, monospace; color: #666; font-size: 10pt;}pre a { font-family: Courier, Consolas, monospace; color: #666;font-size: 10pt;}pre a:link { font-family: Courier, Consolas, monospace; color: #36c;font-size: 10pt;}pre a:visited { font-family: Courier, Consolas, monospace; color: #36c;font-size: 10pt;}pre a:visited:hover { font-family: Courier, Consolas, monospace; color: #36c;font-size: 10pt;}pre a:active { font-family: Courier, Consolas, monospace; color: #36c;font-size: 10pt;}pre a:hover { font-family: Courier, Consolas, monospace; color: #36c;font-size: 10pt;}code {text-decoration: none; font-family: Courier, Consolas, monospace; color: #666;font-size: 10pt;}code a { font-family: Courier, Consolas, monospace; color: #666;font-size: 10pt;}code a:link { font-family: Courier, Consolas, monospace; color: #36c;font-size: 10pt;}code a:visited { font-family: Courier, Consolas, monospace; color: #36c;font-size: 10pt;}code a:visited:hover { font-family: Courier, Consolas, monospace; color: #36c;font-size: 10pt;}code a:active { font-family: Courier, Consolas, monospace; color: #36c;font-size: 10pt;}code a:hover { font-family: Courier, Consolas, monospace; color: #36c;font-size: 10pt;}tt {text-decoration: none; font-family: Courier, Consolas, monospace; color: #666;font-size: 10pt;}tt a { font-family: Courier, Consolas, monospace; color: #666;font-size: 10pt;}tt a:link { font-family: Courier, Consolas, monospace; color: #36c;font-size: 10pt;}tt a:visited { font-family: Courier, Consolas, monospace; color: #36c;font-size: 10pt;}tt a:visited:hover { font-family: Courier, Consolas, monospace; color: #36c;font-size: 10pt;}tt a:active { font-family: Courier, Consolas, monospace; color: #36c;font-size: 10pt;}tt a:hover { font-family: Courier, Consolas, monospace; color: #36c;font-size: 10pt;}body  {text-decoration: none; font-family: Courier, Consolas, monospace; color: #666;font-size: 10pt; padding-left: 0px; padding-top: 0px; margin-left: 0px; margin-top: 0px; border: none; }#hd_outermost_table { margin-left: 0px; border-spacing: 0px; margin-top: 0px; padding-left: 0px; padding-top: 0px; border: none; }#hd_outermost_table > tr { border-spacing: 0px; margin-left: 0px; margin-top: 0px; padding-left: 0px; padding-top: 0px; border: none; }#hd_outermost_table > tr > td { border-spacing: 0px; margin-left: 0px; margin-top: 0px; }#hd_outermost_table > tbody > tr { border-spacing: 0px; margin-left: 0px; margin-top: 0px; padding-left: 0px; padding-top: 0px; border: none; }#hd_outermost_table > tbody > tr > td { border-spacing: 0px; margin-left: 0px; margin-top: 0px; padding-top: 3px; }.afterName { display: none; }.list_indent { margin-left: 40px; }.declaration_indent { margin-left: 40px; margin-top: 0px; margin-bottom: 0px; padding-top: 0px; padding-bottom: 0px; min-height: 12px; vertical-align: middle; }.declaration_indent pre { margin-top: 20px; padding-top: 0px; margin-bottom: 20px; padding-bottom: 0px; }.gapBeforeFooter { display: none; }hr { height: 0px; min-height: 0px; border-top: none; border-left: none; border-right: none; border-bottom: 1px solid #909090;}hr.afterHeader { display: none }.param_group_indent { margin-left: 25px; }.param_indent { margin-left: 40px; margin-top: 0px; padding-top: 0px; }.param_indent dl { margin-top: 4px; padding-top: 0px; }dl dd > p:first-child { margin-top: 2px; padding-top: 0px; }.param_indent dl dd > p:first-child { margin-top: 2px; padding-top: 0px; }.group_indent { margin-left: 40px; }.group_desc_indent { margin-left: 20px; }.warning_indent { margin-left: 40px; }.important_indent { margin-left: 40px; }.note_indent { margin-left: 40px; }h3 {       color: #3C4C6C;}.tight {       margin-top: 2px; margin-bottom: 0px;       padding-top: 0px; padding-bottom: 0px;}h3 a {       color: #3C4C6C;	font-size: 16px;	font-style: normal;	font-variant: normal;	font-weight: bold;	height: 0px;	line-height: normal;}.hd_tocAccess { display: block; margin-left: 40px; font-style: italic; font-size: 10px; font-weight: normal; color: #303030; }.tocSubheading { margin-bottom: 4px; }--></style>
+</head>
+<body bgcolor="#ffffff" onload="hidetoc();">
+<!-- headerDoc=cl; uid=//apple_ref/occ/cl/Object; indexgroup=JX Runtime ; name=Object-->
+<a name="//apple_ref/occ/cl/Object"></a><table id="hd_outermost_table" height="100%" width="100%"><tr>
+<td valign="top" id="tocMenu" src="toc.html"></td>
+<td id="bodyContents" valign="top">
+<a name="top"></a>
+<h1><a name="Object">Object</a></h1>
+<div class="spec_sheet_info_box"><table cellspacing="0" class="specbox">
+<tr>
+<td scope="row"><b>Superclass:</b></td>
+<td><div style="margin-bottom:1px"><div class="content_text">
+<a machinegenerated="true" href="../../../RtObject_h/Classes/RtObject/index.html#//apple_ref/occ/cl/RtObject" logicalPath="//apple_ref/occ/cl/RtObject" target="_top">RtObject</a></div></div></td>
+</tr>
+<tr>
+<td scope="row"><b>Declared In:</b></td>
+<td><div style="margin-bottom:1px"><div class="content_text"><a logicalpath="//apple_ref/doc/header/Object.h" target="_top" machinegenerated="true" href="../../index.html#//apple_ref/doc/header/Object.h">Object.h</a></div></div></td>
+</tr>
+<tr>
+<td scope="row"><b>See Also:</b></td>
+<td><div style="margin-bottom:1px"><div class="content_text"><dl>
+<dt><p><a href="../../../Proxy_h/Classes/Proxy/index.html#//apple_ref/occ/cl/Proxy" logicalPath="//apple_ref/occ/cl/Proxy" target="_top">Proxy</a></p></dt>
+<dd></dd>
+</dl></div></div></td>
+</tr>
+</table></div>
+<h2>Introduction</h2>
+<!-- begin discussion --><!-- headerDoc=discussion;uid=//apple_ref/occ/cl/Object;name=start --><p>Object is the primary root class in JX Objective-C.
+It provides objects inheriting from it - which most do - with a reasonable
+set of behaviour.<!-- headerDoc=discussion;uid=//apple_ref/occ/cl/Object;name=end --><!-- end discussion -->
+</p>
+<hr class="afterClassOrHeaderInfo">
+<br><a name="HeaderDoc_methods"></a>
+<h2 class="h2tight">Methods</h2>
+<dl>
+<dt><tt><a href="index.html#//apple_ref/occ/clm/Object/addMethodsTo:" target="_top">+addMethodsTo:</a></tt></dt>
+<dd></dd>
+<dt><tt><a href="index.html#//apple_ref/occ/instm/Object/findClass:" target="_top">-findClass:</a></tt></dt>
+<dd></dd>
+<dt><tt><a href="index.html#//apple_ref/occ/instm/Object/findSel:" target="_top">-findSel:</a></tt></dt>
+<dd></dd>
+<dt><tt><a href="index.html#//apple_ref/occ/instm/Object/hash" target="_top">-hash</a></tt></dt>
+<dd></dd>
+<dt><tt><a href="index.html#//apple_ref/occ/clm/Object/inheritsFrom:" target="_top">+inheritsFrom:</a></tt></dt>
+<dd></dd>
+<dt><tt><a href="index.html#//apple_ref/occ/instm/Object/isEqual:" target="_top">-isEqual:</a></tt></dt>
+<dd></dd>
+<dt><tt><a href="index.html#//apple_ref/occ/clm/Object/isEqual:" target="_top">+isEqual:</a></tt></dt>
+<dd></dd>
+<dt><tt><a href="index.html#//apple_ref/occ/instm/Object/isKindOf:" target="_top">-isKindOf:</a></tt></dt>
+<dd></dd>
+<dt><tt><a href="index.html#//apple_ref/occ/instm/Object/isMemberOf:" target="_top">-isMemberOf:</a></tt></dt>
+<dd></dd>
+<dt><tt><a href="index.html#//apple_ref/occ/instm/Object/isSame:" target="_top">-isSame:</a></tt></dt>
+<dd></dd>
+<dt><tt><a href="index.html#//apple_ref/occ/clm/Object/isSubclassOf:" target="_top">+isSubclassOf:</a></tt></dt>
+<dd></dd>
+<dt><tt><a href="index.html#//apple_ref/occ/clm/Object/load" target="_top">+load</a></tt></dt>
+<dd></dd>
+<dt><tt><a href="index.html#//apple_ref/occ/instm/Object/myClass" target="_top">-myClass</a></tt></dt>
+<dd></dd>
+<dt><tt><a href="index.html#//apple_ref/occ/clm/Object/myClass" target="_top">+myClass</a></tt></dt>
+<dd></dd>
+<dt><tt><a href="index.html#//apple_ref/occ/instm/Object/name" target="_top">-name</a></tt></dt>
+<dd></dd>
+<dt><tt><a href="index.html#//apple_ref/occ/clm/Object/name" target="_top">+name</a></tt></dt>
+<dd></dd>
+<dt><tt><a href="index.html#//apple_ref/occ/instm/Object/perform:" target="_top">-perform:</a></tt></dt>
+<dd></dd>
+<dt><tt><a href="index.html#//apple_ref/occ/instm/Object/perform:with:" target="_top">-perform:with:</a></tt></dt>
+<dd></dd>
+<dt><tt><a href="index.html#//apple_ref/occ/instm/Object/perform:with:with:" target="_top">-perform:with:with:</a></tt></dt>
+<dd></dd>
+<dt><tt><a href="index.html#//apple_ref/occ/instm/Object/perform:with:with:with:" target="_top">-perform:with:with:with:</a></tt></dt>
+<dd></dd>
+<dt><tt><a href="index.html#//apple_ref/occ/clm/Object/poseAs:" target="_top">+poseAs:</a></tt></dt>
+<dd></dd>
+<dt><tt><a href="index.html#//apple_ref/occ/instm/Object/respondsTo:" target="_top">-respondsTo:</a></tt></dt>
+<dd></dd>
+<dt><tt><a href="index.html#//apple_ref/occ/instm/Object/size" target="_top">-size</a></tt></dt>
+<dd></dd>
+<dt><tt><a href="index.html#//apple_ref/occ/instm/Object/str" target="_top">-str</a></tt></dt>
+<dd></dd>
+<dt><tt><a href="index.html#//apple_ref/occ/clm/Object/subclass:" target="_top">+subclass:</a></tt></dt>
+<dd></dd>
+<dt><tt><a href="index.html#//apple_ref/occ/clm/Object/subclass:ivars:cvars:" target="_top">+subclass:ivars:cvars:</a></tt></dt>
+<dd></dd>
+<dt><tt><a href="index.html#//apple_ref/occ/clm/Object/subclasses" target="_top">+subclasses</a></tt></dt>
+<dd></dd>
+<dt><tt><a href="index.html#//apple_ref/occ/instm/Object/superclass" target="_top">-superclass</a></tt></dt>
+<dd></dd>
+<dt><tt><a href="index.html#//apple_ref/occ/instm/Object/superClass" target="_top">-superClass</a></tt></dt>
+<dd></dd>
+<dt><tt><a href="index.html#//apple_ref/occ/clm/Object/superclass" target="_top">+superclass</a></tt></dt>
+<dd></dd>
+<dt><tt><a href="index.html#//apple_ref/occ/clm/Object/superClass" target="_top">+superClass</a></tt></dt>
+<dd></dd>
+<dt><tt><a href="index.html#//apple_ref/occ/clm/Object/unload" target="_top">+unload</a></tt></dt>
+<dd></dd>
+</dl>
+<hr class="betweenAPIEntries">
+<!-- headerDoc=clm;  uid=//apple_ref/occ/clm/Object/addMethodsTo:;  indexgroup=JX Runtime ;   name=Object::addMethodsTo: --><a name="//apple_ref/occ/clm/Object/addMethodsTo:"></a>
+<h3><a name="addMethodsTo:">addMethodsTo:</a></h3>
+<hr class="afterName">
+<div class="declaration_indent">
+<pre><!-- headerDoc=declaration;uid=//apple_ref/occ/clm/Object/addMethodsTo:;name=start -->+ <a machinegenerated="true" href="index.html#//apple_ref/occ/clm/Object/addMethodsTo:" logicalPath="//apple_ref/occ/instm/Object/addMethodsTo //apple_ref/occ/clm/Object/addMethodsTo" target="_top"><span class="function">addMethodsTo</span></a>:<!-- a logicalPath="//apple_ref/occ/econst/superClass //apple_ref/occ/data/Object/superClass //apple_ref/occ/data/superClass //apple_ref/occ/clconst/Object/superClass " machineGenerated="true" --><span class="var">superClass</span><!-- /a -->; <!-- headerDoc=declaration;uid=//apple_ref/occ/clm/Object/addMethodsTo:;name=end --></pre>
+</div>
+<h5 class="tight"><font face="Lucida Grande,Helvetica,Arial">Parameters</font></h5>
+<div class="param_indent">
+<dl>
+<dt>
+<!-- headerDoc=methodparam;  uid=//apple_ref/doc/methodparam/Object/addMethodsTo:/superClass;  indexgroup=JX Runtime ;   name=addMethodsTo:::superClass -->
+<a name="//apple_ref/doc/methodparam/Object/addMethodsTo:/superClass"></a>
+<code>superClass</code>
+</dt>
+<dd><p>The class to have this class' methods added to.</p></dd>
+</dl>
+</div>
+<h5 class="tight"><font face="Lucida Grande,Helvetica,Arial">Discussion</font></h5>
+<!-- begin discussion --><!-- headerDoc=discussion;uid=//apple_ref/occ/clm/Object/addMethodsTo:;name=start --><p>Add this class' methods to a parent class.
+<!-- headerDoc=discussion;uid=//apple_ref/occ/clm/Object/addMethodsTo:;name=end --><!-- end discussion -->
+</p>
+<hr class="betweenAPIEntries">
+<!-- headerDoc=instm;  uid=//apple_ref/occ/instm/Object/findClass:;  indexgroup=JX Runtime ;   name=Object::findClass: --><a name="//apple_ref/occ/instm/Object/findClass:"></a>
+<h3><a name="findClass:">findClass:</a></h3>
+<hr class="afterName">
+<div class="declaration_indent">
+<pre><!-- headerDoc=declaration;uid=//apple_ref/occ/instm/Object/findClass:;name=start -->- (<!-- a logicalPath="//apple_ref/occ/cl/id //apple_ref/occ/tdef/id //apple_ref/occ/tag/id //apple_ref/occ/struct/id //apple_ref/occ/intf/id //apple_ref/doc/anysymbol/id" machineGenerated="true" --><span class="type">id</span><!-- /a -->)<a machinegenerated="true" href="index.html#//apple_ref/occ/instm/Object/findClass:" logicalPath="//apple_ref/occ/instm/Object/findClass" target="_top"><span class="function">findClass</span></a>:(<!-- a logicalPath="//apple_ref/occ/cl/STR //apple_ref/occ/tdef/STR //apple_ref/occ/tag/STR //apple_ref/occ/struct/STR //apple_ref/occ/intf/STR //apple_ref/doc/anysymbol/STR" machineGenerated="true" --><span class="type">STR</span><!-- /a -->)<!-- a logicalPath="//apple_ref/occ/econst/name //apple_ref/occ/data/Object/name //apple_ref/occ/data/name //apple_ref/occ/clconst/Object/name " machineGenerated="true" --><span class="var">name</span><!-- /a -->; <!-- headerDoc=declaration;uid=//apple_ref/occ/instm/Object/findClass:;name=end --></pre>
+</div>
+<h5 class="tight"><font face="Lucida Grande,Helvetica,Arial">Parameters</font></h5>
+<div class="param_indent">
+<dl>
+<dt>
+<!-- headerDoc=methodparam;  uid=//apple_ref/doc/methodparam/Object/findClass:/name;  indexgroup=JX Runtime ;   name=findClass:::name -->
+<a name="//apple_ref/doc/methodparam/Object/findClass:/name"></a>
+<code>name</code>
+</dt>
+<dd><p>The STR containing a classes' name.</p></dd>
+</dl>
+</div>
+<h5 class="tight"><font face="Lucida Grande,Helvetica,Arial">Discussion</font></h5>
+<!-- begin discussion --><!-- headerDoc=discussion;uid=//apple_ref/occ/instm/Object/findClass:;name=start --><p>Returns the class identified by an STR. If no such class exists, returns
+nil.
+<!-- headerDoc=discussion;uid=//apple_ref/occ/instm/Object/findClass:;name=end --><!-- end discussion -->
+</p>
+<hr class="betweenAPIEntries">
+<!-- headerDoc=instm;  uid=//apple_ref/occ/instm/Object/findSel:;  indexgroup=JX Runtime ;   name=Object::findSel: --><a name="//apple_ref/occ/instm/Object/findSel:"></a>
+<h3><a name="findSel:">findSel:</a></h3>
+<hr class="afterName">
+<div class="declaration_indent">
+<pre><!-- headerDoc=declaration;uid=//apple_ref/occ/instm/Object/findSel:;name=start -->- (<!-- a logicalPath="//apple_ref/occ/cl/SEL //apple_ref/occ/tdef/SEL //apple_ref/occ/tag/SEL //apple_ref/occ/struct/SEL //apple_ref/occ/intf/SEL //apple_ref/doc/anysymbol/SEL" machineGenerated="true" --><span class="type">SEL</span><!-- /a -->)<a machinegenerated="true" href="index.html#//apple_ref/occ/instm/Object/findSel:" logicalPath="//apple_ref/occ/instm/Object/findSel" target="_top"><span class="function">findSel</span></a>:(<!-- a logicalPath="//apple_ref/occ/cl/STR //apple_ref/occ/tdef/STR //apple_ref/occ/tag/STR //apple_ref/occ/struct/STR //apple_ref/occ/intf/STR //apple_ref/doc/anysymbol/STR" machineGenerated="true" --><span class="type">STR</span><!-- /a -->)<!-- a logicalPath="//apple_ref/occ/econst/name //apple_ref/occ/data/Object/name //apple_ref/occ/data/name //apple_ref/occ/clconst/Object/name " machineGenerated="true" --><span class="var">name</span><!-- /a -->; <!-- headerDoc=declaration;uid=//apple_ref/occ/instm/Object/findSel:;name=end --></pre>
+</div>
+<h5 class="tight"><font face="Lucida Grande,Helvetica,Arial">Parameters</font></h5>
+<div class="param_indent">
+<dl>
+<dt>
+<!-- headerDoc=methodparam;  uid=//apple_ref/doc/methodparam/Object/findSel:/name;  indexgroup=JX Runtime ;   name=findSel:::name -->
+<a name="//apple_ref/doc/methodparam/Object/findSel:/name"></a>
+<code>name</code>
+</dt>
+<dd><p>The SEL containing a selector string.</p></dd>
+</dl>
+</div>
+<h5 class="tight"><font face="Lucida Grande,Helvetica,Arial">Discussion</font></h5>
+<!-- begin discussion --><!-- headerDoc=discussion;uid=//apple_ref/occ/instm/Object/findSel:;name=start --><p>Returns the SEL corresponding to an STR. If no SEL is found, returns NULL.
+<!-- headerDoc=discussion;uid=//apple_ref/occ/instm/Object/findSel:;name=end --><!-- end discussion -->
+</p>
+<hr class="betweenAPIEntries">
+<!-- headerDoc=instm;  uid=//apple_ref/occ/instm/Object/hash;  indexgroup=JX Runtime ;   name=Object::hash --><a name="//apple_ref/occ/instm/Object/hash"></a>
+<h3><a name="hash">hash</a></h3>
+<hr class="afterName">
+<div class="declaration_indent">
+<pre><!-- headerDoc=declaration;uid=//apple_ref/occ/instm/Object/hash;name=start -->- (<!-- a logicalPath="//apple_ref/occ/cl/uintptr_t //apple_ref/occ/tdef/uintptr_t //apple_ref/occ/tag/uintptr_t //apple_ref/occ/struct/uintptr_t //apple_ref/occ/intf/uintptr_t //apple_ref/doc/anysymbol/uintptr_t" machineGenerated="true" --><span class="type">uintptr_t</span><!-- /a -->)<!-- a logicalPath="//apple_ref/occ/econst/hash //apple_ref/occ/data/Object/hash //apple_ref/occ/data/hash //apple_ref/occ/clconst/Object/hash " machineGenerated="true" --><span class="var">hash</span><!-- /a -->; <!-- headerDoc=declaration;uid=//apple_ref/occ/instm/Object/hash;name=end --></pre>
+</div>
+<h5 class="tight"><font face="Lucida Grande,Helvetica,Arial">Discussion</font></h5>
+<!-- begin discussion --><!-- headerDoc=discussion;uid=//apple_ref/occ/instm/Object/hash;name=start --><p>Returns the unique hash of an object. By default, returns the object's
+address. <!-- headerDoc=discussion;uid=//apple_ref/occ/instm/Object/hash;name=end --><!-- end discussion -->
+</p>
+<hr class="betweenAPIEntries">
+<!-- headerDoc=clm;  uid=//apple_ref/occ/clm/Object/inheritsFrom:;  indexgroup=JX Runtime ;   name=Object::inheritsFrom: --><a name="//apple_ref/occ/clm/Object/inheritsFrom:"></a>
+<h3><a name="inheritsFrom:">inheritsFrom:</a></h3>
+<hr class="afterName">
+<div class="declaration_indent">
+<pre><!-- headerDoc=declaration;uid=//apple_ref/occ/clm/Object/inheritsFrom:;name=start -->+ (<!-- a logicalPath="//apple_ref/occ/cl/BOOL //apple_ref/occ/tdef/BOOL //apple_ref/occ/tag/BOOL //apple_ref/occ/struct/BOOL //apple_ref/occ/intf/BOOL //apple_ref/doc/anysymbol/BOOL" machineGenerated="true" --><span class="type">BOOL</span><!-- /a -->)<a machinegenerated="true" href="index.html#//apple_ref/occ/clm/Object/inheritsFrom:" logicalPath="//apple_ref/occ/instm/Object/inheritsFrom //apple_ref/occ/clm/Object/inheritsFrom" target="_top"><span class="function">inheritsFrom</span></a>:<!-- a logicalPath="//apple_ref/occ/econst/aClass //apple_ref/occ/data/Object/aClass //apple_ref/occ/data/aClass //apple_ref/occ/clconst/Object/aClass " machineGenerated="true" --><span class="var">aClass</span><!-- /a -->; <!-- headerDoc=declaration;uid=//apple_ref/occ/clm/Object/inheritsFrom:;name=end --></pre>
+</div>
+<h5 class="tight"><font face="Lucida Grande,Helvetica,Arial">Parameters</font></h5>
+<div class="param_indent">
+<dl>
+<dt>
+<!-- headerDoc=methodparam;  uid=//apple_ref/doc/methodparam/Object/inheritsFrom:/aClass;  indexgroup=JX Runtime ;   name=inheritsFrom:::aClass -->
+<a name="//apple_ref/doc/methodparam/Object/inheritsFrom:/aClass"></a>
+<code>aClass</code>
+</dt>
+<dd><p>The class to test this classes' inheritance from.</p></dd>
+</dl>
+</div>
+<h5 class="tight"><font face="Lucida Grande,Helvetica,Arial">Return Value</font></h5>
+<p><!-- begin return value --></p>
+<p>YES if class inherits from aClass, NO if not. 
+<!-- end return value --></p>
+<h5 class="tight"><font face="Lucida Grande,Helvetica,Arial">Discussion</font></h5>
+<!-- begin discussion --><!-- headerDoc=discussion;uid=//apple_ref/occ/clm/Object/inheritsFrom:;name=start --><p>Find out whether this class inherits from another class.
+<!-- headerDoc=discussion;uid=//apple_ref/occ/clm/Object/inheritsFrom:;name=end --><!-- end discussion -->
+</p>
+<hr class="betweenAPIEntries">
+<!-- headerDoc=instm;  uid=//apple_ref/occ/instm/Object/isEqual:;  indexgroup=JX Runtime ;   name=Object::isEqual: --><a name="//apple_ref/occ/instm/Object/isEqual:"></a>
+<h3><a name="isEqual:">isEqual:</a></h3>
+<hr class="afterName">
+<div class="declaration_indent">
+<pre><!-- headerDoc=declaration;uid=//apple_ref/occ/instm/Object/isEqual:;name=start -->- (<!-- a logicalPath="//apple_ref/occ/cl/BOOL //apple_ref/occ/tdef/BOOL //apple_ref/occ/tag/BOOL //apple_ref/occ/struct/BOOL //apple_ref/occ/intf/BOOL //apple_ref/doc/anysymbol/BOOL" machineGenerated="true" --><span class="type">BOOL</span><!-- /a -->)<a machinegenerated="true" href="index.html#//apple_ref/occ/instm/Object/isEqual:" logicalPath="//apple_ref/occ/instm/Object/isEqual" target="_top"><span class="function">isEqual</span></a>:<!-- a logicalPath="//apple_ref/occ/econst/anObject //apple_ref/occ/data/Object/anObject //apple_ref/occ/data/anObject //apple_ref/occ/clconst/Object/anObject " machineGenerated="true" --><span class="var">anObject</span><!-- /a -->; <!-- headerDoc=declaration;uid=//apple_ref/occ/instm/Object/isEqual:;name=end --></pre>
+</div>
+<h5 class="tight"><font face="Lucida Grande,Helvetica,Arial">Discussion</font></h5>
+<!-- begin discussion --><!-- headerDoc=discussion;uid=//apple_ref/occ/instm/Object/isEqual:;name=start --><p>Compares an object to another object. By default, returns YES if the
+objects have the same address. Otherwise, returns NO. <!-- headerDoc=discussion;uid=//apple_ref/occ/instm/Object/isEqual:;name=end --><!-- end discussion -->
+</p>
+<hr class="betweenAPIEntries">
+<!-- headerDoc=clm;  uid=//apple_ref/occ/clm/Object/isEqual:;  indexgroup=JX Runtime ;   name=Object::isEqual: --><a name="//apple_ref/occ/clm/Object/isEqual:"></a>
+<h3><a name="isEqual:">isEqual:</a></h3>
+<hr class="afterName">
+<div class="declaration_indent">
+<pre><!-- headerDoc=declaration;uid=//apple_ref/occ/clm/Object/isEqual:;name=start -->+ (<!-- a logicalPath="//apple_ref/occ/cl/BOOL //apple_ref/occ/tdef/BOOL //apple_ref/occ/tag/BOOL //apple_ref/occ/struct/BOOL //apple_ref/occ/intf/BOOL //apple_ref/doc/anysymbol/BOOL" machineGenerated="true" --><span class="type">BOOL</span><!-- /a -->)<a machinegenerated="true" href="index.html#//apple_ref/occ/instm/Object/isEqual:" logicalPath="//apple_ref/occ/instm/Object/isEqual" target="_top"><span class="function">isEqual</span></a>:<!-- a logicalPath="//apple_ref/occ/econst/anObject //apple_ref/occ/data/Object/anObject //apple_ref/occ/data/anObject //apple_ref/occ/clconst/Object/anObject " machineGenerated="true" --><span class="var">anObject</span><!-- /a -->; <!-- headerDoc=declaration;uid=//apple_ref/occ/clm/Object/isEqual:;name=end --></pre>
+</div>
+<h5 class="tight"><font face="Lucida Grande,Helvetica,Arial">Discussion</font></h5>
+<!-- begin discussion --><!-- headerDoc=discussion;uid=//apple_ref/occ/clm/Object/isEqual:;name=start --><p>Compares a class to another class. By default, returns YES if the
+classes have the same address. Otherwise, returns NO. <!-- headerDoc=discussion;uid=//apple_ref/occ/clm/Object/isEqual:;name=end --><!-- end discussion -->
+</p>
+<hr class="betweenAPIEntries">
+<!-- headerDoc=instm;  uid=//apple_ref/occ/instm/Object/isKindOf:;  indexgroup=JX Runtime ;   name=Object::isKindOf: --><a name="//apple_ref/occ/instm/Object/isKindOf:"></a>
+<h3><a name="isKindOf:">isKindOf:</a></h3>
+<hr class="afterName">
+<div class="declaration_indent">
+<pre><!-- headerDoc=declaration;uid=//apple_ref/occ/instm/Object/isKindOf:;name=start -->- (<!-- a logicalPath="//apple_ref/occ/cl/BOOL //apple_ref/occ/tdef/BOOL //apple_ref/occ/tag/BOOL //apple_ref/occ/struct/BOOL //apple_ref/occ/intf/BOOL //apple_ref/doc/anysymbol/BOOL" machineGenerated="true" --><span class="type">BOOL</span><!-- /a -->)<a machinegenerated="true" href="index.html#//apple_ref/occ/instm/Object/isKindOf:" logicalPath="//apple_ref/occ/instm/Object/isKindOf" target="_top"><span class="function">isKindOf</span></a>:<!-- a logicalPath="//apple_ref/occ/econst/aClass //apple_ref/occ/data/Object/aClass //apple_ref/occ/data/aClass //apple_ref/occ/clconst/Object/aClass " machineGenerated="true" --><span class="var">aClass</span><!-- /a -->; <!-- headerDoc=declaration;uid=//apple_ref/occ/instm/Object/isKindOf:;name=end --></pre>
+</div>
+<h5 class="tight"><font face="Lucida Grande,Helvetica,Arial">Parameters</font></h5>
+<div class="param_indent">
+<dl>
+<dt>
+<!-- headerDoc=methodparam;  uid=//apple_ref/doc/methodparam/Object/isKindOf:/aClass;  indexgroup=JX Runtime ;   name=isKindOf:::aClass -->
+<a name="//apple_ref/doc/methodparam/Object/isKindOf:/aClass"></a>
+<code>aClass</code>
+</dt>
+<dd><p>Which class to test the object's belonging to.</p></dd>
+</dl>
+</div>
+<h5 class="tight"><font face="Lucida Grande,Helvetica,Arial">Return Value</font></h5>
+<p><!-- begin return value --></p>
+<p>YES if the object is a direct or subclass instance of the class, NO
+if it is not. 
+<!-- end return value --></p>
+<h5 class="tight"><font face="Lucida Grande,Helvetica,Arial">Discussion</font></h5>
+<!-- begin discussion --><!-- headerDoc=discussion;uid=//apple_ref/occ/instm/Object/isKindOf:;name=start --><p>Checks if the object is an instance of a kind of class.
+<!-- headerDoc=discussion;uid=//apple_ref/occ/instm/Object/isKindOf:;name=end --><!-- end discussion -->
+</p>
+<hr class="betweenAPIEntries">
+<!-- headerDoc=instm;  uid=//apple_ref/occ/instm/Object/isMemberOf:;  indexgroup=JX Runtime ;   name=Object::isMemberOf: --><a name="//apple_ref/occ/instm/Object/isMemberOf:"></a>
+<h3><a name="isMemberOf:">isMemberOf:</a></h3>
+<hr class="afterName">
+<div class="declaration_indent">
+<pre><!-- headerDoc=declaration;uid=//apple_ref/occ/instm/Object/isMemberOf:;name=start -->- (<!-- a logicalPath="//apple_ref/occ/cl/BOOL //apple_ref/occ/tdef/BOOL //apple_ref/occ/tag/BOOL //apple_ref/occ/struct/BOOL //apple_ref/occ/intf/BOOL //apple_ref/doc/anysymbol/BOOL" machineGenerated="true" --><span class="type">BOOL</span><!-- /a -->)<a machinegenerated="true" href="index.html#//apple_ref/occ/instm/Object/isMemberOf:" logicalPath="//apple_ref/occ/instm/Object/isMemberOf" target="_top"><span class="function">isMemberOf</span></a>:<!-- a logicalPath="//apple_ref/occ/econst/aClass //apple_ref/occ/data/Object/aClass //apple_ref/occ/data/aClass //apple_ref/occ/clconst/Object/aClass " machineGenerated="true" --><span class="var">aClass</span><!-- /a -->; <!-- headerDoc=declaration;uid=//apple_ref/occ/instm/Object/isMemberOf:;name=end --></pre>
+</div>
+<h5 class="tight"><font face="Lucida Grande,Helvetica,Arial">Parameters</font></h5>
+<div class="param_indent">
+<dl>
+<dt>
+<!-- headerDoc=methodparam;  uid=//apple_ref/doc/methodparam/Object/isMemberOf:/aClass;  indexgroup=JX Runtime ;   name=isMemberOf:::aClass -->
+<a name="//apple_ref/doc/methodparam/Object/isMemberOf:/aClass"></a>
+<code>aClass</code>
+</dt>
+<dd><p>Which class to test the object's membership of.</p></dd>
+</dl>
+</div>
+<h5 class="tight"><font face="Lucida Grande,Helvetica,Arial">Return Value</font></h5>
+<p><!-- begin return value --></p>
+<p>YES if the object is a direct instance of the class, NO if it an
+instance of a subclass or otherwise. 
+<!-- end return value --></p>
+<h5 class="tight"><font face="Lucida Grande,Helvetica,Arial">Discussion</font></h5>
+<!-- begin discussion --><!-- headerDoc=discussion;uid=//apple_ref/occ/instm/Object/isMemberOf:;name=start --><p>Checks if the object is an instance of a class.
+<!-- headerDoc=discussion;uid=//apple_ref/occ/instm/Object/isMemberOf:;name=end --><!-- end discussion -->
+</p>
+<hr class="betweenAPIEntries">
+<!-- headerDoc=instm;  uid=//apple_ref/occ/instm/Object/isSame:;  indexgroup=JX Runtime ;   name=Object::isSame: --><a name="//apple_ref/occ/instm/Object/isSame:"></a>
+<h3><a name="isSame:">isSame:</a></h3>
+<hr class="afterName">
+<div class="declaration_indent">
+<pre><!-- headerDoc=declaration;uid=//apple_ref/occ/instm/Object/isSame:;name=start -->- (<!-- a logicalPath="//apple_ref/occ/cl/BOOL //apple_ref/occ/tdef/BOOL //apple_ref/occ/tag/BOOL //apple_ref/occ/struct/BOOL //apple_ref/occ/intf/BOOL //apple_ref/doc/anysymbol/BOOL" machineGenerated="true" --><span class="type">BOOL</span><!-- /a -->)<a machinegenerated="true" href="index.html#//apple_ref/occ/instm/Object/isSame:" logicalPath="//apple_ref/occ/instm/Object/isSame" target="_top"><span class="function">isSame</span></a>:<!-- a logicalPath="//apple_ref/occ/econst/anObject //apple_ref/occ/data/Object/anObject //apple_ref/occ/data/anObject //apple_ref/occ/clconst/Object/anObject " machineGenerated="true" --><span class="var">anObject</span><!-- /a -->; <!-- headerDoc=declaration;uid=//apple_ref/occ/instm/Object/isSame:;name=end --></pre>
+</div>
+<h5 class="tight"><font face="Lucida Grande,Helvetica,Arial">Discussion</font></h5>
+<!-- begin discussion --><!-- headerDoc=discussion;uid=//apple_ref/occ/instm/Object/isSame:;name=start --><p>Checks if two objects are the same. Returns YES if their addresses are
+are equal. <!-- headerDoc=discussion;uid=//apple_ref/occ/instm/Object/isSame:;name=end --><!-- end discussion -->
+</p>
+<hr class="betweenAPIEntries">
+<!-- headerDoc=clm;  uid=//apple_ref/occ/clm/Object/isSubclassOf:;  indexgroup=JX Runtime ;   name=Object::isSubclassOf: --><a name="//apple_ref/occ/clm/Object/isSubclassOf:"></a>
+<h3><a name="isSubclassOf:">isSubclassOf:</a></h3>
+<hr class="afterName">
+<div class="declaration_indent">
+<pre><!-- headerDoc=declaration;uid=//apple_ref/occ/clm/Object/isSubclassOf:;name=start -->+ (<!-- a logicalPath="//apple_ref/occ/cl/BOOL //apple_ref/occ/tdef/BOOL //apple_ref/occ/tag/BOOL //apple_ref/occ/struct/BOOL //apple_ref/occ/intf/BOOL //apple_ref/doc/anysymbol/BOOL" machineGenerated="true" --><span class="type">BOOL</span><!-- /a -->)<a machinegenerated="true" href="index.html#//apple_ref/occ/clm/Object/isSubclassOf:" logicalPath="//apple_ref/occ/instm/Object/isSubclassOf //apple_ref/occ/clm/Object/isSubclassOf" target="_top"><span class="function">isSubclassOf</span></a>:<!-- a logicalPath="//apple_ref/occ/econst/aClass //apple_ref/occ/data/Object/aClass //apple_ref/occ/data/aClass //apple_ref/occ/clconst/Object/aClass " machineGenerated="true" --><span class="var">aClass</span><!-- /a -->; <!-- headerDoc=declaration;uid=//apple_ref/occ/clm/Object/isSubclassOf:;name=end --></pre>
+</div>
+<h5 class="tight"><font face="Lucida Grande,Helvetica,Arial">Discussion</font></h5>
+<!-- begin discussion --><!-- headerDoc=discussion;uid=//apple_ref/occ/clm/Object/isSubclassOf:;name=start --><p>Compatibility alias for <a href="index.html#//apple_ref/occ/clm/Object/inheritsFrom:" logicalPath="//apple_ref/occ/clm/Object/inheritsFrom:" target="_top">inheritsFrom:</a>. <!-- headerDoc=discussion;uid=//apple_ref/occ/clm/Object/isSubclassOf:;name=end --><!-- end discussion -->
+</p>
+<hr class="betweenAPIEntries">
+<!-- headerDoc=clm;  uid=//apple_ref/occ/clm/Object/load;  indexgroup=JX Runtime ;   name=Object::load --><a name="//apple_ref/occ/clm/Object/load"></a>
+<h3><a name="load">load</a></h3>
+<hr class="afterName">
+<div class="declaration_indent">
+<pre><!-- headerDoc=declaration;uid=//apple_ref/occ/clm/Object/load;name=start -->+ <!-- a logicalPath="//apple_ref/occ/econst/load //apple_ref/occ/data/Object/load //apple_ref/occ/data/load //apple_ref/occ/clconst/Object/load " machineGenerated="true" --><span class="var">load</span><!-- /a -->; <!-- headerDoc=declaration;uid=//apple_ref/occ/clm/Object/load;name=end --></pre>
+</div>
+<h5 class="tight"><font face="Lucida Grande,Helvetica,Arial">Discussion</font></h5>
+<!-- begin discussion --><!-- headerDoc=discussion;uid=//apple_ref/occ/clm/Object/load;name=start --><p>Load this class into the running programme. <!-- headerDoc=discussion;uid=//apple_ref/occ/clm/Object/load;name=end --><!-- end discussion -->
+</p>
+<hr class="betweenAPIEntries">
+<!-- headerDoc=instm;  uid=//apple_ref/occ/instm/Object/myClass;  indexgroup=JX Runtime ;   name=Object::myClass --><a name="//apple_ref/occ/instm/Object/myClass"></a>
+<h3><a name="myClass">myClass</a></h3>
+<hr class="afterName">
+<div class="declaration_indent">
+<pre><!-- headerDoc=declaration;uid=//apple_ref/occ/instm/Object/myClass;name=start -->- <!-- a logicalPath="//apple_ref/occ/econst/myClass //apple_ref/occ/data/Object/myClass //apple_ref/occ/data/myClass //apple_ref/occ/clconst/Object/myClass " machineGenerated="true" --><span class="var">myClass</span><!-- /a -->; <!-- headerDoc=declaration;uid=//apple_ref/occ/instm/Object/myClass;name=end --></pre>
+</div>
+<h5 class="tight"><font face="Lucida Grande,Helvetica,Arial">Discussion</font></h5>
+<!-- begin discussion --><!-- headerDoc=discussion;uid=//apple_ref/occ/instm/Object/myClass;name=start --><p>Returns the class of the object. <!-- headerDoc=discussion;uid=//apple_ref/occ/instm/Object/myClass;name=end --><!-- end discussion -->
+</p>
+<hr class="betweenAPIEntries">
+<!-- headerDoc=clm;  uid=//apple_ref/occ/clm/Object/myClass;  indexgroup=JX Runtime ;   name=Object::myClass --><a name="//apple_ref/occ/clm/Object/myClass"></a>
+<h3><a name="myClass">myClass</a></h3>
+<hr class="afterName">
+<div class="declaration_indent">
+<pre><!-- headerDoc=declaration;uid=//apple_ref/occ/clm/Object/myClass;name=start -->+ <!-- a logicalPath="//apple_ref/occ/econst/myClass //apple_ref/occ/data/Object/myClass //apple_ref/occ/data/myClass //apple_ref/occ/clconst/Object/myClass " machineGenerated="true" --><span class="var">myClass</span><!-- /a -->; <!-- headerDoc=declaration;uid=//apple_ref/occ/clm/Object/myClass;name=end --></pre>
+</div>
+<h5 class="tight"><font face="Lucida Grande,Helvetica,Arial">Discussion</font></h5>
+<!-- begin discussion --><!-- headerDoc=discussion;uid=//apple_ref/occ/clm/Object/myClass;name=start --><p>Returns the class of a class. In fact, this always returns <em>self</em> by
+tradition. <!-- headerDoc=discussion;uid=//apple_ref/occ/clm/Object/myClass;name=end --><!-- end discussion -->
+</p>
+<hr class="betweenAPIEntries">
+<!-- headerDoc=instm;  uid=//apple_ref/occ/instm/Object/name;  indexgroup=JX Runtime ;   name=Object::name --><a name="//apple_ref/occ/instm/Object/name"></a>
+<h3><a name="name">name</a></h3>
+<hr class="afterName">
+<div class="declaration_indent">
+<pre><!-- headerDoc=declaration;uid=//apple_ref/occ/instm/Object/name;name=start -->- (<!-- a logicalPath="//apple_ref/occ/cl/STR //apple_ref/occ/tdef/STR //apple_ref/occ/tag/STR //apple_ref/occ/struct/STR //apple_ref/occ/intf/STR //apple_ref/doc/anysymbol/STR" machineGenerated="true" --><span class="type">STR</span><!-- /a -->)<!-- a logicalPath="//apple_ref/occ/econst/name //apple_ref/occ/data/Object/name //apple_ref/occ/data/name //apple_ref/occ/clconst/Object/name " machineGenerated="true" --><span class="var">name</span><!-- /a -->; <!-- headerDoc=declaration;uid=//apple_ref/occ/instm/Object/name;name=end --></pre>
+</div>
+<h5 class="tight"><font face="Lucida Grande,Helvetica,Arial">Discussion</font></h5>
+<!-- begin discussion --><!-- headerDoc=discussion;uid=//apple_ref/occ/instm/Object/name;name=start --><p>Returns the name of this object. By default, returns the name of its
+class. <!-- headerDoc=discussion;uid=//apple_ref/occ/instm/Object/name;name=end --><!-- end discussion -->
+</p>
+<hr class="betweenAPIEntries">
+<!-- headerDoc=clm;  uid=//apple_ref/occ/clm/Object/name;  indexgroup=JX Runtime ;   name=Object::name --><a name="//apple_ref/occ/clm/Object/name"></a>
+<h3><a name="name">name</a></h3>
+<hr class="afterName">
+<div class="declaration_indent">
+<pre><!-- headerDoc=declaration;uid=//apple_ref/occ/clm/Object/name;name=start -->+ (<!-- a logicalPath="//apple_ref/occ/cl/STR //apple_ref/occ/tdef/STR //apple_ref/occ/tag/STR //apple_ref/occ/struct/STR //apple_ref/occ/intf/STR //apple_ref/doc/anysymbol/STR" machineGenerated="true" --><span class="type">STR</span><!-- /a -->)<!-- a logicalPath="//apple_ref/occ/econst/name //apple_ref/occ/data/Object/name //apple_ref/occ/data/name //apple_ref/occ/clconst/Object/name " machineGenerated="true" --><span class="var">name</span><!-- /a -->; <!-- headerDoc=declaration;uid=//apple_ref/occ/clm/Object/name;name=end --></pre>
+</div>
+<h5 class="tight"><font face="Lucida Grande,Helvetica,Arial">Discussion</font></h5>
+<!-- begin discussion --><!-- headerDoc=discussion;uid=//apple_ref/occ/clm/Object/name;name=start --><p>Returns the name of this class. <!-- headerDoc=discussion;uid=//apple_ref/occ/clm/Object/name;name=end --><!-- end discussion -->
+</p>
+<hr class="betweenAPIEntries">
+<!-- headerDoc=instm;  uid=//apple_ref/occ/instm/Object/perform:;  indexgroup=JX Runtime ;   name=Object::perform: --><a name="//apple_ref/occ/instm/Object/perform:"></a>
+<h3><a name="perform:">perform:</a></h3>
+<hr class="afterName">
+<div class="declaration_indent">
+<pre><!-- headerDoc=declaration;uid=//apple_ref/occ/instm/Object/perform:;name=start -->- (<!-- a logicalPath="//apple_ref/occ/cl/id //apple_ref/occ/tdef/id //apple_ref/occ/tag/id //apple_ref/occ/struct/id //apple_ref/occ/intf/id //apple_ref/doc/anysymbol/id" machineGenerated="true" --><span class="type">id</span><!-- /a -->)<a machinegenerated="true" href="index.html#//apple_ref/occ/instm/Object/perform:with:with:with:" logicalPath="//apple_ref/occ/instm/Object/perform" target="_top"><span class="function">perform</span></a>:(<!-- a logicalPath="//apple_ref/occ/cl/SEL //apple_ref/occ/tdef/SEL //apple_ref/occ/tag/SEL //apple_ref/occ/struct/SEL //apple_ref/occ/intf/SEL //apple_ref/doc/anysymbol/SEL" machineGenerated="true" --><span class="type">SEL</span><!-- /a -->)<!-- a logicalPath="//apple_ref/occ/econst/aSelector //apple_ref/occ/data/Object/aSelector //apple_ref/occ/data/aSelector //apple_ref/occ/clconst/Object/aSelector " machineGenerated="true" --><span class="var">aSelector</span><!-- /a -->;  <!-- headerDoc=declaration;uid=//apple_ref/occ/instm/Object/perform:;name=end --></pre>
+</div>
+<h5 class="tight"><font face="Lucida Grande,Helvetica,Arial">Parameters</font></h5>
+<div class="param_indent">
+<dl>
+<dt>
+<!-- headerDoc=methodparam;  uid=//apple_ref/doc/methodparam/Object/perform:/aSelector;  indexgroup=JX Runtime ;   name=perform:::aSelector -->
+<a name="//apple_ref/doc/methodparam/Object/perform:/aSelector"></a>
+<code>aSelector</code>
+</dt>
+<dd><p>The selector to perform.</p></dd>
+</dl>
+</div>
+<h5 class="tight"><font face="Lucida Grande,Helvetica,Arial">Discussion</font></h5>
+<!-- begin discussion --><!-- headerDoc=discussion;uid=//apple_ref/occ/instm/Object/perform:;name=start --><p>Performs the given selector on this instance.
+<!-- headerDoc=discussion;uid=//apple_ref/occ/instm/Object/perform:;name=end --><!-- end discussion -->
+</p>
+<hr class="betweenAPIEntries">
+<!-- headerDoc=instm;  uid=//apple_ref/occ/instm/Object/perform:with:;  indexgroup=JX Runtime ;   name=Object::perform:with: --><a name="//apple_ref/occ/instm/Object/perform:with:"></a>
+<h3><a name="perform:with:">perform:with:</a></h3>
+<hr class="afterName">
+<div class="declaration_indent">
+<pre><!-- headerDoc=declaration;uid=//apple_ref/occ/instm/Object/perform:with:;name=start -->- (<!-- a logicalPath="//apple_ref/occ/cl/id //apple_ref/occ/tdef/id //apple_ref/occ/tag/id //apple_ref/occ/struct/id //apple_ref/occ/intf/id //apple_ref/doc/anysymbol/id" machineGenerated="true" --><span class="type">id</span><!-- /a -->)<a machinegenerated="true" href="index.html#//apple_ref/occ/instm/Object/perform:with:with:with:" logicalPath="//apple_ref/occ/instm/Object/perform" target="_top"><span class="function">perform</span></a>:(<!-- a logicalPath="//apple_ref/occ/cl/SEL //apple_ref/occ/tdef/SEL //apple_ref/occ/tag/SEL //apple_ref/occ/struct/SEL //apple_ref/occ/intf/SEL //apple_ref/doc/anysymbol/SEL" machineGenerated="true" --><span class="type">SEL</span><!-- /a -->)<span class="param">aSelector</span> <!-- a logicalPath="//apple_ref/occ/instm/Object/with //apple_ref/occ/clm/Object/with //apple_ref/occ/intfcm/Object/with //apple_ref/occ/intfm/Object/with //apple_ref/occ/func/with //apple_ref/occ/ftmplt/Object/with //apple_ref/occ/defn/with //apple_ref/occ/macro/with //apple_ref/doc/anysymbol/with" machineGenerated="true" --><span class="function">with</span><!-- /a -->:<!-- a logicalPath="//apple_ref/occ/econst/anObject //apple_ref/occ/data/Object/anObject //apple_ref/occ/data/anObject //apple_ref/occ/clconst/Object/anObject " machineGenerated="true" --><span class="var">anObject</span><!-- /a -->;  <!-- headerDoc=declaration;uid=//apple_ref/occ/instm/Object/perform:with:;name=end --></pre>
+</div>
+<h5 class="tight"><font face="Lucida Grande,Helvetica,Arial">Parameters</font></h5>
+<div class="param_indent">
+<dl>
+<dt>
+<!-- headerDoc=methodparam;  uid=//apple_ref/doc/methodparam/Object/perform:with:/aSelector;  indexgroup=JX Runtime ;   name=perform:with:::aSelector -->
+<a name="//apple_ref/doc/methodparam/Object/perform:with:/aSelector"></a>
+<code>aSelector</code>
+</dt>
+<dd><p>The selector to perform</p></dd>
+<dt>
+<!-- headerDoc=methodparam;  uid=//apple_ref/doc/methodparam/Object/perform:with:/anObject;  indexgroup=JX Runtime ;   name=perform:with:::anObject -->
+<a name="//apple_ref/doc/methodparam/Object/perform:with:/anObject"></a>
+<code>anObject</code>
+</dt>
+<dd><p>The first parameter.</p></dd>
+</dl>
+</div>
+<h5 class="tight"><font face="Lucida Grande,Helvetica,Arial">Discussion</font></h5>
+<!-- begin discussion --><!-- headerDoc=discussion;uid=//apple_ref/occ/instm/Object/perform:with:;name=start --><p>Performs the given selector on this instance with a single <em>id</em>
+parameter.
+<!-- headerDoc=discussion;uid=//apple_ref/occ/instm/Object/perform:with:;name=end --><!-- end discussion -->
+</p>
+<hr class="betweenAPIEntries">
+<!-- headerDoc=instm;  uid=//apple_ref/occ/instm/Object/perform:with:with:;  indexgroup=JX Runtime ;   name=Object::perform:with:with: --><a name="//apple_ref/occ/instm/Object/perform:with:with:"></a>
+<h3><a name="perform:with:with:">perform:with:with:</a></h3>
+<hr class="afterName">
+<div class="declaration_indent">
+<pre><!-- headerDoc=declaration;uid=//apple_ref/occ/instm/Object/perform:with:with:;name=start -->- (<!-- a logicalPath="//apple_ref/occ/cl/id //apple_ref/occ/tdef/id //apple_ref/occ/tag/id //apple_ref/occ/struct/id //apple_ref/occ/intf/id //apple_ref/doc/anysymbol/id" machineGenerated="true" --><span class="type">id</span><!-- /a -->)<a machinegenerated="true" href="index.html#//apple_ref/occ/instm/Object/perform:with:with:with:" logicalPath="//apple_ref/occ/instm/Object/perform" target="_top"><span class="function">perform</span></a>:(<!-- a logicalPath="//apple_ref/occ/cl/SEL //apple_ref/occ/tdef/SEL //apple_ref/occ/tag/SEL //apple_ref/occ/struct/SEL //apple_ref/occ/intf/SEL //apple_ref/doc/anysymbol/SEL" machineGenerated="true" --><span class="type">SEL</span><!-- /a -->)<span class="param">aSelector</span> <!-- a logicalPath="//apple_ref/occ/instm/Object/with //apple_ref/occ/clm/Object/with //apple_ref/occ/intfcm/Object/with //apple_ref/occ/intfm/Object/with //apple_ref/occ/func/with //apple_ref/occ/ftmplt/Object/with //apple_ref/occ/defn/with //apple_ref/occ/macro/with //apple_ref/doc/anysymbol/with" machineGenerated="true" --><span class="function">with</span><!-- /a -->:<span class="param">anObject</span> <!-- a logicalPath="//apple_ref/occ/instm/Object/with //apple_ref/occ/clm/Object/with //apple_ref/occ/intfcm/Object/with //apple_ref/occ/intfm/Object/with //apple_ref/occ/func/with //apple_ref/occ/ftmplt/Object/with //apple_ref/occ/defn/with //apple_ref/occ/macro/with //apple_ref/doc/anysymbol/with" machineGenerated="true" --><span class="function">with</span><!-- /a -->:<!-- a logicalPath="//apple_ref/occ/econst/otherObject //apple_ref/occ/data/Object/otherObject //apple_ref/occ/data/otherObject //apple_ref/occ/clconst/Object/otherObject " machineGenerated="true" --><span class="var">otherObject</span><!-- /a -->;  <!-- headerDoc=declaration;uid=//apple_ref/occ/instm/Object/perform:with:with:;name=end --></pre>
+</div>
+<h5 class="tight"><font face="Lucida Grande,Helvetica,Arial">Parameters</font></h5>
+<div class="param_indent">
+<dl>
+<dt>
+<!-- headerDoc=methodparam;  uid=//apple_ref/doc/methodparam/Object/perform:with:with:/aSelector;  indexgroup=JX Runtime ;   name=perform:with:with:::aSelector -->
+<a name="//apple_ref/doc/methodparam/Object/perform:with:with:/aSelector"></a>
+<code>aSelector</code>
+</dt>
+<dd><p>The selector to perform.</p></dd>
+<dt>
+<!-- headerDoc=methodparam;  uid=//apple_ref/doc/methodparam/Object/perform:with:with:/anObject;  indexgroup=JX Runtime ;   name=perform:with:with:::anObject -->
+<a name="//apple_ref/doc/methodparam/Object/perform:with:with:/anObject"></a>
+<code>anObject</code>
+</dt>
+<dd><p>The first parameter.</p></dd>
+<dt>
+<!-- headerDoc=methodparam;  uid=//apple_ref/doc/methodparam/Object/perform:with:with:/otherObject;  indexgroup=JX Runtime ;   name=perform:with:with:::otherObject -->
+<a name="//apple_ref/doc/methodparam/Object/perform:with:with:/otherObject"></a>
+<code>otherObject</code>
+</dt>
+<dd><p>The second parameter.</p></dd>
+</dl>
+</div>
+<h5 class="tight"><font face="Lucida Grande,Helvetica,Arial">Discussion</font></h5>
+<!-- begin discussion --><!-- headerDoc=discussion;uid=//apple_ref/occ/instm/Object/perform:with:with:;name=start --><p>Performs the given selector on this instance with two <em>id</em>
+parameters.
+<!-- headerDoc=discussion;uid=//apple_ref/occ/instm/Object/perform:with:with:;name=end --><!-- end discussion -->
+</p>
+<hr class="betweenAPIEntries">
+<!-- headerDoc=instm;  uid=//apple_ref/occ/instm/Object/perform:with:with:with:;  indexgroup=JX Runtime ;   name=Object::perform:with:with:with: --><a name="//apple_ref/occ/instm/Object/perform:with:with:with:"></a>
+<h3><a name="perform:with:with:with:">perform:with:with:with:</a></h3>
+<hr class="afterName">
+<div class="declaration_indent">
+<pre><!-- headerDoc=declaration;uid=//apple_ref/occ/instm/Object/perform:with:with:with:;name=start -->- (<!-- a logicalPath="//apple_ref/occ/cl/id //apple_ref/occ/tdef/id //apple_ref/occ/tag/id //apple_ref/occ/struct/id //apple_ref/occ/intf/id //apple_ref/doc/anysymbol/id" machineGenerated="true" --><span class="type">id</span><!-- /a -->)<a machinegenerated="true" href="index.html#//apple_ref/occ/instm/Object/perform:with:with:with:" logicalPath="//apple_ref/occ/instm/Object/perform" target="_top"><span class="function">perform</span></a>:(<!-- a logicalPath="//apple_ref/occ/cl/SEL //apple_ref/occ/tdef/SEL //apple_ref/occ/tag/SEL //apple_ref/occ/struct/SEL //apple_ref/occ/intf/SEL //apple_ref/doc/anysymbol/SEL" machineGenerated="true" --><span class="type">SEL</span><!-- /a -->)<span class="param">aSelector</span> <!-- a logicalPath="//apple_ref/occ/instm/Object/with //apple_ref/occ/clm/Object/with //apple_ref/occ/intfcm/Object/with //apple_ref/occ/intfm/Object/with //apple_ref/occ/func/with //apple_ref/occ/ftmplt/Object/with //apple_ref/occ/defn/with //apple_ref/occ/macro/with //apple_ref/doc/anysymbol/with" machineGenerated="true" --><span class="function">with</span><!-- /a -->:<span class="param">anObject</span> <!-- a logicalPath="//apple_ref/occ/instm/Object/with //apple_ref/occ/clm/Object/with //apple_ref/occ/intfcm/Object/with //apple_ref/occ/intfm/Object/with //apple_ref/occ/func/with //apple_ref/occ/ftmplt/Object/with //apple_ref/occ/defn/with //apple_ref/occ/macro/with //apple_ref/doc/anysymbol/with" machineGenerated="true" --><span class="function">with</span><!-- /a -->:<span class="param">otherObject</span> 
+        <!-- a logicalPath="//apple_ref/occ/instm/Object/with //apple_ref/occ/clm/Object/with //apple_ref/occ/intfcm/Object/with //apple_ref/occ/intfm/Object/with //apple_ref/occ/func/with //apple_ref/occ/ftmplt/Object/with //apple_ref/occ/defn/with //apple_ref/occ/macro/with //apple_ref/doc/anysymbol/with" machineGenerated="true" --><span class="function">with</span><!-- /a -->:<!-- a logicalPath="//apple_ref/occ/econst/thirdObj //apple_ref/occ/data/Object/thirdObj //apple_ref/occ/data/thirdObj //apple_ref/occ/clconst/Object/thirdObj " machineGenerated="true" --><span class="var">thirdObj</span><!-- /a -->;  <!-- headerDoc=declaration;uid=//apple_ref/occ/instm/Object/perform:with:with:with:;name=end --></pre>
+</div>
+<h5 class="tight"><font face="Lucida Grande,Helvetica,Arial">Parameters</font></h5>
+<div class="param_indent">
+<dl>
+<dt>
+<!-- headerDoc=methodparam;  uid=//apple_ref/doc/methodparam/Object/perform:with:with:with:/aSelector;  indexgroup=JX Runtime ;   name=perform:with:with:with:::aSelector -->
+<a name="//apple_ref/doc/methodparam/Object/perform:with:with:with:/aSelector"></a>
+<code>aSelector</code>
+</dt>
+<dd><p>The selector to perform.</p></dd>
+<dt>
+<!-- headerDoc=methodparam;  uid=//apple_ref/doc/methodparam/Object/perform:with:with:with:/anObject;  indexgroup=JX Runtime ;   name=perform:with:with:with:::anObject -->
+<a name="//apple_ref/doc/methodparam/Object/perform:with:with:with:/anObject"></a>
+<code>anObject</code>
+</dt>
+<dd><p>The first parameter.</p></dd>
+<dt>
+<!-- headerDoc=methodparam;  uid=//apple_ref/doc/methodparam/Object/perform:with:with:with:/otherObject;  indexgroup=JX Runtime ;   name=perform:with:with:with:::otherObject -->
+<a name="//apple_ref/doc/methodparam/Object/perform:with:with:with:/otherObject"></a>
+<code>otherObject</code>
+</dt>
+<dd><p>The second parameter.</p></dd>
+<dt>
+<!-- headerDoc=methodparam;  uid=//apple_ref/doc/methodparam/Object/perform:with:with:with:/thirdObj;  indexgroup=JX Runtime ;   name=perform:with:with:with:::thirdObj -->
+<a name="//apple_ref/doc/methodparam/Object/perform:with:with:with:/thirdObj"></a>
+<code>thirdObj</code>
+</dt>
+<dd><p>The third parameter.</p></dd>
+</dl>
+</div>
+<h5 class="tight"><font face="Lucida Grande,Helvetica,Arial">Discussion</font></h5>
+<!-- begin discussion --><!-- headerDoc=discussion;uid=//apple_ref/occ/instm/Object/perform:with:with:with:;name=start --><p>Performs the given selector on this instance with three <em>id</em>
+parameters.
+<!-- headerDoc=discussion;uid=//apple_ref/occ/instm/Object/perform:with:with:with:;name=end --><!-- end discussion -->
+</p>
+<hr class="betweenAPIEntries">
+<!-- headerDoc=clm;  uid=//apple_ref/occ/clm/Object/poseAs:;  indexgroup=JX Runtime ;   name=Object::poseAs: --><a name="//apple_ref/occ/clm/Object/poseAs:"></a>
+<h3><a name="poseAs:">poseAs:</a></h3>
+<hr class="afterName">
+<div class="declaration_indent">
+<pre><!-- headerDoc=declaration;uid=//apple_ref/occ/clm/Object/poseAs:;name=start -->+ <a machinegenerated="true" href="index.html#//apple_ref/occ/clm/Object/poseAs:" logicalPath="//apple_ref/occ/instm/Object/poseAs //apple_ref/occ/clm/Object/poseAs" target="_top"><span class="function">poseAs</span></a>:<!-- a logicalPath="//apple_ref/occ/econst/superClass //apple_ref/occ/data/Object/superClass //apple_ref/occ/data/superClass //apple_ref/occ/clconst/Object/superClass " machineGenerated="true" --><span class="var">superClass</span><!-- /a -->; <!-- headerDoc=declaration;uid=//apple_ref/occ/clm/Object/poseAs:;name=end --></pre>
+</div>
+<h5 class="tight"><font face="Lucida Grande,Helvetica,Arial">Parameters</font></h5>
+<div class="param_indent">
+<dl>
+<dt>
+<!-- headerDoc=methodparam;  uid=//apple_ref/doc/methodparam/Object/poseAs:/superClass;  indexgroup=JX Runtime ;   name=poseAs:::superClass -->
+<a name="//apple_ref/doc/methodparam/Object/poseAs:/superClass"></a>
+<code>superClass</code>
+</dt>
+<dd><p>The class to be substituted with this class.</p></dd>
+</dl>
+</div>
+<h5 class="tight"><font face="Lucida Grande,Helvetica,Arial">Discussion</font></h5>
+<!-- begin discussion --><!-- headerDoc=discussion;uid=//apple_ref/occ/clm/Object/poseAs:;name=start --><p>Have this subclass substitute for a parent class.
+<!-- headerDoc=discussion;uid=//apple_ref/occ/clm/Object/poseAs:;name=end --><!-- end discussion -->
+</p>
+<hr class="betweenAPIEntries">
+<!-- headerDoc=instm;  uid=//apple_ref/occ/instm/Object/respondsTo:;  indexgroup=JX Runtime ;   name=Object::respondsTo: --><a name="//apple_ref/occ/instm/Object/respondsTo:"></a>
+<h3><a name="respondsTo:">respondsTo:</a></h3>
+<hr class="afterName">
+<div class="declaration_indent">
+<pre><!-- headerDoc=declaration;uid=//apple_ref/occ/instm/Object/respondsTo:;name=start -->- (<!-- a logicalPath="//apple_ref/occ/cl/BOOL //apple_ref/occ/tdef/BOOL //apple_ref/occ/tag/BOOL //apple_ref/occ/struct/BOOL //apple_ref/occ/intf/BOOL //apple_ref/doc/anysymbol/BOOL" machineGenerated="true" --><span class="type">BOOL</span><!-- /a -->)<a machinegenerated="true" href="index.html#//apple_ref/occ/instm/Object/respondsTo:" logicalPath="//apple_ref/occ/instm/Object/respondsTo" target="_top"><span class="function">respondsTo</span></a>:(<!-- a logicalPath="//apple_ref/occ/cl/SEL //apple_ref/occ/tdef/SEL //apple_ref/occ/tag/SEL //apple_ref/occ/struct/SEL //apple_ref/occ/intf/SEL //apple_ref/doc/anysymbol/SEL" machineGenerated="true" --><span class="type">SEL</span><!-- /a -->)<!-- a logicalPath="//apple_ref/occ/econst/aSelector //apple_ref/occ/data/Object/aSelector //apple_ref/occ/data/aSelector //apple_ref/occ/clconst/Object/aSelector " machineGenerated="true" --><span class="var">aSelector</span><!-- /a -->; <!-- headerDoc=declaration;uid=//apple_ref/occ/instm/Object/respondsTo:;name=end --></pre>
+</div>
+<h5 class="tight"><font face="Lucida Grande,Helvetica,Arial">Parameters</font></h5>
+<div class="param_indent">
+<dl>
+<dt>
+<!-- headerDoc=methodparam;  uid=//apple_ref/doc/methodparam/Object/respondsTo:/aSelector;  indexgroup=JX Runtime ;   name=respondsTo:::aSelector -->
+<a name="//apple_ref/doc/methodparam/Object/respondsTo:/aSelector"></a>
+<code>aSelector</code>
+</dt>
+<dd><p>Which selector to test the object's response to.</p></dd>
+</dl>
+</div>
+<h5 class="tight"><font face="Lucida Grande,Helvetica,Arial">Return Value</font></h5>
+<p><!-- begin return value --></p>
+<p>YES if the object responds to the selector, NO if not.
+
+<!-- end return value --></p>
+<h5 class="tight"><font face="Lucida Grande,Helvetica,Arial">Discussion</font></h5>
+<!-- begin discussion --><!-- headerDoc=discussion;uid=//apple_ref/occ/instm/Object/respondsTo:;name=start --><p>Checks if the object responds to a selector.
+<!-- headerDoc=discussion;uid=//apple_ref/occ/instm/Object/respondsTo:;name=end --><!-- end discussion -->
+</p>
+<hr class="betweenAPIEntries">
+<!-- headerDoc=instm;  uid=//apple_ref/occ/instm/Object/size;  indexgroup=JX Runtime ;   name=Object::size --><a name="//apple_ref/occ/instm/Object/size"></a>
+<h3><a name="size">size</a></h3>
+<hr class="afterName">
+<div class="declaration_indent">
+<pre><!-- headerDoc=declaration;uid=//apple_ref/occ/instm/Object/size;name=start -->- (<span class="keyword">unsigned</span>)<!-- a logicalPath="//apple_ref/occ/econst/size //apple_ref/occ/data/Object/size //apple_ref/occ/data/size //apple_ref/occ/clconst/Object/size " machineGenerated="true" --><span class="var">size</span><!-- /a -->; <!-- headerDoc=declaration;uid=//apple_ref/occ/instm/Object/size;name=end --></pre>
+</div>
+<h5 class="tight"><font face="Lucida Grande,Helvetica,Arial">Discussion</font></h5>
+<!-- begin discussion --><!-- headerDoc=discussion;uid=//apple_ref/occ/instm/Object/size;name=start --><p>Returns the size of the object. <!-- headerDoc=discussion;uid=//apple_ref/occ/instm/Object/size;name=end --><!-- end discussion -->
+</p>
+<hr class="betweenAPIEntries">
+<!-- headerDoc=instm;  uid=//apple_ref/occ/instm/Object/str;  indexgroup=JX Runtime ;   name=Object::str --><a name="//apple_ref/occ/instm/Object/str"></a>
+<h3><a name="str">str</a></h3>
+<hr class="afterName">
+<div class="declaration_indent">
+<pre><!-- headerDoc=declaration;uid=//apple_ref/occ/instm/Object/str;name=start -->- (<!-- a logicalPath="//apple_ref/occ/cl/STR //apple_ref/occ/tdef/STR //apple_ref/occ/tag/STR //apple_ref/occ/struct/STR //apple_ref/occ/intf/STR //apple_ref/doc/anysymbol/STR" machineGenerated="true" --><span class="type">STR</span><!-- /a -->)<!-- a logicalPath="//apple_ref/occ/econst/str //apple_ref/occ/data/Object/str //apple_ref/occ/data/str //apple_ref/occ/clconst/Object/str " machineGenerated="true" --><span class="var">str</span><!-- /a -->; <!-- headerDoc=declaration;uid=//apple_ref/occ/instm/Object/str;name=end --></pre>
+</div>
+<h5 class="tight"><font face="Lucida Grande,Helvetica,Arial">Discussion</font></h5>
+<!-- begin discussion --><!-- headerDoc=discussion;uid=//apple_ref/occ/instm/Object/str;name=start --><p>Returns the STR representation of an object. By default, returns the name
+of the object's class. <!-- headerDoc=discussion;uid=//apple_ref/occ/instm/Object/str;name=end --><!-- end discussion -->
+</p>
+<hr class="betweenAPIEntries">
+<!-- headerDoc=clm;  uid=//apple_ref/occ/clm/Object/subclass:;  indexgroup=JX Runtime ;   name=Object::subclass: --><a name="//apple_ref/occ/clm/Object/subclass:"></a>
+<h3><a name="subclass:">subclass:</a></h3>
+<hr class="afterName">
+<div class="declaration_indent">
+<pre><!-- headerDoc=declaration;uid=//apple_ref/occ/clm/Object/subclass:;name=start -->+ (<!-- a logicalPath="//apple_ref/occ/cl/id //apple_ref/occ/tdef/id //apple_ref/occ/tag/id //apple_ref/occ/struct/id //apple_ref/occ/intf/id //apple_ref/doc/anysymbol/id" machineGenerated="true" --><span class="type">id</span><!-- /a -->)<a machinegenerated="true" href="index.html#//apple_ref/occ/clm/Object/subclass:" logicalPath="//apple_ref/occ/instm/Object/subclass //apple_ref/occ/clm/Object/subclass" target="_top"><span class="function">subclass</span></a>:(<!-- a logicalPath="//apple_ref/occ/cl/STR //apple_ref/occ/tdef/STR //apple_ref/occ/tag/STR //apple_ref/occ/struct/STR //apple_ref/occ/intf/STR //apple_ref/doc/anysymbol/STR" machineGenerated="true" --><span class="type">STR</span><!-- /a -->)<!-- a logicalPath="//apple_ref/occ/econst/name //apple_ref/occ/data/Object/name //apple_ref/occ/data/name //apple_ref/occ/clconst/Object/name " machineGenerated="true" --><span class="var">name</span><!-- /a -->; <!-- headerDoc=declaration;uid=//apple_ref/occ/clm/Object/subclass:;name=end --></pre>
+</div>
+<h5 class="tight"><font face="Lucida Grande,Helvetica,Arial">Parameters</font></h5>
+<div class="param_indent">
+<dl>
+<dt>
+<!-- headerDoc=methodparam;  uid=//apple_ref/doc/methodparam/Object/subclass:/name;  indexgroup=JX Runtime ;   name=subclass:::name -->
+<a name="//apple_ref/doc/methodparam/Object/subclass:/name"></a>
+<code>name</code>
+</dt>
+<dd><p>The STR representing the newly-created subclass' name.</p></dd>
+</dl>
+</div>
+<h5 class="tight"><font face="Lucida Grande,Helvetica,Arial">Return Value</font></h5>
+<p><!-- begin return value --></p>
+<p>A new subclass. Use <a href="index.html#//apple_ref/occ/clm/Object/load" logicalPath="//apple_ref/occ/clm/Object/load" target="_top">load</a> to load it into the running
+programme.
+
+<!-- end return value --></p>
+<h5 class="tight"><font face="Lucida Grande,Helvetica,Arial">Discussion</font></h5>
+<!-- begin discussion --><!-- headerDoc=discussion;uid=//apple_ref/occ/clm/Object/subclass:;name=start --><p>Create a new subclass of this class.
+<!-- headerDoc=discussion;uid=//apple_ref/occ/clm/Object/subclass:;name=end --><!-- end discussion -->
+</p>
+<hr class="betweenAPIEntries">
+<!-- headerDoc=clm;  uid=//apple_ref/occ/clm/Object/subclass:ivars:cvars:;  indexgroup=JX Runtime ;   name=Object::subclass:ivars:cvars: --><a name="//apple_ref/occ/clm/Object/subclass:ivars:cvars:"></a>
+<h3><a name="subclass:ivars:cvars:">subclass:ivars:cvars:</a></h3>
+<hr class="afterName">
+<div class="declaration_indent">
+<pre><!-- headerDoc=declaration;uid=//apple_ref/occ/clm/Object/subclass:ivars:cvars:;name=start -->+ (<!-- a logicalPath="//apple_ref/occ/cl/id //apple_ref/occ/tdef/id //apple_ref/occ/tag/id //apple_ref/occ/struct/id //apple_ref/occ/intf/id //apple_ref/doc/anysymbol/id" machineGenerated="true" --><span class="type">id</span><!-- /a -->)<a machinegenerated="true" href="index.html#//apple_ref/occ/clm/Object/subclass:" logicalPath="//apple_ref/occ/instm/Object/subclass //apple_ref/occ/clm/Object/subclass" target="_top"><span class="function">subclass</span></a>:(<!-- a logicalPath="//apple_ref/occ/cl/STR //apple_ref/occ/tdef/STR //apple_ref/occ/tag/STR //apple_ref/occ/struct/STR //apple_ref/occ/intf/STR //apple_ref/doc/anysymbol/STR" machineGenerated="true" --><span class="type">STR</span><!-- /a -->)<a machinegenerated="true" href="index.html#//apple_ref/occ/instm/Object/name" logicalPath="//apple_ref/occ/instm/Object/name" target="_top"><span class="function">name</span></a>:(<!-- a logicalPath="//apple_ref/occ/cl/int //apple_ref/occ/tdef/int //apple_ref/occ/tag/int //apple_ref/occ/struct/int //apple_ref/occ/intf/int //apple_ref/doc/anysymbol/int" machineGenerated="true" --><span class="type">int</span><!-- /a -->)<a machinegenerated="true" href="index.html#//apple_ref/doc/methodparam/Object/subclass:ivars:cvars:/ivars" logicalPath="//apple_ref/occ/instm/Object/ivars //apple_ref/occ/clm/Object/ivars //apple_ref/occ/intfcm/Object/ivars //apple_ref/occ/intfm/Object/ivars //apple_ref/occ/func/ivars //apple_ref/occ/ftmplt/Object/ivars //apple_ref/occ/defn/ivars //apple_ref/occ/macro/ivars //apple_ref/doc/anysymbol/ivars" target="_top"><span class="function">ivars</span></a>:(<!-- a logicalPath="//apple_ref/occ/cl/int //apple_ref/occ/tdef/int //apple_ref/occ/tag/int //apple_ref/occ/struct/int //apple_ref/occ/intf/int //apple_ref/doc/anysymbol/int" machineGenerated="true" --><span class="type">int</span><!-- /a -->)<!-- a logicalPath="//apple_ref/occ/econst/cvars //apple_ref/occ/data/Object/cvars //apple_ref/occ/data/cvars //apple_ref/occ/clconst/Object/cvars " machineGenerated="true" --><span class="var">cvars</span><!-- /a -->; <!-- headerDoc=declaration;uid=//apple_ref/occ/clm/Object/subclass:ivars:cvars:;name=end --></pre>
+</div>
+<h5 class="tight"><font face="Lucida Grande,Helvetica,Arial">Parameters</font></h5>
+<div class="param_indent">
+<dl>
+<dt>
+<!-- headerDoc=methodparam;  uid=//apple_ref/doc/methodparam/Object/subclass:ivars:cvars:/name;  indexgroup=JX Runtime ;   name=subclass:ivars:cvars:::name -->
+<a name="//apple_ref/doc/methodparam/Object/subclass:ivars:cvars:/name"></a>
+<code>name</code>
+</dt>
+<dd><p>An STR representing the newly-created subclass' name.</p></dd>
+<dt>
+<!-- headerDoc=methodparam;  uid=//apple_ref/doc/methodparam/Object/subclass:ivars:cvars:/ivars;  indexgroup=JX Runtime ;   name=subclass:ivars:cvars:::ivars -->
+<a name="//apple_ref/doc/methodparam/Object/subclass:ivars:cvars:/ivars"></a>
+<code>ivars</code>
+</dt>
+<dd><p>Count of additional instance variables to be added to the new
+subclass.</p></dd>
+<dt>
+<!-- headerDoc=methodparam;  uid=//apple_ref/doc/methodparam/Object/subclass:ivars:cvars:/cvars;  indexgroup=JX Runtime ;   name=subclass:ivars:cvars:::cvars -->
+<a name="//apple_ref/doc/methodparam/Object/subclass:ivars:cvars:/cvars"></a>
+<code>cvars</code>
+</dt>
+<dd><p>Count of additional factory variables to be added to the new
+subclass.</p></dd>
+</dl>
+</div>
+<h5 class="tight"><font face="Lucida Grande,Helvetica,Arial">Return Value</font></h5>
+<p><!-- begin return value --></p>
+<p>A new subclass. Use <a href="index.html#//apple_ref/occ/clm/Object/load" logicalPath="//apple_ref/occ/clm/Object/load" target="_top">load</a> to load it into the running
+programme.
+
+<!-- end return value --></p>
+<h5 class="tight"><font face="Lucida Grande,Helvetica,Arial">Discussion</font></h5>
+<!-- begin discussion --><!-- headerDoc=discussion;uid=//apple_ref/occ/clm/Object/subclass:ivars:cvars:;name=start --><p>Create a new subclass of this class.
+<!-- headerDoc=discussion;uid=//apple_ref/occ/clm/Object/subclass:ivars:cvars:;name=end --><!-- end discussion -->
+</p>
+<hr class="betweenAPIEntries">
+<!-- headerDoc=clm;  uid=//apple_ref/occ/clm/Object/subclasses;  indexgroup=JX Runtime ;   name=Object::subclasses --><a name="//apple_ref/occ/clm/Object/subclasses"></a>
+<h3><a name="subclasses">subclasses</a></h3>
+<hr class="afterName">
+<div class="declaration_indent">
+<pre><!-- headerDoc=declaration;uid=//apple_ref/occ/clm/Object/subclasses;name=start -->+ <!-- a logicalPath="//apple_ref/occ/econst/subclasses //apple_ref/occ/data/Object/subclasses //apple_ref/occ/data/subclasses //apple_ref/occ/clconst/Object/subclasses " machineGenerated="true" --><span class="var">subclasses</span><!-- /a -->; <!-- headerDoc=declaration;uid=//apple_ref/occ/clm/Object/subclasses;name=end --></pre>
+</div>
+<h5 class="tight"><font face="Lucida Grande,Helvetica,Arial">Discussion</font></h5>
+<!-- begin discussion --><!-- headerDoc=discussion;uid=//apple_ref/occ/clm/Object/subclasses;name=start --><p>Returns an <!-- a logicalPath="//apple_ref/occ/cl/OrdCltn //apple_ref/occ/tdef/OrdCltn //apple_ref/occ/tag/OrdCltn //apple_ref/occ/struct/OrdCltn //apple_ref/occ/intf/OrdCltn //apple_ref/occ/econst/OrdCltn //apple_ref/occ/data/OrdCltn //apple_ref/occ/clconst/OrdCltn //apple_ref/occ/instm/OrdCltn //apple_ref/occ/clm/OrdCltn //apple_ref/occ/intfcm/OrdCltn //apple_ref/occ/intfm/OrdCltn //apple_ref/occ/func/OrdCltn //apple_ref/occ/ftmplt/OrdCltn //apple_ref/occ/defn/OrdCltn //apple_ref/occ/macro/OrdCltn //apple_ref/doc/com/intfm/OrdCltn //apple_ref/doc/anysymbol/OrdCltn" -->OrdCltn<!-- /a --> of this class' subclasses. <!-- headerDoc=discussion;uid=//apple_ref/occ/clm/Object/subclasses;name=end --><!-- end discussion -->
+</p>
+<hr class="betweenAPIEntries">
+<!-- headerDoc=instm;  uid=//apple_ref/occ/instm/Object/superclass;  indexgroup=JX Runtime ;   name=Object::superclass --><a name="//apple_ref/occ/instm/Object/superclass"></a>
+<h3><a name="superclass">superclass</a></h3>
+<hr class="afterName">
+<div class="declaration_indent">
+<pre><!-- headerDoc=declaration;uid=//apple_ref/occ/instm/Object/superclass;name=start -->- <!-- a logicalPath="//apple_ref/occ/econst/superclass //apple_ref/occ/data/Object/superclass //apple_ref/occ/data/superclass //apple_ref/occ/clconst/Object/superclass " machineGenerated="true" --><span class="var">superclass</span><!-- /a -->; <!-- headerDoc=declaration;uid=//apple_ref/occ/instm/Object/superclass;name=end --></pre>
+</div>
+<h5 class="tight"><font face="Lucida Grande,Helvetica,Arial">Discussion</font></h5>
+<!-- begin discussion --><!-- headerDoc=discussion;uid=//apple_ref/occ/instm/Object/superclass;name=start --><p>Returns the superclass of the object. <!-- headerDoc=discussion;uid=//apple_ref/occ/instm/Object/superclass;name=end --><!-- end discussion -->
+</p>
+<hr class="betweenAPIEntries">
+<!-- headerDoc=instm;  uid=//apple_ref/occ/instm/Object/superClass;  indexgroup=JX Runtime ;   name=Object::superClass --><a name="//apple_ref/occ/instm/Object/superClass"></a>
+<h3><a name="superClass">superClass</a></h3>
+<hr class="afterName">
+<div class="declaration_indent">
+<pre><!-- headerDoc=declaration;uid=//apple_ref/occ/instm/Object/superClass;name=start -->- <!-- a logicalPath="//apple_ref/occ/econst/superClass //apple_ref/occ/data/Object/superClass //apple_ref/occ/data/superClass //apple_ref/occ/clconst/Object/superClass " machineGenerated="true" --><span class="var">superClass</span><!-- /a -->; <!-- headerDoc=declaration;uid=//apple_ref/occ/instm/Object/superClass;name=end --></pre>
+</div>
+<h5 class="tight"><font face="Lucida Grande,Helvetica,Arial">Discussion</font></h5>
+<!-- begin discussion --><!-- headerDoc=discussion;uid=//apple_ref/occ/instm/Object/superClass;name=start --><p>Compatibility alias for <a href="index.html#//apple_ref/occ/instm/Object/superclass" logicalPath="//apple_ref/occ/instm/Object/superclass" target="_top">superclass</a>. <!-- headerDoc=discussion;uid=//apple_ref/occ/instm/Object/superClass;name=end --><!-- end discussion -->
+</p>
+<hr class="betweenAPIEntries">
+<!-- headerDoc=clm;  uid=//apple_ref/occ/clm/Object/superclass;  indexgroup=JX Runtime ;   name=Object::superclass --><a name="//apple_ref/occ/clm/Object/superclass"></a>
+<h3><a name="superclass">superclass</a></h3>
+<hr class="afterName">
+<div class="declaration_indent">
+<pre><!-- headerDoc=declaration;uid=//apple_ref/occ/clm/Object/superclass;name=start -->+ <!-- a logicalPath="//apple_ref/occ/econst/superclass //apple_ref/occ/data/Object/superclass //apple_ref/occ/data/superclass //apple_ref/occ/clconst/Object/superclass " machineGenerated="true" --><span class="var">superclass</span><!-- /a -->; <!-- headerDoc=declaration;uid=//apple_ref/occ/clm/Object/superclass;name=end --></pre>
+</div>
+<h5 class="tight"><font face="Lucida Grande,Helvetica,Arial">Discussion</font></h5>
+<!-- begin discussion --><!-- headerDoc=discussion;uid=//apple_ref/occ/clm/Object/superclass;name=start --><p>Returns the superclass of this class (its parent class). <!-- headerDoc=discussion;uid=//apple_ref/occ/clm/Object/superclass;name=end --><!-- end discussion -->
+</p>
+<hr class="betweenAPIEntries">
+<!-- headerDoc=clm;  uid=//apple_ref/occ/clm/Object/superClass;  indexgroup=JX Runtime ;   name=Object::superClass --><a name="//apple_ref/occ/clm/Object/superClass"></a>
+<h3><a name="superClass">superClass</a></h3>
+<hr class="afterName">
+<div class="declaration_indent">
+<pre><!-- headerDoc=declaration;uid=//apple_ref/occ/clm/Object/superClass;name=start -->+ <!-- a logicalPath="//apple_ref/occ/econst/superClass //apple_ref/occ/data/Object/superClass //apple_ref/occ/data/superClass //apple_ref/occ/clconst/Object/superClass " machineGenerated="true" --><span class="var">superClass</span><!-- /a -->; <!-- headerDoc=declaration;uid=//apple_ref/occ/clm/Object/superClass;name=end --></pre>
+</div>
+<h5 class="tight"><font face="Lucida Grande,Helvetica,Arial">Discussion</font></h5>
+<!-- begin discussion --><!-- headerDoc=discussion;uid=//apple_ref/occ/clm/Object/superClass;name=start --><p>Compatibility alias for <a href="index.html#//apple_ref/occ/instm/Object/superclass" logicalPath="//apple_ref/occ/instm/Object/superclass" target="_top">superclass</a>. <!-- headerDoc=discussion;uid=//apple_ref/occ/clm/Object/superClass;name=end --><!-- end discussion -->
+</p>
+<hr class="betweenAPIEntries">
+<!-- headerDoc=clm;  uid=//apple_ref/occ/clm/Object/unload;  indexgroup=JX Runtime ;   name=Object::unload --><a name="//apple_ref/occ/clm/Object/unload"></a>
+<h3><a name="unload">unload</a></h3>
+<hr class="afterName">
+<div class="declaration_indent">
+<pre><!-- headerDoc=declaration;uid=//apple_ref/occ/clm/Object/unload;name=start -->+ <!-- a logicalPath="//apple_ref/occ/econst/unload //apple_ref/occ/data/Object/unload //apple_ref/occ/data/unload //apple_ref/occ/clconst/Object/unload " machineGenerated="true" --><span class="var">unload</span><!-- /a -->; <!-- headerDoc=declaration;uid=//apple_ref/occ/clm/Object/unload;name=end --></pre>
+</div>
+<h5 class="tight"><font face="Lucida Grande,Helvetica,Arial">Discussion</font></h5>
+<!-- begin discussion --><!-- headerDoc=discussion;uid=//apple_ref/occ/clm/Object/unload;name=start --><p>Unload this class from the running programme. <!-- headerDoc=discussion;uid=//apple_ref/occ/clm/Object/unload;name=end --><!-- end discussion -->
+</p>
+<p class="gapBeforeFooter">&nbsp;</p>
+<hr class="afterFooter">
+<div class="hd_copyright_and_timestamp">
+<p class="hd_copyright">&copy; David Mackay </p>
+<p class="hd_timestamp">Last Updated: Saturday, January 09, 2016
+</p>
+</div>
+</td>
+</tr></table>
+</body>
+</html>
