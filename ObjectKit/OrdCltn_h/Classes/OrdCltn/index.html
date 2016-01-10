@@ -274,7 +274,8 @@ function disclosure_triangle(elt) {
 <p>An Ordered collection of objects.
 <!-- end abstract --><!-- headerDoc=abstract;uid=//apple_ref/occ/cl/OrdCltn;name=end --></p>
 <h5 class="tight"><font face="Lucida Grande,Helvetica,Arial">Discussion</font></h5>
-<!-- begin discussion --><!-- headerDoc=discussion;uid=//apple_ref/occ/cl/OrdCltn;name=start --><p>Stores objects in an ordered form similar to the C++ STL's Vector.
+<!-- begin discussion --><!-- headerDoc=discussion;uid=//apple_ref/occ/cl/OrdCltn;name=start --><p>Stores objects in an ordered form similar to the C++ STL's
+Vector.
 Objects at any specified index may be retrieved, removed, or inserted. The
 index begins at 0 for the first object, and ends at
 <em><a href="index.html#//apple_ref/occ/instm/OrdCltn/size" logicalPath="//apple_ref/occ/instm/OrdCltn/size" target="_top">size</a> - 1</em> for the last.
@@ -284,6 +285,24 @@ index begins at 0 for the first object, and ends at
 <br><a name="HeaderDoc_methods"></a>
 <h2 class="h2tight">Methods</h2>
 <dl>
+<dt><tt><a href="index.html#//apple_ref/occ/instm/OrdCltn/add:" target="_top">-add:</a></tt></dt>
+<dd></dd>
+<dt><tt><a href="index.html#//apple_ref/occ/instm/OrdCltn/addFirst:" target="_top">-addFirst:</a></tt></dt>
+<dd></dd>
+<dt><tt><a href="index.html#//apple_ref/occ/instm/OrdCltn/addIfAbsent:" target="_top">-addIfAbsent:</a></tt></dt>
+<dd></dd>
+<dt><tt><a href="index.html#//apple_ref/occ/instm/OrdCltn/addIfAbsentMatching:" target="_top">-addIfAbsentMatching:</a></tt></dt>
+<dd></dd>
+<dt><tt><a href="index.html#//apple_ref/occ/instm/OrdCltn/after:" target="_top">-after:</a></tt></dt>
+<dd></dd>
+<dt><tt><a href="index.html#//apple_ref/occ/instm/OrdCltn/at:" target="_top">-at:</a></tt></dt>
+<dd></dd>
+<dt><tt><a href="index.html#//apple_ref/occ/instm/OrdCltn/at:insert:" target="_top">-at:insert:</a></tt></dt>
+<dd></dd>
+<dt><tt><a href="index.html#//apple_ref/occ/instm/OrdCltn/at:put:" target="_top">-at:put:</a></tt></dt>
+<dd></dd>
+<dt><tt><a href="index.html#//apple_ref/occ/instm/OrdCltn/before:" target="_top">-before:</a></tt></dt>
+<dd></dd>
 <dt><tt><a href="index.html#//apple_ref/occ/instm/OrdCltn/copy" target="_top">-copy</a></tt></dt>
 <dd></dd>
 <dt><tt><a href="index.html#//apple_ref/occ/instm/OrdCltn/deepCopy" target="_top">-deepCopy</a></tt></dt>
@@ -292,15 +311,268 @@ index begins at 0 for the first object, and ends at
 <dd></dd>
 <dt><tt><a href="index.html#//apple_ref/occ/instm/OrdCltn/do:until:" target="_top">-do:until:</a></tt></dt>
 <dd></dd>
+<dt><tt><a href="index.html#//apple_ref/occ/instm/OrdCltn/insert:after:" target="_top">-insert:after:</a></tt></dt>
+<dd></dd>
+<dt><tt><a href="index.html#//apple_ref/occ/instm/OrdCltn/insert:before:" target="_top">-insert:before:</a></tt></dt>
+<dd></dd>
 <dt><tt><a href="index.html#//apple_ref/occ/instm/OrdCltn/isEmpty" target="_top">-isEmpty</a></tt></dt>
 <dd></dd>
 <dt><tt><a href="index.html#//apple_ref/occ/instm/OrdCltn/lastOffset" target="_top">-lastOffset</a></tt></dt>
+<dd></dd>
+<dt><tt><a href="index.html#//apple_ref/occ/instm/OrdCltn/remove:" target="_top">-remove:</a></tt></dt>
+<dd></dd>
+<dt><tt><a href="index.html#//apple_ref/occ/instm/OrdCltn/remove:ifAbsent:" target="_top">-remove:ifAbsent:</a></tt></dt>
+<dd></dd>
+<dt><tt><a href="index.html#//apple_ref/occ/instm/OrdCltn/removeAt:" target="_top">-removeAt:</a></tt></dt>
+<dd></dd>
+<dt><tt><a href="index.html#//apple_ref/occ/instm/OrdCltn/removeFirst" target="_top">-removeFirst</a></tt></dt>
+<dd></dd>
+<dt><tt><a href="index.html#//apple_ref/occ/instm/OrdCltn/removeLast" target="_top">-removeLast</a></tt></dt>
 <dd></dd>
 <dt><tt><a href="index.html#//apple_ref/occ/instm/OrdCltn/reverseDo:" target="_top">-reverseDo:</a></tt></dt>
 <dd></dd>
 <dt><tt><a href="index.html#//apple_ref/occ/instm/OrdCltn/size" target="_top">-size</a></tt></dt>
 <dd></dd>
 </dl>
+<hr class="betweenAPIEntries">
+<!-- headerDoc=instm;  uid=//apple_ref/occ/instm/OrdCltn/add:;  indexgroup=Collection ;   name=OrdCltn::add: --><a name="//apple_ref/occ/instm/OrdCltn/add:"></a>
+<h3><a name="add:">add:</a></h3>
+<hr class="afterName">
+<div class="declaration_indent">
+<pre><!-- headerDoc=declaration;uid=//apple_ref/occ/instm/OrdCltn/add:;name=start -->- <a machinegenerated="true" href="index.html#//apple_ref/occ/instm/OrdCltn/addFirst:" logicalPath="//apple_ref/occ/instm/OrdCltn/add" target="_top"><span class="function">add</span></a>:<!-- a logicalPath="//apple_ref/occ/econst/anObject //apple_ref/occ/data/OrdCltn/anObject //apple_ref/occ/data/anObject //apple_ref/occ/clconst/OrdCltn/anObject " machineGenerated="true" --><span class="var">anObject</span><!-- /a -->;  <!-- headerDoc=declaration;uid=//apple_ref/occ/instm/OrdCltn/add:;name=end --></pre>
+</div>
+<h5 class="tight"><font face="Lucida Grande,Helvetica,Arial">Parameters</font></h5>
+<div class="param_indent">
+<dl>
+<dt>
+<!-- headerDoc=methodparam;  uid=//apple_ref/doc/methodparam/OrdCltn/add:/anObject;  indexgroup=Collection ;   name=add:::anObject -->
+<a name="//apple_ref/doc/methodparam/OrdCltn/add:/anObject"></a>
+<code>anObject</code>
+</dt>
+<dd><p>Object to add.</p></dd>
+</dl>
+</div>
+<h5 class="tight"><font face="Lucida Grande,Helvetica,Arial">Discussion</font></h5>
+<!-- begin discussion --><!-- headerDoc=discussion;uid=//apple_ref/occ/instm/OrdCltn/add:;name=start --><p>Add an object to the end of the collection.
+<!-- headerDoc=discussion;uid=//apple_ref/occ/instm/OrdCltn/add:;name=end --><!-- end discussion -->
+</p>
+<hr class="betweenAPIEntries">
+<!-- headerDoc=instm;  uid=//apple_ref/occ/instm/OrdCltn/addFirst:;  indexgroup=Collection ;   name=OrdCltn::addFirst: --><a name="//apple_ref/occ/instm/OrdCltn/addFirst:"></a>
+<h3><a name="addFirst:">addFirst:</a></h3>
+<hr class="afterName">
+<div class="declaration_indent">
+<pre><!-- headerDoc=declaration;uid=//apple_ref/occ/instm/OrdCltn/addFirst:;name=start -->- <a machinegenerated="true" href="index.html#//apple_ref/occ/instm/OrdCltn/addFirst:" logicalPath="//apple_ref/occ/instm/OrdCltn/addFirst" target="_top"><span class="function">addFirst</span></a>:<!-- a logicalPath="//apple_ref/occ/econst/newObject //apple_ref/occ/data/OrdCltn/newObject //apple_ref/occ/data/newObject //apple_ref/occ/clconst/OrdCltn/newObject " machineGenerated="true" --><span class="var">newObject</span><!-- /a -->;  <!-- headerDoc=declaration;uid=//apple_ref/occ/instm/OrdCltn/addFirst:;name=end --></pre>
+</div>
+<h5 class="tight"><font face="Lucida Grande,Helvetica,Arial">Parameters</font></h5>
+<div class="param_indent">
+<dl>
+<dt>
+<!-- headerDoc=methodparam;  uid=//apple_ref/doc/methodparam/OrdCltn/addFirst:/newObject;  indexgroup=Collection ;   name=addFirst:::newObject -->
+<a name="//apple_ref/doc/methodparam/OrdCltn/addFirst:/newObject"></a>
+<code>newObject</code>
+</dt>
+<dd><p>Object to add.</p></dd>
+</dl>
+</div>
+<h5 class="tight"><font face="Lucida Grande,Helvetica,Arial">Discussion</font></h5>
+<!-- begin discussion --><!-- headerDoc=discussion;uid=//apple_ref/occ/instm/OrdCltn/addFirst:;name=start --><p>Add an object as the first in the collection.
+</p>
+<p>Any extant objects are accordingly moved up to the next higher offset.
+<!-- headerDoc=discussion;uid=//apple_ref/occ/instm/OrdCltn/addFirst:;name=end --><!-- end discussion -->
+</p>
+<hr class="betweenAPIEntries">
+<!-- headerDoc=instm;  uid=//apple_ref/occ/instm/OrdCltn/addIfAbsent:;  indexgroup=Collection ;   name=OrdCltn::addIfAbsent: --><a name="//apple_ref/occ/instm/OrdCltn/addIfAbsent:"></a>
+<h3><a name="addIfAbsent:">addIfAbsent:</a></h3>
+<hr class="afterName">
+<div class="declaration_indent">
+<pre><!-- headerDoc=declaration;uid=//apple_ref/occ/instm/OrdCltn/addIfAbsent:;name=start -->- <a machinegenerated="true" href="index.html#//apple_ref/occ/instm/OrdCltn/addIfAbsentMatching:" logicalPath="//apple_ref/occ/instm/OrdCltn/addIfAbsent" target="_top"><span class="function">addIfAbsent</span></a>:<!-- a logicalPath="//apple_ref/occ/econst/anObject //apple_ref/occ/data/OrdCltn/anObject //apple_ref/occ/data/anObject //apple_ref/occ/clconst/OrdCltn/anObject " machineGenerated="true" --><span class="var">anObject</span><!-- /a -->;  <!-- headerDoc=declaration;uid=//apple_ref/occ/instm/OrdCltn/addIfAbsent:;name=end --></pre>
+</div>
+<h5 class="tight"><font face="Lucida Grande,Helvetica,Arial">Parameters</font></h5>
+<div class="param_indent">
+<dl>
+<dt>
+<!-- headerDoc=methodparam;  uid=//apple_ref/doc/methodparam/OrdCltn/addIfAbsent:/anObject;  indexgroup=Collection ;   name=addIfAbsent:::anObject -->
+<a name="//apple_ref/doc/methodparam/OrdCltn/addIfAbsent:/anObject"></a>
+<code>anObject</code>
+</dt>
+<dd><p>Object to add.</p></dd>
+</dl>
+</div>
+<h5 class="tight"><font face="Lucida Grande,Helvetica,Arial">Discussion</font></h5>
+<!-- begin discussion --><!-- headerDoc=discussion;uid=//apple_ref/occ/instm/OrdCltn/addIfAbsent:;name=start --><p>Add an object, but only if the same object isn't already there.
+</p>
+<p>Equality here is determined by equal object addresses.
+<!-- headerDoc=discussion;uid=//apple_ref/occ/instm/OrdCltn/addIfAbsent:;name=end --><!-- end discussion -->
+</p>
+<hr class="betweenAPIEntries">
+<!-- headerDoc=instm;  uid=//apple_ref/occ/instm/OrdCltn/addIfAbsentMatching:;  indexgroup=Collection ;   name=OrdCltn::addIfAbsentMatching: --><a name="//apple_ref/occ/instm/OrdCltn/addIfAbsentMatching:"></a>
+<h3><a name="addIfAbsentMatching:">addIfAbsentMatching:</a></h3>
+<hr class="afterName">
+<div class="declaration_indent">
+<pre><!-- headerDoc=declaration;uid=//apple_ref/occ/instm/OrdCltn/addIfAbsentMatching:;name=start -->- <a machinegenerated="true" href="index.html#//apple_ref/occ/instm/OrdCltn/addIfAbsentMatching:" logicalPath="//apple_ref/occ/instm/OrdCltn/addIfAbsentMatching" target="_top"><span class="function">addIfAbsentMatching</span></a>:<!-- a logicalPath="//apple_ref/occ/econst/anObject //apple_ref/occ/data/OrdCltn/anObject //apple_ref/occ/data/anObject //apple_ref/occ/clconst/OrdCltn/anObject " machineGenerated="true" --><span class="var">anObject</span><!-- /a -->;  <!-- headerDoc=declaration;uid=//apple_ref/occ/instm/OrdCltn/addIfAbsentMatching:;name=end --></pre>
+</div>
+<h5 class="tight"><font face="Lucida Grande,Helvetica,Arial">Parameters</font></h5>
+<div class="param_indent">
+<dl>
+<dt>
+<!-- headerDoc=methodparam;  uid=//apple_ref/doc/methodparam/OrdCltn/addIfAbsentMatching:/anObject;  indexgroup=Collection ;   name=addIfAbsentMatching:::anObject -->
+<a name="//apple_ref/doc/methodparam/OrdCltn/addIfAbsentMatching:/anObject"></a>
+<code>anObject</code>
+</dt>
+<dd><p>Object to add.</p></dd>
+</dl>
+</div>
+<h5 class="tight"><font face="Lucida Grande,Helvetica,Arial">Discussion</font></h5>
+<!-- begin discussion --><!-- headerDoc=discussion;uid=//apple_ref/occ/instm/OrdCltn/addIfAbsentMatching:;name=start --><p>Add an object, but only if a matching object isn't already there.
+</p>
+<p>Matching is determined using the <!-- a logicalPath="//apple_ref/occ/cl/isEqual: //apple_ref/occ/tdef/isEqual: //apple_ref/occ/tag/isEqual: //apple_ref/occ/struct/isEqual: //apple_ref/occ/intf/isEqual: //apple_ref/occ/econst/isEqual: //apple_ref/occ/data/isEqual: //apple_ref/occ/clconst/isEqual: //apple_ref/occ/instm/isEqual: //apple_ref/occ/clm/isEqual: //apple_ref/occ/intfcm/isEqual: //apple_ref/occ/intfm/isEqual: //apple_ref/occ/func/isEqual: //apple_ref/occ/ftmplt/isEqual: //apple_ref/occ/defn/isEqual: //apple_ref/occ/macro/isEqual: //apple_ref/doc/com/intfm/isEqual: //apple_ref/doc/anysymbol/isEqual:" -->isEqual:<!-- /a --> method.
+<!-- headerDoc=discussion;uid=//apple_ref/occ/instm/OrdCltn/addIfAbsentMatching:;name=end --><!-- end discussion -->
+</p>
+<hr class="betweenAPIEntries">
+<!-- headerDoc=instm;  uid=//apple_ref/occ/instm/OrdCltn/after:;  indexgroup=Collection ;   name=OrdCltn::after: --><a name="//apple_ref/occ/instm/OrdCltn/after:"></a>
+<h3><a name="after:">after:</a></h3>
+<hr class="afterName">
+<div class="declaration_indent">
+<pre><!-- headerDoc=declaration;uid=//apple_ref/occ/instm/OrdCltn/after:;name=start -->- <a machinegenerated="true" href="index.html#//apple_ref/occ/instm/OrdCltn/after:" logicalPath="//apple_ref/occ/instm/OrdCltn/after" target="_top"><span class="function">after</span></a>:<!-- a logicalPath="//apple_ref/occ/econst/anObject //apple_ref/occ/data/OrdCltn/anObject //apple_ref/occ/data/anObject //apple_ref/occ/clconst/OrdCltn/anObject " machineGenerated="true" --><span class="var">anObject</span><!-- /a -->;  <!-- headerDoc=declaration;uid=//apple_ref/occ/instm/OrdCltn/after:;name=end --></pre>
+</div>
+<h5 class="tight"><font face="Lucida Grande,Helvetica,Arial">Parameters</font></h5>
+<div class="param_indent">
+<dl>
+<dt>
+<!-- headerDoc=methodparam;  uid=//apple_ref/doc/methodparam/OrdCltn/after:/anObject;  indexgroup=Collection ;   name=after:::anObject -->
+<a name="//apple_ref/doc/methodparam/OrdCltn/after:/anObject"></a>
+<code>anObject</code>
+</dt>
+<dd><p>Object whose immediately-following neighbour is retrieved.</p></dd>
+</dl>
+</div>
+<h5 class="tight"><font face="Lucida Grande,Helvetica,Arial">Discussion</font></h5>
+<!-- begin discussion --><!-- headerDoc=discussion;uid=//apple_ref/occ/instm/OrdCltn/after:;name=start --><p>Retrieves the object positioned immediately after anObject.
+</p>
+<p>If the specified object is not found in the collection, a Could not find
+object exception is signaled. If the object is the last in the collection,
+<em>nil</em> is returned.
+<!-- headerDoc=discussion;uid=//apple_ref/occ/instm/OrdCltn/after:;name=end --><!-- end discussion -->
+</p>
+<hr class="betweenAPIEntries">
+<!-- headerDoc=instm;  uid=//apple_ref/occ/instm/OrdCltn/at:;  indexgroup=Collection ;   name=OrdCltn::at: --><a name="//apple_ref/occ/instm/OrdCltn/at:"></a>
+<h3><a name="at:">at:</a></h3>
+<hr class="afterName">
+<div class="declaration_indent">
+<pre><!-- headerDoc=declaration;uid=//apple_ref/occ/instm/OrdCltn/at:;name=start -->- (<!-- a logicalPath="//apple_ref/occ/cl/id //apple_ref/occ/tdef/id //apple_ref/occ/tag/id //apple_ref/occ/struct/id //apple_ref/occ/intf/id //apple_ref/doc/anysymbol/id" machineGenerated="true" --><span class="type">id</span><!-- /a -->)<a machinegenerated="true" href="index.html#//apple_ref/occ/instm/OrdCltn/at:" logicalPath="//apple_ref/occ/instm/OrdCltn/at" target="_top"><span class="function">at</span></a>:(<span class="keyword">unsigned</span>)<!-- a logicalPath="//apple_ref/occ/econst/anOffset //apple_ref/occ/data/OrdCltn/anOffset //apple_ref/occ/data/anOffset //apple_ref/occ/clconst/OrdCltn/anOffset " machineGenerated="true" --><span class="var">anOffset</span><!-- /a -->;  <!-- headerDoc=declaration;uid=//apple_ref/occ/instm/OrdCltn/at:;name=end --></pre>
+</div>
+<h5 class="tight"><font face="Lucida Grande,Helvetica,Arial">Parameters</font></h5>
+<div class="param_indent">
+<dl>
+<dt>
+<!-- headerDoc=methodparam;  uid=//apple_ref/doc/methodparam/OrdCltn/at:/anOffset;  indexgroup=Collection ;   name=at:::anOffset -->
+<a name="//apple_ref/doc/methodparam/OrdCltn/at:/anOffset"></a>
+<code>anOffset</code>
+</dt>
+<dd><p>Offset at which to retrieve an object.</p></dd>
+</dl>
+</div>
+<h5 class="tight"><font face="Lucida Grande,Helvetica,Arial">Discussion</font></h5>
+<!-- begin discussion --><!-- headerDoc=discussion;uid=//apple_ref/occ/instm/OrdCltn/at:;name=start --><p>Retrieves the object positioned at the specified offset.
+</p>
+<p>If the specified offset exceeds the size of the collection, an OutOfBounds
+exception is signaled. Offsets begin at 0 for the first object and end at
+the OrdCltn's size minus 1 for the last.
+<!-- headerDoc=discussion;uid=//apple_ref/occ/instm/OrdCltn/at:;name=end --><!-- end discussion -->
+</p>
+<hr class="betweenAPIEntries">
+<!-- headerDoc=instm;  uid=//apple_ref/occ/instm/OrdCltn/at:insert:;  indexgroup=Collection ;   name=OrdCltn::at:insert: --><a name="//apple_ref/occ/instm/OrdCltn/at:insert:"></a>
+<h3><a name="at:insert:">at:insert:</a></h3>
+<hr class="afterName">
+<div class="declaration_indent">
+<pre><!-- headerDoc=declaration;uid=//apple_ref/occ/instm/OrdCltn/at:insert:;name=start -->- (<!-- a logicalPath="//apple_ref/occ/cl/id //apple_ref/occ/tdef/id //apple_ref/occ/tag/id //apple_ref/occ/struct/id //apple_ref/occ/intf/id //apple_ref/doc/anysymbol/id" machineGenerated="true" --><span class="type">id</span><!-- /a -->)<a machinegenerated="true" href="index.html#//apple_ref/occ/instm/OrdCltn/at:" logicalPath="//apple_ref/occ/instm/OrdCltn/at" target="_top"><span class="function">at</span></a>:(<span class="keyword">unsigned</span>)<span class="param">anOffset</span> <a machinegenerated="true" href="index.html#//apple_ref/occ/instm/OrdCltn/insert:after:" logicalPath="//apple_ref/occ/instm/OrdCltn/insert" target="_top"><span class="function">insert</span></a>:<!-- a logicalPath="//apple_ref/occ/econst/anObject //apple_ref/occ/data/OrdCltn/anObject //apple_ref/occ/data/anObject //apple_ref/occ/clconst/OrdCltn/anObject " machineGenerated="true" --><span class="var">anObject</span><!-- /a -->;  <!-- headerDoc=declaration;uid=//apple_ref/occ/instm/OrdCltn/at:insert:;name=end --></pre>
+</div>
+<h5 class="tight"><font face="Lucida Grande,Helvetica,Arial">Parameters</font></h5>
+<div class="param_indent">
+<dl>
+<dt>
+<!-- headerDoc=methodparam;  uid=//apple_ref/doc/methodparam/OrdCltn/at:insert:/anOffset;  indexgroup=Collection ;   name=at:insert:::anOffset -->
+<a name="//apple_ref/doc/methodparam/OrdCltn/at:insert:/anOffset"></a>
+<code>anOffset</code>
+</dt>
+<dd><p>Offset at which to insert the object.</p></dd>
+<dt>
+<!-- headerDoc=methodparam;  uid=//apple_ref/doc/methodparam/OrdCltn/at:insert:/anObject;  indexgroup=Collection ;   name=at:insert:::anObject -->
+<a name="//apple_ref/doc/methodparam/OrdCltn/at:insert:/anObject"></a>
+<code>anObject</code>
+</dt>
+<dd><p>Object to add.</p></dd>
+</dl>
+</div>
+<h5 class="tight"><font face="Lucida Grande,Helvetica,Arial">Discussion</font></h5>
+<!-- begin discussion --><!-- headerDoc=discussion;uid=//apple_ref/occ/instm/OrdCltn/at:insert:;name=start --><p>Add an object at the specified position.
+</p>
+<p>If the specified offset is greater than the size of the collection, an
+OutOfBounds exception is signaled.
+<!-- headerDoc=discussion;uid=//apple_ref/occ/instm/OrdCltn/at:insert:;name=end --><!-- end discussion -->
+</p>
+<hr class="betweenAPIEntries">
+<!-- headerDoc=instm;  uid=//apple_ref/occ/instm/OrdCltn/at:put:;  indexgroup=Collection ;   name=OrdCltn::at:put: --><a name="//apple_ref/occ/instm/OrdCltn/at:put:"></a>
+<h3><a name="at:put:">at:put:</a></h3>
+<hr class="afterName">
+<div class="declaration_indent">
+<pre><!-- headerDoc=declaration;uid=//apple_ref/occ/instm/OrdCltn/at:put:;name=start -->- (<!-- a logicalPath="//apple_ref/occ/cl/id //apple_ref/occ/tdef/id //apple_ref/occ/tag/id //apple_ref/occ/struct/id //apple_ref/occ/intf/id //apple_ref/doc/anysymbol/id" machineGenerated="true" --><span class="type">id</span><!-- /a -->)<a machinegenerated="true" href="index.html#//apple_ref/occ/instm/OrdCltn/at:" logicalPath="//apple_ref/occ/instm/OrdCltn/at" target="_top"><span class="function">at</span></a>:(<span class="keyword">unsigned</span>)<span class="param">anOffset</span> <!-- a logicalPath="//apple_ref/occ/instm/OrdCltn/put //apple_ref/occ/clm/OrdCltn/put //apple_ref/occ/intfcm/OrdCltn/put //apple_ref/occ/intfm/OrdCltn/put //apple_ref/occ/func/put //apple_ref/occ/ftmplt/OrdCltn/put //apple_ref/occ/defn/put //apple_ref/occ/macro/put //apple_ref/doc/anysymbol/put" machineGenerated="true" --><span class="function">put</span><!-- /a -->:<!-- a logicalPath="//apple_ref/occ/econst/anObject //apple_ref/occ/data/OrdCltn/anObject //apple_ref/occ/data/anObject //apple_ref/occ/clconst/OrdCltn/anObject " machineGenerated="true" --><span class="var">anObject</span><!-- /a -->;  <!-- headerDoc=declaration;uid=//apple_ref/occ/instm/OrdCltn/at:put:;name=end --></pre>
+</div>
+<h5 class="tight"><font face="Lucida Grande,Helvetica,Arial">Parameters</font></h5>
+<div class="param_indent">
+<dl>
+<dt>
+<!-- headerDoc=methodparam;  uid=//apple_ref/doc/methodparam/OrdCltn/at:put:/anOffset;  indexgroup=Collection ;   name=at:put:::anOffset -->
+<a name="//apple_ref/doc/methodparam/OrdCltn/at:put:/anOffset"></a>
+<code>anOffset</code>
+</dt>
+<dd><p>Offset at which to retrieve &amp; replace an object.</p></dd>
+<dt>
+<!-- headerDoc=methodparam;  uid=//apple_ref/doc/methodparam/OrdCltn/at:put:/anObject;  indexgroup=Collection ;   name=at:put:::anObject -->
+<a name="//apple_ref/doc/methodparam/OrdCltn/at:put:/anObject"></a>
+<code>anObject</code>
+</dt>
+<dd><p>Object to replace the prior object with.</p></dd>
+</dl>
+</div>
+<h5 class="tight"><font face="Lucida Grande,Helvetica,Arial">Return Value</font></h5>
+<p><!-- begin return value --></p>
+<p>The object previously at the specified offset.
+
+<!-- end return value --></p>
+<h5 class="tight"><font face="Lucida Grande,Helvetica,Arial">Discussion</font></h5>
+<!-- begin discussion --><!-- headerDoc=discussion;uid=//apple_ref/occ/instm/OrdCltn/at:put:;name=start --><p>Retrieves the object at a specified offset and replaces it with another.
+</p>
+<p>If the specified offset exceeds the size of the collection, an OutOfBounds
+exception is signaled.
+<!-- headerDoc=discussion;uid=//apple_ref/occ/instm/OrdCltn/at:put:;name=end --><!-- end discussion -->
+</p>
+<hr class="betweenAPIEntries">
+<!-- headerDoc=instm;  uid=//apple_ref/occ/instm/OrdCltn/before:;  indexgroup=Collection ;   name=OrdCltn::before: --><a name="//apple_ref/occ/instm/OrdCltn/before:"></a>
+<h3><a name="before:">before:</a></h3>
+<hr class="afterName">
+<div class="declaration_indent">
+<pre><!-- headerDoc=declaration;uid=//apple_ref/occ/instm/OrdCltn/before:;name=start -->- <a machinegenerated="true" href="index.html#//apple_ref/occ/instm/OrdCltn/before:" logicalPath="//apple_ref/occ/instm/OrdCltn/before" target="_top"><span class="function">before</span></a>:<!-- a logicalPath="//apple_ref/occ/econst/anObject //apple_ref/occ/data/OrdCltn/anObject //apple_ref/occ/data/anObject //apple_ref/occ/clconst/OrdCltn/anObject " machineGenerated="true" --><span class="var">anObject</span><!-- /a -->;  <!-- headerDoc=declaration;uid=//apple_ref/occ/instm/OrdCltn/before:;name=end --></pre>
+</div>
+<h5 class="tight"><font face="Lucida Grande,Helvetica,Arial">Parameters</font></h5>
+<div class="param_indent">
+<dl>
+<dt>
+<!-- headerDoc=methodparam;  uid=//apple_ref/doc/methodparam/OrdCltn/before:/anObject;  indexgroup=Collection ;   name=before:::anObject -->
+<a name="//apple_ref/doc/methodparam/OrdCltn/before:/anObject"></a>
+<code>anObject</code>
+</dt>
+<dd><p>Object whose immediately-preceding neighbour is retrieved.</p></dd>
+</dl>
+</div>
+<h5 class="tight"><font face="Lucida Grande,Helvetica,Arial">Discussion</font></h5>
+<!-- begin discussion --><!-- headerDoc=discussion;uid=//apple_ref/occ/instm/OrdCltn/before:;name=start --><p>Retrieves the object positioned immediately before anObject.
+</p>
+<p>If the specified object is not found in the collection, a Could not find
+object exception is signaled. If the object is the first in the collection,
+<em>nil</em> is returned.
+<!-- headerDoc=discussion;uid=//apple_ref/occ/instm/OrdCltn/before:;name=end --><!-- end discussion -->
+</p>
 <hr class="betweenAPIEntries">
 <!-- headerDoc=instm;  uid=//apple_ref/occ/instm/OrdCltn/copy;  indexgroup=Collection ;   name=OrdCltn::copy --><a name="//apple_ref/occ/instm/OrdCltn/copy"></a>
 <h3><a name="copy">copy</a></h3>
@@ -310,7 +582,8 @@ index begins at 0 for the first object, and ends at
 </div>
 <h5 class="tight"><font face="Lucida Grande,Helvetica,Arial">Discussion</font></h5>
 <!-- begin discussion --><!-- headerDoc=discussion;uid=//apple_ref/occ/instm/OrdCltn/copy;name=start --><p>Copies the OrdCltn. The objects themselves are not copied, only their
-identifiers, so the contents are 100% identical to the original OrdCltn. <!-- headerDoc=discussion;uid=//apple_ref/occ/instm/OrdCltn/copy;name=end --><!-- end discussion -->
+identifiers, so the contents are 100% identical to the original OrdCltn.
+<!-- headerDoc=discussion;uid=//apple_ref/occ/instm/OrdCltn/copy;name=end --><!-- end discussion -->
 </p>
 <hr class="betweenAPIEntries">
 <!-- headerDoc=instm;  uid=//apple_ref/occ/instm/OrdCltn/deepCopy;  indexgroup=Collection ;   name=OrdCltn::deepCopy --><a name="//apple_ref/occ/instm/OrdCltn/deepCopy"></a>
@@ -327,7 +600,7 @@ identifiers, so the contents are 100% identical to the original OrdCltn. <!-- he
 <h3><a name="do:">do:</a></h3>
 <hr class="afterName">
 <div class="declaration_indent">
-<pre><!-- headerDoc=declaration;uid=//apple_ref/occ/instm/OrdCltn/do:;name=start -->- <a machinegenerated="true" href="index.html#//apple_ref/occ/instm/OrdCltn/do:until:" logicalPath="//apple_ref/occ/instm/OrdCltn/do" target="_top"><span class="function">do</span></a>:<!-- a logicalPath="//apple_ref/occ/econst/aBlock //apple_ref/occ/data/OrdCltn/aBlock //apple_ref/occ/data/aBlock //apple_ref/occ/clconst/OrdCltn/aBlock " machineGenerated="true" --><span class="var">aBlock</span><!-- /a -->;  <!-- headerDoc=declaration;uid=//apple_ref/occ/instm/OrdCltn/do:;name=end --></pre>
+<pre><!-- headerDoc=declaration;uid=//apple_ref/occ/instm/OrdCltn/do:;name=start -->- <a machinegenerated="true" href="index.html#//apple_ref/occ/instm/OrdCltn/do:" logicalPath="//apple_ref/occ/instm/OrdCltn/do" target="_top"><span class="function">do</span></a>:<!-- a logicalPath="//apple_ref/occ/econst/aBlock //apple_ref/occ/data/OrdCltn/aBlock //apple_ref/occ/data/aBlock //apple_ref/occ/clconst/OrdCltn/aBlock " machineGenerated="true" --><span class="var">aBlock</span><!-- /a -->;  <!-- headerDoc=declaration;uid=//apple_ref/occ/instm/OrdCltn/do:;name=end --></pre>
 </div>
 <h5 class="tight"><font face="Lucida Grande,Helvetica,Arial">Parameters</font></h5>
 <div class="param_indent">
@@ -350,7 +623,7 @@ as the single parameter to the block.
 <h3><a name="do:until:">do:until:</a></h3>
 <hr class="afterName">
 <div class="declaration_indent">
-<pre><!-- headerDoc=declaration;uid=//apple_ref/occ/instm/OrdCltn/do:until:;name=start -->- (<!-- a logicalPath="//apple_ref/occ/cl/id //apple_ref/occ/tdef/id //apple_ref/occ/tag/id //apple_ref/occ/struct/id //apple_ref/occ/intf/id //apple_ref/doc/anysymbol/id" machineGenerated="true" --><span class="type">id</span><!-- /a -->) <a machinegenerated="true" href="index.html#//apple_ref/occ/instm/OrdCltn/do:until:" logicalPath="//apple_ref/occ/instm/OrdCltn/do" target="_top"><span class="function">do</span></a>:<span class="param">aBlock</span> <!-- a logicalPath="//apple_ref/occ/instm/OrdCltn/until //apple_ref/occ/clm/OrdCltn/until //apple_ref/occ/intfcm/OrdCltn/until //apple_ref/occ/intfm/OrdCltn/until //apple_ref/occ/func/until //apple_ref/occ/ftmplt/OrdCltn/until //apple_ref/occ/defn/until //apple_ref/occ/macro/until //apple_ref/doc/anysymbol/until" machineGenerated="true" --><span class="function">until</span><!-- /a -->:(<!-- a logicalPath="//apple_ref/occ/cl/BOOL //apple_ref/occ/tdef/BOOL //apple_ref/occ/tag/BOOL //apple_ref/occ/struct/BOOL //apple_ref/occ/intf/BOOL //apple_ref/doc/anysymbol/BOOL" machineGenerated="true" --><span class="type">BOOL</span><!-- /a --> <span class="type">*</span>)<!-- a logicalPath="//apple_ref/occ/econst/flag //apple_ref/occ/data/OrdCltn/flag //apple_ref/occ/data/flag //apple_ref/occ/clconst/OrdCltn/flag " machineGenerated="true" --><span class="var">flag</span><!-- /a -->;  <!-- headerDoc=declaration;uid=//apple_ref/occ/instm/OrdCltn/do:until:;name=end --></pre>
+<pre><!-- headerDoc=declaration;uid=//apple_ref/occ/instm/OrdCltn/do:until:;name=start -->- (<!-- a logicalPath="//apple_ref/occ/cl/id //apple_ref/occ/tdef/id //apple_ref/occ/tag/id //apple_ref/occ/struct/id //apple_ref/occ/intf/id //apple_ref/doc/anysymbol/id" machineGenerated="true" --><span class="type">id</span><!-- /a -->) <a machinegenerated="true" href="index.html#//apple_ref/occ/instm/OrdCltn/do:" logicalPath="//apple_ref/occ/instm/OrdCltn/do" target="_top"><span class="function">do</span></a>:<span class="param">aBlock</span> <!-- a logicalPath="//apple_ref/occ/instm/OrdCltn/until //apple_ref/occ/clm/OrdCltn/until //apple_ref/occ/intfcm/OrdCltn/until //apple_ref/occ/intfm/OrdCltn/until //apple_ref/occ/func/until //apple_ref/occ/ftmplt/OrdCltn/until //apple_ref/occ/defn/until //apple_ref/occ/macro/until //apple_ref/doc/anysymbol/until" machineGenerated="true" --><span class="function">until</span><!-- /a -->:(<!-- a logicalPath="//apple_ref/occ/cl/BOOL //apple_ref/occ/tdef/BOOL //apple_ref/occ/tag/BOOL //apple_ref/occ/struct/BOOL //apple_ref/occ/intf/BOOL //apple_ref/doc/anysymbol/BOOL" machineGenerated="true" --><span class="type">BOOL</span><!-- /a --> <span class="type">*</span>)<!-- a logicalPath="//apple_ref/occ/econst/flag //apple_ref/occ/data/OrdCltn/flag //apple_ref/occ/data/flag //apple_ref/occ/clconst/OrdCltn/flag " machineGenerated="true" --><span class="var">flag</span><!-- /a -->;  <!-- headerDoc=declaration;uid=//apple_ref/occ/instm/OrdCltn/do:until:;name=end --></pre>
 </div>
 <h5 class="tight"><font face="Lucida Grande,Helvetica,Arial">Parameters</font></h5>
 <div class="param_indent">
@@ -375,6 +648,65 @@ when it becomes YES.</p></dd>
 YES.
 <!-- headerDoc=discussion;uid=//apple_ref/occ/instm/OrdCltn/do:until:;name=end --><!-- end discussion -->
 </p>
+<hr class="betweenAPIEntries">
+<!-- headerDoc=instm;  uid=//apple_ref/occ/instm/OrdCltn/insert:after:;  indexgroup=Collection ;   name=OrdCltn::insert:after: --><a name="//apple_ref/occ/instm/OrdCltn/insert:after:"></a>
+<h3><a name="insert:after:">insert:after:</a></h3>
+<hr class="afterName">
+<div class="declaration_indent">
+<pre><!-- headerDoc=declaration;uid=//apple_ref/occ/instm/OrdCltn/insert:after:;name=start -->- <a machinegenerated="true" href="index.html#//apple_ref/occ/instm/OrdCltn/insert:after:" logicalPath="//apple_ref/occ/instm/OrdCltn/insert" target="_top"><span class="function">insert</span></a>:<span class="param">newObject</span> <a machinegenerated="true" href="index.html#//apple_ref/occ/instm/OrdCltn/after:" logicalPath="//apple_ref/occ/instm/OrdCltn/after" target="_top"><span class="function">after</span></a>:<!-- a logicalPath="//apple_ref/occ/econst/oldObject //apple_ref/occ/data/OrdCltn/oldObject //apple_ref/occ/data/oldObject //apple_ref/occ/clconst/OrdCltn/oldObject " machineGenerated="true" --><span class="var">oldObject</span><!-- /a -->;  <!-- headerDoc=declaration;uid=//apple_ref/occ/instm/OrdCltn/insert:after:;name=end --></pre>
+</div>
+<h5 class="tight"><font face="Lucida Grande,Helvetica,Arial">Parameters</font></h5>
+<div class="param_indent">
+<dl>
+<dt>
+<!-- headerDoc=methodparam;  uid=//apple_ref/doc/methodparam/OrdCltn/insert:after:/newObject;  indexgroup=Collection ;   name=insert:after:::newObject -->
+<a name="//apple_ref/doc/methodparam/OrdCltn/insert:after:/newObject"></a>
+<code>newObject</code>
+</dt>
+<dd><p>Object to add.</p></dd>
+<dt>
+<!-- headerDoc=methodparam;  uid=//apple_ref/doc/methodparam/OrdCltn/insert:after:/oldObject;  indexgroup=Collection ;   name=insert:after:::oldObject -->
+<a name="//apple_ref/doc/methodparam/OrdCltn/insert:after:/oldObject"></a>
+<code>oldObject</code>
+</dt>
+<dd><p>Object to add newObject after.</p></dd>
+</dl>
+</div>
+<h5 class="tight"><font face="Lucida Grande,Helvetica,Arial">Discussion</font></h5>
+<!-- begin discussion --><!-- headerDoc=discussion;uid=//apple_ref/occ/instm/OrdCltn/insert:after:;name=start --><p>Add an object positioned immediately after a specified object.
+</p>
+<p>If the specified object is not found in the collection, a Could not find
+object exception is signaled.
+<!-- headerDoc=discussion;uid=//apple_ref/occ/instm/OrdCltn/insert:after:;name=end --><!-- end discussion -->
+</p>
+<hr class="betweenAPIEntries">
+<!-- headerDoc=instm;  uid=//apple_ref/occ/instm/OrdCltn/insert:before:;  indexgroup=Collection ;   name=OrdCltn::insert:before: --><a name="//apple_ref/occ/instm/OrdCltn/insert:before:"></a>
+<h3><a name="insert:before:">insert:before:</a></h3>
+<hr class="afterName">
+<div class="declaration_indent">
+<pre><!-- headerDoc=declaration;uid=//apple_ref/occ/instm/OrdCltn/insert:before:;name=start -->- <a machinegenerated="true" href="index.html#//apple_ref/occ/instm/OrdCltn/insert:after:" logicalPath="//apple_ref/occ/instm/OrdCltn/insert" target="_top"><span class="function">insert</span></a>:<span class="param">newObject</span> <a machinegenerated="true" href="index.html#//apple_ref/occ/instm/OrdCltn/before:" logicalPath="//apple_ref/occ/instm/OrdCltn/before" target="_top"><span class="function">before</span></a>:<!-- a logicalPath="//apple_ref/occ/econst/oldObject //apple_ref/occ/data/OrdCltn/oldObject //apple_ref/occ/data/oldObject //apple_ref/occ/clconst/OrdCltn/oldObject " machineGenerated="true" --><span class="var">oldObject</span><!-- /a -->;  <!-- headerDoc=declaration;uid=//apple_ref/occ/instm/OrdCltn/insert:before:;name=end --></pre>
+</div>
+<h5 class="tight"><font face="Lucida Grande,Helvetica,Arial">Parameters</font></h5>
+<div class="param_indent">
+<dl>
+<dt>
+<!-- headerDoc=methodparam;  uid=//apple_ref/doc/methodparam/OrdCltn/insert:before:/newObject;  indexgroup=Collection ;   name=insert:before:::newObject -->
+<a name="//apple_ref/doc/methodparam/OrdCltn/insert:before:/newObject"></a>
+<code>newObject</code>
+</dt>
+<dd><p>Object to add.</p></dd>
+<dt>
+<!-- headerDoc=methodparam;  uid=//apple_ref/doc/methodparam/OrdCltn/insert:before:/oldObject;  indexgroup=Collection ;   name=insert:before:::oldObject -->
+<a name="//apple_ref/doc/methodparam/OrdCltn/insert:before:/oldObject"></a>
+<code>oldObject</code>
+</dt>
+<dd><p>Object to add newObject before.</p></dd>
+</dl>
+</div>
+<h5 class="tight"><font face="Lucida Grande,Helvetica,Arial">Discussion</font></h5>
+<!-- begin discussion --><!-- headerDoc=discussion;uid=//apple_ref/occ/instm/OrdCltn/insert:before:;name=start --><p>Add an object positioned immediately before a specified object.
+</p>
+<!-- headerDoc=discussion;uid=//apple_ref/occ/instm/OrdCltn/insert:before:;name=end --><!-- end discussion -->
 <hr class="betweenAPIEntries">
 <!-- headerDoc=instm;  uid=//apple_ref/occ/instm/OrdCltn/isEmpty;  indexgroup=Collection ;   name=OrdCltn::isEmpty --><a name="//apple_ref/occ/instm/OrdCltn/isEmpty"></a>
 <h3><a name="isEmpty">isEmpty</a></h3>
@@ -404,6 +736,113 @@ YES.
 <h5 class="tight"><font face="Lucida Grande,Helvetica,Arial">Discussion</font></h5>
 <!-- begin discussion --><!-- headerDoc=discussion;uid=//apple_ref/occ/instm/OrdCltn/lastOffset;name=start --><p>Requests the offset of the last element.
 <!-- headerDoc=discussion;uid=//apple_ref/occ/instm/OrdCltn/lastOffset;name=end --><!-- end discussion -->
+</p>
+<hr class="betweenAPIEntries">
+<!-- headerDoc=instm;  uid=//apple_ref/occ/instm/OrdCltn/remove:;  indexgroup=Collection ;   name=OrdCltn::remove: --><a name="//apple_ref/occ/instm/OrdCltn/remove:"></a>
+<h3><a name="remove:">remove:</a></h3>
+<hr class="afterName">
+<div class="declaration_indent">
+<pre><!-- headerDoc=declaration;uid=//apple_ref/occ/instm/OrdCltn/remove:;name=start -->- <a machinegenerated="true" href="index.html#//apple_ref/occ/instm/OrdCltn/remove:" logicalPath="//apple_ref/occ/instm/OrdCltn/remove" target="_top"><span class="function">remove</span></a>:<!-- a logicalPath="//apple_ref/occ/econst/oldObject //apple_ref/occ/data/OrdCltn/oldObject //apple_ref/occ/data/oldObject //apple_ref/occ/clconst/OrdCltn/oldObject " machineGenerated="true" --><span class="var">oldObject</span><!-- /a -->;  <!-- headerDoc=declaration;uid=//apple_ref/occ/instm/OrdCltn/remove:;name=end --></pre>
+</div>
+<h5 class="tight"><font face="Lucida Grande,Helvetica,Arial">Parameters</font></h5>
+<div class="param_indent">
+<dl>
+<dt>
+<!-- headerDoc=methodparam;  uid=//apple_ref/doc/methodparam/OrdCltn/remove:/anObject;  indexgroup=Collection ;   name=remove:::anObject -->
+<a name="//apple_ref/doc/methodparam/OrdCltn/remove:/anObject"></a>
+<code>anObject</code>
+</dt>
+<dd><p>Object to be removed from the collection.</p></dd>
+</dl>
+</div>
+<h5 class="tight"><font face="Lucida Grande,Helvetica,Arial">Discussion</font></h5>
+<!-- begin discussion --><!-- headerDoc=discussion;uid=//apple_ref/occ/instm/OrdCltn/remove:;name=start --><p>Removes the exact object specified, returning it.
+</p>
+<p>If the specified object could not be found, returns nil.
+<!-- headerDoc=discussion;uid=//apple_ref/occ/instm/OrdCltn/remove:;name=end --><!-- end discussion -->
+</p>
+<hr class="betweenAPIEntries">
+<!-- headerDoc=instm;  uid=//apple_ref/occ/instm/OrdCltn/remove:ifAbsent:;  indexgroup=Collection ;   name=OrdCltn::remove:ifAbsent: --><a name="//apple_ref/occ/instm/OrdCltn/remove:ifAbsent:"></a>
+<h3><a name="remove:ifAbsent:">remove:ifAbsent:</a></h3>
+<hr class="afterName">
+<div class="declaration_indent">
+<pre><!-- headerDoc=declaration;uid=//apple_ref/occ/instm/OrdCltn/remove:ifAbsent:;name=start -->- <a machinegenerated="true" href="index.html#//apple_ref/occ/instm/OrdCltn/remove:" logicalPath="//apple_ref/occ/instm/OrdCltn/remove" target="_top"><span class="function">remove</span></a>:<span class="param">oldObject</span> <!-- a logicalPath="//apple_ref/occ/instm/OrdCltn/ifAbsent //apple_ref/occ/clm/OrdCltn/ifAbsent //apple_ref/occ/intfcm/OrdCltn/ifAbsent //apple_ref/occ/intfm/OrdCltn/ifAbsent //apple_ref/occ/func/ifAbsent //apple_ref/occ/ftmplt/OrdCltn/ifAbsent //apple_ref/occ/defn/ifAbsent //apple_ref/occ/macro/ifAbsent //apple_ref/doc/anysymbol/ifAbsent" machineGenerated="true" --><span class="function">ifAbsent</span><!-- /a -->:<!-- a logicalPath="//apple_ref/occ/econst/exceptionBlock //apple_ref/occ/data/OrdCltn/exceptionBlock //apple_ref/occ/data/exceptionBlock //apple_ref/occ/clconst/OrdCltn/exceptionBlock " machineGenerated="true" --><span class="var">exceptionBlock</span><!-- /a -->;  <!-- headerDoc=declaration;uid=//apple_ref/occ/instm/OrdCltn/remove:ifAbsent:;name=end --></pre>
+</div>
+<h5 class="tight"><font face="Lucida Grande,Helvetica,Arial">Parameters</font></h5>
+<div class="param_indent">
+<dl>
+<dt>
+<!-- headerDoc=methodparam;  uid=//apple_ref/doc/methodparam/OrdCltn/remove:ifAbsent:/anObject;  indexgroup=Collection ;   name=remove:ifAbsent:::anObject -->
+<a name="//apple_ref/doc/methodparam/OrdCltn/remove:ifAbsent:/anObject"></a>
+<code>anObject</code>
+</dt>
+<dd><p>Object to be removed from the collection.</p></dd>
+<dt>
+<!-- headerDoc=methodparam;  uid=//apple_ref/doc/methodparam/OrdCltn/remove:ifAbsent:/exceptionBlock;  indexgroup=Collection ;   name=remove:ifAbsent:::exceptionBlock -->
+<a name="//apple_ref/doc/methodparam/OrdCltn/remove:ifAbsent:/exceptionBlock"></a>
+<code>exceptionBlock</code>
+</dt>
+<dd><p><!-- a logicalPath="//apple_ref/occ/cl/Block //apple_ref/occ/tdef/Block //apple_ref/occ/tag/Block //apple_ref/occ/struct/Block //apple_ref/occ/intf/Block //apple_ref/occ/econst/Block //apple_ref/occ/data/Block //apple_ref/occ/clconst/Block //apple_ref/occ/instm/Block //apple_ref/occ/clm/Block //apple_ref/occ/intfcm/Block //apple_ref/occ/intfm/Block //apple_ref/occ/func/Block //apple_ref/occ/ftmplt/Block //apple_ref/occ/defn/Block //apple_ref/occ/macro/Block //apple_ref/doc/com/intfm/Block //apple_ref/doc/anysymbol/Block" -->Block<!-- /a --> to be evaluated if anObject not
+found.</p></dd>
+</dl>
+</div>
+<h5 class="tight"><font face="Lucida Grande,Helvetica,Arial">Discussion</font></h5>
+<!-- begin discussion --><!-- headerDoc=discussion;uid=//apple_ref/occ/instm/OrdCltn/remove:ifAbsent:;name=start --><p>Removes the exact object specified, returning it. If unfound, calls a block.
+</p>
+<p>If the specified object could not be found, the specified exception block
+is called, the block's return value being returned.
+The <a href="index.html#//apple_ref/occ/instm/OrdCltn/remove:" logicalPath="//apple_ref/occ/instm/OrdCltn/remove:" target="_top">remove:</a> method can thus be defined as such:
+<tt>[someCltn remove: someObject ifAbsent:{ nil }];</tt>
+<!-- headerDoc=discussion;uid=//apple_ref/occ/instm/OrdCltn/remove:ifAbsent:;name=end --><!-- end discussion -->
+</p>
+<hr class="betweenAPIEntries">
+<!-- headerDoc=instm;  uid=//apple_ref/occ/instm/OrdCltn/removeAt:;  indexgroup=Collection ;   name=OrdCltn::removeAt: --><a name="//apple_ref/occ/instm/OrdCltn/removeAt:"></a>
+<h3><a name="removeAt:">removeAt:</a></h3>
+<hr class="afterName">
+<div class="declaration_indent">
+<pre><!-- headerDoc=declaration;uid=//apple_ref/occ/instm/OrdCltn/removeAt:;name=start -->- (<!-- a logicalPath="//apple_ref/occ/cl/id //apple_ref/occ/tdef/id //apple_ref/occ/tag/id //apple_ref/occ/struct/id //apple_ref/occ/intf/id //apple_ref/doc/anysymbol/id" machineGenerated="true" --><span class="type">id</span><!-- /a -->)<a machinegenerated="true" href="index.html#//apple_ref/occ/instm/OrdCltn/removeAt:" logicalPath="//apple_ref/occ/instm/OrdCltn/removeAt" target="_top"><span class="function">removeAt</span></a>:(<span class="keyword">unsigned</span>)<!-- a logicalPath="//apple_ref/occ/econst/anOffset //apple_ref/occ/data/OrdCltn/anOffset //apple_ref/occ/data/anOffset //apple_ref/occ/clconst/OrdCltn/anOffset " machineGenerated="true" --><span class="var">anOffset</span><!-- /a -->;  <!-- headerDoc=declaration;uid=//apple_ref/occ/instm/OrdCltn/removeAt:;name=end --></pre>
+</div>
+<h5 class="tight"><font face="Lucida Grande,Helvetica,Arial">Parameters</font></h5>
+<div class="param_indent">
+<dl>
+<dt>
+<!-- headerDoc=methodparam;  uid=//apple_ref/doc/methodparam/OrdCltn/removeAt:/anOffset;  indexgroup=Collection ;   name=removeAt:::anOffset -->
+<a name="//apple_ref/doc/methodparam/OrdCltn/removeAt:/anOffset"></a>
+<code>anOffset</code>
+</dt>
+<dd><p>Offset at which to remove and return object.</p></dd>
+</dl>
+</div>
+<h5 class="tight"><font face="Lucida Grande,Helvetica,Arial">Discussion</font></h5>
+<!-- begin discussion --><!-- headerDoc=discussion;uid=//apple_ref/occ/instm/OrdCltn/removeAt:;name=start --><p>Removes the object at the specified offset, returning it.
+</p>
+<p>If the specified offset exceeds collection size, signals an OutOfBounds
+exception.
+<!-- headerDoc=discussion;uid=//apple_ref/occ/instm/OrdCltn/removeAt:;name=end --><!-- end discussion -->
+</p>
+<hr class="betweenAPIEntries">
+<!-- headerDoc=instm;  uid=//apple_ref/occ/instm/OrdCltn/removeFirst;  indexgroup=Collection ;   name=OrdCltn::removeFirst --><a name="//apple_ref/occ/instm/OrdCltn/removeFirst"></a>
+<h3><a name="removeFirst">removeFirst</a></h3>
+<hr class="afterName">
+<div class="declaration_indent">
+<pre><!-- headerDoc=declaration;uid=//apple_ref/occ/instm/OrdCltn/removeFirst;name=start -->- <!-- a logicalPath="//apple_ref/occ/econst/removeFirst //apple_ref/occ/data/OrdCltn/removeFirst //apple_ref/occ/data/removeFirst //apple_ref/occ/clconst/OrdCltn/removeFirst " machineGenerated="true" --><span class="var">removeFirst</span><!-- /a -->;  <!-- headerDoc=declaration;uid=//apple_ref/occ/instm/OrdCltn/removeFirst;name=end --></pre>
+</div>
+<h5 class="tight"><font face="Lucida Grande,Helvetica,Arial">Discussion</font></h5>
+<!-- begin discussion --><!-- headerDoc=discussion;uid=//apple_ref/occ/instm/OrdCltn/removeFirst;name=start --><p>Removes the first object from the collection, returning it.
+</p>
+<p>If the collection is empty, returns <em>nil</em>.
+<!-- headerDoc=discussion;uid=//apple_ref/occ/instm/OrdCltn/removeFirst;name=end --><!-- end discussion -->
+</p>
+<hr class="betweenAPIEntries">
+<!-- headerDoc=instm;  uid=//apple_ref/occ/instm/OrdCltn/removeLast;  indexgroup=Collection ;   name=OrdCltn::removeLast --><a name="//apple_ref/occ/instm/OrdCltn/removeLast"></a>
+<h3><a name="removeLast">removeLast</a></h3>
+<hr class="afterName">
+<div class="declaration_indent">
+<pre><!-- headerDoc=declaration;uid=//apple_ref/occ/instm/OrdCltn/removeLast;name=start -->- <!-- a logicalPath="//apple_ref/occ/econst/removeLast //apple_ref/occ/data/OrdCltn/removeLast //apple_ref/occ/data/removeLast //apple_ref/occ/clconst/OrdCltn/removeLast " machineGenerated="true" --><span class="var">removeLast</span><!-- /a -->;  <!-- headerDoc=declaration;uid=//apple_ref/occ/instm/OrdCltn/removeLast;name=end --></pre>
+</div>
+<h5 class="tight"><font face="Lucida Grande,Helvetica,Arial">Discussion</font></h5>
+<!-- begin discussion --><!-- headerDoc=discussion;uid=//apple_ref/occ/instm/OrdCltn/removeLast;name=start --><p>Removes the last object from the collection, returning it.
+<!-- headerDoc=discussion;uid=//apple_ref/occ/instm/OrdCltn/removeLast;name=end --><!-- end discussion -->
 </p>
 <hr class="betweenAPIEntries">
 <!-- headerDoc=instm;  uid=//apple_ref/occ/instm/OrdCltn/reverseDo:;  indexgroup=Collection ;   name=OrdCltn::reverseDo: --><a name="//apple_ref/occ/instm/OrdCltn/reverseDo:"></a>
