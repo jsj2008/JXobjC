@@ -45,12 +45,38 @@ typedef struct objcol
     struct objcol value;
 }
 
-/*! @group Instance management */
+/*! @functiongroup Factory */
+
 + new;
-+ new:(unsigned)n;
-+ with:(int)nArgs, ...;
+
+/*!
+ * Creates a new empty collection pre-sized to hold at least the specified
+ * number of objects without need to expand.
+ * @param n Space for how many objects to reserve.
+ */
++ (id) new:(unsigned)n;
+
+/*!
+ * Creates a collection with the specified objects added.
+ *
+ * This may be used as such:
+ * <tt>OrdCltn * someCltn = [OrdCltn with:3,Object1,Object2,Object3];</tt>
+ * @param nArgs Number of objects provided to be added.
+ * @param ... Objects to be added.
+ */
++ (id)with:(int)nArgs, ...;
+
+/*!
+ * Creates a collection with the two specified objects added.
+ * @param firstObject First object to add to the newly created collection.
+ * @param nextObject Second object to add.
+ */
 + with:firstObject with:nextObject;
+
 + add:firstObject;
+
+/*! @functiongroup Instance management */
+
 /*!
  * Copies the OrdCltn. The objects themselves are not copied, only their
  * identifiers, so the contents are 100% identical to the original OrdCltn.
@@ -59,11 +85,13 @@ typedef struct objcol
 
 /*! Copies the OrdCltn, sending a deepCopy message to each object contained. */
 - deepCopy;
+
+/*! Empties the OrdCltn. */
 - emptyYourself;
 - freeContents;
 - free;
 
-/*! @group Inquiry */
+/*! @functiongroup Inquiry */
 
 /*! Queries the OrdCltn, returning the number of objects stored in it. */
 - (unsigned)size;
@@ -76,12 +104,17 @@ typedef struct objcol
     @return Offset of the last element if OrdCltn is not empty, -1 if it is. */
 - (unsigned)lastOffset;
 - eachElement;
-- firstElement;
-- lastElement;
 
+/*!
+ * Compares the OrdCltn with another collection.
+ *
+ * If the specified object is another collection, iterates through each
+ * indexed position. If each element of both respond affirmatively to the
+ * <em>isEqual:</em> message in turn, the collections are considered equal.
+ */
 - (BOOL)isEqual:aCltn;
 
-/*! @group Adding */
+/*! @functiongroup Adding */
 
 /*!
  * Add an object to the end of the collection.
@@ -143,7 +176,15 @@ typedef struct objcol
  */
 - insert:newObject before:oldObject;
 
-/*! @group Indexed retrieval */
+/*! @functiongroup Indexed retrieval */
+
+/*! Retrieves the first object in the collection.
+    If the collection is empty, returns nil. */
+- firstElement;
+
+/*! Retrieves the last object in the collection.
+    If the collection is empty, returns nil. */
+- lastElement;
 
 /*!
  * Retrieves the object positioned immediately after anObject.
@@ -186,7 +227,7 @@ typedef struct objcol
  */
 - (id)at:(unsigned)anOffset put:anObject;
 
-/*! @group Removal */
+/*! @functiongroup Removal */
 
 /*!
  * Removes the first object from the collection, returning it.
@@ -208,6 +249,7 @@ typedef struct objcol
  * @param anOffset Offset at which to remove and return object.
  */
 - (id)removeAt:(unsigned)anOffset;
+
 - (id)removeAtIndex:(unsigned)anOffset;
 
 /*!
@@ -231,33 +273,178 @@ typedef struct objcol
  */
 - remove:oldObject ifAbsent:exceptionBlock;
 
+/*! @functiongroup Testing contents */
+
+/*!
+ * Asks whether the collection includes all the items in another specified
+ * collection.
+ *
+ * This is effected through sending an @link includes: @/link message for each
+ * element. If every such message is answered YES, this message replies YES.
+ * If any are not found in the receiver, then the reply is NO.
+ * @param aCltn Collection whose entries' presence are to be tested for in the
+ * receiving collection.
+ * @return YES if receiving collection includes every entry of <em>aCltn</em>,
+ * NO if not. */
 - (BOOL)includesAllOf:aCltn;
+
+/*!
+ * Asks whether the collection includes any of the items in another specified
+ * collection.
+ *
+ * This is effected through sending an @link includes: @/link message for each
+ * element. If any of these messages are answered with YES, then the reply to
+ * this message is YES. If none, NO.
+ * @param aCltn Collection whose entries' presence are to be tested for in the
+ * receiving collection.
+ * @return YES if receiving collection includes any entry of <em>aCltn</em>,
+ * NO if not. */
 - (BOOL)includesAnyOf:aCltn;
 
+/*! @functiongroup Adding and removing contents */
+
+/*!
+ * Adds each member of the specified collection to the receiver.
+ *
+ * The specified collection may in fact not be a collection at all. It simply
+ * needs to respond to @link eachElement @/link as a collection does. If the
+ * specified collection is <em>nil</em>, then no action is taken.
+ * @param aCltn Collection whose entries are to be added to the receiver.
+ */
 - addAll:aCltn;
 - addContentsOf:aCltn;
 - addContentsTo:aCltn;
+
+/*!
+ * Removes each member of the specified collection from the receiver.
+ *
+ * Objects are removed if they are the same object (equal address) as an object
+ * in the specified collection. If the specified collection is <em>nil</em>,
+ * then no action is taken.
+ * @param aCltn Collection whose entries are to be removed from the receiver.
+ */
 - removeAll:aCltn;
 - removeContentsFrom:aCltn;
 - removeContentsOf:aCltn;
 
+/*! @functiongroup Combining */
+
+/*!
+ * Returns a new collection formed of the intersection between the receiver and
+ * another specified collection.
+ *
+ * The new collection contains only those objects found in both the receiver
+ * and in the specified collection. The specified collection may in fact not
+ * be a collection at all. It simply needs to respond to @link find: @/link as
+ * a collection does.
+ * @param bag Collection to intersect receiver with.
+ */
 - intersection:bag;
+
+/*!
+ * Returns a new collection formed of the union between the receiver and
+ * another specified collection.
+ *
+ * The new collection contains all the elements found in the receiver and in
+ * the specified collection. The specified collection may in fact not be a
+ * collection at all. It simply needs to respond to @link eachElement @/link as
+ * a collection does.
+ * @param bag Collection to unite receiver with.
+ */
 - union:bag;
+
+/*!
+ * Returns a new collection formed of the difference between the receiver and
+ * another specified collection.
+ *
+ * The new collection contains only those objects found in the receiver but not
+ * found in the specified collection.
+ * @param bag Collection to differentiate receiver with.
+ */
 - difference:bag;
 
+/*! @functiongroup Conversion */
+
+/*! Converts the collection to a Set. */
 - asSet;
+
+/*! Converts the collection to an OrdCltn. Returns itself. */
 - asOrdCltn;
 
+/*! @functiongroup Functional */
+
+/*!
+ * Returns the first entry in the receiver for which a specified block
+ * evaluates as true.
+ *
+ * The block receives each object in turn as its sole parameter. If the block
+ * evaluates nothing to non-nil, then nil is returned.
+ * @param aBlock Block with which to evaluate each object.
+ */
 - detect:aBlock;
+
+/*!
+ * Returns the first entry in the receiver for which a specified block
+ * evaluates as true; if none evaluate as true, returns the result of a
+ * specified block.
+ *
+ * The block receives each object in turn as its sole parameter. If the block
+ * evaluates nothing to non-nil, then the second specified block is evaluated;
+ * its return value is returned by the message.
+ * @param aBlock Block with which to evaluate each object.
+ * @param noneBlock Block to evaluate and return value thereof if no object
+ * evaluates non-nil with <em>aBlock</em>.
+ */
 - detect:aBlock ifNone:noneBlock;
+
+/*!
+ * Returns a new OrdCltn containing each object a specified block evaluates to
+ * non-nil with.
+ *
+ * The block receives each object in turn as its sole parameter. If the block
+ * evaluates nothing to non-nil, then an empty OrdCltn is returned.
+ * @param aBlock Block with which to evaluate each object.
+ */
 - select:testBlock;
+
+/*!
+ * Returns a new OrdCltn containing each object a specified block evaluates to
+ * nil with.
+ *
+ * The block receives each object in turn as its sole parameter. If the block
+ * evaluates nothing to nil, then an empty OrdCltn is returned.
+ * @param aBlock Block with which to evaluate each object.
+ */
 - reject:testBlock;
+
+/*!
+ * Returns a new OrdCltn containing the result of applying a block to each
+ * object in the receiver in turn.
+ *
+ * The block receives each object in turn as its sole parameter. The block
+ * should return another object. If the block returns <em>nil</em>, then for
+ * this object nothing is added to the new collection.
+ * @param aBlock Block with which to evaluate each object.
+ */
 - collect:transformBlock;
+
+/*!
+ * Returns the number of entries for which a specified block evaluates to a
+ * non-<em>nil</em> value with.
+ *
+ * The block receives each object in turn as its sole parameter.
+ * @param aBlock Block with which to evaluate each object.
+ */
 - (unsigned)count:aBlock;
 
-/*! @group Enumeration */
+/*! @functiongroup Enumeration */
 
-- elementsPerform:(SEL)aSelector;
+/*!
+ * Asks each object in the collection to perform a specified selector.
+ * @param aSelector Selector for each object to perform.
+ */
+- (id)elementsPerform:(SEL)aSelector;
+
 - elementsPerform:(SEL)aSelector with:anObject;
 - elementsPerform:(SEL)aSelector with:anObject with:otherObject;
 - elementsPerform:(SEL)aSelector with:anObject with:otherObject with:thirdObj;
@@ -279,11 +466,47 @@ typedef struct objcol
     @param aBlock Block to be called with each object as its argument. */
 - reverseDo:aBlock;
 
+/*! @functiongroup Locating */
+
+/*!
+ * Returns the first object equal (address-equality) to a specified object.
+ * If no such object is found, returns nil.
+ * @param anObject Object to find in the collection.
+ */
 - find:anObject;
+
+/*!
+ * Returns the first object matching (@link isEqual: @/link) a specified
+ * object.
+ * If no such object is found, returns nil.
+ * @param anObject Object to find a match for in the collection.
+ */
 - findMatching:anObject;
+
+/*!
+ * Inquires as to whether an object matching a specified object is in the
+ * collection.
+ * Matching is in terms of the @link isEqual: @/link message.
+ * @param anObject Object to find a match for in the collection.
+ * @return YES if a matching object is found; NO if not.
+ */
 - (BOOL)includes:anObject;
+
 - findSTR:(STR)aString;
+
+/*!
+ * Inquires as to whether an object is in the collection.
+ * Equality is in terms of address equality.
+ * @param anObject Object to find in the collection.
+ * @return YES if the object is found; NO if not.
+ */
 - (BOOL)contains:anObject;
+
+/*!
+ * Returns the offset of a specified object in the collection.
+ * If no such object is found, returns -1.
+ * @param anObject Object to find in the collection.
+ */
 - (unsigned)offsetOf:anObject;
 
 - printOn:(IOD)aFile;
