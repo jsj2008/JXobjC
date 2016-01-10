@@ -15,6 +15,6 @@ package:
 	tar -C $(PATH_INS) -cvzf $(PKGNAME) $(PKGDIRS)
 
 cleandoc:
-	rm -rf doc/Runtime
+	rm -rf doc/Runtime doc/ObjectKit
 
 include $(FILE_KBUILD_SUB_FOOTER)

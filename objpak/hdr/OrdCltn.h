@@ -31,24 +31,46 @@ typedef struct objcol
     id * ptr;
 } * objcol_t;
 
+/*!
+ @abstract An Ordered collection of objects.
+ @discussion Stores objects in an ordered form similar to the C++ STL's Vector.
+ Objects at any specified index may be retrieved, removed, or inserted. The
+ index begins at 0 for the first object, and ends at
+ <em>@link size @/link - 1</em> for the last.
+ @indexgroup Collection
+ */
 @interface OrdCltn : Cltn
 {
     struct objcol value;
 }
 
+/*! @group Instance management */
 + new;
 + new:(unsigned)n;
 + with:(int)nArgs, ...;
 + with:firstObject with:nextObject;
 + add:firstObject;
+/*! Copies the OrdCltn. The objects themselves are not copied, only their
+    identifiers, so the contents are 100% identical to the original OrdCltn. */
 - copy;
+
+/*! Copies the OrdCltn, sending a deepCopy message to each object contained. */
 - deepCopy;
 - emptyYourself;
 - freeContents;
 - free;
 
+/*! @group Inquiry */
+
+/*! Queries the OrdCltn, returning the number of objects stored in it. */
 - (unsigned)size;
+
+/*! Queries the OrdCltn on whether it is empty.
+    @return YES if it is empty, NO if it is not. */
 - (BOOL)isEmpty;
+
+/*! Requests the offset of the last element.
+    @return Offset of the last element if OrdCltn is not empty, -1 if it is. */
 - (unsigned)lastOffset;
 - eachElement;
 - firstElement;
@@ -76,9 +98,7 @@ typedef struct objcol
 - removeAt:(unsigned)anOffset;
 - removeAtIndex:(unsigned)anOffset;
 - remove:oldObject;
-#if OBJC_BLOCKS
 - remove:oldObject ifAbsent:exceptionBlock;
-#endif /* OBJC_BLOCKS */
 
 - (BOOL)includesAllOf:aCltn;
 - (BOOL)includesAnyOf:aCltn;
@@ -97,25 +117,34 @@ typedef struct objcol
 - asSet;
 - asOrdCltn;
 
-#if OBJC_BLOCKS
 - detect:aBlock;
 - detect:aBlock ifNone:noneBlock;
 - select:testBlock;
 - reject:testBlock;
 - collect:transformBlock;
 - (unsigned)count:aBlock;
-#endif /* OBJC_BLOCKS */
 
 - elementsPerform:(SEL)aSelector;
 - elementsPerform:(SEL)aSelector with:anObject;
 - elementsPerform:(SEL)aSelector with:anObject with:otherObject;
 - elementsPerform:(SEL)aSelector with:anObject with:otherObject with:thirdObj;
 
-#if OBJC_BLOCKS
+/*! Calls a block with each object in the OrdCltn, passing in turn each object
+    as the single parameter to the block.
+    @param aBlock Block to be called with each object as its argument. */
 - do:aBlock;
-- do:aBlock until:(BOOL *)flag;
+
+/*! Calls a block with each object in the OrdCltn, until a BOOL becomes
+    YES.
+    @param aBlock Block to be called with each object as its argument.
+    @param flag Pointer to a boolean value, which halts further iteration
+    when it becomes YES. */
+- (id) do:aBlock until:(BOOL *)flag;
+
+/*! Calls a block with each object in the OrdCltn, starting with the last
+    and proceeding backwards to the first.
+    @param aBlock Block to be called with each object as its argument. */
 - reverseDo:aBlock;
-#endif /* OBJC_BLOCKS */
 
 - find:anObject;
 - findMatching:anObject;
@@ -126,10 +155,8 @@ typedef struct objcol
 
 - printOn:(IOD)aFile;
 
-#ifdef __PORTABLE_OBJC__
 - fileOutOn:aFiler;
 - fileInFrom:aFiler;
-#endif /* __PORTABLE_OBJC__ */
 
 /* private */
 - freeAll;

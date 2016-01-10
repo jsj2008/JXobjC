@@ -22,21 +22,42 @@
 #include <stdio.h>
 #include "Object.h"
 
+/*!
+ Stores associations of keys to values. For each key, a value is associated,
+ and with that key the value may be accessed.
+ @indexgroup Collection
+ */
 @interface Dictionary : Object
 {
     id associations;
 }
 
 + new;
+/*! Copies the dictionary. The associations are copied but the keys and values
+    point to the same objects as in the original. */
 - copy;
+
+/*! Copies the dictionary, each key and value being sent a deepCopy message in
+    turn. */
 - deepCopy;
+
+/*! Empties the dictionary of all associations. */
 - emptyYourself;
 - freeContents;
 - freeAll;
 - free;
 
+/*! Query the size of the dictionary in terms of the count of key-value
+    associations.
+    @return The number of key-value associations. */
 - (unsigned)size;
 - (BOOL)isEmpty;
+
+/*! Queries the dictionary to find out whether it includes an object as
+    a key.
+    @param aKey Which object's presence as a key in the dictionary should be
+    checked.
+    @return YES if aKey is in the dictionary, NO if not. */
 - (BOOL)includesKey:aKey;
 
 - (uintptr_t)hash;
@@ -53,9 +74,10 @@
 - removeKey:key;
 - removeKey:key ifAbsent:aBlock;
 
-#if OBJC_BLOCKS
+/*! Calls a block with each key in the dictionary, passing a single parameter
+    to the block, the current key.
+    @param aBlock Block to be called with each key as an argument. */
 - keysDo:aBlock;
-#endif /* OBJC_BLOCKS */
 
 - printOn:(IOD)aFile;
 

@@ -34,9 +34,9 @@ extern id EXPORT newBlock (int n, IMP fn, void * data, IMP dtor);
  You may implement a block accepting two <em>id</em>-type parameters and
  returning the answer to the @link self @/link message sent to the second
  in this way:
- @code
+ <tt>
  Block * aBlock = {:first :second | [second self]};
- @endcode
+ </tt>
  @indexgroup JX Runtime
  */
 @interface Block : Object
@@ -52,45 +52,7 @@ extern id EXPORT newBlock (int n, IMP fn, void * data, IMP dtor);
 + errorHandler:aHandler;
 + halt:message value:receiver;
 
-/*!
-  Calls into the block. If an exception is raised, deploys a handler block with
-  two arguments (the @link Message @/link first, and then the object to which
-  the sent message triggered an exception.)
-  @param aHandler Block taking two arguments (:msg and :rcv) for handling the
-  exception.
-  @return The <em>id</em>-type return value of the block. */
-- ifError:aHandler;
-
-/*!
-  Calls into the block with an <em>id</em>-type parameter. If an exception is
-  raised, deploys a handler block.
-  @param anObject <em>id</em>-type argument to the block.
-  @param aHandler Block handling any exception raised.
-  @return The <em>id</em>-type return value of the block. */
-- value:anObject ifError:aHandler;
-
-/*!
-  Calls into the block. If an exception is raised and matches the specified
-  class of exceptions (the exception is an instance of the class, or of one of
-  its subclasses,) a handler block is called with its single argument being
-  the instance of the exception raised.
-  @param aClassOfExceptions The @link Exception @/link class, or one of its
-  subclasses.
-  @param aHandler Block taking an argument (:except) for handling the
-  exception.
-  @return The <em>id</em>-type return value of the block. */
-- on:aClassOfExceptions do:aHandler;
-
-/*!
-  Calls into the block with an <em>id</em>-type parameter. If an exception is
-  raised and matches the specified class of exceptions, deploys a handler
-  block.
-  @param aClassOfExceptions The @link Exception @/link class, or one of its
-  subclasses.
-  @param aHandler Block taking an argument (:except) for handling the
-  exception.
-  @return The <em>id</em>-type return value of the block. */
-- value:anObject on:aClassOfExceptions do:aHandler;
+/*! @group Calling the block */
 
 /*! Calls into the block.
     @return The <em>id</em>-type return value of the block. */
@@ -134,6 +96,48 @@ extern id EXPORT newBlock (int n, IMP fn, void * data, IMP dtor);
   @param n How many times to repeat the call.
   @return The block itself. */
 - repeatTimes:(int)n;
+
+/*! @group Calling with exception handling */
+
+/*!
+  Calls into the block. If an exception is raised, deploys a handler block with
+  two arguments (the @link Message @/link first, and then the object to which
+  the sent message triggered an exception.)
+  @param aHandler Block taking two arguments (:msg and :rcv) for handling the
+  exception.
+  @return The <em>id</em>-type return value of the block. */
+- ifError:aHandler;
+
+/*!
+  Calls into the block with an <em>id</em>-type parameter. If an exception is
+  raised, deploys a handler block.
+  @param anObject <em>id</em>-type argument to the block.
+  @param aHandler Block handling any exception raised.
+  @return The <em>id</em>-type return value of the block. */
+- value:anObject ifError:aHandler;
+
+/*!
+  Calls into the block. If an exception is raised and matches the specified
+  class of exceptions (the exception is an instance of the class, or of one of
+  its subclasses,) a handler block is called with its single argument being
+  the instance of the exception raised.
+  @param aClassOfExceptions The @link Exception @/link class, or one of its
+  subclasses.
+  @param aHandler Block taking an argument (:except) for handling the
+  exception.
+  @return The <em>id</em>-type return value of the block. */
+- on:aClassOfExceptions do:aHandler;
+
+/*!
+  Calls into the block with an <em>id</em>-type parameter. If an exception is
+  raised and matches the specified class of exceptions, deploys a handler
+  block.
+  @param aClassOfExceptions The @link Exception @/link class, or one of its
+  subclasses.
+  @param aHandler Block taking an argument (:except) for handling the
+  exception.
+  @return The <em>id</em>-type return value of the block. */
+- value:anObject on:aClassOfExceptions do:aHandler;
 
 /* private */
 

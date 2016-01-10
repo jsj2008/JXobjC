@@ -35,17 +35,39 @@ typedef struct objstr
     char * ptr;
 } * objstr_t;
 
+/*!
+ @abstract Text string
+ @discussion Stores a string of bytes terminated with NULL, typically
+ representing text. String provides a variety of useful methods for
+ their manipulation, oriented towards its use for storing ASCII or UTF-8
+ text. Additionally, String instances may be easily initialised from C
+ null-terminated byte arrays using @link str: @/link, and from a format string
+ and parameters through the C sprintf function using @link sprintf: @/link.
+ @indexgroup Collection
+ */
 @interface String : Array
 {
     struct objstr value;
 }
 
+/*! @group Instance management */
+
 + new;
 + new:(unsigned)nChars;
-+ str:(STR)aString;
+
+/*! Creates a new String from the contents of a C null-terminated byte array.
+    @param aString C byte array to initialise the String with. */
++ (id)str:(STR)aString;
+
 + chars:(STR)aString count:(int)n;
 + vsprintf:(STR)format:(va_list *)ap;
-+ sprintf:(STR)format, ...;
+
+/*! Creates a new String using a format string and parameters via the C
+    sprintf function.
+    @param format Format STR in same style as used for sprintf.
+    @param ... Parameters to sprintf for filling in the format STR. */
++ (id)sprintf:(STR)format, ...;
+
 - copy;
 - deepCopy;
 - free;

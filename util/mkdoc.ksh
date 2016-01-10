@@ -1,7 +1,14 @@
 #!/usr/bin/env sh
 
+genDocs () # $1: output directory; $2: input directory
+{
+    mkdir -p $1
+    headerdoc2html -o `pwd`/$1 -p `pwd`/$2
+    gatherheaderdoc `pwd`/$1 index.html
+}
+
+
 kmk cleandoc
 cd doc
-mkdir -p Runtime
-headerdoc2html -o `pwd`/Runtime -p `pwd`/../objcrt/hdr
-gatherheaderdoc `pwd`/Runtime index.html
+genDocs Runtime ../objcrt/hdr
+genDocs ObjectKit ../objpak/hdr
