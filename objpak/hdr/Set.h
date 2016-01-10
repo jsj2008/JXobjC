@@ -28,6 +28,20 @@ typedef struct objset
     id * ptr;
 } * objset_t;
 
+/*!
+ * @abstract Set of objects.
+ * @discussion Stores objects in a hashed table. Each object may be added only
+ * once; no duplicates are permitted. The @link hash @/link message is used for
+ * this purpose. Both that and the @link isEqual: @/link message should be
+ * responded to by any object to be added to the set, and @link hash @/link
+ * should return an identical hash for an object to that of one that
+ * @link isEqual: @/link to another.
+ *
+ * The object may not be properly located within the Set, or duplicates may be
+ * permitted to be added, if the object should change its respond to
+ * @link hash @/link while it is in the Set.
+ * @indexgroup Collection
+ */
 @interface Set : Cltn
 {
     struct objset value;
