@@ -33,6 +33,9 @@
 }
 
 + new;
+
+/*! @functiongroup Instance management */
+
 /*! Copies the dictionary. The associations are copied but the keys and values
     point to the same objects as in the original. */
 - copy;
@@ -47,10 +50,15 @@
 - freeAll;
 - free;
 
+/*! @functiongroup Introspection */
+
 /*! Query the size of the dictionary in terms of the count of key-value
     associations.
     @return The number of key-value associations. */
 - (unsigned)size;
+
+/*! Queries the Dictionary on whether it is empty.
+    @return YES if it is empty, NO if it is not. */
 - (BOOL)isEmpty;
 
 /*! Queries the dictionary to find out whether it includes an object as
@@ -60,24 +68,92 @@
     @return YES if aKey is in the dictionary, NO if not. */
 - (BOOL)includesKey:aKey;
 
+/*! @functiongroup Comparison */
+
+/*! Returns the unique hash of the dictionary, combining the hash of each
+    key and value. */
 - (uintptr_t)hash;
+
+/*!
+ * Compares the dictionary to another.
+ *
+ * If each key and value in turn responds with YES to <em>isEqual:</em>,
+ * returnsYES.
+ * @param aDic Dictionary to compare with.
+ */
 - (BOOL)isEqual:aDic;
 
-- atKey:aKey;
-- atKey:aKey ifAbsent:exceptionBlock;
-- atKeySTR:(STR)strKey;
-- atKey:aKey put:anObject;
-- atKeySTR:(STR)strKey put:anObject;
-- eachKey;
-- eachValue;
+/*! @functiongroup Indexed retrieval */
 
+/*!
+ * Retrieves the value at the specified key.
+ *
+ * The Key is located in the dictionary using @link isEqual: @/link.
+ * If the key is not found, returns <em>nil</em>.
+ * @param aKey Key to find value for.
+ */
+- atKey:aKey;
+
+/*!
+ * Retrieves the value at the specified key, evaluating a specified block if
+ * no such key is found in the dictionary and returning its result.
+ *
+ * @param aKey Key to find value for.
+ * @param exceptionBlock Block to be evaluated and value returned if key is
+ * not found.
+ */
+- atKey:aKey ifAbsent:exceptionBlock;
+
+- atKeySTR:(STR)strKey;
+
+/*! @functiongroup Indexed insertion */
+
+/*!
+ * Inserts the specified value for the specified key.
+ *
+ * If a key that @link isEqual: @/link to the specified key is found in the
+ * dictionary, returns the previous value for that key. Otherwise, returns
+ * <em>nil</em>.
+ * @param aKey Key to insert value for.
+ * @param anObject Value to associate with <em>aKey</em>.
+ */
+- atKey:aKey put:anObject;
+
+- atKeySTR:(STR)strKey put:anObject;
+
+/*! @functiongroup Removal */
+
+/*!
+ * Removes the association keyed to the specified key and returns its value.
+ *
+ * If no such key is found, the NotFound exception is signaled.
+ * @param key Key whose according association is to be removed.
+ */
 - removeKey:key;
+
+/*!
+ * Removes the association keyed to the specified key and returns its value. If
+ * such a key is not found, returns the result of the specified block.
+ *
+ * @param key Key whose according association is to be removed.
+ * @param aBlock Block to be evaluated & value returned if key is not found.
+ */
 - removeKey:key ifAbsent:aBlock;
 
-/*! Calls a block with each key in the dictionary, passing a single parameter
-    to the block, the current key.
-    @param aBlock Block to be called with each key as an argument. */
+/*! @functiongroup Iteration */
+
+/*!
+ * Calls a block with each key in the dictionary, passing a single parameter
+ * to the block, the current key.
+ * @param aBlock Block to be called with each key as an argument.
+ */
 - keysDo:aBlock;
+
+/*! Returns a sequence of each key in the dictionary. */
+- eachKey;
+
+/*! Returns a sequence of each value in the dictionary. */
+- eachValue;
 
 - printOn:(IOD)aFile;
 

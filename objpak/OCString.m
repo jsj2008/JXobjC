@@ -370,7 +370,7 @@ static char putcharat (objstr_t self, int i, char c)
 {
     size_t i, sepsize = [aString size];
     STR sepstr        = [aString str];
-    Range r           = MakeRange (0, value.count);
+    Range r           = MakeRange (0, 0);
 
     for (i = 0; i < value.count - sepsize; i++)
     {
