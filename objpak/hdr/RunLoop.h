@@ -12,6 +12,13 @@
 @class RunLoopDescriptor;
 @class Timer;
 
+/*!
+ * @abstract Run Loop
+ * @discussion Run loop for your program. Allows the multiplexing of timers,
+ * sockets, and other events, and provides the ability to perform blocks or
+ * selectors after an iteration, waking up if asleep to perform these.
+ * @indexgroup Run Loop
+ */
 @interface RunLoop : Object
 {
     /* In fact, all of these collections are actually AtomicProxies;
@@ -33,6 +40,7 @@
     id mainRunLoop;
 }
 
+/*! Whether the Run Loop is currently running. */
 @property BOOL running;
 
 + (RunLoop *)mainRunLoop;
