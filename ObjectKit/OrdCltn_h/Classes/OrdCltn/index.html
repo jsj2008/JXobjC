@@ -271,19 +271,52 @@ function disclosure_triangle(elt) {
 </table></div>
 <h2>Introduction</h2>
 <p><!-- headerDoc=abstract;uid=//apple_ref/occ/cl/OrdCltn;name=start --><!-- begin abstract --></p>
-<p>An Ordered collection of objects.
+<p>Ordered collection of objects.
 <!-- end abstract --><!-- headerDoc=abstract;uid=//apple_ref/occ/cl/OrdCltn;name=end --></p>
 <h5 class="tight"><font face="Lucida Grande,Helvetica,Arial">Discussion</font></h5>
-<!-- begin discussion --><!-- headerDoc=discussion;uid=//apple_ref/occ/cl/OrdCltn;name=start --><p>Stores objects in an ordered form similar to the C++ STL's
+<!-- begin discussion --><!-- headerDoc=discussion;uid=//apple_ref/occ/cl/OrdCltn;name=start --><p>Stores objects in a user-ordered form similar to the C++ STL's
 Vector.
 Objects at any specified index may be retrieved, removed, or inserted. The
 index begins at 0 for the first object, and ends at
 <em><a href="index.html#//apple_ref/occ/instm/OrdCltn/size" logicalPath="//apple_ref/occ/instm/OrdCltn/size" target="_top">size</a> - 1</em> for the last.
+Object ordering matches the order of insertion, or can be manually altered.
 <!-- headerDoc=discussion;uid=//apple_ref/occ/cl/OrdCltn;name=end --><!-- end discussion -->
 </p>
 <hr class="afterClassOrHeaderInfo">
 <br><a name="HeaderDoc_groups"><h2 class="h2tight">Groups</h2></a>
 
+<h3>Testing contents</h3>
+<div class="group_desc_indent">
+</div>
+<h4>Group members:</h4>
+<div class="group_indent">
+<dl>
+<dt><tt><a machinegenerated="true" href="index.html#//apple_ref/occ/instm/OrdCltn/includesAllOf:" logicalPath="//apple_ref/occ/instm/OrdCltn/includesAllOf:" target="_top">-includesAllOf:</a></tt></dt>
+<dd></dd>
+<dt><tt><a machinegenerated="true" href="index.html#//apple_ref/occ/instm/OrdCltn/includesAnyOf:" logicalPath="//apple_ref/occ/instm/OrdCltn/includesAnyOf:" target="_top">-includesAnyOf:</a></tt></dt>
+<dd></dd>
+</dl>
+</div>
+<p>&nbsp;</p>
+<h3>Removal</h3>
+<div class="group_desc_indent">
+</div>
+<h4>Group members:</h4>
+<div class="group_indent">
+<dl>
+<dt><tt><a machinegenerated="true" href="index.html#//apple_ref/occ/instm/OrdCltn/remove:ifAbsent:" logicalPath="//apple_ref/occ/instm/OrdCltn/remove:" target="_top">-remove:</a></tt></dt>
+<dd></dd>
+<dt><tt><a machinegenerated="true" href="index.html#//apple_ref/occ/instm/OrdCltn/remove:ifAbsent:" logicalPath="//apple_ref/occ/instm/OrdCltn/remove:ifAbsent:" target="_top">-remove:ifAbsent:</a></tt></dt>
+<dd></dd>
+<dt><tt><a machinegenerated="true" href="index.html#//apple_ref/occ/instm/OrdCltn/removeAt:" logicalPath="//apple_ref/occ/instm/OrdCltn/removeAt:" target="_top">-removeAt:</a></tt></dt>
+<dd></dd>
+<dt><tt><a machinegenerated="true" href="index.html#//apple_ref/occ/instm/OrdCltn/removeFirst" logicalPath="//apple_ref/occ/instm/OrdCltn/removeFirst" target="_top">-removeFirst</a></tt></dt>
+<dd></dd>
+<dt><tt><a machinegenerated="true" href="index.html#//apple_ref/occ/instm/OrdCltn/removeLast" logicalPath="//apple_ref/occ/instm/OrdCltn/removeLast" target="_top">-removeLast</a></tt></dt>
+<dd></dd>
+</dl>
+</div>
+<p>&nbsp;</p>
 <h3>Instance management</h3>
 <div class="group_desc_indent">
 </div>
@@ -299,66 +332,19 @@ index begins at 0 for the first object, and ends at
 </dl>
 </div>
 <p>&nbsp;</p>
-<h3>Testing contents</h3>
+<h3>Enumeration</h3>
 <div class="group_desc_indent">
 </div>
 <h4>Group members:</h4>
 <div class="group_indent">
 <dl>
-<dt><tt><a machinegenerated="true" href="index.html#//apple_ref/occ/instm/OrdCltn/includesAllOf:" logicalPath="//apple_ref/occ/instm/OrdCltn/includesAllOf:" target="_top">-includesAllOf:</a></tt></dt>
+<dt><tt><a machinegenerated="true" href="index.html#//apple_ref/occ/instm/OrdCltn/do:until:" logicalPath="//apple_ref/occ/instm/OrdCltn/do:" target="_top">-do:</a></tt></dt>
 <dd></dd>
-<dt><tt><a machinegenerated="true" href="index.html#//apple_ref/occ/instm/OrdCltn/includesAnyOf:" logicalPath="//apple_ref/occ/instm/OrdCltn/includesAnyOf:" target="_top">-includesAnyOf:</a></tt></dt>
+<dt><tt><a machinegenerated="true" href="index.html#//apple_ref/occ/instm/OrdCltn/do:until:" logicalPath="//apple_ref/occ/instm/OrdCltn/do:until:" target="_top">-do:until:</a></tt></dt>
 <dd></dd>
-</dl>
-</div>
-<p>&nbsp;</p>
-<h3>Functional</h3>
-<div class="group_desc_indent">
-</div>
-<h4>Group members:</h4>
-<div class="group_indent">
-<dl>
-<dt><tt><a machinegenerated="true" href="index.html#//apple_ref/occ/instm/OrdCltn/collect:" logicalPath="//apple_ref/occ/instm/OrdCltn/collect:" target="_top">-collect:</a></tt></dt>
+<dt><tt><a machinegenerated="true" href="index.html#//apple_ref/occ/instm/OrdCltn/elementsPerform:" logicalPath="//apple_ref/occ/instm/OrdCltn/elementsPerform:" target="_top">-elementsPerform:</a></tt></dt>
 <dd></dd>
-<dt><tt><a machinegenerated="true" href="index.html#//apple_ref/occ/instm/OrdCltn/count:" logicalPath="//apple_ref/occ/instm/OrdCltn/count:" target="_top">-count:</a></tt></dt>
-<dd></dd>
-<dt><tt><a machinegenerated="true" href="index.html#//apple_ref/occ/instm/OrdCltn/detect:" logicalPath="//apple_ref/occ/instm/OrdCltn/detect:" target="_top">-detect:</a></tt></dt>
-<dd></dd>
-<dt><tt><a machinegenerated="true" href="index.html#//apple_ref/occ/instm/OrdCltn/detect:ifNone:" logicalPath="//apple_ref/occ/instm/OrdCltn/detect:ifNone:" target="_top">-detect:ifNone:</a></tt></dt>
-<dd></dd>
-<dt><tt><a machinegenerated="true" href="index.html#//apple_ref/occ/instm/OrdCltn/reject:" logicalPath="//apple_ref/occ/instm/OrdCltn/reject:" target="_top">-reject:</a></tt></dt>
-<dd></dd>
-<dt><tt><a machinegenerated="true" href="index.html#//apple_ref/occ/instm/OrdCltn/select:" logicalPath="//apple_ref/occ/instm/OrdCltn/select:" target="_top">-select:</a></tt></dt>
-<dd></dd>
-</dl>
-</div>
-<p>&nbsp;</p>
-<h3>Combining</h3>
-<div class="group_desc_indent">
-</div>
-<h4>Group members:</h4>
-<div class="group_indent">
-<dl>
-<dt><tt><a machinegenerated="true" href="index.html#//apple_ref/occ/instm/OrdCltn/difference:" logicalPath="//apple_ref/occ/instm/OrdCltn/difference:" target="_top">-difference:</a></tt></dt>
-<dd></dd>
-<dt><tt><a machinegenerated="true" href="index.html#//apple_ref/occ/instm/OrdCltn/intersection:" logicalPath="//apple_ref/occ/instm/OrdCltn/intersection:" target="_top">-intersection:</a></tt></dt>
-<dd></dd>
-<dt><tt><a machinegenerated="true" href="index.html#//apple_ref/occ/instm/OrdCltn/union:" logicalPath="//apple_ref/occ/instm/OrdCltn/union:" target="_top">-union:</a></tt></dt>
-<dd></dd>
-</dl>
-</div>
-<p>&nbsp;</p>
-<h3>Factory</h3>
-<div class="group_desc_indent">
-</div>
-<h4>Group members:</h4>
-<div class="group_indent">
-<dl>
-<dt><tt><a machinegenerated="true" href="index.html#//apple_ref/occ/clm/OrdCltn/new:" logicalPath="//apple_ref/occ/clm/OrdCltn/new:" target="_top">+new:</a></tt></dt>
-<dd></dd>
-<dt><tt><a machinegenerated="true" href="index.html#//apple_ref/occ/clm/OrdCltn/with:with:" logicalPath="//apple_ref/occ/clm/OrdCltn/with:" target="_top">+with:</a></tt></dt>
-<dd></dd>
-<dt><tt><a machinegenerated="true" href="index.html#//apple_ref/occ/clm/OrdCltn/with:with:" logicalPath="//apple_ref/occ/clm/OrdCltn/with:with:" target="_top">+with:with:</a></tt></dt>
+<dt><tt><a machinegenerated="true" href="index.html#//apple_ref/occ/instm/OrdCltn/reverseDo:" logicalPath="//apple_ref/occ/instm/OrdCltn/reverseDo:" target="_top">-reverseDo:</a></tt></dt>
 <dd></dd>
 </dl>
 </div>
@@ -380,6 +366,27 @@ index begins at 0 for the first object, and ends at
 </dl>
 </div>
 <p>&nbsp;</p>
+<h3>Indexed retrieval</h3>
+<div class="group_desc_indent">
+</div>
+<h4>Group members:</h4>
+<div class="group_indent">
+<dl>
+<dt><tt><a machinegenerated="true" href="index.html#//apple_ref/occ/instm/OrdCltn/after:" logicalPath="//apple_ref/occ/instm/OrdCltn/after:" target="_top">-after:</a></tt></dt>
+<dd></dd>
+<dt><tt><a machinegenerated="true" href="index.html#//apple_ref/occ/instm/OrdCltn/at:put:" logicalPath="//apple_ref/occ/instm/OrdCltn/at:" target="_top">-at:</a></tt></dt>
+<dd></dd>
+<dt><tt><a machinegenerated="true" href="index.html#//apple_ref/occ/instm/OrdCltn/at:put:" logicalPath="//apple_ref/occ/instm/OrdCltn/at:put:" target="_top">-at:put:</a></tt></dt>
+<dd></dd>
+<dt><tt><a machinegenerated="true" href="index.html#//apple_ref/occ/instm/OrdCltn/before:" logicalPath="//apple_ref/occ/instm/OrdCltn/before:" target="_top">-before:</a></tt></dt>
+<dd></dd>
+<dt><tt><a machinegenerated="true" href="index.html#//apple_ref/occ/instm/OrdCltn/firstElement" logicalPath="//apple_ref/occ/instm/OrdCltn/firstElement" target="_top">-firstElement</a></tt></dt>
+<dd></dd>
+<dt><tt><a machinegenerated="true" href="index.html#//apple_ref/occ/instm/OrdCltn/lastElement" logicalPath="//apple_ref/occ/instm/OrdCltn/lastElement" target="_top">-lastElement</a></tt></dt>
+<dd></dd>
+</dl>
+</div>
+<p>&nbsp;</p>
 <h3>Adding and removing contents</h3>
 <div class="group_desc_indent">
 </div>
@@ -393,19 +400,70 @@ index begins at 0 for the first object, and ends at
 </dl>
 </div>
 <p>&nbsp;</p>
-<h3>Enumeration</h3>
+<h3>Functional</h3>
 <div class="group_desc_indent">
 </div>
 <h4>Group members:</h4>
 <div class="group_indent">
 <dl>
-<dt><tt><a machinegenerated="true" href="index.html#//apple_ref/occ/instm/OrdCltn/do:until:" logicalPath="//apple_ref/occ/instm/OrdCltn/do:" target="_top">-do:</a></tt></dt>
+<dt><tt><a machinegenerated="true" href="index.html#//apple_ref/occ/instm/OrdCltn/collect:" logicalPath="//apple_ref/occ/instm/OrdCltn/collect:" target="_top">-collect:</a></tt></dt>
 <dd></dd>
-<dt><tt><a machinegenerated="true" href="index.html#//apple_ref/occ/instm/OrdCltn/do:until:" logicalPath="//apple_ref/occ/instm/OrdCltn/do:until:" target="_top">-do:until:</a></tt></dt>
+<dt><tt><a machinegenerated="true" href="index.html#//apple_ref/occ/instm/OrdCltn/count:" logicalPath="//apple_ref/occ/instm/OrdCltn/count:" target="_top">-count:</a></tt></dt>
 <dd></dd>
-<dt><tt><a machinegenerated="true" href="index.html#//apple_ref/occ/instm/OrdCltn/elementsPerform:" logicalPath="//apple_ref/occ/instm/OrdCltn/elementsPerform:" target="_top">-elementsPerform:</a></tt></dt>
+<dt><tt><a machinegenerated="true" href="index.html#//apple_ref/occ/instm/OrdCltn/detect:ifNone:" logicalPath="//apple_ref/occ/instm/OrdCltn/detect:" target="_top">-detect:</a></tt></dt>
 <dd></dd>
-<dt><tt><a machinegenerated="true" href="index.html#//apple_ref/occ/instm/OrdCltn/reverseDo:" logicalPath="//apple_ref/occ/instm/OrdCltn/reverseDo:" target="_top">-reverseDo:</a></tt></dt>
+<dt><tt><a machinegenerated="true" href="index.html#//apple_ref/occ/instm/OrdCltn/detect:ifNone:" logicalPath="//apple_ref/occ/instm/OrdCltn/detect:ifNone:" target="_top">-detect:ifNone:</a></tt></dt>
+<dd></dd>
+<dt><tt><a machinegenerated="true" href="index.html#//apple_ref/occ/instm/OrdCltn/reject:" logicalPath="//apple_ref/occ/instm/OrdCltn/reject:" target="_top">-reject:</a></tt></dt>
+<dd></dd>
+<dt><tt><a machinegenerated="true" href="index.html#//apple_ref/occ/instm/OrdCltn/select:" logicalPath="//apple_ref/occ/instm/OrdCltn/select:" target="_top">-select:</a></tt></dt>
+<dd></dd>
+</dl>
+</div>
+<p>&nbsp;</p>
+<h3>Locating</h3>
+<div class="group_desc_indent">
+</div>
+<h4>Group members:</h4>
+<div class="group_indent">
+<dl>
+<dt><tt><a machinegenerated="true" href="index.html#//apple_ref/occ/instm/OrdCltn/contains:" logicalPath="//apple_ref/occ/instm/OrdCltn/contains:" target="_top">-contains:</a></tt></dt>
+<dd></dd>
+<dt><tt><a machinegenerated="true" href="index.html#//apple_ref/occ/instm/OrdCltn/find:" logicalPath="//apple_ref/occ/instm/OrdCltn/find:" target="_top">-find:</a></tt></dt>
+<dd></dd>
+<dt><tt><a machinegenerated="true" href="index.html#//apple_ref/occ/instm/OrdCltn/findMatching:" logicalPath="//apple_ref/occ/instm/OrdCltn/findMatching:" target="_top">-findMatching:</a></tt></dt>
+<dd></dd>
+<dt><tt><a machinegenerated="true" href="index.html#//apple_ref/occ/instm/OrdCltn/includes:" logicalPath="//apple_ref/occ/instm/OrdCltn/includes:" target="_top">-includes:</a></tt></dt>
+<dd></dd>
+<dt><tt><a machinegenerated="true" href="index.html#//apple_ref/occ/instm/OrdCltn/offsetOf:" logicalPath="//apple_ref/occ/instm/OrdCltn/offsetOf:" target="_top">-offsetOf:</a></tt></dt>
+<dd></dd>
+</dl>
+</div>
+<p>&nbsp;</p>
+<h3>Factory</h3>
+<div class="group_desc_indent">
+</div>
+<h4>Group members:</h4>
+<div class="group_indent">
+<dl>
+<dt><tt><a machinegenerated="true" href="index.html#//apple_ref/occ/clm/OrdCltn/new:" logicalPath="//apple_ref/occ/clm/OrdCltn/new:" target="_top">+new:</a></tt></dt>
+<dd></dd>
+<dt><tt><a machinegenerated="true" href="index.html#//apple_ref/occ/clm/OrdCltn/with:with:" logicalPath="//apple_ref/occ/clm/OrdCltn/with:" target="_top">+with:</a></tt></dt>
+<dd></dd>
+<dt><tt><a machinegenerated="true" href="index.html#//apple_ref/occ/clm/OrdCltn/with:with:" logicalPath="//apple_ref/occ/clm/OrdCltn/with:with:" target="_top">+with:with:</a></tt></dt>
+<dd></dd>
+</dl>
+</div>
+<p>&nbsp;</p>
+<h3>Conversion</h3>
+<div class="group_desc_indent">
+</div>
+<h4>Group members:</h4>
+<div class="group_indent">
+<dl>
+<dt><tt><a machinegenerated="true" href="index.html#//apple_ref/occ/instm/OrdCltn/asOrdCltn" logicalPath="//apple_ref/occ/instm/OrdCltn/asOrdCltn" target="_top">-asOrdCltn</a></tt></dt>
+<dd></dd>
+<dt><tt><a machinegenerated="true" href="index.html#//apple_ref/occ/instm/OrdCltn/asSet" logicalPath="//apple_ref/occ/instm/OrdCltn/asSet" target="_top">-asSet</a></tt></dt>
 <dd></dd>
 </dl>
 </div>
@@ -433,74 +491,17 @@ index begins at 0 for the first object, and ends at
 </dl>
 </div>
 <p>&nbsp;</p>
-<h3>Indexed retrieval</h3>
+<h3>Combining</h3>
 <div class="group_desc_indent">
 </div>
 <h4>Group members:</h4>
 <div class="group_indent">
 <dl>
-<dt><tt><a machinegenerated="true" href="index.html#//apple_ref/occ/instm/OrdCltn/after:" logicalPath="//apple_ref/occ/instm/OrdCltn/after:" target="_top">-after:</a></tt></dt>
+<dt><tt><a machinegenerated="true" href="index.html#//apple_ref/occ/instm/OrdCltn/difference:" logicalPath="//apple_ref/occ/instm/OrdCltn/difference:" target="_top">-difference:</a></tt></dt>
 <dd></dd>
-<dt><tt><a machinegenerated="true" href="index.html#//apple_ref/occ/instm/OrdCltn/at:insert:" logicalPath="//apple_ref/occ/instm/OrdCltn/at:" target="_top">-at:</a></tt></dt>
+<dt><tt><a machinegenerated="true" href="index.html#//apple_ref/occ/instm/OrdCltn/intersection:" logicalPath="//apple_ref/occ/instm/OrdCltn/intersection:" target="_top">-intersection:</a></tt></dt>
 <dd></dd>
-<dt><tt><a machinegenerated="true" href="index.html#//apple_ref/occ/instm/OrdCltn/at:put:" logicalPath="//apple_ref/occ/instm/OrdCltn/at:put:" target="_top">-at:put:</a></tt></dt>
-<dd></dd>
-<dt><tt><a machinegenerated="true" href="index.html#//apple_ref/occ/instm/OrdCltn/before:" logicalPath="//apple_ref/occ/instm/OrdCltn/before:" target="_top">-before:</a></tt></dt>
-<dd></dd>
-<dt><tt><a machinegenerated="true" href="index.html#//apple_ref/occ/instm/OrdCltn/firstElement" logicalPath="//apple_ref/occ/instm/OrdCltn/firstElement" target="_top">-firstElement</a></tt></dt>
-<dd></dd>
-<dt><tt><a machinegenerated="true" href="index.html#//apple_ref/occ/instm/OrdCltn/lastElement" logicalPath="//apple_ref/occ/instm/OrdCltn/lastElement" target="_top">-lastElement</a></tt></dt>
-<dd></dd>
-</dl>
-</div>
-<p>&nbsp;</p>
-<h3>Conversion</h3>
-<div class="group_desc_indent">
-</div>
-<h4>Group members:</h4>
-<div class="group_indent">
-<dl>
-<dt><tt><a machinegenerated="true" href="index.html#//apple_ref/occ/instm/OrdCltn/asOrdCltn" logicalPath="//apple_ref/occ/instm/OrdCltn/asOrdCltn" target="_top">-asOrdCltn</a></tt></dt>
-<dd></dd>
-<dt><tt><a machinegenerated="true" href="index.html#//apple_ref/occ/instm/OrdCltn/asSet" logicalPath="//apple_ref/occ/instm/OrdCltn/asSet" target="_top">-asSet</a></tt></dt>
-<dd></dd>
-</dl>
-</div>
-<p>&nbsp;</p>
-<h3>Locating</h3>
-<div class="group_desc_indent">
-</div>
-<h4>Group members:</h4>
-<div class="group_indent">
-<dl>
-<dt><tt><a machinegenerated="true" href="index.html#//apple_ref/occ/instm/OrdCltn/contains:" logicalPath="//apple_ref/occ/instm/OrdCltn/contains:" target="_top">-contains:</a></tt></dt>
-<dd></dd>
-<dt><tt><a machinegenerated="true" href="index.html#//apple_ref/occ/instm/OrdCltn/find:" logicalPath="//apple_ref/occ/instm/OrdCltn/find:" target="_top">-find:</a></tt></dt>
-<dd></dd>
-<dt><tt><a machinegenerated="true" href="index.html#//apple_ref/occ/instm/OrdCltn/findMatching:" logicalPath="//apple_ref/occ/instm/OrdCltn/findMatching:" target="_top">-findMatching:</a></tt></dt>
-<dd></dd>
-<dt><tt><a machinegenerated="true" href="index.html#//apple_ref/occ/instm/OrdCltn/includes:" logicalPath="//apple_ref/occ/instm/OrdCltn/includes:" target="_top">-includes:</a></tt></dt>
-<dd></dd>
-<dt><tt><a machinegenerated="true" href="index.html#//apple_ref/occ/instm/OrdCltn/offsetOf:" logicalPath="//apple_ref/occ/instm/OrdCltn/offsetOf:" target="_top">-offsetOf:</a></tt></dt>
-<dd></dd>
-</dl>
-</div>
-<p>&nbsp;</p>
-<h3>Removal</h3>
-<div class="group_desc_indent">
-</div>
-<h4>Group members:</h4>
-<div class="group_indent">
-<dl>
-<dt><tt><a machinegenerated="true" href="index.html#//apple_ref/occ/instm/OrdCltn/remove:" logicalPath="//apple_ref/occ/instm/OrdCltn/remove:" target="_top">-remove:</a></tt></dt>
-<dd></dd>
-<dt><tt><a machinegenerated="true" href="index.html#//apple_ref/occ/instm/OrdCltn/remove:ifAbsent:" logicalPath="//apple_ref/occ/instm/OrdCltn/remove:ifAbsent:" target="_top">-remove:ifAbsent:</a></tt></dt>
-<dd></dd>
-<dt><tt><a machinegenerated="true" href="index.html#//apple_ref/occ/instm/OrdCltn/removeAt:" logicalPath="//apple_ref/occ/instm/OrdCltn/removeAt:" target="_top">-removeAt:</a></tt></dt>
-<dd></dd>
-<dt><tt><a machinegenerated="true" href="index.html#//apple_ref/occ/instm/OrdCltn/removeFirst" logicalPath="//apple_ref/occ/instm/OrdCltn/removeFirst" target="_top">-removeFirst</a></tt></dt>
-<dd></dd>
-<dt><tt><a machinegenerated="true" href="index.html#//apple_ref/occ/instm/OrdCltn/removeLast" logicalPath="//apple_ref/occ/instm/OrdCltn/removeLast" target="_top">-removeLast</a></tt></dt>
+<dt><tt><a machinegenerated="true" href="index.html#//apple_ref/occ/instm/OrdCltn/union:" logicalPath="//apple_ref/occ/instm/OrdCltn/union:" target="_top">-union:</a></tt></dt>
 <dd></dd>
 </dl>
 </div>
@@ -618,7 +619,7 @@ index begins at 0 for the first object, and ends at
 <h3><a name="add:">add:</a></h3>
 <hr class="afterName">
 <div class="declaration_indent">
-<pre><!-- headerDoc=declaration;uid=//apple_ref/occ/instm/OrdCltn/add:;name=start -->- <a machinegenerated="true" href="index.html#//apple_ref/occ/instm/OrdCltn/add:" logicalPath="//apple_ref/occ/instm/OrdCltn/add" target="_top"><span class="function">add</span></a>:<!-- a logicalPath="//apple_ref/occ/econst/anObject //apple_ref/occ/data/OrdCltn/anObject //apple_ref/occ/data/anObject //apple_ref/occ/clconst/OrdCltn/anObject " machineGenerated="true" --><span class="var">anObject</span><!-- /a -->; <!-- headerDoc=declaration;uid=//apple_ref/occ/instm/OrdCltn/add:;name=end --></pre>
+<pre><!-- headerDoc=declaration;uid=//apple_ref/occ/instm/OrdCltn/add:;name=start -->- <a machinegenerated="true" href="index.html#//apple_ref/occ/instm/OrdCltn/addAll:" logicalPath="//apple_ref/occ/instm/OrdCltn/add" target="_top"><span class="function">add</span></a>:<!-- a logicalPath="//apple_ref/occ/econst/anObject //apple_ref/occ/data/OrdCltn/anObject //apple_ref/occ/data/anObject //apple_ref/occ/clconst/OrdCltn/anObject " machineGenerated="true" --><span class="var">anObject</span><!-- /a -->; <!-- headerDoc=declaration;uid=//apple_ref/occ/instm/OrdCltn/add:;name=end --></pre>
 </div>
 <h5 class="tight"><font face="Lucida Grande,Helvetica,Arial">Parameters</font></h5>
 <div class="param_indent">
@@ -690,7 +691,7 @@ specified collection is <em>nil</em>, then no action is taken.
 <h3><a name="addIfAbsent:">addIfAbsent:</a></h3>
 <hr class="afterName">
 <div class="declaration_indent">
-<pre><!-- headerDoc=declaration;uid=//apple_ref/occ/instm/OrdCltn/addIfAbsent:;name=start -->- <a machinegenerated="true" href="index.html#//apple_ref/occ/instm/OrdCltn/addIfAbsent:" logicalPath="//apple_ref/occ/instm/OrdCltn/addIfAbsent" target="_top"><span class="function">addIfAbsent</span></a>:<!-- a logicalPath="//apple_ref/occ/econst/anObject //apple_ref/occ/data/OrdCltn/anObject //apple_ref/occ/data/anObject //apple_ref/occ/clconst/OrdCltn/anObject " machineGenerated="true" --><span class="var">anObject</span><!-- /a -->; <!-- headerDoc=declaration;uid=//apple_ref/occ/instm/OrdCltn/addIfAbsent:;name=end --></pre>
+<pre><!-- headerDoc=declaration;uid=//apple_ref/occ/instm/OrdCltn/addIfAbsent:;name=start -->- <a machinegenerated="true" href="index.html#//apple_ref/occ/instm/OrdCltn/addIfAbsentMatching:" logicalPath="//apple_ref/occ/instm/OrdCltn/addIfAbsent" target="_top"><span class="function">addIfAbsent</span></a>:<!-- a logicalPath="//apple_ref/occ/econst/anObject //apple_ref/occ/data/OrdCltn/anObject //apple_ref/occ/data/anObject //apple_ref/occ/clconst/OrdCltn/anObject " machineGenerated="true" --><span class="var">anObject</span><!-- /a -->; <!-- headerDoc=declaration;uid=//apple_ref/occ/instm/OrdCltn/addIfAbsent:;name=end --></pre>
 </div>
 <h5 class="tight"><font face="Lucida Grande,Helvetica,Arial">Parameters</font></h5>
 <div class="param_indent">
@@ -784,7 +785,7 @@ object exception is signaled. If the object is the last in the collection,
 <h3><a name="at:">at:</a></h3>
 <hr class="afterName">
 <div class="declaration_indent">
-<pre><!-- headerDoc=declaration;uid=//apple_ref/occ/instm/OrdCltn/at:;name=start -->- (<!-- a logicalPath="//apple_ref/occ/cl/id //apple_ref/occ/tdef/id //apple_ref/occ/tag/id //apple_ref/occ/struct/id //apple_ref/occ/intf/id //apple_ref/doc/anysymbol/id" machineGenerated="true" --><span class="type">id</span><!-- /a -->)<a machinegenerated="true" href="index.html#//apple_ref/occ/instm/OrdCltn/at:insert:" logicalPath="//apple_ref/occ/instm/OrdCltn/at" target="_top"><span class="function">at</span></a>:(<span class="keyword">unsigned</span>)<!-- a logicalPath="//apple_ref/occ/econst/anOffset //apple_ref/occ/data/OrdCltn/anOffset //apple_ref/occ/data/anOffset //apple_ref/occ/clconst/OrdCltn/anOffset " machineGenerated="true" --><span class="var">anOffset</span><!-- /a -->; <!-- headerDoc=declaration;uid=//apple_ref/occ/instm/OrdCltn/at:;name=end --></pre>
+<pre><!-- headerDoc=declaration;uid=//apple_ref/occ/instm/OrdCltn/at:;name=start -->- (<!-- a logicalPath="//apple_ref/occ/cl/id //apple_ref/occ/tdef/id //apple_ref/occ/tag/id //apple_ref/occ/struct/id //apple_ref/occ/intf/id //apple_ref/doc/anysymbol/id" machineGenerated="true" --><span class="type">id</span><!-- /a -->)<a machinegenerated="true" href="index.html#//apple_ref/occ/instm/OrdCltn/at:put:" logicalPath="//apple_ref/occ/instm/OrdCltn/at" target="_top"><span class="function">at</span></a>:(<span class="keyword">unsigned</span>)<!-- a logicalPath="//apple_ref/occ/econst/anOffset //apple_ref/occ/data/OrdCltn/anOffset //apple_ref/occ/data/anOffset //apple_ref/occ/clconst/OrdCltn/anOffset " machineGenerated="true" --><span class="var">anOffset</span><!-- /a -->; <!-- headerDoc=declaration;uid=//apple_ref/occ/instm/OrdCltn/at:;name=end --></pre>
 </div>
 <h5 class="tight"><font face="Lucida Grande,Helvetica,Arial">Parameters</font></h5>
 <div class="param_indent">
@@ -810,7 +811,7 @@ the OrdCltn's size minus 1 for the last.
 <h3><a name="at:insert:">at:insert:</a></h3>
 <hr class="afterName">
 <div class="declaration_indent">
-<pre><!-- headerDoc=declaration;uid=//apple_ref/occ/instm/OrdCltn/at:insert:;name=start -->- (<!-- a logicalPath="//apple_ref/occ/cl/id //apple_ref/occ/tdef/id //apple_ref/occ/tag/id //apple_ref/occ/struct/id //apple_ref/occ/intf/id //apple_ref/doc/anysymbol/id" machineGenerated="true" --><span class="type">id</span><!-- /a -->)<a machinegenerated="true" href="index.html#//apple_ref/occ/instm/OrdCltn/at:insert:" logicalPath="//apple_ref/occ/instm/OrdCltn/at" target="_top"><span class="function">at</span></a>:(<span class="keyword">unsigned</span>)<span class="param">anOffset</span> <a machinegenerated="true" href="index.html#//apple_ref/occ/instm/OrdCltn/insert:before:" logicalPath="//apple_ref/occ/instm/OrdCltn/insert" target="_top"><span class="function">insert</span></a>:<!-- a logicalPath="//apple_ref/occ/econst/anObject //apple_ref/occ/data/OrdCltn/anObject //apple_ref/occ/data/anObject //apple_ref/occ/clconst/OrdCltn/anObject " machineGenerated="true" --><span class="var">anObject</span><!-- /a -->; <!-- headerDoc=declaration;uid=//apple_ref/occ/instm/OrdCltn/at:insert:;name=end --></pre>
+<pre><!-- headerDoc=declaration;uid=//apple_ref/occ/instm/OrdCltn/at:insert:;name=start -->- (<!-- a logicalPath="//apple_ref/occ/cl/id //apple_ref/occ/tdef/id //apple_ref/occ/tag/id //apple_ref/occ/struct/id //apple_ref/occ/intf/id //apple_ref/doc/anysymbol/id" machineGenerated="true" --><span class="type">id</span><!-- /a -->)<a machinegenerated="true" href="index.html#//apple_ref/occ/instm/OrdCltn/at:put:" logicalPath="//apple_ref/occ/instm/OrdCltn/at" target="_top"><span class="function">at</span></a>:(<span class="keyword">unsigned</span>)<span class="param">anOffset</span> <a machinegenerated="true" href="index.html#//apple_ref/occ/instm/OrdCltn/insert:before:" logicalPath="//apple_ref/occ/instm/OrdCltn/insert" target="_top"><span class="function">insert</span></a>:<!-- a logicalPath="//apple_ref/occ/econst/anObject //apple_ref/occ/data/OrdCltn/anObject //apple_ref/occ/data/anObject //apple_ref/occ/clconst/OrdCltn/anObject " machineGenerated="true" --><span class="var">anObject</span><!-- /a -->; <!-- headerDoc=declaration;uid=//apple_ref/occ/instm/OrdCltn/at:insert:;name=end --></pre>
 </div>
 <h5 class="tight"><font face="Lucida Grande,Helvetica,Arial">Parameters</font></h5>
 <div class="param_indent">
@@ -841,7 +842,7 @@ OutOfBounds exception is signaled.
 <h3><a name="at:put:">at:put:</a></h3>
 <hr class="afterName">
 <div class="declaration_indent">
-<pre><!-- headerDoc=declaration;uid=//apple_ref/occ/instm/OrdCltn/at:put:;name=start -->- (<!-- a logicalPath="//apple_ref/occ/cl/id //apple_ref/occ/tdef/id //apple_ref/occ/tag/id //apple_ref/occ/struct/id //apple_ref/occ/intf/id //apple_ref/doc/anysymbol/id" machineGenerated="true" --><span class="type">id</span><!-- /a -->)<a machinegenerated="true" href="index.html#//apple_ref/occ/instm/OrdCltn/at:insert:" logicalPath="//apple_ref/occ/instm/OrdCltn/at" target="_top"><span class="function">at</span></a>:(<span class="keyword">unsigned</span>)<span class="param">anOffset</span> <!-- a logicalPath="//apple_ref/occ/instm/OrdCltn/put //apple_ref/occ/clm/OrdCltn/put //apple_ref/occ/intfcm/OrdCltn/put //apple_ref/occ/intfm/OrdCltn/put //apple_ref/occ/func/put //apple_ref/occ/ftmplt/OrdCltn/put //apple_ref/occ/defn/put //apple_ref/occ/macro/put //apple_ref/doc/anysymbol/put" machineGenerated="true" --><span class="function">put</span><!-- /a -->:<!-- a logicalPath="//apple_ref/occ/econst/anObject //apple_ref/occ/data/OrdCltn/anObject //apple_ref/occ/data/anObject //apple_ref/occ/clconst/OrdCltn/anObject " machineGenerated="true" --><span class="var">anObject</span><!-- /a -->; <!-- headerDoc=declaration;uid=//apple_ref/occ/instm/OrdCltn/at:put:;name=end --></pre>
+<pre><!-- headerDoc=declaration;uid=//apple_ref/occ/instm/OrdCltn/at:put:;name=start -->- (<!-- a logicalPath="//apple_ref/occ/cl/id //apple_ref/occ/tdef/id //apple_ref/occ/tag/id //apple_ref/occ/struct/id //apple_ref/occ/intf/id //apple_ref/doc/anysymbol/id" machineGenerated="true" --><span class="type">id</span><!-- /a -->)<a machinegenerated="true" href="index.html#//apple_ref/occ/instm/OrdCltn/at:put:" logicalPath="//apple_ref/occ/instm/OrdCltn/at" target="_top"><span class="function">at</span></a>:(<span class="keyword">unsigned</span>)<span class="param">anOffset</span> <!-- a logicalPath="//apple_ref/occ/instm/OrdCltn/put //apple_ref/occ/clm/OrdCltn/put //apple_ref/occ/intfcm/OrdCltn/put //apple_ref/occ/intfm/OrdCltn/put //apple_ref/occ/func/put //apple_ref/occ/ftmplt/OrdCltn/put //apple_ref/occ/defn/put //apple_ref/occ/macro/put //apple_ref/doc/anysymbol/put" machineGenerated="true" --><span class="function">put</span><!-- /a -->:<!-- a logicalPath="//apple_ref/occ/econst/anObject //apple_ref/occ/data/OrdCltn/anObject //apple_ref/occ/data/anObject //apple_ref/occ/clconst/OrdCltn/anObject " machineGenerated="true" --><span class="var">anObject</span><!-- /a -->; <!-- headerDoc=declaration;uid=//apple_ref/occ/instm/OrdCltn/at:put:;name=end --></pre>
 </div>
 <h5 class="tight"><font face="Lucida Grande,Helvetica,Arial">Parameters</font></h5>
 <div class="param_indent">
@@ -1005,7 +1006,7 @@ non-<em>nil</em> value with.
 <h3><a name="detect:">detect:</a></h3>
 <hr class="afterName">
 <div class="declaration_indent">
-<pre><!-- headerDoc=declaration;uid=//apple_ref/occ/instm/OrdCltn/detect:;name=start -->- <a machinegenerated="true" href="index.html#//apple_ref/occ/instm/OrdCltn/detect:" logicalPath="//apple_ref/occ/instm/OrdCltn/detect" target="_top"><span class="function">detect</span></a>:<!-- a logicalPath="//apple_ref/occ/econst/aBlock //apple_ref/occ/data/OrdCltn/aBlock //apple_ref/occ/data/aBlock //apple_ref/occ/clconst/OrdCltn/aBlock " machineGenerated="true" --><span class="var">aBlock</span><!-- /a -->; <!-- headerDoc=declaration;uid=//apple_ref/occ/instm/OrdCltn/detect:;name=end --></pre>
+<pre><!-- headerDoc=declaration;uid=//apple_ref/occ/instm/OrdCltn/detect:;name=start -->- <a machinegenerated="true" href="index.html#//apple_ref/occ/instm/OrdCltn/detect:ifNone:" logicalPath="//apple_ref/occ/instm/OrdCltn/detect" target="_top"><span class="function">detect</span></a>:<!-- a logicalPath="//apple_ref/occ/econst/aBlock //apple_ref/occ/data/OrdCltn/aBlock //apple_ref/occ/data/aBlock //apple_ref/occ/clconst/OrdCltn/aBlock " machineGenerated="true" --><span class="var">aBlock</span><!-- /a -->; <!-- headerDoc=declaration;uid=//apple_ref/occ/instm/OrdCltn/detect:;name=end --></pre>
 </div>
 <h5 class="tight"><font face="Lucida Grande,Helvetica,Arial">Parameters</font></h5>
 <div class="param_indent">
@@ -1031,7 +1032,7 @@ evaluates nothing to non-nil, then nil is returned.
 <h3><a name="detect:ifNone:">detect:ifNone:</a></h3>
 <hr class="afterName">
 <div class="declaration_indent">
-<pre><!-- headerDoc=declaration;uid=//apple_ref/occ/instm/OrdCltn/detect:ifNone:;name=start -->- <a machinegenerated="true" href="index.html#//apple_ref/occ/instm/OrdCltn/detect:" logicalPath="//apple_ref/occ/instm/OrdCltn/detect" target="_top"><span class="function">detect</span></a>:<span class="param">aBlock</span> <!-- a logicalPath="//apple_ref/occ/instm/OrdCltn/ifNone //apple_ref/occ/clm/OrdCltn/ifNone //apple_ref/occ/intfcm/OrdCltn/ifNone //apple_ref/occ/intfm/OrdCltn/ifNone //apple_ref/occ/func/ifNone //apple_ref/occ/ftmplt/OrdCltn/ifNone //apple_ref/occ/defn/ifNone //apple_ref/occ/macro/ifNone //apple_ref/doc/anysymbol/ifNone" machineGenerated="true" --><span class="function">ifNone</span><!-- /a -->:<!-- a logicalPath="//apple_ref/occ/econst/noneBlock //apple_ref/occ/data/OrdCltn/noneBlock //apple_ref/occ/data/noneBlock //apple_ref/occ/clconst/OrdCltn/noneBlock " machineGenerated="true" --><span class="var">noneBlock</span><!-- /a -->; <!-- headerDoc=declaration;uid=//apple_ref/occ/instm/OrdCltn/detect:ifNone:;name=end --></pre>
+<pre><!-- headerDoc=declaration;uid=//apple_ref/occ/instm/OrdCltn/detect:ifNone:;name=start -->- <a machinegenerated="true" href="index.html#//apple_ref/occ/instm/OrdCltn/detect:ifNone:" logicalPath="//apple_ref/occ/instm/OrdCltn/detect" target="_top"><span class="function">detect</span></a>:<span class="param">aBlock</span> <!-- a logicalPath="//apple_ref/occ/instm/OrdCltn/ifNone //apple_ref/occ/clm/OrdCltn/ifNone //apple_ref/occ/intfcm/OrdCltn/ifNone //apple_ref/occ/intfm/OrdCltn/ifNone //apple_ref/occ/func/ifNone //apple_ref/occ/ftmplt/OrdCltn/ifNone //apple_ref/occ/defn/ifNone //apple_ref/occ/macro/ifNone //apple_ref/doc/anysymbol/ifNone" machineGenerated="true" --><span class="function">ifNone</span><!-- /a -->:<!-- a logicalPath="//apple_ref/occ/econst/noneBlock //apple_ref/occ/data/OrdCltn/noneBlock //apple_ref/occ/data/noneBlock //apple_ref/occ/clconst/OrdCltn/noneBlock " machineGenerated="true" --><span class="var">noneBlock</span><!-- /a -->; <!-- headerDoc=declaration;uid=//apple_ref/occ/instm/OrdCltn/detect:ifNone:;name=end --></pre>
 </div>
 <h5 class="tight"><font face="Lucida Grande,Helvetica,Arial">Parameters</font></h5>
 <div class="param_indent">
@@ -1235,7 +1236,7 @@ If the collection is empty, returns nil. <!-- headerDoc=discussion;uid=//apple_r
 <h3><a name="includes:">includes:</a></h3>
 <hr class="afterName">
 <div class="declaration_indent">
-<pre><!-- headerDoc=declaration;uid=//apple_ref/occ/instm/OrdCltn/includes:;name=start -->- (<!-- a logicalPath="//apple_ref/occ/cl/BOOL //apple_ref/occ/tdef/BOOL //apple_ref/occ/tag/BOOL //apple_ref/occ/struct/BOOL //apple_ref/occ/intf/BOOL //apple_ref/doc/anysymbol/BOOL" machineGenerated="true" --><span class="type">BOOL</span><!-- /a -->)<a machinegenerated="true" href="index.html#//apple_ref/occ/instm/OrdCltn/includes:" logicalPath="//apple_ref/occ/instm/OrdCltn/includes" target="_top"><span class="function">includes</span></a>:<!-- a logicalPath="//apple_ref/occ/econst/anObject //apple_ref/occ/data/OrdCltn/anObject //apple_ref/occ/data/anObject //apple_ref/occ/clconst/OrdCltn/anObject " machineGenerated="true" --><span class="var">anObject</span><!-- /a -->;  <!-- headerDoc=declaration;uid=//apple_ref/occ/instm/OrdCltn/includes:;name=end --></pre>
+<pre><!-- headerDoc=declaration;uid=//apple_ref/occ/instm/OrdCltn/includes:;name=start -->- (<!-- a logicalPath="//apple_ref/occ/cl/BOOL //apple_ref/occ/tdef/BOOL //apple_ref/occ/tag/BOOL //apple_ref/occ/struct/BOOL //apple_ref/occ/intf/BOOL //apple_ref/doc/anysymbol/BOOL" machineGenerated="true" --><span class="type">BOOL</span><!-- /a -->)<a machinegenerated="true" href="index.html#//apple_ref/occ/instm/OrdCltn/includesAllOf:" logicalPath="//apple_ref/occ/instm/OrdCltn/includes" target="_top"><span class="function">includes</span></a>:<!-- a logicalPath="//apple_ref/occ/econst/anObject //apple_ref/occ/data/OrdCltn/anObject //apple_ref/occ/data/anObject //apple_ref/occ/clconst/OrdCltn/anObject " machineGenerated="true" --><span class="var">anObject</span><!-- /a -->;  <!-- headerDoc=declaration;uid=//apple_ref/occ/instm/OrdCltn/includes:;name=end --></pre>
 </div>
 <h5 class="tight"><font face="Lucida Grande,Helvetica,Arial">Parameters</font></h5>
 <div class="param_indent">
@@ -1545,7 +1546,7 @@ evaluates nothing to nil, then an empty OrdCltn is returned.
 <h3><a name="remove:">remove:</a></h3>
 <hr class="afterName">
 <div class="declaration_indent">
-<pre><!-- headerDoc=declaration;uid=//apple_ref/occ/instm/OrdCltn/remove:;name=start -->- <a machinegenerated="true" href="index.html#//apple_ref/occ/instm/OrdCltn/remove:" logicalPath="//apple_ref/occ/instm/OrdCltn/remove" target="_top"><span class="function">remove</span></a>:<!-- a logicalPath="//apple_ref/occ/econst/oldObject //apple_ref/occ/data/OrdCltn/oldObject //apple_ref/occ/data/oldObject //apple_ref/occ/clconst/OrdCltn/oldObject " machineGenerated="true" --><span class="var">oldObject</span><!-- /a -->; <!-- headerDoc=declaration;uid=//apple_ref/occ/instm/OrdCltn/remove:;name=end --></pre>
+<pre><!-- headerDoc=declaration;uid=//apple_ref/occ/instm/OrdCltn/remove:;name=start -->- <a machinegenerated="true" href="index.html#//apple_ref/occ/instm/OrdCltn/removeFirst" logicalPath="//apple_ref/occ/instm/OrdCltn/remove" target="_top"><span class="function">remove</span></a>:<!-- a logicalPath="//apple_ref/occ/econst/oldObject //apple_ref/occ/data/OrdCltn/oldObject //apple_ref/occ/data/oldObject //apple_ref/occ/clconst/OrdCltn/oldObject " machineGenerated="true" --><span class="var">oldObject</span><!-- /a -->; <!-- headerDoc=declaration;uid=//apple_ref/occ/instm/OrdCltn/remove:;name=end --></pre>
 </div>
 <h5 class="tight"><font face="Lucida Grande,Helvetica,Arial">Parameters</font></h5>
 <div class="param_indent">
@@ -1569,7 +1570,7 @@ evaluates nothing to nil, then an empty OrdCltn is returned.
 <h3><a name="remove:ifAbsent:">remove:ifAbsent:</a></h3>
 <hr class="afterName">
 <div class="declaration_indent">
-<pre><!-- headerDoc=declaration;uid=//apple_ref/occ/instm/OrdCltn/remove:ifAbsent:;name=start -->- <a machinegenerated="true" href="index.html#//apple_ref/occ/instm/OrdCltn/remove:" logicalPath="//apple_ref/occ/instm/OrdCltn/remove" target="_top"><span class="function">remove</span></a>:<span class="param">oldObject</span> <!-- a logicalPath="//apple_ref/occ/instm/OrdCltn/ifAbsent //apple_ref/occ/clm/OrdCltn/ifAbsent //apple_ref/occ/intfcm/OrdCltn/ifAbsent //apple_ref/occ/intfm/OrdCltn/ifAbsent //apple_ref/occ/func/ifAbsent //apple_ref/occ/ftmplt/OrdCltn/ifAbsent //apple_ref/occ/defn/ifAbsent //apple_ref/occ/macro/ifAbsent //apple_ref/doc/anysymbol/ifAbsent" machineGenerated="true" --><span class="function">ifAbsent</span><!-- /a -->:<!-- a logicalPath="//apple_ref/occ/econst/exceptionBlock //apple_ref/occ/data/OrdCltn/exceptionBlock //apple_ref/occ/data/exceptionBlock //apple_ref/occ/clconst/OrdCltn/exceptionBlock " machineGenerated="true" --><span class="var">exceptionBlock</span><!-- /a -->; <!-- headerDoc=declaration;uid=//apple_ref/occ/instm/OrdCltn/remove:ifAbsent:;name=end --></pre>
+<pre><!-- headerDoc=declaration;uid=//apple_ref/occ/instm/OrdCltn/remove:ifAbsent:;name=start -->- <a machinegenerated="true" href="index.html#//apple_ref/occ/instm/OrdCltn/removeFirst" logicalPath="//apple_ref/occ/instm/OrdCltn/remove" target="_top"><span class="function">remove</span></a>:<span class="param">oldObject</span> <!-- a logicalPath="//apple_ref/occ/instm/OrdCltn/ifAbsent //apple_ref/occ/clm/OrdCltn/ifAbsent //apple_ref/occ/intfcm/OrdCltn/ifAbsent //apple_ref/occ/intfm/OrdCltn/ifAbsent //apple_ref/occ/func/ifAbsent //apple_ref/occ/ftmplt/OrdCltn/ifAbsent //apple_ref/occ/defn/ifAbsent //apple_ref/occ/macro/ifAbsent //apple_ref/doc/anysymbol/ifAbsent" machineGenerated="true" --><span class="function">ifAbsent</span><!-- /a -->:<!-- a logicalPath="//apple_ref/occ/econst/exceptionBlock //apple_ref/occ/data/OrdCltn/exceptionBlock //apple_ref/occ/data/exceptionBlock //apple_ref/occ/clconst/OrdCltn/exceptionBlock " machineGenerated="true" --><span class="var">exceptionBlock</span><!-- /a -->; <!-- headerDoc=declaration;uid=//apple_ref/occ/instm/OrdCltn/remove:ifAbsent:;name=end --></pre>
 </div>
 <h5 class="tight"><font face="Lucida Grande,Helvetica,Arial">Parameters</font></h5>
 <div class="param_indent">
@@ -1594,7 +1595,7 @@ found.</p></dd>
 </p>
 <p>If the specified object could not be found, the specified exception block
 is called, the block's return value being returned.
-The <a href="index.html#//apple_ref/occ/instm/OrdCltn/remove:" logicalPath="//apple_ref/occ/instm/OrdCltn/remove:" target="_top">remove:</a> method can thus be defined as such:
+The <a href="index.html#//apple_ref/occ/instm/OrdCltn/remove:ifAbsent:" logicalPath="//apple_ref/occ/instm/OrdCltn/remove:" target="_top">remove:</a> method can thus be defined as such:
 <tt>[someCltn remove: someObject ifAbsent:{ nil }];</tt>
 <!-- headerDoc=discussion;uid=//apple_ref/occ/instm/OrdCltn/remove:ifAbsent:;name=end --><!-- end discussion -->
 </p>
