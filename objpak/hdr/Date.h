@@ -18,14 +18,27 @@ struct timeval
 #import "Object.h"
 #import "KVO.h"
 
+/*!
+ * @abstract Date
+ * @discussion Stores a date. Dates are internally represented as a
+ * (Double-type) number of seconds from 1970.
+ * @indexgroup Container
+ */
 @interface Date : Object
 
+/*! Number of seconds from 1970. */
 @property TimeInterval seconds;
 
+/*! Creates a new Date representing the current date. */
 + date;
+
 + dateWithTimeIntervalSinceNow:(TimeInterval)seconds;
 + dateWithTimeIntervalSince1970:(TimeInterval)seconds;
+
+/*! Creates a new Date representing a date in the distant future. */
 + distantFuture;
+
+/*! Creates a new Date representing a date in the distant past. */
 + distantPast;
 
 - initWithTimeInterval:(TimeInterval)secsToBeAdded

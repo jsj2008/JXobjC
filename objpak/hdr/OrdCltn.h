@@ -32,12 +32,13 @@ typedef struct objcol
 } * objcol_t;
 
 /*!
- * @abstract An Ordered collection of objects.
- * @discussion Stores objects in an ordered form similar to the C++ STL's
+ * @abstract Ordered collection of objects.
+ * @discussion Stores objects in a user-ordered form similar to the C++ STL's
  * Vector.
  * Objects at any specified index may be retrieved, removed, or inserted. The
  * index begins at 0 for the first object, and ends at
  * <em>@link size @/link - 1</em> for the last.
+ * Object ordering matches the order of insertion, or can be manually altered.
  * @indexgroup Collection
  */
 @interface OrdCltn : Cltn

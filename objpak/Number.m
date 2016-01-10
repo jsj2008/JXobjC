@@ -13,9 +13,9 @@
     return [anObject doubleValue] == [self doubleValue];
 }
 
-- (number_type_t)type { return type; }
+- (number_type_e)type { return type; }
 
-- setType:(number_type_t)aType
+- setType:(number_type_e)aType
 {
     type = aType;
     return self;

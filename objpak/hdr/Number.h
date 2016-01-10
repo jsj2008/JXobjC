@@ -32,8 +32,14 @@ typedef enum number_type_e
     NUMBER_INTPTR,
     NUMBER_UINTPTR,
     NUMBER_PTRDIFF,
-} number_type_t;
+} number_type_e;
 
+/*!
+ * @abstract Number
+ * @discussion Number encased in an Objective-C object. Useful for adding to
+ * collections.
+ * @indexgroup Container
+ */
 @interface Number : Object
 {
     union number_value_u
@@ -51,11 +57,14 @@ typedef enum number_type_e
         float f;
         double d;
     } value;
-    number_type_t type;
+    number_type_e type;
 }
 
-- (number_type_t)type;
-- setType:(number_type_t)aType;
+/*! Returns the type of number stored within. */
+- (number_type_e)type;
+
+/*! Sets the type of number stored within. */
+- (id)setType:(number_type_e)aType;
 
 #define NumFrom(typ, nam)                                                      \
     +numberWith##nam : (typ)val;                                               \

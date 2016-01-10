@@ -33,6 +33,14 @@ typedef struct objbbt
     id key;
 } * objbbt_t;
 
+/*!
+ * @abstract Sorted collection of objects.
+ * @discussion Stores objects in an AVL Tree. Invented in the USSR, AVL Trees
+ * are self-balancing binary trees allowing fast manipulation of data.
+ * Objects are ordered according to their @link compare: @/link message
+ * responses.
+ * @indexgroup Collection
+ */
 @interface SortCltn : Cltn
 {
     struct objbbt value;
@@ -86,24 +94,20 @@ typedef struct objbbt
 - asSet;
 - asOrdCltn;
 
-#if OBJC_BLOCKS
 - detect:aBlock;
 - detect:aBlock ifNone:noneBlock;
 - select:testBlock;
 - reject:testBlock;
 - collect:transformBlock;
 - (unsigned)count:aBlock;
-#endif /* OBJC_BLOCKS */
 
 - elementsPerform:(SEL)aSelector;
 - elementsPerform:(SEL)aSelector with:anObject;
 - elementsPerform:(SEL)aSelector with:anObject with:otherObject;
 - elementsPerform:(SEL)aSelector with:anObject with:otherObject with:thirdObj;
 
-#if OBJC_BLOCKS
 - do:aBlock;
 - do:aBlock until:(BOOL *)flag;
-#endif /* OBJC_BLOCKS */
 
 - find:anObject;
 - (BOOL)contains:anObject;
