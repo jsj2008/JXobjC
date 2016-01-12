@@ -39,6 +39,7 @@ typedef struct objbbt
  * are self-balancing binary trees allowing fast manipulation of data.
  * Objects are ordered according to their @link compare: @/link message
  * responses.
+ * @see Cltn
  * @indexgroup Collection
  */
 @interface SortCltn : Cltn

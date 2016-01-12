@@ -21,6 +21,12 @@
 
 #include "cltn.h"
 
+/*!
+ * @abstract Stack
+ * @discussion A last-in, first-out stack. In fact, this wraps an
+ * @link OrdCltn @/link internally.
+ * @indexgroup Collection
+ */
 @interface Stack : Cltn
 {
     id contents;

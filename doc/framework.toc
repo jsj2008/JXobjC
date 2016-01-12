@@ -49,8 +49,11 @@
 			<tr>
 				<td width="600" align="center" valign="top">
 <H2>Classes</H2>
-				
       $$classlist cols=3 order=down atts=border="0" cellpadding="1" cellspacing="0" width="420"@@
+
+<H2>Protocols</H2>
+      $$protocollist cols=3 order=down atts=border="0" cellpadding="1" cellspacing="0" width="420"@@
+
 			</tr>
 		</table>
 

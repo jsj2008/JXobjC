@@ -1099,6 +1099,8 @@ id mkclassdef (id keyw, id name, id sname, id protocols, id ivars, id cvars,
 
     [protocols do:
                { :each | id prot = [trlunit lookupprotocol:each];
+                   if (!prot)
+                       fatal ("no such protocol <%s>\n", [each str]);
                    [[prot clssels] do:
                                    { :each | [r addclssel: each];
                                    }];

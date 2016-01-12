@@ -59,25 +59,9 @@
 + with:(int)nArgs, ...
 {
     id newObject;
-
-    /* use OC macros for porting to SunOS4 */
     OC_VA_LIST vp;
 
     newObject = [self new];
-
-/* #if 0 this piece of code if problems with stdarg
- * typically this means the driver is not configured with
- * the right -builtintype
- * or builtinfunction flags (because the macros might expand to these)
- *
- * alternative solution: check the .P output (-retain) and
- * do a setenv OBJCOPT -builtinfunction __builtin_foo
- * (and please let me know)
- */
-
-#ifdef NSTDARG
-    [self notImplemented];
-#else
     OC_VA_START (vp, nArgs);
     while (nArgs-- > 0)
     {
@@ -85,7 +69,6 @@
         [newObject add:anObject];
     }
     OC_VA_END (vp);
-#endif
 
     return newObject;
 }

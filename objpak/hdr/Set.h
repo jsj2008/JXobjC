@@ -40,6 +40,7 @@ typedef struct objset
  * The object may not be properly located within the Set, or duplicates may be
  * permitted to be added, if the object should change its respond to
  * @link hash @/link while it is in the Set.
+ * @see Cltn
  * @indexgroup Collection
  */
 @interface Set : Cltn
