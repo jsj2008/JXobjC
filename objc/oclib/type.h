@@ -68,6 +68,7 @@ extern id t_id;
 
 - (BOOL)isid;
 - (BOOL)isrefcounted;
+- (BOOL)isNamedClass;
 - (BOOL)isvoid;
 - (BOOL)canforward;
 - (BOOL)isscalartype;

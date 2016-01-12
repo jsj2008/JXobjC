@@ -55,6 +55,8 @@
 
 - pointer { return pointer; }
 
+- (int)numpointers { return [pointer numpointers]; }
+
 - identifier:aName
 {
     [decl identifier:aName];

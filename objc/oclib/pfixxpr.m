@@ -65,19 +65,4 @@
     return self;
 }
 
-- go
-{
-    id v, w;
-    v = [expr go];
-    w = [v copy];
-    if (strcmp (op, "++") == 0)
-        [w increment];
-    else if (strcmp (op, "--") == 0)
-        [w decrement];
-    else
-        [self notImplemented:_cmd];
-    [expr assignvar:w];
-    return v;
-}
-
 @end

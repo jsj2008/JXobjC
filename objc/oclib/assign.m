@@ -87,13 +87,15 @@
         if (isselfassign || [[lhs type] isrefcounted])
             isidassign++;
     }
-    /* FIXME */
-    if (((o_refcnt || (![lhs isKindOf:ArrowExpr] && ![lhs isKindOf:DotExpr] &&
-                       ![rhs isKindOf:ArrowExpr] && ![rhs isKindOf:DotExpr]))
 
-         && [[lhs type] isid] && [[rhs type] isid]) &&
-        ![[lhs type] isEqual:[rhs type]])
-        rcast = [lhs type];
+    /* printf ("LHS:");
+    [[[lhs type] specs] do:{ : each | printf (" <%s>", [each str])}];
+    printf (" [%s]", [[[lhs type] decl] str]);
+    printf ("\n");
+    printf ("RHS:");
+    [[[rhs type] specs] do:{ : each | printf (" <%s>", [each str])}];
+    printf (" [%s]", [[[rhs type] decl] str]);
+    printf ("\n"); */
 
     return self;
 }
@@ -144,8 +146,6 @@
     else
         return [super gen];
 }
-
-- go { return [lhs assignvar:[rhs go]]; }
 
 - st80
 {

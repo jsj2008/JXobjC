@@ -200,7 +200,7 @@
 - reject:testBlock;
 
 /*!
- * Returns a new collectioncontaining the result of applying a block to each
+ * Returns a new collection containing the result of applying a block to each
  * object in the receiver in turn.
  *
  * The block receives each object in turn as its sole parameter. The block

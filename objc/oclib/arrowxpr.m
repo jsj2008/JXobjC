@@ -36,11 +36,24 @@
 - typesynth
 {
     assert ([rhs isKindOf:(id)[Symbol class]]);
-    lhs  = [lhs typesynth];
-    type = [[lhs type] star];
-    type = [type dot:rhs];
+    lhs = [lhs typesynth];
+
+    if ([[lhs type] isid])
+    {
+        if ([rhs isEqual:@"isa"])
+            type = t_id;
+        else
+            type = t_unknown;
+    }
+    else
+    {
+        type = [[lhs type] star];
+        type = [type dot:rhs];
+    }
+
     if (!type)
         fatalat (rhs, "structure has no field '%s'", [rhs str]);
+
     return self;
 }
 

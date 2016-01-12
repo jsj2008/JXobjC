@@ -23,6 +23,7 @@
 
 - pointer:aPointer;
 - pointer;
+- (int)numpointers;
 - decl:aDecl;
 - decl;
 - gen;

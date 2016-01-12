@@ -128,9 +128,6 @@ extern id curstruct;
 - undefcomps;
 - use;
 
-- getivarval:instance:(BOOL)infactory:varname;
-- setivarval:instance:(BOOL)infactory:varname:value;
-
 - addpropmeth:propmeth;
 - propmeths;
 

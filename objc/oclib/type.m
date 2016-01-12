@@ -430,28 +430,40 @@ BASIC_TYPESPECS basicSpecForSpec (id spec)
 
 - (BOOL)isrefcounted
 {
-    BOOL isobj = NO, isvolatile = NO;
+    BOOL isvolatile = NO;
     int n;
 
     if (self == t_id)
-    {
         return YES;
-    }
 
     [specs do:
            { : each |
-               if ([trlunit lookupclass:[String str:[each str]]])
-                   isobj = YES;
                if ([each isvolatile])
                    isvolatile = YES;
            }];
 
     if (isvolatile)
         return NO;
-    if (isobj && decl && [decl isKindOf:Pointer] && ![decl pointer])
+    if ([self isNamedClass])
         return YES;
     if (decl == nil && (n = [specs size]) > 0)
         return [[specs at:n - 1] isrefcounted];
+
+    return NO;
+}
+
+- (BOOL)isNamedClass
+{
+    BOOL isObj = NO;
+
+    [specs do:
+           { : each |
+               if ([trlunit lookupclass:[String str:[each str]]])
+                   isObj = YES;
+           }];
+
+    if (isObj && decl && [decl isKindOf:Pointer] && ![decl pointer])
+        return YES;
 
     return NO;
 }

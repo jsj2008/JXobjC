@@ -42,7 +42,4 @@
 - gen;
 - lhsself:(BOOL)flag;
 
-- go;
-- assignvar:v;
-
 @end
