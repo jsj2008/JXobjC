@@ -1,6 +1,5 @@
 /*
  * Portable Object Compiler (c) 1997,98.  All Rights Reserved.
- * $Id: keyseq.h,v 1.1.1.1 2000/06/07 21:09:25 stes Exp $
  *
  * This library is free software; you can redistribute it and/or modify it
  * under the terms of the GNU Library General Public License as published

@@ -33,6 +33,4 @@
 - (BOOL)isselptr;
 - (BOOL)canforward;
 
-- go;
-
 @end

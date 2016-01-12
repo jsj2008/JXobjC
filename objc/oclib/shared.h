@@ -42,7 +42,3 @@
 - gendecrefsheapvars;
 
 - removeheapvarsfromdatadefs;
-
-- fcall:x;
-- go;
-- switchOn:e;

@@ -317,10 +317,4 @@ void fatalat (id sym, char * s, ...)
 
 - dot:sym { return nil; }
 
-- go
-{
-    fprintf (stderr, "vici>%s\n", [self name]);
-    return self;
-}
-
 @end

@@ -35,7 +35,6 @@
 #include "type.h"
 #include "expr.h"
 #include "msgxpr.h"
-#include "stkframe.h"
 
 @implementation MethodDef
 
@@ -238,35 +237,6 @@
     [body st80];
     gs ("! !\n");
     gc ('\n');
-    return self;
-}
-
-- fcall:x
-{
-    id r;
-    trlunit = unit;
-    if (breakpt)
-        [breakpt go];
-    [[Stackframe push] def:self];
-    r = [body fcall:x];
-    [Stackframe pop];
-    return r;
-}
-
-- printBtOn:(IOD)d
-{
-    int no    = [method lineno];
-    char * fn = [[method filename] str];
-    char * cn = [classdef classname];
-    char * sn = [[self selector] str];
-    fprintf (d, (factory) ? "+" : "-");
-    fprintf (d, "[%s %s] at %s:%d\n", cn, sn, fn, no);
-    return self;
-}
-
-- setbreak:bkpt
-{
-    breakpt = bkpt;
     return self;
 }
 

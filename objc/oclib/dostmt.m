@@ -25,7 +25,6 @@
 #include "compstmt.h"
 #include "options.h"
 #include "util.h"
-#include "stkframe.h"
 #include "var.h"
 #include "scalar.h"
 
@@ -89,20 +88,6 @@
     gs ("]whileTrue:[\n");
     [stmt st80];
     gc (']');
-    return self;
-}
-
-- go
-{
-    id e;
-    do
-    {
-        [stmt go];
-        if ([topframe breakframe])
-            break;
-        [topframe contframe:NO];
-    } while (e = [expr go], !ISSCALARZERO (e));
-    [topframe breakframe:NO];
     return self;
 }
 

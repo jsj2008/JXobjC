@@ -140,11 +140,4 @@
     return self;
 }
 
-- go
-{
-    if (exprlist)
-        [self notImplemented:_cmd];
-    return [expr go];
-}
-
 @end

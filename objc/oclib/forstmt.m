@@ -27,7 +27,6 @@
 #include "util.h"
 #include "var.h"
 #include "scalar.h"
-#include "stkframe.h"
 
 @implementation ForStmt
 
@@ -94,20 +93,4 @@
     gc (']');
     return self;
 }
-
-- go
-{
-    id e;
-    for ([begin go]; cond == nil || (e = [cond go], !ISSCALARZERO (e));
-             [step go])
-    {
-        [stmt go];
-        if ([topframe breakframe])
-            break;
-        [topframe contframe:NO];
-    }
-    [topframe breakframe:NO];
-    return self;
-}
-
 @end

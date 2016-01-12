@@ -66,6 +66,4 @@
 
 - fcall:x { return [compound fcall:x]; }
 
-- go { return [compound go]; }
-
 @end

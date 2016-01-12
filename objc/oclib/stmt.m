@@ -33,11 +33,4 @@
 
 - (BOOL)iscaseOf:e { return NO; }
 
-- go
-{
-    if (o_stepbreak != nil && o_stepnext != 0)
-        [o_stepbreak go];
-    return self;
-}
-
 @end

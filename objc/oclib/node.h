@@ -56,7 +56,6 @@ void fatalat (id sym, char * fmt, ...);
 - sgen;
 - st80;
 
-- go;
 - (BOOL)isstorageclass;
 - (BOOL)isscalartype;
 - (BOOL)isgnuattrib;

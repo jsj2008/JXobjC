@@ -38,44 +38,4 @@
     return self;
 }
 
-- go
-{
-    id x = [expr go];
-
-    if ([x isKindOf:(id)[ArrayVariable class]])
-    {
-        return [x at:0];
-    }
-    else
-    {
-        if ([x type] == t_str)
-        {
-            STR s = [x u_str];
-            return [[Scalar new] u_char:*s];
-        }
-        return [self notImplemented];
-    }
-}
-
-- assignvar:v
-{
-    id x = [expr go];
-
-    if ([x isKindOf:(id)[ArrayVariable class]])
-    {
-        [x at:0 put:v];
-        return v;
-    }
-    else
-    {
-        if ([x type] == t_str)
-        {
-            STR s = [x u_str];
-            *s    = [v u_char];
-            return v;
-        }
-        return [self notImplemented];
-    }
-}
-
 @end

@@ -557,32 +557,4 @@ id msgwraps; /* VICI */
     return [self subclassResponsibility:_cmd];
 }
 
-- go
-{
-    id r;
-    if ((r = [rcvr go]))
-    {
-        SEL s;
-        char * sn;
-        sn = [[self selector] str];
-        if ((s = [self findSel:sn]))
-        {
-            IMP i = [r methodFor:s];
-            if (!msgwrap)
-                msgwrap = [msgwraps find:self];
-            if (!msgwrap)
-                [self error:"'%s' can't send this type of message", sn];
-            return [msgwrap send:i sel:s with:[msg ksel] to:r];
-        }
-        else
-        {
-            return [self error:"selector %s not loaded", sn];
-        }
-    }
-    else
-    {
-        return nil; /* msg to nil */
-    }
-}
-
 @end

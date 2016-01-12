@@ -1,4 +1,3 @@
-
 /*
  * Copyright (c) 1999 David Stes.
  *
@@ -15,8 +14,6 @@
  * You should have received a copy of the GNU Library General Public License
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
- *
- * $Id: scalar.h,v 1.2 2000/09/08 15:02:08 stes Exp $
  */
 
 #define ISSCALARZERO(e)                                                        \

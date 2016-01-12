@@ -21,8 +21,8 @@
 
 #define __objpak_revision__ "4.5"
 
-#include "stdio.h"  /* FILE for printOn: prototype */
-#include "Object.h" /* Stepstone Object.h assumes #import */
+#include "stdio.h" /* FILE for printOn: prototype */
+#include "Object.h"
 
 #include "Block.h"
 #include "Exceptn.h"

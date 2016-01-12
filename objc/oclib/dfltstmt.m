@@ -59,6 +59,4 @@
 
 - (BOOL)iscaseOf:e { return YES; /* anything matches */ }
 
-- go { return [stmt go]; }
-
 @end

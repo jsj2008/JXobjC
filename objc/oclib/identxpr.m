@@ -34,7 +34,6 @@
 #include "datadef.h"
 #include "globdef.h"
 #include "classdef.h"
-#include "stkframe.h"
 #include "var.h"
 #include "scalar.h"
 

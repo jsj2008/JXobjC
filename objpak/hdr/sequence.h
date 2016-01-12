@@ -19,8 +19,7 @@
 #ifndef __OBJSEQ_H__
 #define __OBJSEQ_H__
 
-#include <stdio.h>
-#include "Object.h" /* Stepstone Object.h assumes #import */
+#include "Object.h"
 
 /* the name of this class in ICpak101 is IPSequence */
 #define IPSequence Sequence

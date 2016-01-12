@@ -98,25 +98,4 @@
     return self;
 }
 
-- go
-{
-    id args;
-    int i, n;
-    id fdef = [funname go];
-    if ([fdef isfundef])
-    {
-        n    = [funargs size];
-        args = [IdArray new:n];
-        for (i = 0; i < n; i++)
-        {
-            [args at:i put:[[funargs at:i] go]];
-        }
-        return [fdef fcall:args];
-    }
-    else
-    {
-        return [self error:"Object is not a function name"];
-    }
-}
-
 @end

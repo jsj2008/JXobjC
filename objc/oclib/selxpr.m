@@ -63,13 +63,4 @@
     return self;
 }
 
-- go
-{
-#ifdef __PORTABLE_OBJC__
-    return [[Scalar new] u_str:selUid ([selector str])];
-#else
-    return nil;
-#endif
-}
-
 @end

@@ -53,12 +53,6 @@
     return self;
 }
 
-- go
-{
-    [expr go];
-    return self;
-}
-
 - st80
 {
     [expr st80];

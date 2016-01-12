@@ -67,8 +67,4 @@
     return self;
 }
 
-- (BOOL)iscaseOf:e { return [e isEqual:[expr go]]; }
-
-- go { return [stmt go]; }
-
 @end

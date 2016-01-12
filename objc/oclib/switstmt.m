@@ -23,18 +23,7 @@
 #include "stmt.h"
 #include "ifstmt.h"
 #include "switstmt.h"
-#include "compstmt.h"
-#include "stkframe.h"
 
 @implementation SwitchStmt
-
-- go
-{
-    id r;
-    id e = [expr go];
-    r    = [stmt switchOn:e];
-    [topframe breakframe:NO];
-    return r;
-}
 
 @end

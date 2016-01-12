@@ -98,18 +98,4 @@
     gc (')');
     return self;
 }
-
-- go
-{
-    id c = [expr go];
-    if (!ISSCALARZERO (c))
-    {
-        return (lhs) ? [lhs go] : c; /* gnu extension */
-    }
-    else
-    {
-        return [rhs go];
-    }
-}
-
 @end

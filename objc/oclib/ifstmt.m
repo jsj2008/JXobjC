@@ -25,7 +25,6 @@
 #include "compstmt.h"
 #include "options.h"
 #include "util.h"
-#include "stkframe.h"
 #include "var.h"
 #include "scalar.h"
 
@@ -107,21 +106,6 @@
         gc (']');
     }
     gs (".\n");
-    return self;
-}
-
-- go
-{
-    id e;
-    if (e = [expr go], !ISSCALARZERO (e))
-    {
-        [stmt go];
-    }
-    else
-    {
-        if (estmt)
-            [estmt go];
-    }
     return self;
 }
 

@@ -65,7 +65,4 @@ extern id msgwraps; /* VICI */
 - (char *)dispname;
 - (char *)argstructname;
 
-- go;
-- send:(IMP)i sel:(SEL)sel with:kw to:rcvr;
-
 @end

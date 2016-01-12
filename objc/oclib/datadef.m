@@ -36,7 +36,6 @@
 #include "stmt.h"
 #include "compstmt.h"
 #include "util.h"
-#include "stkframe.h"
 
 @implementation DataDef
 
@@ -289,25 +288,6 @@
 {
     if (decllist)
         [decllist elementsPerform:_cmd];
-    return self;
-}
-
-- go
-{
-    int i, n;
-
-    for (i = 0, n = [decllist size]; i < n; i++)
-    {
-        id d, v;
-        d = [decllist at:i];
-        v = [d identifier];
-        if ([d isinit])
-        {
-            id e = [d initializer];
-            [topframe defval:v as:[e go]];
-        }
-    }
-
     return self;
 }
 

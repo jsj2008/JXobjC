@@ -76,29 +76,4 @@
     return self;
 }
 
-- go
-{
-    id a, r;
-    int s = 0;
-    a = [expr go];
-    if ([a isKindOf:(id)[Scalar class]])
-    {
-        s = [a u_int];
-    }
-    else
-    {
-        s = (a) ? 1 : 0;
-    }
-    r = [Scalar new];
-    if (strcmp (op, "-") == 0)
-        s = -s;
-    else if (strcmp (op, "+") == 0)
-        s = +s;
-    else if (strcmp (op, "!") == 0)
-        s = !s;
-    else
-        [self notImplemented:_cmd];
-    return [r u_int:s];
-}
-
 @end

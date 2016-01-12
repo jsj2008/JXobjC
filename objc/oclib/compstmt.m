@@ -39,7 +39,6 @@
 #include "type.h"
 #include "util.h"
 #include "options.h"
-#include "stkframe.h"
 #include "casestmt.h"
 
 id curcompound;

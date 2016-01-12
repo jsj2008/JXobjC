@@ -32,7 +32,6 @@
 #include "decl.h"
 #include "type.h"
 #include "options.h"
-#include "stkframe.h"
 
 @implementation FunctionDef
 
@@ -239,41 +238,5 @@
         [self genmain];
     return self;
 }
-
-- go { return [self shouldNotImplement:_cmd]; }
-
-- fcall:x
-{
-    id r;
-    trlunit = unit;
-    [[Stackframe push] def:self];
-    if (breakpt)
-        [breakpt go];
-    r = [body fcall:x]; /* dispatch to funbody */
-    [Stackframe pop];
-    return r;
-}
-
-- printBtOn:(IOD)d
-{
-    id n;
-    int lo;
-    char * fn;
-    n  = [decl identifier];
-    fn = [[n filename] str];
-    lo = [n lineno];
-    fprintf (d, "%s () at %s:%d\n", [n str], fn, lo);
-    return self;
-}
-
-- setbreak:bkpt
-{
-    breakpt = bkpt;
-    return self;
-}
-
-- defval:v { return [self error:"Attempt to assign a value to function"]; }
-
-- value { return self; }
 
 @end

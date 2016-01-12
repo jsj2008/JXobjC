@@ -68,10 +68,4 @@
     return self;
 }
 
-- go
-{
-    [lhs go];
-    return [rhs go];
-}
-
 @end

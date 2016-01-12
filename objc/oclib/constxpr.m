@@ -104,34 +104,6 @@
     }
     return [s unescape];
 }
-
-- go
-{
-    id v = [Scalar new];
-    if (!type)
-        [self typesynth];
-    if (identifier)
-    {
-        if ([type isEqual:t_char])
-        {
-            id s = [Symbol str:[identifier str]];
-            [s unescapeChar];
-            [v u_char:*[s str]];
-        }
-        if ([type isEqual:t_int])
-            [v u_int:atoi ([identifier str])];
-        if ([type isEqual:t_double])
-            [v u_double:atof ([identifier str])];
-    }
-    if (stringchain)
-    {
-        if (!strcontent)
-            strcontent = [self concatstringchain];
-        [v u_str:[strcontent strCopy]];
-    }
-    return v;
-}
-
 - st80
 {
     if (identifier)

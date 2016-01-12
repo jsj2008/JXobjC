@@ -63,7 +63,7 @@
 
 - reset
 {
-    value = (initializer) ? [initializer go] : [type zero];
+    value = [type zero];
     return self;
 }
 

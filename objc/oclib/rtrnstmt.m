@@ -30,7 +30,6 @@
 #include "options.h"
 #include "def.h"
 #include "methdef.h"
-#include "stkframe.h"
 #include "binxpr.h"
 #include "dotxpr.h"
 #include "arrowxpr.h"
@@ -157,14 +156,6 @@
     else
         [e_self st80];
     gs (".\n");
-    return self;
-}
-
-- go
-{
-    [topframe quitframe:YES];
-    if (expr)
-        [topframe returnval:[expr go]];
     return self;
 }
 

@@ -27,7 +27,6 @@
 #include "compstmt.h"
 #include "var.h"
 #include "scalar.h"
-#include "stkframe.h"
 
 @implementation WhileStmt
 
@@ -50,20 +49,6 @@
     [stmt st80];
     gc (']');
     gs (".\n");
-    return self;
-}
-
-- go
-{
-    id e;
-    while (e = [expr go], !ISSCALARZERO (e))
-    {
-        [stmt go];
-        if ([topframe breakframe])
-            break;
-        [topframe contframe:NO];
-    }
-    [topframe breakframe:NO];
     return self;
 }
 

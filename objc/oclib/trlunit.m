@@ -946,15 +946,6 @@ static char * mystrrchr (const char * s, int c)
 
 - (BOOL)isgentype:s { return [gentypes includes:s]; }
 
-- go
-{
-    if (clsimpl)
-        [clsimpl go];
-    if (clsimpls)
-        [clsimpls elementsPerform:_cmd];
-    return self;
-}
-
 - reset
 {
     id v, s;

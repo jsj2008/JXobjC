@@ -22,7 +22,6 @@
 #include "node.h"
 #include "stmt.h"
 #include "contstmt.h"
-#include "stkframe.h"
 
 @implementation ContinueStmt
 
@@ -45,17 +44,6 @@
 {
     gs ([keyw str]);
     gs (".\n");
-    return self;
-}
-
-- go
-{
-    if (strcmp ([keyw str], "break") == 0)
-        [topframe breakframe:YES];
-    else if (strcmp ([keyw str], "continue") == 0)
-        [topframe contframe:YES];
-    else
-        [self notImplemented:_cmd];
     return self;
 }
 

@@ -35,45 +35,4 @@
     return self;
 }
 
-- go
-{
-    id a, b, r;
-    int s = 0;
-    int av, bv;
-    a = [lhs go];
-    b = [rhs go];
-    r = [Scalar new];
-    if ([a isKindOf:(id)[Scalar class]])
-    {
-        av = [a u_int];
-    }
-    else
-    {
-        av = (a) ? 1 : 0;
-    }
-    if ([b isKindOf:(id)[Scalar class]])
-    {
-        bv = [b u_int];
-    }
-    else
-    {
-        bv = (b) ? 1 : 0;
-    }
-    if (strcmp (op, "<") == 0)
-        s = av < bv;
-    else if (strcmp (op, ">") == 0)
-        s = av > bv;
-    else if (strcmp (op, "==") == 0)
-        s = av == bv;
-    else if (strcmp (op, "!=") == 0)
-        s = av != bv;
-    else if (strcmp (op, ">=") == 0)
-        s = av >= bv;
-    else if (strcmp (op, "<=") == 0)
-        s = av <= bv;
-    else
-        [self notImplemented:_cmd];
-    return [r u_int:s];
-}
-
 @end

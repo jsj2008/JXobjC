@@ -65,6 +65,4 @@
     return self;
 }
 
-- go { return [expr go]; }
-
 @end

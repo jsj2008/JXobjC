@@ -42,7 +42,6 @@
 #include "datadef.h"
 #include "trlunit.h"
 #include "util.h"
-#include "stkframe.h"
 #include "casestmt.h"
 
 @implementation BlockExpr
