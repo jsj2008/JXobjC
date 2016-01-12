@@ -1319,4 +1319,57 @@ id curclassdef;
 
 - propmeths { return propmeths; }
 
+- clssels { return clssels; }
+- nstsels { return nstsels; }
+
+static BOOL checkUpCast (ClassDef * one, ClassDef * two)
+{
+    ClassDef * superOne;
+    if (!one || !two)
+        return YES;
+    else if (one == two)
+        return YES;
+    else if ((superOne = [one superclassdef]) && (two == superOne))
+        return NO;
+    else if (superOne)
+        return checkUpCast (superOne, two);
+    return YES;
+}
+
+- checkAssign:(ClassDef *)aClass
+{
+    if (!checkUpCast (self, aClass))
+        warn ("downcasting parent class %s to derived class %s",
+              [aClass classname], [self classname]);
+    return self;
+}
+
+static BOOL selectorOK (id aClass, Selector * aSel)
+{
+    if (!aClass)
+        return YES;
+    else if (!aSel)
+        return YES;
+    else
+    {
+        if ([[aClass clssels] includes:aSel] ||
+            [[aClass nstsels] includes:aSel])
+            return YES;
+        else if ([aClass superclassdef])
+            return selectorOK ([aClass superclassdef], aSel);
+    }
+    return NO;
+}
+
+#define KNRM "\x1B[0m"
+#define KBLD "\x1B[1m"
+
+- checkSelector:(Selector *)aSel
+{
+    if (!selectorOK (self, aSel))
+        warn ("selector %s may not be understood by object of class %s",
+              [aSel str], [self classname]);
+    return self;
+}
+
 @end

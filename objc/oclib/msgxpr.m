@@ -141,7 +141,10 @@ id msgwraps; /* VICI */
         method = [trlunit lookupmethod:[self selector]];
         if (!method && o_warnundefined)
         {
-            warnat (msg, "argument types for '%s' default to 'id'", [sel str]);
+            warnat (
+                msg,
+                "argument types for unresolved selector '%s' default to 'id'",
+                [sel str]);
         }
         else
         {
@@ -219,6 +222,12 @@ id msgwraps; /* VICI */
     printf("Receiver type: %s\n", [[[rcvr type] decl] str]);
 
     [[[rcvr type] specs] do: {:each | printf("Spec: %s\n", [each str]) }];*/
+
+    if ([[rcvr type] isNamedClass])
+    {
+        [[[rcvr type] getClass] checkSelector:[self selector]];
+    }
+
     msg = [msg synth];
 
     if (o_refcnt && [[self type] isid] && !hasSynthedForId)

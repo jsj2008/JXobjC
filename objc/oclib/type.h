@@ -31,6 +31,8 @@ extern id t_id;
 #ifndef TYPE__H__
 #define TYPE__H__
 
+@class ClassDef;
+
 @interface Type : Node
 {
     id specs, decl;
@@ -73,6 +75,8 @@ extern id t_id;
 - (BOOL)canforward;
 - (BOOL)isscalartype;
 - (BOOL)isselptr;
+
+- (ClassDef *)getClass;
 
 - encode:nested;
 - encode;

@@ -19,6 +19,8 @@
 extern id curclassdef;
 extern id curstruct;
 
+@class Selector;
+
 @interface ClassDef : Node
 {
     id unit;
@@ -91,6 +93,8 @@ extern id curstruct;
 - checkivars:aList;
 - cvars;
 - cvars:aList;
+- clssels;
+- nstsels;
 - checkcvars:aList;
 - addclsdisp:method;
 - addnstdisp:method;
@@ -127,5 +131,8 @@ extern id curstruct;
 
 - addpropmeth:propmeth;
 - propmeths;
+
+- checkAssign:(ClassDef *)aClass;
+- checkSelector:(Selector *)aSel;
 
 @end

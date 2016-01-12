@@ -40,6 +40,7 @@
 #include "trlunit.h"
 #include "identxpr.h"
 #include "constxpr.h"
+#include "classdef.h"
 
 id t_unknown;
 id t_void;
@@ -460,12 +461,27 @@ BASIC_TYPESPECS basicSpecForSpec (id spec)
            { : each |
                if ([trlunit lookupclass:[String str:[each str]]])
                    isObj = YES;
+               else if ([trlunit lookupclassfwd:[String str:[each str]]])
+                   isObj = YES;
            }];
 
     if (isObj && decl && [decl isKindOf:Pointer] && ![decl pointer])
         return YES;
 
     return NO;
+}
+
+- (ClassDef *)getClass
+{
+    ClassDef * cl = nil;
+
+    [specs do:
+           { : each | ClassDef * clTmp;
+               if ((clTmp = [trlunit lookupclass:[String str:[each str]]]))
+                   cl = clTmp;
+           }];
+
+    return cl;
 }
 
 - (BOOL)isscalartype

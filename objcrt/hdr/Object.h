@@ -243,24 +243,21 @@
 - awakeFrom:aFiler;
 
 /* private */
-- new;
 - initialize;
 + free;
 + ARC_dealloc;
 
-- _lock;
-- _unlock;
-
 + become:other;
 - vsprintf:(STR)format:(OC_VA_LIST *)ap;
 - str:(STR)s;
-- ARC_dealloc;
 - add:anObject;
 - printToFile:(FILE *)aFile;
 - fileOutIdsFor:aFiler;
 - fileInIdsFrom:aFiler;
 - fileOutIdsFor;
 - fileInIdsFrom;
+/* KVO stub */
+- (void)sendKVOForProperty:prop oldValue:oldVal newValue:newVal;
 @end
 
 #endif /* __OBJECT_H__ */

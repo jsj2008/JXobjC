@@ -99,7 +99,7 @@
     if (newRoot)
         [KPOs do:{ : each | [each setRoot:newRoot]}];
 
-    [kToObs do:
+    [kToObs keysDo:
             { :key | id val, intersect;
                 val       = [kToObs atKey:key];
                 intersect = [val detect:matchDetector];

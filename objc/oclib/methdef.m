@@ -135,17 +135,12 @@
             }
         }
         else
-        {
             [trlunit def:s asmethod:method];
-            if (factory)
-            {
-                [curclassdef addclssel:s];
-            }
-            else
-            {
-                [curclassdef addnstsel:s];
-            }
-        }
+
+        if (factory && ![[curclassdef clssels] includes:s])
+            [curclassdef addclssel:s];
+        else if (!factory && ![[curclassdef nstsels] includes:s])
+            [curclassdef addnstsel:s];
     }
     return self;
 }

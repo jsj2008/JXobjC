@@ -88,14 +88,8 @@
             isidassign++;
     }
 
-    /* printf ("LHS:");
-    [[[lhs type] specs] do:{ : each | printf (" <%s>", [each str])}];
-    printf (" [%s]", [[[lhs type] decl] str]);
-    printf ("\n");
-    printf ("RHS:");
-    [[[rhs type] specs] do:{ : each | printf (" <%s>", [each str])}];
-    printf (" [%s]", [[[rhs type] decl] str]);
-    printf ("\n"); */
+    if ([[lhs type] isNamedClass] && [[rhs type] isNamedClass])
+        [[[lhs type] getClass] checkAssign:[[rhs type] getClass]];
 
     return self;
 }
