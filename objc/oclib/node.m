@@ -231,6 +231,8 @@ void warnat (id sym, char * s, ...)
         fprintf (stderr, KBLD);
         if (no != 0 && fn != NULL)
             fprintf (stderr, "%s:%d: " KYEL "warning: " KNRM KBLD, fn, no);
+        else if (no != 0)
+            fprintf (stderr, "%d:" KYEL "warning: " KNRM KBLD, no);
         vwarn (s, ap);
         fprintf (stderr, KNRM);
         OC_VA_END (ap);
@@ -287,6 +289,7 @@ void fatalat (id sym, char * s, ...)
     vfatal (s, ap);
     fprintf (stderr, KNRM);
     OC_VA_END (ap);
+    abort ();
 }
 
 @implementation Node

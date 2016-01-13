@@ -74,6 +74,12 @@
     return self;
 }
 
+- arg
+{
+    printf ("Arg %p, cast %p\n", arg, cast);
+    return arg;
+}
+
 - selcons:sel
 {
     if (keyw)
@@ -88,8 +94,6 @@
 {
     id x = (hide) ? hide : arg;
 
-    if ([[self type] isid])
-        cast = [self type];
     if (cast)
     {
         [cast gendef:x];

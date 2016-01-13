@@ -19,6 +19,7 @@
 #include <stdlib.h>
 #include <assert.h>
 #include "Object.h"
+#include "OCString.h"
 #include "node.h"
 #include "decl.h"
 #include "stardecl.h"
@@ -140,6 +141,22 @@
         [pointer gendef:sym];
     }
     return self;
+}
+
+- (String *)asDefFor:sym
+{
+    String * aType = [String new];
+
+    if (decl)
+    {
+        [aType concat:[pointer asDefFor:nil]];
+        [aType concat:[decl asDefFor:nil]];
+    }
+    else
+    {
+        [aType concat:[pointer asDefFor:nil]];
+    }
+    return aType;
 }
 
 - synth

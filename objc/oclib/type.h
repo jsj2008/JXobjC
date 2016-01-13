@@ -32,6 +32,7 @@ extern id t_id;
 #define TYPE__H__
 
 @class ClassDef;
+@class String;
 
 @interface Type : Node
 {
@@ -61,6 +62,8 @@ extern id t_id;
 - gen;
 - gendef:sym;
 - genabstrtype;
+
+- (String *)asDefFor:sym;
 
 - max:aType;
 - (uintptr_t)hash;

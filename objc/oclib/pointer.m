@@ -23,6 +23,8 @@
 #include "node.h"
 #include "decl.h"
 #include "pointer.h"
+#include "OCString.h"
+#include "Block.h"
 
 @implementation Pointer
 
@@ -114,6 +116,25 @@
             [sym gen];
     }
     return self;
+}
+
+- (String *)asDefFor:sym
+{
+    String * aType = [String str:"*"];
+
+    [specs do:{ : each | [aType concat:each]}];
+    if (pointer)
+    {
+        [aType concat:[pointer asDefFor:nil]];
+    }
+    else
+    {
+        if (anident)
+            [aType concat:anident];
+        else if (sym)
+            [aType concat:sym];
+    }
+    return aType;
 }
 
 - synth { return self; }

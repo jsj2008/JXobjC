@@ -204,6 +204,10 @@
     }
 }
 
+- (int)numArgs { return ksel ? [ksel size] : 0; }
+
+- (KeywExpr *)argAt:(int)i { return [ksel at:i]; }
+
 - calcneedscast
 {
     haveneedscast++;
@@ -228,10 +232,6 @@
             {
                 needscast = YES;
                 break;
-            }
-            else
-            {
-                [[ksel at:i] cast:[[ksel at:i] type]];
             }
         }
     }

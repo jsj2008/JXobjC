@@ -25,6 +25,7 @@
 
 - keyw;
 - keyw:sel;
+- arg;
 - arg:a;
 - selcons:sel;
 - cvtcommalist;
@@ -32,5 +33,6 @@
 - genarg;
 - (BOOL)isselptr;
 - (BOOL)canforward;
+- (BOOL)isVarArgs;
 
 @end

@@ -21,6 +21,8 @@
 
 #include "node.h"
 
+@class String;
+
 @interface Decl : Node
 {
 }
@@ -41,6 +43,8 @@
 - hide:sym rename:x;
 - st80;
 - st80inits;
+
+- (String *)asDefFor:sym;
 
 @end
 

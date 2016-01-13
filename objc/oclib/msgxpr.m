@@ -41,6 +41,8 @@
 #include "options.h"
 #include "var.h"
 #include "scalar.h"
+#include "binxpr.h"
+#include "arrowxpr.h"
 
 id msgwraps; /* VICI */
 
@@ -182,6 +184,7 @@ id msgwraps; /* VICI */
 
 - synth
 {
+    int i;
     /* find prototype */
     method = [self method];
     if ([self varargs])
@@ -225,6 +228,29 @@ id msgwraps; /* VICI */
                   [sel str], [[[rcvr type] getClass] classname]);
 
     msg = [msg synth];
+
+    if (method)
+        for (i = [msg numArgs] - 1; i > 0; i--)
+        {
+            Type *argType, *methType;
+            if ([[[msg argAt:i] expr] isKindOf:ArrowExpr])
+                continue;
+            argType = [[[msg argAt:i] expr] type];
+            methType =
+                ([[method argAt:i] cast] ?: [[method argAt:i] type]) ?: t_id;
+
+            if (argType && ![argType isEqual:methType])
+            {
+                // printf("[[msg argAt:i] expr] = %s\n", [[[msg argAt:i] expr]
+                // str]);
+                warnat (
+                    msg,
+                    "type of parameter %d does not match type of declaration",
+                    i);
+                printf ("%s and %s\n", [[argType asDefFor:nil] str],
+                        [[methType asDefFor:nil] str]);
+            }
+        }
 
     if (o_refcnt && [[self type] isid] && !hasSynthedForId)
     {

@@ -16,6 +16,8 @@
  * Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
  */
 
+@class KeywExpr;
+
 @interface Method : Node
 {
     int lineno;
@@ -55,6 +57,8 @@
 - keywsel:aList;
 - (BOOL)varargs;
 - varargs:(BOOL)flag;
+- (int)numArgs;
+- (KeywExpr *)argAt:(int)i;
 
 - gen;
 - gencast;

@@ -49,6 +49,8 @@
     return self;
 }
 
+- expr { return expr; }
+
 - (unsigned)typehash { return [t_id hash]; }
 
 - (BOOL)typeEqual:x { return YES; }
@@ -127,6 +129,8 @@
 - (BOOL)isselptr { return YES; /* assume 'id' */ }
 
 - (BOOL)canforward { return YES; /* assume 'id' */ }
+
+- (BOOL)isVarArgs { return exprlist ? YES : NO; }
 
 - st80
 {

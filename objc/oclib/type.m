@@ -609,6 +609,21 @@ BASIC_TYPESPECS basicSpecForSpec (id spec)
     return self;
 }
 
+- (String *)asDefFor:sym
+{
+    String * aType = [String new];
+    [specs do:{ : each | [aType concat:each]}];
+    if (decl)
+    {
+        [aType concat:[decl asDefFor:nil]];
+    }
+    if (sym)
+    {
+        [aType concat:sym];
+    }
+    return aType;
+}
+
 - dot:sym
 {
     if (decl)
