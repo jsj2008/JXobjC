@@ -215,18 +215,14 @@ id msgwraps; /* VICI */
     if (rcvr)
         rcvr = [rcvr synth];
 
-    /* This will be a good place to put the optional-typing to use.
-     * We should lookup the class according to type and scan it (along
-     * with its parents and any categories) for the selector.
+    /* We lookup the class definition if the receiver is a named-class type and
+     * scan it (along with its parents) for the selector.
+     * Later, we should check for associated categories too. */
 
-    printf("Receiver type: %s\n", [[[rcvr type] decl] str]);
-
-    [[[rcvr type] specs] do: {:each | printf("Spec: %s\n", [each str]) }];*/
-
-    if ([[rcvr type] isNamedClass])
-    {
-        [[[rcvr type] getClass] checkSelector:[self selector]];
-    }
+    if ([[rcvr type] isNamedClass] && [[rcvr type] getClass])
+        if (![[[rcvr type] getClass] lookupSelector:[self selector]])
+            warn ("selector %s may not be understood by object of class %s",
+                  [sel str], [[[rcvr type] getClass] classname]);
 
     msg = [msg synth];
 

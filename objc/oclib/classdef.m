@@ -1344,32 +1344,20 @@ static BOOL checkUpCast (ClassDef * one, ClassDef * two)
     return self;
 }
 
-static BOOL selectorOK (id aClass, Selector * aSel)
+- lookupSelector:(Selector *)aSel
 {
-    if (!aClass)
-        return YES;
-    else if (!aSel)
-        return YES;
+    if (!aSel)
+        return nil;
     else
     {
-        if ([[aClass clssels] includes:aSel] ||
-            [[aClass nstsels] includes:aSel])
-            return YES;
-        else if ([aClass superclassdef])
-            return selectorOK ([aClass superclassdef], aSel);
+        Selector * candidate = [clssels findMatching:aSel];
+        if (!candidate)
+            candidate = [nstsels findMatching:aSel];
+        if (!candidate && superc)
+            return [superc lookupSelector:aSel];
+        else
+            return candidate;
     }
-    return NO;
-}
-
-#define KNRM "\x1B[0m"
-#define KBLD "\x1B[1m"
-
-- checkSelector:(Selector *)aSel
-{
-    if (!selectorOK (self, aSel))
-        warn ("selector %s may not be understood by object of class %s",
-              [aSel str], [self classname]);
-    return self;
 }
 
 @end

@@ -121,6 +121,7 @@ extern id curstruct;
 - genmetasuper;
 - genclassref;
 
+- lookupSelector:(Selector *)aSel;
 - lookupivar:sym;
 - lookupcvar:sym;
 - (BOOL)isivar:sym;
@@ -133,6 +134,5 @@ extern id curstruct;
 - propmeths;
 
 - checkAssign:(ClassDef *)aClass;
-- checkSelector:(Selector *)aSel;
 
 @end
