@@ -78,6 +78,7 @@ extern id t_id;
 - (BOOL)canforward;
 - (BOOL)isscalartype;
 - (BOOL)isselptr;
+- (BOOL)isTypeEqual:x;
 
 - (ClassDef *)getClass;
 

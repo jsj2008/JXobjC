@@ -239,7 +239,7 @@ id msgwraps; /* VICI */
             methType =
                 ([[method argAt:i] cast] ?: [[method argAt:i] type]) ?: t_id;
 
-            if (argType && ![argType isEqual:methType])
+            if (argType && ![argType isTypeEqual:methType])
             {
                 // printf("[[msg argAt:i] expr] = %s\n", [[[msg argAt:i] expr]
                 // str]);

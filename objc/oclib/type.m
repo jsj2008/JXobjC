@@ -412,6 +412,29 @@ BASIC_TYPESPECS basicSpecForSpec (id spec)
     }
 }
 
+- (BOOL)isTypeEqual:x
+{
+    int i, n;
+    BOOL matched = NO;
+
+    if ([self isEqual:x])
+        return YES;
+
+    for (i = 0, n = [specs size]; i < n; i++)
+    {
+        Type * potentialType;
+        id each = [specs at:i];
+
+        if (!matched && (potentialType = [trlunit lookuptype:each]))
+        {
+            matched =
+                [potentialType isTypeEqual:x] ?: [x isTypeEqual:potentialType];
+        }
+    }
+
+    return matched;
+}
+
 - (BOOL)isvoid
 {
     if (self == t_void)
