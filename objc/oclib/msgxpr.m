@@ -43,6 +43,7 @@
 #include "scalar.h"
 #include "binxpr.h"
 #include "arrowxpr.h"
+#include "keywxpr.h"
 
 id msgwraps; /* VICI */
 
@@ -230,7 +231,7 @@ id msgwraps; /* VICI */
     msg = [msg synth];
 
     if (method)
-        for (i = [msg numArgs] - 1; i > 0; i--)
+        for (i = [msg numArgs] - 1; i >= 0; i--)
         {
             Type *argType, *methType;
             if ([[[msg argAt:i] expr] isKindOf:ArrowExpr])
@@ -241,8 +242,8 @@ id msgwraps; /* VICI */
 
             if (argType && ![argType isTypeEqual:methType])
             {
-                // printf("[[msg argAt:i] expr] = %s\n", [[[msg argAt:i] expr]
-                // str]);
+                printf ("[[msg argAt:i] expr] = %s\n",
+                        [[[msg argAt:i] expr] str]);
                 warnat (
                     msg,
                     "type of parameter %d does not match type of declaration",

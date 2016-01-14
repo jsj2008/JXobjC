@@ -25,6 +25,7 @@
 - keyw;
 - keyw:sel;
 - cast:c;
+- cast;
 - arg:a;
 - arg;
 - selcons:sel;

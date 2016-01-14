@@ -71,6 +71,7 @@ void definebuiltintype (char * s)
 id s_void;
 id s_char;
 id s_bool;
+id s_short;
 id s_int;
 id s_uns;
 id s_long;
@@ -107,6 +108,7 @@ id s_iddecref;
     s_void          = [Symbol str:"void"];
     s_char          = [Symbol str:"char"];
     s_bool          = [Symbol str:"BOOL"];
+    s_short         = [Symbol str:"short"];
     s_int           = [Symbol str:"int"];
     s_uns           = [Symbol str:"unsigned"];
     s_long          = [Symbol str:"long"];

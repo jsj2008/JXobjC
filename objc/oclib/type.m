@@ -46,6 +46,7 @@ id t_unknown;
 id t_void;
 id t_char;
 id t_bool;
+id t_short;
 id t_int;
 id t_uns;
 id t_long;
@@ -56,7 +57,7 @@ id t_id;
 
 typedef enum _BASIC_TYPESPECS
 {
-    T_NO,
+    T_NO = 0,
     T_VOID,
     T_CHAR,
     T_BOOL,
@@ -81,6 +82,8 @@ BASIC_TYPESPECS basicSpecForSpec (id spec)
         return T_CHAR;
     else if ([spec isEqual:s_bool])
         return T_BOOL;
+    else if ([spec isEqual:s_short])
+        return T_SHORT;
     else if ([spec isEqual:s_int])
         return T_INT;
     else if ([spec isEqual:s_uns])
@@ -108,6 +111,7 @@ BASIC_TYPESPECS basicSpecForSpec (id spec)
         t_void    = [[Type new] addspec:s_void];
         t_char    = [[Type new] addspec:s_char];
         t_bool    = [[Type new] addspec:s_bool];
+        t_short   = [[Type new] addspec:s_short];
         t_int     = [[Type new] addspec:s_int];
         t_uns     = [[Type new] addspec:s_uns];
         t_long    = [[Type new] addspec:s_long];
@@ -419,14 +423,22 @@ BASIC_TYPESPECS basicSpecForSpec (id spec)
 
     if ([self isEqual:x])
         return YES;
+    else if (self == t_unknown || x == t_unknown)
+        return YES;
 
     for (i = 0, n = [specs size]; i < n; i++)
     {
         Type * potentialType;
         id each = [specs at:i];
 
+        if (basicSpecForSpec (each))
+            matched = YES;
+
         if (!matched && (potentialType = [trlunit lookuptype:each]))
         {
+            printf ("Potential type for <%s>: <%s>\n",
+                    [[self asDefFor:nil] str],
+                    [[potentialType asDefFor:nil] str]);
             matched =
                 [potentialType isTypeEqual:x] ?: [x isTypeEqual:potentialType];
         }

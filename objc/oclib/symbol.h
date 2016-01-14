@@ -19,6 +19,7 @@
 extern id s_void;
 extern id s_char;
 extern id s_bool;
+extern id s_short;
 extern id s_int;
 extern id s_uns;
 extern id s_long;

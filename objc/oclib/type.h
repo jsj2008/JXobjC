@@ -20,6 +20,7 @@ extern id t_unknown;
 extern id t_void;
 extern id t_char;
 extern id t_bool;
+extern id t_short;
 extern id t_int;
 extern id t_long;
 extern id t_uns;
