@@ -62,9 +62,13 @@ id curclassdef;
 {
     if (!selftype)
     {
+        id r = [StructSpec new];
+
+        [r keyw:[Symbol sprintf:"struct"]];
+        [r name:[Symbol sprintf:"%s", privtypename]];
         assert (privtypename);
         selftype = [Type new];
-        [selftype addspec:[Symbol sprintf:"struct %s", privtypename]];
+        [selftype addspec:r];
         [selftype decl:[Pointer new]];
     }
     return selftype;
@@ -1336,13 +1340,23 @@ static BOOL checkUpCast (ClassDef * one, ClassDef * two)
     return YES;
 }
 
-- checkAssign:(ClassDef *)aClass
+static BOOL checkRelation (ClassDef * one, ClassDef * two)
 {
-    if (!checkUpCast (self, aClass))
-        warn ("downcasting parent class %s to derived class %s",
-              [aClass classname], [self classname]);
-    return self;
+    ClassDef *superOne, *superTwo;
+    if (!one || !two)
+        return YES;
+    else if (one == two)
+        return YES;
+    else if ((superOne = [one superclassdef]) && (two == superOne))
+        return YES;
+    else if (superOne)
+        return checkRelation (superOne, two);
+    return NO;
 }
+
+- (BOOL)checkAssign:(ClassDef *)aClass { return checkUpCast (self, aClass); }
+
+- (BOOL)isRelated:(ClassDef *)aClass { return checkRelation (self, aClass); }
 
 - lookupSelector:(Selector *)aSel
 {

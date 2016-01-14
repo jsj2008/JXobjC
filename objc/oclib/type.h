@@ -73,6 +73,7 @@ extern id t_id;
 - (int)lineno;
 
 - (BOOL)isid;
+- (BOOL)isRealId;
 - (BOOL)isrefcounted;
 - (BOOL)isNamedClass;
 - (BOOL)isvoid;

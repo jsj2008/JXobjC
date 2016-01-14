@@ -133,6 +133,7 @@ extern id curstruct;
 - addpropmeth:propmeth;
 - propmeths;
 
-- checkAssign:(ClassDef *)aClass;
+- (BOOL)checkAssign:(ClassDef *)aClass;
+- (BOOL)isRelated:(ClassDef *)aClass;
 
 @end

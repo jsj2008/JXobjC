@@ -44,6 +44,8 @@
 #include "binxpr.h"
 #include "arrowxpr.h"
 #include "keywxpr.h"
+#include "decl.h"
+#include "keywdecl.h"
 
 id msgwraps; /* VICI */
 
@@ -225,8 +227,9 @@ id msgwraps; /* VICI */
 
     if ([[rcvr type] isNamedClass] && [[rcvr type] getClass])
         if (![[[rcvr type] getClass] lookupSelector:[self selector]])
-            warn ("selector %s may not be understood by object of class %s",
-                  [sel str], [[[rcvr type] getClass] classname]);
+            warnat (msg,
+                    "selector %s may not be understood by object of class %s",
+                    [sel str], [[[rcvr type] getClass] classname]);
 
     msg = [msg synth];
 
@@ -238,17 +241,16 @@ id msgwraps; /* VICI */
                 continue;
             argType = [[[msg argAt:i] expr] type];
             methType =
-                ([[method argAt:i] cast] ?: [[method argAt:i] type]) ?: t_id;
+                ([(KeywDecl *)[method argAt:i] cast] ?: [[method argAt:i] type])
+                    ?: t_id;
 
             if (argType && ![argType isTypeEqual:methType])
             {
                 printf ("[[msg argAt:i] expr] = %s\n",
                         [[[msg argAt:i] expr] str]);
-                warnat (
-                    msg,
-                    "type of parameter %d does not match type of declaration",
-                    i);
-                printf ("%s and %s\n", [[argType asDefFor:nil] str],
+                warnat (msg, "incompatible type '%s' specified to '%s:(%s)' ",
+                        [[argType asDefFor:nil] str],
+                        [[[msg argAt:i] keyw] str],
                         [[methType asDefFor:nil] str]);
             }
         }

@@ -89,7 +89,17 @@
     }
 
     if ([[lhs type] isNamedClass] && [[rhs type] isNamedClass])
-        [[[lhs type] getClass] checkAssign:[[rhs type] getClass]];
+    {
+        ClassDef *lhsCls = [[lhs type] getClass],
+                 *rhsCls = [[rhs type] getClass];
+        if (![lhsCls checkAssign:rhsCls])
+            warn ("downcasting object of parent class %s to derived class %s",
+                  [lhsCls classname], [rhsCls classname]);
+        else if (![lhsCls isRelated:rhsCls])
+            warn ("assigning object of unrelated class %s to identifier of "
+                  "class %s",
+                  [lhsCls classname], [rhsCls classname]);
+    }
 
     return self;
 }

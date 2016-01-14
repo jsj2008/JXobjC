@@ -425,6 +425,9 @@ BASIC_TYPESPECS basicSpecForSpec (id spec)
         return YES;
     else if (self == t_unknown || x == t_unknown)
         return YES;
+    else if ([self isNamedClass] && [x isNamedClass])
+        return [[self getClass] checkAssign:[x getClass]] &&
+               [[self getClass] isRelated:[x getClass]];
 
     for (i = 0, n = [specs size]; i < n; i++)
     {
@@ -432,6 +435,8 @@ BASIC_TYPESPECS basicSpecForSpec (id spec)
         id each = [specs at:i];
 
         if (basicSpecForSpec (each))
+            matched = YES;
+        if ([each isKindOf:StructSpec])
             matched = YES;
 
         if (!matched && (potentialType = [trlunit lookuptype:each]))
@@ -459,6 +464,14 @@ BASIC_TYPESPECS basicSpecForSpec (id spec)
     if (self == t_id)
         return YES;
     else if ([self isrefcounted])
+        return YES;
+    else
+        return decl == nil && [specs size] == 1 && [[specs at:0] isid];
+}
+
+- (BOOL)isRealId
+{
+    if (self == t_id)
         return YES;
     else
         return decl == nil && [specs size] == 1 && [[specs at:0] isid];
