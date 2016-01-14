@@ -20,6 +20,7 @@ extern id curclassdef;
 extern id curstruct;
 
 @class Selector;
+@class OrdCltn;
 
 @interface ClassDef : Node
 {
@@ -61,6 +62,8 @@ extern id curstruct;
     id decrefsmethod, increfsmethod, propmeths;
     long offset;
 }
+
+@property OrdCltn * generics;
 
 - (int)compare:c;
 

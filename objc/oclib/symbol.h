@@ -16,6 +16,8 @@
  * Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
  */
 
+#pragma once
+
 extern id s_void;
 extern id s_char;
 extern id s_bool;

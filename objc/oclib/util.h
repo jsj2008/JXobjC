@@ -25,6 +25,8 @@ FILE * reopenfile (STR name, STR modfs, FILE * of);
 
 extern int okblock;
 
+@class OrdCltn;
+
 id mkcppdirect (char * s);
 id mkexprstmt (id expr);
 id mklabeledstmt (id label, id stmt);
@@ -86,7 +88,7 @@ id atdefsaddall (id c, id n);
 id mkblockexpr (id lb, id parms, id datadefs, id stmts, id expr, id rb);
 void mkclassfwd (id name);
 id mkclassdef (id keyw, id name, id sname, id protocols, id ivars, id cvars,
-               BOOL iscategory);
+               OrdCltn * generics, BOOL iscategory);
 id mkdatadef (id datadef, id specs, id decl, id initializer);
 id mkencodeexpr (id name);
 id mkenumspec (id keyw, id name, id lb, id list, id rb);

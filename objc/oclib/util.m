@@ -104,6 +104,7 @@
 #include "propdef.h"
 #include "protodef.h"
 #include "encxpr.h"
+#include "gendecl.h"
 
 void procextdef (id def)
 {
@@ -129,12 +130,18 @@ void finclassdef (void)
                 [curclassdef synthrefcntmethods];
             }
         }
+
         if ([curclassdef propmeths])
             [curclassdef synthpropmethods];
+
+        [[curclassdef generics]
+            do:{ : each | [trlunit undefSym:[[each decl] sym] asType:each]}];
+
         if (o_warnmissingmethods && [curclassdef isimpl])
         {
             [curclassdef warnimplnotfound];
         }
+
         curclassdef = nil;
     }
     else if (curclassdef && [curclassdef isKindOf:ProtoDef])
@@ -1056,7 +1063,7 @@ void mkclassfwd (id name)
 }
 
 id mkclassdef (id keyw, id name, id sname, id protocols, id ivars, id cvars,
-               BOOL iscategory)
+               OrdCltn * generics, BOOL iscategory)
 {
     id r;
     BOOL intfkeyw = (keyw != nil && strstr ([keyw str], "interface") != NULL);
@@ -1092,6 +1099,21 @@ id mkclassdef (id keyw, id name, id sname, id protocols, id ivars, id cvars,
         [r supername:sname];
         [r ivars:ivars];
         [r cvars:cvars];
+        [r setGenerics:generics];
+    }
+
+    if (generics)
+    {
+        OrdCltn * clsGenerics = [OrdCltn new];
+        short i               = 0;
+
+        [generics do:
+                  { :each |
+          Type * newType =[[t_id deepCopy] decl:[[[GenericDecl new] setIndex:i++] setSym:each]];
+                      [trlunit def:each astype:newType];
+                      [clsGenerics add:newType];
+                  }];
+        [r setGenerics:clsGenerics];
     }
 
     if (implkeyw)

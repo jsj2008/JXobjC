@@ -298,21 +298,21 @@ optgenericnames
 
 classdef
     : atbegin optgenericnames identorclass optprotoreflist ivardef
-    { $$ = mkclassdef($1,$3,nil,$4,$5,nil,0); }
+    { $$ = mkclassdef($1,$3,nil,$4,$5,nil,$2,0); }
     | atbegin optgenericnames identorclass optprotoreflist ivardef ':' ivardef
-    { $$ = mkclassdef($1,$3,nil,$4,$5,$7,0); }
+    { $$ = mkclassdef($1,$3,nil,$4,$5,$7,$2,0); }
     | atbegin optgenericnames identorclass optprotoreflist
-    { $$ = mkclassdef($1,$3,nil,$4,nil,nil,0); }
+    { $$ = mkclassdef($1,$3,nil,$4,nil,nil,$2,0); }
     | atbegin optgenericnames identorclass  ':' classornil optprotoreflist
-    { $$ = mkclassdef($1,$3,$5,$6,nil,nil,0); }
+    { $$ = mkclassdef($1,$3,$5,$6,nil,nil,$2,0); }
     | atbegin optgenericnames identorclass ':' classornil optprotoreflist
       ivardef
-    { $$ = mkclassdef($1,$3,$5,$6,$7,nil,0); }
+    { $$ = mkclassdef($1,$3,$5,$6,$7,nil,$2,0); }
     | atbegin optgenericnames identorclass ':' classornil optprotoreflist
       ivardef  ':' ivardef
-    { $$ = mkclassdef($1,$3,$5,$6,$7,$9,0); }
+    { $$ = mkclassdef($1,$3,$5,$6,$7,$9,$2,0); }
     | atbegin optgenericnames identorclass '(' identifier ')' optprotoreflist
-    { $$ = mkclassdef($1, $5, $3, $7, nil, nil, 1); }
+    { $$ = mkclassdef($1, $5, $3, $7, nil, nil, $2, 1); }
     ;
 
 compoundstmt

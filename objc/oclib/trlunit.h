@@ -88,6 +88,7 @@ extern id trlunit;
 - defbuiltinfun:node;
 - defbuiltintype:node;
 - def:sym astype:aType;
+- undefSym:node asType:atype;
 - defdata:node astype:aType;
 - def:sym asprotocol:protodef;
 - def:sym asclass:classdef;

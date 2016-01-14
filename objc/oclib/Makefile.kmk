@@ -17,6 +17,6 @@ oclib_SOURCES = casestmt.m datadef.m forstmt.m msgxpr.m propdef.m stmt.m \
     enumtor.m gattrib.m listxpr.m pointer.m stardecl.m util.m blockxpr.m \
     cppdirec.m expr.m globdef.m methdef.m precdecl.m stclass.m var.m \
     btincall.m dasmstmt.m exprstmt.m gotostmt.m method.m precxpr.m \
-    whilstmt.m protodef.m prdotxpr.m encxpr.m
+    whilstmt.m protodef.m prdotxpr.m encxpr.m gendecl.m
 
 include $(FILE_KBUILD_SUB_FOOTER)

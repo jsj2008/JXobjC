@@ -844,6 +844,13 @@ static char * mystrrchr (const char * s, int c)
     return self;
 }
 
+- undefSym:node asType:atype
+{
+    [types remove:atype];
+    [typedic removeKey:node];
+    return self;
+}
+
 - defenumtor:e
 {
     if (!enumtors)
