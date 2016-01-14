@@ -36,7 +36,6 @@
 #define YY_NEVER_INTERACTIVE 1
 #define YY_DECL int yylex_raw()
 
-
 extern id yylval;
 
 int identif(void);
@@ -256,12 +255,12 @@ __pragma\([^)]*\([^)]*\)\)  { return watcomkeyw(cppdirect); } /* msvc */
 "-"                { return '-'; }
 "<<"               { return keyw(shift); }
 ">>"               { return keyw(shift); }
-"<"                { return keyw(relop); }
-"<="               { return keyw(relop); }
-">"                { return keyw(relop); }
-">="               { return keyw(relop); }
+"<"                { return keyw(angleopen); }
+"<="               { return keyw(directrelop); }
+">"                { return keyw(angleclose); }
+">="               { return keyw(directrelop); }
 "=="               { return keyw(equalop); }
-"!="               { return keyw(relop); }
+"!="               { return keyw(directrelop); }
 "&"                { return '&'; }
 "^"                { return '^'; }
 "|"                { return '|'; }
