@@ -135,7 +135,7 @@ void finclassdef (void)
             [curclassdef synthpropmethods];
 
         [[curclassdef generics]
-            do:{ : each | [trlunit undefSym:[[each decl] sym] asType:each]}];
+            keysDo:{ : eachKey | [trlunit undefSym:eachKey asType:[[curclassdef generics] atKey:eachKey]]}];
 
         if (o_warnmissingmethods && [curclassdef isimpl])
         {
@@ -1099,19 +1099,23 @@ id mkclassdef (id keyw, id name, id sname, id protocols, id ivars, id cvars,
         [r supername:sname];
         [r ivars:ivars];
         [r cvars:cvars];
-        [r setGenerics:generics];
     }
 
     if (generics)
     {
-        OrdCltn * clsGenerics = [OrdCltn new];
-        short i               = 0;
+        Dictionary * clsGenerics = [Dictionary new];
+        short i                  = 0;
 
         [generics do:
                   { :each |
-          Type * newType =[[t_id deepCopy] decl:[[[GenericDecl new] setIndex:i++] setSym:each]];
+                      GenericDecl * gDecl =  [[[GenericDecl new] 
+                                               setIndex:i++] setSym:each];
+                      Type * newType = [[t_id deepCopy] decl:gDecl];
                       [trlunit def:each astype:newType];
-                      [clsGenerics add:newType];
+                      [clsGenerics atKey:each put:newType];
+                      /* A better option: make the generic types temporarily a
+                         different token that is resolved into an <id> type. */
+                      gf ("typedef id %s;\n", [each str]);
                   }];
         [r setGenerics:clsGenerics];
     }

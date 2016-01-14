@@ -32,6 +32,8 @@ extern id t_id;
 #ifndef TYPE__H__
 #define TYPE__H__
 
+@class GenericSpec;
+@class GenericDecl;
 @class ClassDef;
 @class String;
 
@@ -80,9 +82,12 @@ extern id t_id;
 - (BOOL)canforward;
 - (BOOL)isscalartype;
 - (BOOL)isselptr;
+- (BOOL)isGenSpec;
 - (BOOL)isTypeEqual:x;
 
 - (ClassDef *)getClass;
+- (GenericSpec *)getGenSpec;
+- (GenericDecl *)genDeclForClass:aClass;
 
 - encode:nested;
 - encode;

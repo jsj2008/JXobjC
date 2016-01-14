@@ -85,6 +85,8 @@
 {
     String * aType = [String new];
 
+    [aType concat:"*genericiser*"];
+
     if (decl)
     {
         [aType concat:[decl asDefFor:sym]];

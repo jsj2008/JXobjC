@@ -29,6 +29,7 @@
 #include "util.h"
 #include "stmt.h"
 #include "trlunit.h"
+#include "genspec.h"
 
 #ifndef __WATCOMC__
 /* breaks compile wcc386 */
@@ -1126,7 +1127,7 @@ typenamelist
 
 genericspec
     : angleopen typenamelist angleclose
-    { $$ = $2; }
+    { $$ = [[GenericSpec new] setTypes: $2]; }
     ;
 
 typespec

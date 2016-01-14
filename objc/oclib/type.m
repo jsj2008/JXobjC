@@ -15,7 +15,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
  */
-/* Copyright (c) 2015 D. Mackay. All rights reserved. */
+/* Copyright (c) 2015-16 D. Mackay. All rights reserved. */
 
 #include <assert.h>
 #include <ctype.h>
@@ -41,6 +41,8 @@
 #include "identxpr.h"
 #include "constxpr.h"
 #include "classdef.h"
+#include "genspec.h"
+#include "gendecl.h"
 
 id t_unknown;
 id t_void;
@@ -504,6 +506,7 @@ BASIC_TYPESPECS basicSpecForSpec (id spec)
 - (BOOL)isNamedClass
 {
     BOOL isObj = NO;
+    Pointer * viewDecl;
 
     [specs do:
            { : each |
@@ -513,10 +516,41 @@ BASIC_TYPESPECS basicSpecForSpec (id spec)
                    isObj = YES;
            }];
 
-    if (isObj && decl && [decl isKindOf:Pointer] && ![decl pointer])
+    viewDecl = [decl isKindOf:GenericDecl] ? [decl decl] : decl;
+    if (isObj && viewDecl && [viewDecl isKindOf:Pointer] && ![viewDecl pointer])
         return YES;
 
     return NO;
+}
+
+- (GenericDecl *)genDeclForClass:aClass
+{
+    if ([decl isKindOf:GenericDecl])
+        return self;
+    else
+    {
+        Type * pType = nil;
+
+        [specs do:
+               { :each | Type * tmpT;
+                   if ((tmpT = [[aClass generics] atKey:each]))
+                       pType = tmpT;
+               }];
+
+        return pType;
+    }
+}
+
+- (BOOL)isGenSpec
+{
+    BOOL isGenSpec = NO;
+
+    [specs do:
+           { : each |
+               if ([each isKindOf: GenericSpec]) isGenSpec = YES;
+           }];
+
+    return isGenSpec;
 }
 
 - (ClassDef *)getClass
@@ -530,6 +564,19 @@ BASIC_TYPESPECS basicSpecForSpec (id spec)
            }];
 
     return cl;
+}
+
+- (GenericSpec *)getGenSpec
+{
+    GenericSpec * gSpec = nil;
+
+    [specs do:
+           { : each |
+               if ([each isKindOf: GenericSpec])
+                   gSpec = each;
+           }];
+
+    return gSpec;
 }
 
 - (BOOL)isscalartype

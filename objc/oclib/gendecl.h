@@ -1,9 +1,10 @@
 /* Copyright (c) 2016 D. Mackay. All rights reserved. */
 
-#pragma once
-
 #include "decl.h"
 #include "symbol.h"
+
+#ifndef GENDECL_H_
+#define GENDECL_H_
 
 @interface GenericDecl : Decl
 {
@@ -17,3 +18,5 @@
 - gen;
 
 @end
+
+#endif
