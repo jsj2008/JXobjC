@@ -41,8 +41,6 @@
 - gendef:sym;
 - genabstrtype;
 - hide:sym rename:x;
-- st80;
-- st80inits;
 
 - (String *)asDefFor:sym;
 

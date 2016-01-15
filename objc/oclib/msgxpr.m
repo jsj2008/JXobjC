@@ -46,6 +46,9 @@
 #include "keywxpr.h"
 #include "decl.h"
 #include "keywdecl.h"
+#include "genspec.h"
+#include "gendecl.h"
+#include "OrdCltn.h"
 
 id msgwraps; /* VICI */
 
@@ -187,6 +190,7 @@ id msgwraps; /* VICI */
 
 - synth
 {
+    OrdCltn * generics = 0;
     int i;
     /* find prototype */
     method = [self method];
@@ -231,6 +235,17 @@ id msgwraps; /* VICI */
                     "selector %s may not be understood by object of class %s",
                     [sel str], [[[rcvr type] getClass] classname]);
 
+    if ([[rcvr type] isGenSpec])
+    {
+        size_t numGen = [[[[rcvr type] getClass] generics] size];
+        generics = [[[rcvr type] getGenSpec] types];
+        if (numGen != [generics size])
+            fatalat (rcvr, "%s is specialised for %d types, but class %s is "
+                           "specialised against %d types",
+                     [rcvr str], [generics size],
+                     [[[rcvr type] getClass] classname], numGen);
+    }
+
     msg = [msg synth];
 
     if (method)
@@ -244,10 +259,21 @@ id msgwraps; /* VICI */
                 ([(KeywDecl *)[method argAt:i] cast] ?: [[method argAt:i] type])
                     ?: t_id;
 
-            if (argType && ![argType isTypeEqual:methType])
+            if (!argType || !methType)
+                break;
+
+            if (generics)
             {
-                printf ("[[msg argAt:i] expr] = %s\n",
-                        [[[msg argAt:i] expr] str]);
+                Type * pType =
+                    [methType genDeclForClass:[[rcvr type] getClass]];
+                methType =
+                    pType ? [generics at:[[pType decl] index]] : methType;
+                dbg ("pType: %p\n", pType);
+            }
+
+            if (![argType isTypeEqual:methType])
+            {
+                dbg ("[[msg argAt:i] expr] = %s\n", [[[msg argAt:i] expr] str]);
                 warnat (msg, "incompatible type '%s' specified to '%s:(%s)' ",
                         [[argType asDefFor:nil] str],
                         [[[msg argAt:i] keyw] str],

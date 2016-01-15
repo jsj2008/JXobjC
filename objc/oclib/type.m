@@ -15,7 +15,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
  */
-/* Copyright (c) 2015 D. Mackay. All rights reserved. */
+/* Copyright (c) 2015-16 D. Mackay. All rights reserved. */
 
 #include <assert.h>
 #include <ctype.h>
@@ -41,6 +41,8 @@
 #include "identxpr.h"
 #include "constxpr.h"
 #include "classdef.h"
+#include "genspec.h"
+#include "gendecl.h"
 
 id t_unknown;
 id t_void;
@@ -441,9 +443,8 @@ BASIC_TYPESPECS basicSpecForSpec (id spec)
 
         if (!matched && (potentialType = [trlunit lookuptype:each]))
         {
-            printf ("Potential type for <%s>: <%s>\n",
-                    [[self asDefFor:nil] str],
-                    [[potentialType asDefFor:nil] str]);
+            dbg ("Potential type for <%s>: <%s>\n", [[self asDefFor:nil] str],
+                 [[potentialType asDefFor:nil] str]);
             matched =
                 [potentialType isTypeEqual:x] ?: [x isTypeEqual:potentialType];
         }
@@ -504,6 +505,7 @@ BASIC_TYPESPECS basicSpecForSpec (id spec)
 - (BOOL)isNamedClass
 {
     BOOL isObj = NO;
+    Pointer * viewDecl;
 
     [specs do:
            { : each |
@@ -513,10 +515,31 @@ BASIC_TYPESPECS basicSpecForSpec (id spec)
                    isObj = YES;
            }];
 
-    if (isObj && decl && [decl isKindOf:Pointer] && ![decl pointer])
+    viewDecl = [decl isKindOf:GenericDecl] ? [decl decl] : decl;
+    if (isObj && viewDecl && [viewDecl isKindOf:Pointer] && ![viewDecl pointer])
         return YES;
 
     return NO;
+}
+
+- (Type *)genDeclForClass:aClass
+{
+    if ([decl isKindOf:GenericDecl])
+        return self;
+    else
+        return nil; /* generics resolved at typename formation now */
+}
+
+- (BOOL)isGenSpec
+{
+    BOOL isGenSpec = NO;
+
+    [specs do:
+           { : each |
+               if ([each isKindOf: GenericSpec]) isGenSpec = YES;
+           }];
+
+    return isGenSpec;
 }
 
 - (ClassDef *)getClass
@@ -530,6 +553,19 @@ BASIC_TYPESPECS basicSpecForSpec (id spec)
            }];
 
     return cl;
+}
+
+- (GenericSpec *)getGenSpec
+{
+    GenericSpec * gSpec = nil;
+
+    [specs do:
+           { : each |
+               if ([each isKindOf: GenericSpec])
+                   gSpec = each;
+           }];
+
+    return gSpec;
 }
 
 - (BOOL)isscalartype
@@ -654,6 +690,7 @@ BASIC_TYPESPECS basicSpecForSpec (id spec)
             [sym gen];
     }
     o_nolinetags--;
+
     return self;
 }
 
@@ -713,65 +750,6 @@ BASIC_TYPESPECS basicSpecForSpec (id spec)
     if (decl == nil && [specs size] != 1)
         return nil;
     return [[self copy] abstrdecl:[decl funcall]];
-}
-
-- zero
-{
-    if ([self isEqual:t_id])
-        return nil;
-    if ([self isEqual:t_str])
-        return [[Scalar new] u_str:NULL];
-    if ([decl isKindOf:(id)[ArrayDecl class]] && [specs size] == 1)
-    {
-        id s;
-        int n = [[decl expr] asInt];
-        s     = [Symbol new:n];
-        return [[Scalar new] u_str:[s strCopy]];
-    }
-    if (decl == nil && [specs size] == 1)
-    {
-        return [[specs at:0] zero];
-    }
-    return nil;
-}
-
-- peekAt:(char *)ptr
-{
-    if (decl == nil && [specs size] == 1)
-    {
-        return [[specs at:0] peekAt:ptr];
-    }
-    else
-    {
-        [self notImplemented:_cmd];
-        return 0;
-    }
-}
-
-- poke:v at:(char *)ptr
-{
-    if (decl == nil && [specs size] == 1)
-    {
-        return [[specs at:0] poke:v at:ptr];
-    }
-    else
-    {
-        [self notImplemented:_cmd];
-        return 0;
-    }
-}
-
-- (int)bytesize
-{
-    if (decl == nil && [specs size] == 1)
-    {
-        return [[specs at:0] bytesize];
-    }
-    else
-    {
-        [self notImplemented:_cmd];
-        return 0;
-    }
 }
 
 @end

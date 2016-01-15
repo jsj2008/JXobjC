@@ -1342,7 +1342,7 @@ static BOOL checkUpCast (ClassDef * one, ClassDef * two)
 
 static BOOL checkRelation (ClassDef * one, ClassDef * two)
 {
-    ClassDef *superOne, *superTwo;
+    ClassDef * superOne;
     if (!one || !two)
         return YES;
     else if (one == two)

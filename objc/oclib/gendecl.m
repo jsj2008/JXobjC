@@ -85,6 +85,8 @@
 {
     String * aType = [String new];
 
+    [aType concat:[String sprintf:"<%s>", [sym str]]];
+
     if (decl)
     {
         [aType concat:[decl asDefFor:sym]];

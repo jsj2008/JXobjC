@@ -28,6 +28,8 @@
 
 - abstrdecl { return [self subclassResponsibility:_cmd]; }
 
+- (String *)asDefFor:sym { return [self subclassResponsibility:_cmd]; }
+
 - (BOOL)isinit { return NO; }
 
 - (BOOL)islistinit { return NO; }
@@ -55,9 +57,5 @@
 - synth { return [self subclassResponsibility:_cmd]; }
 
 - synthinits { return self; }
-
-- st80 { return [self subclassResponsibility:_cmd]; }
-
-- st80inits { return self; }
 
 @end

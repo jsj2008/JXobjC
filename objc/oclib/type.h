@@ -16,6 +16,8 @@
  * Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
  */
 
+#include "node.h"
+
 extern id t_unknown;
 extern id t_void;
 extern id t_char;
@@ -32,6 +34,8 @@ extern id t_id;
 #ifndef TYPE__H__
 #define TYPE__H__
 
+@class GenericSpec;
+@class GenericDecl;
 @class ClassDef;
 @class String;
 
@@ -80,9 +84,12 @@ extern id t_id;
 - (BOOL)canforward;
 - (BOOL)isscalartype;
 - (BOOL)isselptr;
+- (BOOL)isGenSpec;
 - (BOOL)isTypeEqual:x;
 
 - (ClassDef *)getClass;
+- (GenericSpec *)getGenSpec;
+- (Type *)genDeclForClass:aClass;
 
 - encode:nested;
 - encode;
@@ -90,12 +97,6 @@ extern id t_id;
 - star;
 - funcall;
 - ampersand;
-
-- zero;
-- peekAt:(char *)ptr;
-- poke:v at:(char *)ptr;
-
-- (int)bytesize;
 
 @end
 

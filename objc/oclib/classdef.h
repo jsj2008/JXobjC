@@ -22,6 +22,8 @@ extern id curstruct;
 @class Selector;
 @class OrdCltn;
 
+#include "Dictionary.h"
+
 @interface ClassDef : Node
 {
     id unit;
@@ -63,7 +65,7 @@ extern id curstruct;
     long offset;
 }
 
-@property OrdCltn * generics;
+@property Dictionary * generics;
 
 - (int)compare:c;
 

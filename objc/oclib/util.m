@@ -135,7 +135,7 @@ void finclassdef (void)
             [curclassdef synthpropmethods];
 
         [[curclassdef generics]
-            do:{ : each | [trlunit undefSym:[[each decl] sym] asType:each]}];
+            keysDo:{ : eachKey | [trlunit undefSym:eachKey asType:[[curclassdef generics] atKey:eachKey]]}];
 
         if (o_warnmissingmethods && [curclassdef isimpl])
         {
@@ -1099,19 +1099,20 @@ id mkclassdef (id keyw, id name, id sname, id protocols, id ivars, id cvars,
         [r supername:sname];
         [r ivars:ivars];
         [r cvars:cvars];
-        [r setGenerics:generics];
     }
 
     if (generics)
     {
-        OrdCltn * clsGenerics = [OrdCltn new];
-        short i               = 0;
+        Dictionary * clsGenerics = [Dictionary new];
+        short i                  = 0;
 
         [generics do:
                   { :each |
-          Type * newType =[[t_id deepCopy] decl:[[[GenericDecl new] setIndex:i++] setSym:each]];
+                      GenericDecl * gDecl =  [[[GenericDecl new] 
+                                               setIndex:i++] setSym:each];
+                      Type * newType = [[t_id deepCopy] decl:gDecl];
                       [trlunit def:each astype:newType];
-                      [clsGenerics add:newType];
+                      [clsGenerics atKey:each put:newType];
                   }];
         [r setGenerics:clsGenerics];
     }
@@ -1245,11 +1246,22 @@ id mklistexpr (id lb, id x, id rb)
 
 id mktypename (id specs, id decl)
 {
-    id r = [Type new];
+    Type * nType = nil;
 
-    [r specs:specs];
-    [r decl:decl];
-    return r;
+    if (curclassdef) /* handle case of generics as early as possible */
+        [specs do:
+               { :each | Type * tmpT;
+                   if ((tmpT = [[curclassdef generics] atKey:each]))
+                       nType = tmpT;
+               }];
+
+    if (!nType)
+    {
+        nType = [Type new];
+        [nType specs:specs];
+        [nType decl:decl];
+    }
+    return nType;
 }
 
 id mkcomponentdef (id cdef, id specs, id decl)
