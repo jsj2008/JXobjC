@@ -89,7 +89,7 @@ extern id t_id;
 
 - (ClassDef *)getClass;
 - (GenericSpec *)getGenSpec;
-- (GenericDecl *)genDeclForClass:aClass;
+- (Type *)genDeclForClass:aClass;
 
 - encode:nested;
 - encode;
@@ -97,12 +97,6 @@ extern id t_id;
 - star;
 - funcall;
 - ampersand;
-
-- zero;
-- peekAt:(char *)ptr;
-- poke:v at:(char *)ptr;
-
-- (int)bytesize;
 
 @end
 

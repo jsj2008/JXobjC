@@ -8,6 +8,7 @@
 }
 
 @property id protoname;
+@property Dictionary * generics;
 
 - (int)compare:c;
 

@@ -273,8 +273,7 @@ id msgwraps; /* VICI */
 
             if (![argType isTypeEqual:methType])
             {
-                dbg ("[[msg argAt:i] expr] = %s\n",
-                       [[[msg argAt:i] expr] str]);
+                dbg ("[[msg argAt:i] expr] = %s\n", [[[msg argAt:i] expr] str]);
                 warnat (msg, "incompatible type '%s' specified to '%s:(%s)' ",
                         [[argType asDefFor:nil] str],
                         [[[msg argAt:i] keyw] str],

@@ -61,10 +61,4 @@
     return self;
 }
 
-- reset
-{
-    value = [type zero];
-    return self;
-}
-
 @end

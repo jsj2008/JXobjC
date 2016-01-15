@@ -33,6 +33,5 @@
 
 - type:t;
 - initializer:d;
-- reset;
 
 @end

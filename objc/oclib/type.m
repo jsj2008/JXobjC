@@ -443,9 +443,8 @@ BASIC_TYPESPECS basicSpecForSpec (id spec)
 
         if (!matched && (potentialType = [trlunit lookuptype:each]))
         {
-            dbg ("Potential type for <%s>: <%s>\n",
-                    [[self asDefFor:nil] str],
-                    [[potentialType asDefFor:nil] str]);
+            dbg ("Potential type for <%s>: <%s>\n", [[self asDefFor:nil] str],
+                 [[potentialType asDefFor:nil] str]);
             matched =
                 [potentialType isTypeEqual:x] ?: [x isTypeEqual:potentialType];
         }
@@ -523,22 +522,12 @@ BASIC_TYPESPECS basicSpecForSpec (id spec)
     return NO;
 }
 
-- (GenericDecl *)genDeclForClass:aClass
+- (Type *)genDeclForClass:aClass
 {
     if ([decl isKindOf:GenericDecl])
         return self;
     else
-    {
-        Type * pType = nil;
-
-        [specs do:
-               { :each | Type * tmpT;
-                   if ((tmpT = [[aClass generics] atKey:each]))
-                       pType = tmpT;
-               }];
-
-        return pType;
-    }
+        return nil; /* generics resolved at typename formation now */
 }
 
 - (BOOL)isGenSpec
@@ -701,6 +690,7 @@ BASIC_TYPESPECS basicSpecForSpec (id spec)
             [sym gen];
     }
     o_nolinetags--;
+
     return self;
 }
 
@@ -760,65 +750,6 @@ BASIC_TYPESPECS basicSpecForSpec (id spec)
     if (decl == nil && [specs size] != 1)
         return nil;
     return [[self copy] abstrdecl:[decl funcall]];
-}
-
-- zero
-{
-    if ([self isEqual:t_id])
-        return nil;
-    if ([self isEqual:t_str])
-        return [[Scalar new] u_str:NULL];
-    if ([decl isKindOf:(id)[ArrayDecl class]] && [specs size] == 1)
-    {
-        id s;
-        int n = [[decl expr] asInt];
-        s     = [Symbol new:n];
-        return [[Scalar new] u_str:[s strCopy]];
-    }
-    if (decl == nil && [specs size] == 1)
-    {
-        return [[specs at:0] zero];
-    }
-    return nil;
-}
-
-- peekAt:(char *)ptr
-{
-    if (decl == nil && [specs size] == 1)
-    {
-        return [[specs at:0] peekAt:ptr];
-    }
-    else
-    {
-        [self notImplemented:_cmd];
-        return 0;
-    }
-}
-
-- poke:v at:(char *)ptr
-{
-    if (decl == nil && [specs size] == 1)
-    {
-        return [[specs at:0] poke:v at:ptr];
-    }
-    else
-    {
-        [self notImplemented:_cmd];
-        return 0;
-    }
-}
-
-- (int)bytesize
-{
-    if (decl == nil && [specs size] == 1)
-    {
-        return [[specs at:0] bytesize];
-    }
-    else
-    {
-        [self notImplemented:_cmd];
-        return 0;
-    }
 }
 
 @end

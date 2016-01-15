@@ -96,9 +96,10 @@
             warn ("downcasting object of parent class %s to derived class %s",
                   [lhsCls classname], [rhsCls classname]);
         else if (![lhsCls isRelated:rhsCls])
-            warn ("assigning object of unrelated class %s to identifier of "
-                  "class %s",
-                  [lhsCls classname], [rhsCls classname]);
+            warnat (rhs,
+                    "assigning object of unrelated class %s to identifier of "
+                    "class %s",
+                    [rhsCls classname], [lhsCls classname]);
     }
 
     return self;

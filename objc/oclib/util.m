@@ -1113,9 +1113,6 @@ id mkclassdef (id keyw, id name, id sname, id protocols, id ivars, id cvars,
                       Type * newType = [[t_id deepCopy] decl:gDecl];
                       [trlunit def:each astype:newType];
                       [clsGenerics atKey:each put:newType];
-                      /* A better option: make the generic types temporarily a
-                         different token that is resolved into an <id> type. */
-                      gf ("typedef id %s;\n", [each str]);
                   }];
         [r setGenerics:clsGenerics];
     }
@@ -1249,11 +1246,22 @@ id mklistexpr (id lb, id x, id rb)
 
 id mktypename (id specs, id decl)
 {
-    id r = [Type new];
+    Type * nType = nil;
 
-    [r specs:specs];
-    [r decl:decl];
-    return r;
+    if (curclassdef) /* handle case of generics as early as possible */
+        [specs do:
+               { :each | Type * tmpT;
+                   if ((tmpT = [[curclassdef generics] atKey:each]))
+                       nType = tmpT;
+               }];
+
+    if (!nType)
+    {
+        nType = [Type new];
+        [nType specs:specs];
+        [nType decl:decl];
+    }
+    return nType;
 }
 
 id mkcomponentdef (id cdef, id specs, id decl)

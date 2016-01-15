@@ -280,7 +280,7 @@ protolist
     ;
 
 optprotoreflist
-    : relop protolist relop { $$ = $2; }
+    : angleopen protolist angleclose { $$ = $2; }
     | { $$ = nil; }
     ;
 
@@ -300,7 +300,7 @@ genericnamelist
     ;
 
 genericnames
-    : relop genericnamelist relop { $$ = $2; }
+    : angleopen genericnamelist angleclose { $$ = $2; }
     ;
 
 optgenericnames
