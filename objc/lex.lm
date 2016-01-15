@@ -381,6 +381,7 @@ int identif(void)
     if (isbuiltinfun(yylval)) return builtinfun;
     if ([trlunit lookupclass: yylval] || [trlunit lookupclassfwd: yylval]) return classname;
     if (istypeword(yylval)) return typeword;
+    if ([trlunit lookupprotocol: yylval]) return protoname;
   }
   return identifier;
 }
