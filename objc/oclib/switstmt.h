@@ -17,9 +17,4 @@
  */
 
 @interface SwitchStmt : IfStmt
-{
-}
-
-- st80;
-
 @end

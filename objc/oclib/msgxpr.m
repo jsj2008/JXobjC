@@ -268,13 +268,13 @@ id msgwraps; /* VICI */
                     [methType genDeclForClass:[[rcvr type] getClass]];
                 methType =
                     pType ? [generics at:[[pType decl] index]] : methType;
-                printf ("pType: %p\n", pType);
+                dbg ("pType: %p\n", pType);
             }
 
             if (![argType isTypeEqual:methType])
             {
-                printf ("[[msg argAt:i] expr] = %s\n",
-                        [[[msg argAt:i] expr] str]);
+                dbg ("[[msg argAt:i] expr] = %s\n",
+                       [[[msg argAt:i] expr] str]);
                 warnat (msg, "incompatible type '%s' specified to '%s:(%s)' ",
                         [[argType asDefFor:nil] str],
                         [[[msg argAt:i] keyw] str],

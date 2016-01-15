@@ -443,7 +443,7 @@ BASIC_TYPESPECS basicSpecForSpec (id spec)
 
         if (!matched && (potentialType = [trlunit lookuptype:each]))
         {
-            printf ("Potential type for <%s>: <%s>\n",
+            dbg ("Potential type for <%s>: <%s>\n",
                     [[self asDefFor:nil] str],
                     [[potentialType asDefFor:nil] str]);
             matched =
