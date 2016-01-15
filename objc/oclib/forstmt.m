@@ -27,6 +27,7 @@
 #include "util.h"
 #include "var.h"
 #include "scalar.h"
+#include "datadef.h"
 
 @implementation ForStmt
 
@@ -71,7 +72,8 @@
     [keyw gen];
     gc ('(');
     [begin gen];
-    gc (';');
+    if (![begin isKindOf:DataDef])
+        gc (';');
     [cond gen];
     gc (';');
     [step gen];
