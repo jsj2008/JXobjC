@@ -1,1 +1,3 @@
 *.m linguist-language=Objective-C
+*.lm linguist-language=Lex
+*.ym linguist-language=Yacc
