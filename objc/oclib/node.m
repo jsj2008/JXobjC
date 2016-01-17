@@ -216,8 +216,14 @@ void vwarn (char * s, OC_VA_LIST ap)
     int n;
     vfprintf (stderr, s, ap);
     if ((n = strlen (s)) && s[n - 1] != '\n')
-        fprintf (stderr, "\n");
+        fprintf (stderr, KNRM "\n");
 }
+
+#define LNO "%s:%d: "
+#define WSTR "Warning: "
+#define ESTR "Error: "
+#define WARN KBLD LNO KYEL WSTR KWHT
+#define ERRO KBLD LNO KRED ESTR KWHT
 
 void warnat (id sym, char * s, ...)
 {
@@ -229,12 +235,9 @@ void warnat (id sym, char * s, ...)
 
         OC_VA_START (ap, s);
         fprintf (stderr, KBLD);
-        if (no != 0 && fn != NULL)
-            fprintf (stderr, "%s:%d: " KYEL "warning: " KNRM KBLD, fn, no);
-        else if (no != 0)
-            fprintf (stderr, "%d:" KYEL "warning: " KNRM KBLD, no);
+        if (no)
+            fprintf (stderr, WARN, fn ?: "(std-in)", no);
         vwarn (s, ap);
-        fprintf (stderr, KNRM);
         OC_VA_END (ap);
     }
 }
@@ -246,10 +249,8 @@ void warn (char * s, ...)
         OC_VA_LIST ap;
 
         OC_VA_START (ap, s);
-        fprintf (stderr, KBLD "%s:%d: " KYEL "warning: " KNRM KBLD,
-                 [infilename str], inlineno);
+        fprintf (stderr, WARN, [infilename str], inlineno);
         vwarn (s, ap);
-        fprintf (stderr, KNRM);
         OC_VA_END (ap);
     }
 }
@@ -260,7 +261,7 @@ void vfatal (char * s, OC_VA_LIST ap)
 
     vfprintf (stderr, s, ap);
     if ((n = strlen (s)) && s[n - 1] != '\n')
-        fprintf (stderr, "\n");
+        fprintf (stderr, KNRM "\n");
     exitstatus = 1;
 }
 
@@ -269,10 +270,8 @@ void fatal (char * s, ...)
     OC_VA_LIST ap;
 
     OC_VA_START (ap, s);
-    fprintf (stderr, KBLD "%s:%d: " KRED "error: " KNRM KBLD, [infilename str],
-             inlineno);
+    fprintf (stderr, ERRO, [infilename str], inlineno);
     vfatal (s, ap);
-    fprintf (stderr, KNRM);
     OC_VA_END (ap);
 }
 
@@ -283,11 +282,9 @@ void fatalat (id sym, char * s, ...)
     char * fn = [[sym filename] str];
 
     OC_VA_START (ap, s);
-    fprintf (stderr, KBLD);
-    if (no != 0 && fn != NULL)
-        fprintf (stderr, "%s:%d: " KRED "error: " KNRM KBLD, fn, no);
+    if (no)
+        fprintf (stderr, ERRO, fn ?: "(std-in)", no);
     vfatal (s, ap);
-    fprintf (stderr, KNRM);
     OC_VA_END (ap);
     abort ();
 }
