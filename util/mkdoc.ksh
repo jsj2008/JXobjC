@@ -9,6 +9,6 @@ genDocs () # $1: output directory; $2: input directory
 
 
 kmk cleandoc
-cd doc
-genDocs Runtime ../objcrt/hdr
-genDocs ObjectKit ../objpak/hdr
+cd doc/bld
+genDocs ../Runtime ../../objcrt/hdr
+genDocs ../ObjectKit ../../objpak/hdr

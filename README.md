@@ -1,6 +1,6 @@
 # JX Objective-C #
 
-![JX Objective-C Logo](doc/nlogotyp.png)
+![JX Objective-C Logo](doc/res/nlogotyp.png)
 
 ### Overview ###
 
