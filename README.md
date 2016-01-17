@@ -66,9 +66,6 @@ The language provides a variety of features, which include the following:
 
 ### Compiling ###
 
-Instructions are available in `doc/compile.md` detailing compilation on various
-platforms. In general, the process simply involves running `kmk`.
-
-Before you can build the JX Objective-C compiler, you will need to build and
-install the bootstrap package. This is available in the **Releases** section of
-the GitHub page.
+Instructions are available in [doc/Build.md](doc/Build.md) detailing compilation
+on various platforms. If building presents issues for you, please report this as
+a GitHub issue on this repository.
