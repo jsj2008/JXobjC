@@ -109,10 +109,7 @@
 void procextdef (id def)
 {
     [def synth];
-    if (o_outputcode)
-        [def gen];
-    if (o_st80)
-        [def st80];
+    [trlunit addCode:def];
 }
 
 void finclassdef (void)

@@ -16,6 +16,14 @@
  * Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
  */
 
+#ifndef TRLUNIT_H_
+#define TRLUNIT_H_
+
+#include "OCString.h"
+#include "OrdCltn.h"
+#include "Dictionary.h"
+#include "node.h"
+
 extern id trlunit;
 
 @interface TranslationUnit : Node
@@ -36,6 +44,7 @@ extern id trlunit;
     id msgdic, fwdcltn;
     id protocols;
     id cats;
+    Dictionary * stringLits; /* String as key, variable name as value. */
     char * modname;
     char * modversion;
     char * bindfunname;
@@ -43,10 +52,11 @@ extern id trlunit;
     id usesentries;
     id definesentries;
     id methods;
-    id classdefs;
+    Dictionary * classdefs;
     id structdefs;
     id gentypes;
     id enumtors;
+    OrdCltn * code;
     BOOL usingblocks;
     BOOL usingselfassign;
 }
@@ -75,6 +85,7 @@ extern id trlunit;
 - allclsimpls;
 - addclsimpl:c;
 - genglobfuncall;
+- addCode:(Node *)someCode;
 
 - usesentry:name;
 - definesentry:name;
@@ -94,6 +105,8 @@ extern id trlunit;
 - def:sym asclass:classdef;
 - def:sel asmethod:method;
 - def:sym as:def;
+/* Returns the name of this string literal's associated variable. */
+- (String *)defStringLit:(String *)aStr;
 - defasclassfwd:sym;
 - defenumtor:e;
 - lookupprotocol:sym;
@@ -111,3 +124,5 @@ extern id trlunit;
 - (BOOL)isgentype:s;
 
 @end
+
+#endif

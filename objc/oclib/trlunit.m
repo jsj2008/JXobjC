@@ -67,6 +67,14 @@ id trlunit;
 
 - (BOOL)usingselfassign { return usingselfassign; }
 
+- addCode:(Node *)someCode
+{
+    if (!code)
+        code = [OrdCltn new];
+    [code add:someCode];
+    return self;
+}
+
 - usingselfassign:(BOOL)x
 {
     usingselfassign = x;
@@ -299,6 +307,8 @@ static char * mystrrchr (const char * s, int c)
         [self checkbindprologue];
     if (o_comments)
         gs ("/* end of objc prologue */\n");
+    else
+        gs ("\n\n\n");
     return self;
 }
 
@@ -724,6 +734,10 @@ static char * mystrrchr (const char * s, int c)
 {
     id e;
 
+    [classfwds do:{ : f | gf ("typedef struct _PRIVATE %s;\n", [f str])}];
+
+    [code elementsPerform:@selector (gen)];
+
     o_nolinetags++;
 
     if (curclassdef)
@@ -736,7 +750,7 @@ static char * mystrrchr (const char * s, int c)
     }
     else
     {
-        gc ('\n');
+        gs ("\n\n\n");
     }
 
     if ((e = [self allclsimpls]))
@@ -941,6 +955,15 @@ static char * mystrrchr (const char * s, int c)
         methods = [Dictionary new];
     [methods atKey:sel put:method];
     return self;
+}
+
+- (String *)defStringLit:(String *)aStr
+{
+    String * var = [self gettmpvar];
+    if (!stringLits)
+        stringLits = [Dictionary new];
+    [stringLits atKey:aStr put:var];
+    return var;
 }
 
 - addgentype:s

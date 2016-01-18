@@ -126,9 +126,6 @@ id curclassdef;
     {
         otbtypename = [[String sprintf:"%s_OTB", s] strCopy];
     }
-
-    gf ("typedef struct _PRIVATE %s;\n", s);
-
     if ([trlunit lookupstruct:[Symbol sprintf:"%s", privtypename]] == nil)
     {
         id r = [StructSpec new];
@@ -891,6 +888,8 @@ id curclassdef;
 
 - gen
 {
+    gf ("typedef struct _PRIVATE %s;\n", [classname str]);
+
     if (isimpl)
     {
         [self genprivtype]; /* for instance variables */

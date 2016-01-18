@@ -557,7 +557,6 @@ extdef
     {
         if (![trlunit lookupclass:$2])
         {
-            gf("typedef struct _PRIVATE %s;\n", [$2 str], [$2 str]);
             mkclassfwd($2);
         }
         $$ = nil;
