@@ -34,7 +34,10 @@ JXobjC is founded upon a humanist, modernist, and universalist philosophy, and
 is unapologetically Object-Oriented in the Kayian sense, with a capital **O**.
 Read about the philosophy of JXobjC [here](doc/Philsphy.md).
 
-The language provides a variety of features, which include the following:
+The language provides a variety of features. You can read about these in the
+eBook,
+["The Programming Language Objective-C *(JX)* and Its Implementation `jxobjc`"]
+(doc/Book.md) which is linked. Some features of JXobjC include the following:
 - C basis, allowing inlining of C code as desired.
 - Blocks, similar to the lambda expressions of the functional languages:
 

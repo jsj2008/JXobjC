@@ -13,11 +13,17 @@ Objective-C language pioneered by Stepstone, NeXT, and Apple. It is an
 iconoclastic language: it is guided by the lessons of social fields -
 critical theory, psychoanalysis, sociology, and psychology - just as much as it
 is by traditional programming language theory. The aim is to build a language
-where one does not write **code**, but instead, describes objects and how they
+where one does not write *code*, but instead, describes objects and how they
 should interact with each other. It is *the abolition of coding*. You can find
 further details, if you are interested, in the philosophy supplement linked in
 the first paragraph.
 
-The book is divded into three parts - theory, praxis, and implementation - and
-an appendix. 
+The book is divided into three parts - theory, praxis, and implementation - and
+an appendix. This introduction marks the beginning of the first part.
 
+JXobjC is an Object-Oriented language with a capital **O**; it places at its
+centre the Object. In order to understand JXobjC and to write it well, it's very
+important to understand the Object. This, then, is where we will start.
+
+- [Back to Title](../../Book.md)
+- [Next Chapter (The autonomous Object)](Object.md)
