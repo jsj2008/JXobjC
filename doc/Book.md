@@ -1,5 +1,5 @@
 <img align="right" src="res/minilogo.png">
-## The Programming Language Objective-C *(JX)* and Its Implementation  ##
+## The Programming Language Objective-C *(JX)* and Its Implementation `jxobjc`
 ###### D. MacKay
 
 #### Sections
@@ -27,8 +27,8 @@ for such details.
 
 #### Table of Contents ####
 1. Section One (Theory)
-  1. [Introduction](Book/one/Intro.md)
-  2. [The autonomous Object](Book/one/Object.md)
+  1. [Introduction](Book/Theory/Intro.md)
+  2. [The autonomous Object](Book/Theory/Object.md)
 2. Section Two (Praxis)
   1. Hello, world!
   2. Talking to Objects

@@ -1,4 +1,4 @@
-## The Philosophy of the Objective-C *(JX)* Programming Language
+## The Philosophy of the Programming Language Objective-C *(JX)*
 
 #### Core Philosophy ####
 
