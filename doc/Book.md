@@ -1,3 +1,4 @@
+<img align="right" src="res/minilogo.png">
 ## The Programming Language Objective-C *(JX)* and Its Implementation  ##
 ###### D. MacKay
 
