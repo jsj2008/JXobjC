@@ -1,11 +1,11 @@
-
-## Objective-C *(JX)* Language Philosophy
+## The Philosophy of the Objective-C *(JX)* Programming Language
 
 #### Core Philosophy ####
 
 > *Objects [are] like biological cells, or individual computers on a network,
-able to communicate with messages.* - Dr. Alan Kay, father of the Kayian School
-of object-orientation
+able to communicate with messages.*
+>> <small>*Dr. Alan C. Kay*, father of the Kayian School of object-orientation
+and inventor of the legendary SmallTalk programming language.</small>
 
 Objective-C *(JX)* is, thus, an Object Oriented language with the capital
 **O**. This does not preclude functionality associated with other schools of
@@ -28,7 +28,9 @@ there. Our goal is not to make a friendlier code, but to abolish it.
 #### Radical Humanism ####
 
 > *In the age of the individual's liquidation, the question of individuality
-must be raised anew.* - Theodor Adorno, critical theorist
+must be raised anew.*
+>> <small>*Theodor W. Adorno*, leading critical theorist of the Frankfurt
+School (may he rest in peace.)</small>
 
 The programmer today is an alienated being. The trade is unique in its
 ideology; one hears a claim that "*programming must be taught in primary
@@ -38,11 +40,12 @@ overworked and underpaid, and decry unionisation.
 
 Perhaps this contradictory nature in tech has some relation to the modern trend
 of the programming language as an oppressor and terrorist of the programmer,
-the compiler as super-ego, destroying hopes and dreams in a flurry of typing
-errors and complaints.
+the compiler as super-ego, destroying hopes and dreams in a flurry of type
+mismatches, imposing upon the programmer firmly its own opinion on what they
+ought to be doing.
 
 Objective-C *(JX)* stands firmly opposed to this trend of deprecating the
-human, bestowing the compiler with God-like powers to harm the user. The
+human, bestowing upon the compiler God-like powers to offend the user. The
 purpose of JXobjC is to facilitate the realisation of the programmer's dreams.
 The creative energy of the programmer must not be impeded, and suggestions are
 to be made without unwilling imposition of them.
@@ -58,7 +61,9 @@ instead.
 
 > *Instead of the bit-grinding processor brutalising data structures, we have
 a universe of well-behaved objects that courteously ask each other to carry out
-their desires.* - Dan Ingalls
+their desires.*
+>> <small>*Daniel H. Ingalls*</small>, of Xerox PARC, a lead contributor to
+SmallTalk.
 
 In line with the humanist vision outlined, Objective-C *(JX)* utilises the model
 of computation that grew in Xerox's PARC in the development of SmallTalk. The
