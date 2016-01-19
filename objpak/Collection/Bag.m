@@ -19,8 +19,8 @@
 #include <assert.h>
 #include <string.h>
 #include <stdlib.h>
-#include "bag.h"
-#include "bagseq.h"
+#include "Bag.h"
+#include "BagSequence.h"
 #include "OrdCltn.h"
 #include "Set.h"
 #include "sequence.h"

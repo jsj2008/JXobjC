@@ -18,7 +18,7 @@
 
 #include <assert.h>
 #include <stdlib.h>
-#include "bagseq.h"
+#include "BagSequence.h"
 
 @implementation BagSequence
 - (objbagseq_t)objbagseqvalue { return &value; }

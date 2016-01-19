@@ -19,15 +19,13 @@
 #include <assert.h>
 #include <stdlib.h>
 #include "SortCltn.h"
-#include "treeseq.h"
+#include "TreeSequence.h"
 #include "Set.h"
 #include "OrdCltn.h"
 #include "ascfiler.h"
 #include "sequence.h"
 #include "OCString.h"
-#if OBJC_BLOCKS
 #include "Block.h"
-#endif
 
 #ifndef NDEBUG
 #define CHECK_BALANCE

@@ -63,8 +63,8 @@
 - (Pair *)resolveKeyPathFirst:keyPath
 {
     Pair * indirector$remainder = [Pair new];
-    OrdCltn * components         = [keyPath componentsSeparatedByString:@"."],
-            * first               = nil;
+    OrdCltn *components         = [keyPath componentsSeparatedByString:@"."],
+            *first              = nil;
 
     first = [components removeFirst];
 

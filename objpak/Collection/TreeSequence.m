@@ -16,7 +16,7 @@
  * Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
  */
 
-#include "treeseq.h"
+#include "TreeSequence.h"
 
 @implementation TreeSequence
 static objbbt_t first (objbbt_t p)

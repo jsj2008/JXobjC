@@ -20,7 +20,7 @@
 #include <string.h>
 #include <stdlib.h>
 #include "Set.h"
-#include "setseq.h"
+#include "SetSequence.h"
 #include "ascfiler.h"
 #include "OrdCltn.h"
 #include "OCString.h"

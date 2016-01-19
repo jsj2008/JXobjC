@@ -16,10 +16,10 @@
  * Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
  */
 
-#include "valueseq.h"
+#include "KeySequence.h"
 #include "assoc.h"
 
-@implementation ValueSequence
+@implementation KeySequence
 /*****************************************************************************
  *
  * Creation
@@ -61,14 +61,14 @@
  *
  ****************************************************************************/
 
-- next { return [[carrier next] value]; }
+- next { return [[carrier next] key]; }
 
-- peek { return [[carrier peek] value]; }
+- peek { return [[carrier peek] key]; }
 
-- previous { return [[carrier previous] value]; }
+- previous { return [[carrier previous] key]; }
 
-- first { return [[carrier first] value]; }
+- first { return [[carrier first] key]; }
 
-- last { return [[carrier last] value]; }
+- last { return [[carrier last] key]; }
 
 @end

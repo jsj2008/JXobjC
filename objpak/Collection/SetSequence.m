@@ -18,7 +18,7 @@
 
 #include <assert.h>
 #include <stdlib.h>
-#include "setseq.h"
+#include "SetSequence.h"
 
 @implementation SetSequence
 - (objsetseq_t)objsetseqvalue { return &value; }

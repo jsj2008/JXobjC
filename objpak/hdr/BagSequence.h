@@ -19,7 +19,7 @@
 #ifndef __OBJBAGSEQ_H__
 #define __OBJBAGSEQ_H__
 
-#include "bag.h"
+#include "Bag.h"
 
 typedef struct objbagseq
 {

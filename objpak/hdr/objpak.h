@@ -38,7 +38,7 @@
 #include "badvers.h"
 #include "unknownt.h"
 #include "typeinc.h"
-#include "bag.h"
+#include "Bag.h"
 #include "Set.h"
 #include "Stack.h"
 #include "sequence.h"
