@@ -314,6 +314,12 @@ static char * mystrrchr (const char * s, int c)
         moddescname);
     if (o_checkbind)
         [self checkbindprologue];
+
+    gs ("struct gConstantString {\n");
+    gs ("  id isa;\n  unsigned capacity;\n);
+    gs ("  int count;\n int capacity;\n char * ptr;\n");
+    gs ("};\n");
+
     if (o_comments)
         gs ("/* end of objc prologue */\n");
     else
@@ -999,7 +1005,7 @@ static char * mystrrchr (const char * s, int c)
 
 - genLiteralDeclsForVar:(String *)aVar ofClass:(String *)aClass
 {
-    gf ("extern struct %s_PRIVATE %s;\n", [aClass str], [aVar str]);
+    gf ("extern struct g%s %s;\n", [aClass str], [aVar str]);
     return self;
 }
 
@@ -1027,7 +1033,7 @@ static char * mystrrchr (const char * s, int c)
 {
     gf ("pthread_mutex_t %s_mutex = PTHREAD_RECURSIVE_MUTEX_INITIALIZER;\n",
         [aVar str]);
-    gf ("struct %s_PRIVATE %s =\n{\n", [aClass str], [aVar str]);
+    gf ("struct g%s %s =\n{\n", [aClass str], [aVar str]);
     gf ("_%s_classref(),\n ", [aClass str]);
     gf ("0,\n");
     gf ("&%s_mutex,", [aVar str]);
