@@ -15,7 +15,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
  */
-/* Copyright (c) 2015 D. Mackay. All rights reserved. */
+/* Copyright (c) 2015,16 D. Mackay. All rights reserved. */
 
 #include <ctype.h>
 #include <string.h>

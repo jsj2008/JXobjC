@@ -19,7 +19,6 @@
 #include <stdlib.h>
 #include <assert.h>
 #include <string.h>
-#include <stdio.h> /* FILE */
 #include "Object.h"
 #include "Block.h"
 #include "OCString.h"
