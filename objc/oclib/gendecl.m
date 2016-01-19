@@ -3,7 +3,7 @@
 #include <stdlib.h>
 #include <assert.h>
 #include "Object.h"
-#include "OCString.h"
+#include "MutableString.h"
 #include "node.h"
 #include "gendecl.h"
 
@@ -83,9 +83,7 @@
 
 - (String *)asDefFor:sym
 {
-    String * aType = [String new];
-
-    [aType concat:[String sprintf:"<%s>", [sym str]]];
+    MutableString * aType = [String sprintf:"<%s>", [sym str]];
 
     if (decl)
     {

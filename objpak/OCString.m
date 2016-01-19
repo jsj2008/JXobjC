@@ -19,8 +19,8 @@
 #include <assert.h>
 #include <ctype.h>
 #include <stdlib.h>
-#include "array.h"
 #include "OCString.h"
+#include "MutableString.h"
 #include "outofbnd.h"
 #include "ascfiler.h"
 #include "OrdCltn.h"
@@ -176,6 +176,13 @@ static void copy (objstr_t dst, objstr_t src)
 - copy
 {
     id aCopy = [super copy];
+    copy ([aCopy objstrvalue], (&value));
+    return aCopy;
+}
+
+- mutableCopy
+{
+    id aCopy = [MutableString new];
     copy ([aCopy objstrvalue], (&value));
     return aCopy;
 }
@@ -383,11 +390,11 @@ static char putcharat (objstr_t self, int i, char c)
     return r;
 }
 
-- componentsSeparatedByString:separator
+- (OrdCltn *)componentsSeparatedByString:separator
 {
     size_t i, si, sepsize = [separator size];
     STR sepstr            = [separator str];
-    id rset               = [OrdCltn new];
+    OrdCltn * rset        = [OrdCltn new];
 
     for (i = 0, si = 0; i < value.count - sepsize; i++)
     {
@@ -465,14 +472,14 @@ static void concat_self (objstr_t self)
 
 - (String *)stringByConcatenating:(String *)aString
 {
-    String * newString = [self copy];
+    MutableString * newString = [self mutableCopy];
     [newString concat:aString];
     return newString;
 }
 
 - (String *)stringByConcatenatingSTR:(STR)aStr
 {
-    String * newString = [self copy];
+    MutableString * newString = [self mutableCopy];
     [newString concatSTR:aStr];
     return newString;
 }
@@ -516,6 +523,20 @@ static void atinsert (objstr_t self, int i, char * s, int n)
     return res;
 }
 
+- (String *)stringByInsertingAt:(unsigned)anOffset
+                          bytes:(char *)aString
+                          count:(int)n
+{
+    MutableString * newStr = [self mutableCopy];
+    return [newStr at:anOffset insert:aString count:n];
+}
+
+- (String *)stringByInsertingAt:(unsigned)anOffset string:(String *)aString
+{
+    MutableString * newStr = [self mutableCopy];
+    return [newStr at:anOffset insert:aString];
+}
+
 static void deleteat (objstr_t self, int p, int n)
 {
     int i, m;
@@ -544,6 +565,12 @@ static void deleteat (objstr_t self, int p, int n)
         deleteat ((&value), p, q - p + 1);
         return self;
     }
+}
+
+- (String *)stringByDeletingFrom:(unsigned)p to:(unsigned)q
+{
+    MutableString * newStr = [self mutableCopy];
+    return [newStr deleteFrom:p to:q];
 }
 
 static void assign (objstr_t self, char * s, int n)

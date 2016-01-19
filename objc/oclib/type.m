@@ -23,7 +23,7 @@
 #include <string.h>
 #include "Object.h"
 #include "Block.h"
-#include "OCString.h"
+#include "MutableString.h"
 #include "OrdCltn.h"
 #include "node.h"
 #include "type.h"
@@ -232,10 +232,10 @@ BASIC_TYPESPECS basicSpecForSpec (id spec)
 
 - encode:nested
 {
-    id result = [String new];
-    id d      = decl;
+    MutableString * result = [MutableString new];
+    id d                   = decl;
     // clang-format off
-    id p = [decl isKindOf:Pointer] ? decl
+    Pointer * p = [decl isKindOf:Pointer] ? decl
          : [decl isKindOf:StarDecl] ? (d = [decl decl], [decl pointer])
          : /*_*/ nil;
     // clang-format on

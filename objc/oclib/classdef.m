@@ -405,8 +405,10 @@ id curclassdef;
 
         if (![impls includes:t])
         {
-            warn ("can't find implementation of %s%s", (f) ? "+" : "-",
-                  [t str]);
+            if (superc)
+                if (![superc lookupSelector:t])
+                    warn ("can't find implementation of %s%s", (f) ? "+" : "-",
+                          [t str]);
         }
     }
     return self;

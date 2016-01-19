@@ -35,6 +35,8 @@ typedef struct objstr
     char * ptr;
 } * objstr_t;
 
+@class OrdCltn;
+
 /*!
  @abstract Text string
  @discussion Stores a string of bytes terminated with NULL, typically
@@ -220,21 +222,22 @@ typedef struct objstr
 
 - concat:aString;
 - (id)concatSTR:(STR)aString;
-- concatenateSTR:(STR)aString;
 - (id)at:(unsigned)anOffset insert:(char *)aString count:(int)n;
 - (id)at:(unsigned)anOffset insert:aString;
 
 /* @functiongroup Deletion */
 
 /*!
- * Deletes the bytes from the specified offset to the specified offset.
+ * Returns a new string formed by deleting the bytes from the specified offset
+ * to the specified offset.
  *
  * Any bytes following the end offset are moved backwards.
  * @param p Byte offset to begin deleting from.
  * @param q Byte offset to end deleting from.
  */
-- deleteFrom:(unsigned)p to:(unsigned)q;
+- (String *)stringByDeletingFrom:(unsigned)p to:(unsigned)q;
 
+- deleteFrom:(unsigned)p to:(unsigned)q;
 - assignSTR:(STR)aString;
 - assignSTR:(STR)aString length:(unsigned)nChars;
 
@@ -264,7 +267,7 @@ typedef struct objstr
  * the receiver String.
  * @param separator String delimiting each component substring.
  */
-- componentsSeparatedByString:separator;
+- (OrdCltn *)componentsSeparatedByString:separator;
 
 /*! @functiongroup Conversion */
 
