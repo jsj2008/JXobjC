@@ -43,6 +43,15 @@
 
 id trlunit;
 
+@interface TranslationUnit ()
+- genLiteralDecls;
+- genLiteralDeclsForVar:(String *)aVar ofClass:(String *)aClass;
+- genLiteralDefs;
+- genLiteralDefForVar:(String *)aVar
+              ofClass:(String *)aClass
+               fields:(String *)fields;
+@end
+
 @implementation TranslationUnit
 
 + new
@@ -736,7 +745,11 @@ static char * mystrrchr (const char * s, int c)
 
     [classfwds do:{ : f | gf ("typedef struct _PRIVATE %s;\n", [f str])}];
 
+    [trlunit genLiteralDecls];
+
     [code elementsPerform:@selector (gen)];
+
+    [trlunit genLiteralDefs];
 
     o_nolinetags++;
 
@@ -975,6 +988,53 @@ static char * mystrrchr (const char * s, int c)
 }
 
 - (BOOL)isgentype:s { return [gentypes includes:s]; }
+
+- genLiteralDecls
+{
+    [stringLits keysDo:
+                { :aKey | [trlunit genLiteralDeclsForVar:aKey ofClass:@"ConstantString"]
+                }];
+    return self;
+}
+
+- genLiteralDeclsForVar:(String *)aVar ofClass:(String *)aClass
+{
+    gf ("extern struct %s_PRIVATE %s;\n", [aClass str], [aVar str]);
+    return self;
+}
+
+- genLiteralDefs
+{
+    [stringLits keysDo:
+                { :aKey | String * fields;
+                    String * text;
+                    unsigned siz;
+                    text = [stringLits atKey:aKey];
+                    siz  = [text size];
+                    /* capacity, objstr_value { count, cap, ptr } */
+                    fields = [String sprintf:"%d,\n { %d, %d, \"%s\" }", siz,
+                                             siz, siz, [text str]];
+                    [trlunit genLiteralDefForVar:aKey
+                                         ofClass:@"ConstantString"
+                                          fields:fields]
+                }];
+    return self;
+}
+
+- genLiteralDefForVar:(String *)aVar
+              ofClass:(String *)aClass
+               fields:(String *)fields
+{
+    gf ("pthread_mutex_t %s_mutex = PTHREAD_RECURSIVE_MUTEX_INITIALIZER;\n",
+        [aVar str]);
+    gf ("struct %s_PRIVATE %s =\n{\n", [aClass str], [aVar str]);
+    gf ("_%s_classref(),\n ", [aClass str]);
+    gf ("0,\n");
+    gf ("&%s_mutex,", [aVar str]);
+    gs ([fields str]);
+    gf ("\n};");
+    return self;
+}
 
 - reset
 {
