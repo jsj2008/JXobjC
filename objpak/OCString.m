@@ -463,6 +463,20 @@ static void concat_self (objstr_t self)
 
 - concatenateSTR:(STR)aString { return [self concatSTR:aString]; }
 
+- (String *)stringByConcatenating:(String *)aString
+{
+    String * newString = [self copy];
+    [newString concat:aString];
+    return newString;
+}
+
+- (String *)stringByConcatenatingSTR:(STR)aStr
+{
+    String * newString = [self copy];
+    [newString concatSTR:aStr];
+    return newString;
+}
+
 static void atinsert (objstr_t self, int i, char * s, int n)
 {
     int j;

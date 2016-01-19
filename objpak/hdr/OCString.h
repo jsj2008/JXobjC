@@ -176,40 +176,52 @@ typedef struct objstr
 - (STR)strcat:(STR)aBuffer;
 
 /*!
- * Concatenates the specified String to the String.
+ * Creates a new string formed by concatenating a specified string to the
+ * receiving string.
  *
  * @param aString String to concatenate onto the receiver.
+ * @return A new autoreleased string of format "%@%@", rcvr, aString.
  */
-- concat:aString;
+- (String *)stringByConcatenating:(String *)aString;
 
 /*!
- * Concatenates the specified C STR to the String.
+ * Creates a new string formed by concatenating a specified C STR to the
+ * receiving string.
  *
  * @param aString C STR to concatenate onto the receiver.
+ * @return A new autoreleased string of format "%@%s", rcvr, aStr.
  */
-- (id)concatSTR:(STR)aString;
-
-- concatenateSTR:(STR)aString;
+- (String *)stringByConcatenatingSTR:(STR)aStr;
 
 /*!
- * Concatenates the specified number of bytes from the specified byte buffer
- * into the String at the specified offset.
+ * Creates a new string formed by concatenating the specified number of bytes
+ * from the specified byte buffer into the receiving String at the specified
+ * offset.
  *
  * Any bytes following the offset are moved forward.
  * @param anOffset Byte offset at which to concatenate bytes.
  * @param aString C byte buffer to concatenate into the receiver.
  * @param n Number of bytes to concatenate into the receiver.
+ * @return The new autoreleased string.
  */
-- (id)at:(unsigned)anOffset insert:(char *)aString count:(int)n;
+- (String *)stringByInsertingAt:(unsigned)anOffset
+                          bytes:(char *)aString
+                          count:(int)n;
 
 /*!
- * Concatenates the specified String into the String at the specified
- * offset.
+ * Creates a new string formed by concatenating the specified String into the
+ * String at the specified offset.
  *
  * Any bytes following the offset are moved forward.
  * @param anOffset Byte offset at which to concatenate the String.
  * @param aString String to concatenate into the receiver.
  */
+- (String *)stringByInsertingAt:(unsigned)anOffset string:(String *)aString;
+
+- concat:aString;
+- (id)concatSTR:(STR)aString;
+- concatenateSTR:(STR)aString;
+- (id)at:(unsigned)anOffset insert:(char *)aString count:(int)n;
 - (id)at:(unsigned)anOffset insert:aString;
 
 /* @functiongroup Deletion */
