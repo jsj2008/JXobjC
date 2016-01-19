@@ -44,7 +44,7 @@ extern id trlunit;
     id msgdic, fwdcltn;
     id protocols;
     id cats;
-    Dictionary * stringLits; /* String as key, variable name as value. */
+    Dictionary * stringLits; /* Variable name as value, string as value */
     char * modname;
     char * modversion;
     char * bindfunname;

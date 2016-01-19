@@ -1587,4 +1587,12 @@ id mkpcstringlit (id string)
     id msg  = mkmethproto (nil, nil, args, NO);
 
     return mkmesgexpr ([IdentifierExpr str:"String"], msg);
+
+    /* the new version:
+    Symbol * sym;
+    String * tVar = [trlunit defStringLit:[string deleteFrom:0 to:0]];
+
+    [trlunit defdata:[Symbol str:[tVar str]] astype:t_id];
+    return mkaddressof ([IdentifierExpr str:[tVar str]]);
+    */
 };

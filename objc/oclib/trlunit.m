@@ -316,9 +316,12 @@ static char * mystrrchr (const char * s, int c)
         [self checkbindprologue];
 
     gs ("struct gConstantString {\n");
-    gs ("  id isa;\n  unsigned capacity;\n);
+    gs ("  id isa;\n  unsigned refcnt;\n  void * lock;\n  unsigned "
+        "capcompat;\n");
     gs ("  int count;\n int capacity;\n char * ptr;\n");
     gs ("};\n");
+
+    gs ("extern id _ConstantString_classref();\n");
 
     if (o_comments)
         gs ("/* end of objc prologue */\n");
@@ -981,7 +984,7 @@ static char * mystrrchr (const char * s, int c)
     String * var = [self gettmpvar];
     if (!stringLits)
         stringLits = [Dictionary new];
-    [stringLits atKey:aStr put:var];
+    [stringLits atKey:var put:aStr];
     return var;
 }
 
@@ -1018,8 +1021,8 @@ static char * mystrrchr (const char * s, int c)
                     text = [stringLits atKey:aKey];
                     siz  = [text size];
                     /* capacity, objstr_value { count, cap, ptr } */
-                    fields = [String sprintf:"%d,\n { %d, %d, \"%s\" }", siz,
-                                             siz, siz, [text str]];
+                    fields = [String
+                        sprintf:"%d, %d, %d, %s", siz, siz, siz, [text str]];
                     [trlunit genLiteralDefForVar:aKey
                                          ofClass:@"ConstantString"
                                           fields:fields]
@@ -1031,12 +1034,10 @@ static char * mystrrchr (const char * s, int c)
               ofClass:(String *)aClass
                fields:(String *)fields
 {
-    gf ("pthread_mutex_t %s_mutex = PTHREAD_RECURSIVE_MUTEX_INITIALIZER;\n",
-        [aVar str]);
     gf ("struct g%s %s =\n{\n", [aClass str], [aVar str]);
     gf ("_%s_classref(),\n ", [aClass str]);
     gf ("0,\n");
-    gf ("&%s_mutex,", [aVar str]);
+    gf ("0,", [aVar str]);
     gs ([fields str]);
     gf ("\n};");
     return self;
