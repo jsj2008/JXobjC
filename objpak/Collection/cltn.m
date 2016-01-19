@@ -21,10 +21,8 @@
 #include "Set.h"
 #include "OrdCltn.h"
 #include "sequence.h"
-#include "OCString.h"
-#if OBJC_BLOCKS
+#include "MutableString.h"
 #include "Block.h"
-#endif
 
 @implementation Cltn
 
@@ -540,10 +538,9 @@
 
 - (String *)componentsJoinedByString:aString
 {
-    String * newString;
+    MutableString * newString = [MutableString new];
     BOOL isAdd;
 
-    newString = [String new];
     [self do:
           { :each | [newString concatSTR:[each str]];
               if (isAdd)

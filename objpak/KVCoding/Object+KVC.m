@@ -4,7 +4,7 @@
 
 #import "Block.h"
 #import "KVOStore.h"
-#import "OCString.h"
+#import "MutableString.h"
 #import "OrdCltn.h"
 #import "KVC.h"
 #import "Pair.h"
@@ -40,7 +40,7 @@
     if (!key)
         return;
 
-    strSet = [key copy];
+    strSet = [key mutableCopy];
     [[[strSet at:0 insert:"set" count:3] concatSTR:":"]
         charAt:3
            put:toupper ([strSet charAt:3])];
@@ -62,8 +62,9 @@
 
 - (Pair *)resolveKeyPathFirst:keyPath
 {
-    id indirector$remainder = [Pair new];
-    id components = [keyPath componentsSeparatedByString:@"."], first = nil;
+    Pair * indirector$remainder = [Pair new];
+    OrdCltn * components         = [keyPath componentsSeparatedByString:@"."],
+            * first               = nil;
 
     first = [components removeFirst];
 

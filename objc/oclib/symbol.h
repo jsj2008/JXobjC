@@ -16,7 +16,10 @@
  * Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
  */
 
-#pragma once
+#ifndef OCSYM_H_
+#define OCSYM_H_
+
+#include "MutableString.h"
 
 extern id s_void;
 extern id s_char;
@@ -56,7 +59,7 @@ void definebuiltintype (char * s);
 void definebuiltinfun (char * s);
 void definebuiltinvar (char * s);
 
-@interface Symbol : String
+@interface Symbol : MutableString
 {
     int lineno;
     id filename;
@@ -100,3 +103,5 @@ void definebuiltinvar (char * s);
 - poke:v at:(char *)ptr;
 
 @end
+
+#endif

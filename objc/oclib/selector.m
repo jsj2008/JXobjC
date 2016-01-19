@@ -19,9 +19,6 @@
 #include <stdlib.h>
 #include <assert.h>
 #include <string.h>
-#include "Object.h"
-#include "OCString.h"
-#include "node.h"
 #include "selector.h"
 #include "trlunit.h"
 #include "options.h"

@@ -21,7 +21,6 @@
 #include <string.h>
 #include <assert.h>
 #include <stdlib.h>
-#include "Object.h"
 #include "Block.h"
 #include "node.h"
 #include "OrdCltn.h"
@@ -1062,19 +1061,23 @@ void mkclassfwd (id name)
 id mkclassdef (id keyw, id name, id sname, id protocols, id ivars, id cvars,
                OrdCltn * generics, BOOL iscategory)
 {
-    id r;
+    ClassDef * r;
+    BOOL isExtantClass = NO;
     BOOL intfkeyw = (keyw != nil && strstr ([keyw str], "interface") != NULL);
     BOOL implkeyw =
         (keyw != nil && strstr ([keyw str], "implementation") != NULL);
 
-    if (iscategory)
+    if (iscategory && sname)
     {
         [name at:0 insert:sname];
     }
 
     if ((r = [trlunit lookupclass:name]))
     {
-        if (intfkeyw)
+        if (iscategory)
+        {
+        }
+        else if (intfkeyw)
         {
             fatal ("multiple interfaces for class %s.", [r classname]);
         }
@@ -1087,6 +1090,7 @@ id mkclassdef (id keyw, id name, id sname, id protocols, id ivars, id cvars,
             if (cvars)
                 [r checkcvars:cvars];
         }
+        isExtantClass = YES;
     }
     else
     {
@@ -1139,7 +1143,7 @@ id mkclassdef (id keyw, id name, id sname, id protocols, id ivars, id cvars,
         curclassdef = r;
     }
 
-    if (iscategory)
+    if (iscategory && !isExtantClass)
     {
         [curclassdef use]; /* ensure it is added to its superclass */
         [trlunit defcat:curclassdef];

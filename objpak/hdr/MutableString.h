@@ -3,7 +3,7 @@
 #ifndef MUTSTR_H__
 #define MUTSTR_H__
 
-#include "OCString.h"
+#include "OCString_mut.h"
 
 /*!
  @abstract Mutable Text string

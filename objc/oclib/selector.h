@@ -16,7 +16,12 @@
  * Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
  */
 
-@interface Selector : String
+#ifndef SELECTOR_H_
+#define SELECTOR_H_
+
+#include "MutableString.h"
+
+@interface Selector : MutableString
 {
     int lineno;
     id filename;
@@ -28,3 +33,5 @@
 - addcol;
 
 @end
+
+#endif

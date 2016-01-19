@@ -21,8 +21,7 @@
 #include <ctype.h>
 #include <assert.h>
 #include <string.h>
-#include "Object.h"
-#include "OCString.h"
+#include "MutableString.h"
 #include "OrdCltn.h"
 #include "node.h"
 #include "symbol.h"
@@ -57,7 +56,7 @@ char * browsepath (char * filename)
     }
     else
     {
-        id buf = [String str:o_browsedir];
+        MutableString * buf = [MutableString str:o_browsedir];
         [buf concatSTR:o_pathsep];
         [buf concatSTR:filename];
         return [buf str];

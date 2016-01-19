@@ -18,8 +18,7 @@
 
 #include <stdlib.h>
 #include <assert.h>
-#include "Object.h"
-#include "OCString.h"
+#include "MutableString.h"
 #include "node.h"
 #include "decl.h"
 #include "stardecl.h"
@@ -145,7 +144,7 @@
 
 - (String *)asDefFor:sym
 {
-    String * aType = [String new];
+    MutableString * aType = [MutableString new];
 
     if (decl)
     {

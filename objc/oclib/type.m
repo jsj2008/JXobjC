@@ -696,7 +696,7 @@ BASIC_TYPESPECS basicSpecForSpec (id spec)
 
 - (String *)asDefFor:sym
 {
-    String * aType = [String new];
+    MutableString * aType = [String new];
     [specs do:{ : each | [aType concat:each]}];
     if (decl)
     {

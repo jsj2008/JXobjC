@@ -86,6 +86,10 @@ typedef struct objstr
     buffer. */
 - copy;
 
+/*! Returns a mutable copy of the string, including a copy of its internal byte
+    buffer. */
+- mutableCopy;
+
 - deepCopy;
 - free;
 
@@ -220,11 +224,6 @@ typedef struct objstr
  */
 - (String *)stringByInsertingAt:(unsigned)anOffset string:(String *)aString;
 
-- concat:aString;
-- (id)concatSTR:(STR)aString;
-- (id)at:(unsigned)anOffset insert:(char *)aString count:(int)n;
-- (id)at:(unsigned)anOffset insert:aString;
-
 /* @functiongroup Deletion */
 
 /*!
@@ -236,10 +235,6 @@ typedef struct objstr
  * @param q Byte offset to end deleting from.
  */
 - (String *)stringByDeletingFrom:(unsigned)p to:(unsigned)q;
-
-- deleteFrom:(unsigned)p to:(unsigned)q;
-- assignSTR:(STR)aString;
-- assignSTR:(STR)aString length:(unsigned)nChars;
 
 /*! @functiongroup Substrings */
 

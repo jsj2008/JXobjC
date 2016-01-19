@@ -1,6 +1,6 @@
 /* Copyright (c) 2016 D. Mackay. All rights reserved. */
 
-#include "OCString.h"
+#include "MutableString.h"
 #include "OrdCltn.h"
 #include "sequence.h"
 #include "type.h"
@@ -13,8 +13,8 @@
 - (STR)str
 {
     Type * aType;
-    Sequence * typeSeq = [types eachElement];
-    String * desc      = @"<";
+    Sequence * typeSeq   = [types eachElement];
+    MutableString * desc = [@"<" mutableCopy];
 
     while ((aType = [typeSeq next]))
     {
@@ -35,7 +35,6 @@
 
 - synth
 {
-    //[types elementsPerform:print];
     [types elementsPerform:_cmd];
     return self;
 }

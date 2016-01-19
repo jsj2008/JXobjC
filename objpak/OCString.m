@@ -19,7 +19,7 @@
 #include <assert.h>
 #include <ctype.h>
 #include <stdlib.h>
-#include "OCString.h"
+#include "OCString_mut.h"
 #include "MutableString.h"
 #include "outofbnd.h"
 #include "ascfiler.h"

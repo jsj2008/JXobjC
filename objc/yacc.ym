@@ -23,7 +23,7 @@
 #include <string.h>
 #include "Object.h"
 #include "Block.h"
-#include "OCString.h"
+#include "MutableString.h"
 #include "options.h"
 #include "node.h"
 #include "util.h"
@@ -331,6 +331,8 @@ classdef
     { $$ = mkclassdef($1,$2,$5,$6,$7,$9,$3,0); }
     | atbegin identorclass '(' identifier ')' optgenericnames optprotoreflist
     { $$ = mkclassdef($1, $4, $2, $7, nil, nil, $6, 1); }
+    | atbegin identorclass '(' ')' optgenericnames optprotoreflist
+    { $$ = mkclassdef($1, $2, nil, $6, nil, nil, $5, 1); }
     ;
 
 compoundstmt

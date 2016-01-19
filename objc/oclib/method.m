@@ -20,7 +20,6 @@
 #include <stdlib.h>
 #include <string.h>
 #include "Block.h"
-#include "Object.h"
 #include "OCString.h"
 #include "OrdCltn.h"
 #include "decl.h"
@@ -365,7 +364,7 @@
 
 - encode
 {
-    id result = [String new];
+    MutableString * result = [MutableString new];
 
     if (restype)
     {
