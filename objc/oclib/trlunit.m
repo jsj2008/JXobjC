@@ -882,7 +882,7 @@ static char * mystrrchr (const char * s, int c)
 
 - undefSym:node asType:atype
 {
-    [types remove:atype];
+    [types remove:node];
     [typedic removeKey:node];
     return self;
 }

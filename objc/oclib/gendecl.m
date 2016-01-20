@@ -75,9 +75,9 @@
 - gendef:sym
 {
     if (decl)
-    {
         [decl gendef:sym];
-    }
+    if (sym)
+        [sym gen];
     return self;
 }
 

@@ -1079,7 +1079,7 @@ id mkclassdef (id keyw, id name, id sname, id protocols, id ivars, id cvars,
         }
         else if (intfkeyw)
         {
-            fatal ("multiple interfaces for class %s.", [r classname]);
+            fatal ("Multiple interfaces for class %s.", [r classname]);
         }
         else
         {
@@ -1089,6 +1089,18 @@ id mkclassdef (id keyw, id name, id sname, id protocols, id ivars, id cvars,
                 [r checkivars:ivars];
             if (cvars)
                 [r checkcvars:cvars];
+            if ([r generics])
+            {
+                if (generics)
+                    warn ("Generic parameters specified in implementation for "
+                          "class %s.\n"
+                          "  (generics should be specified in the interface)",
+                          [r classname]);
+                [[r generics] keysDo: 
+                    { :aKey |
+                        [trlunit def:aKey astype:[[r generics] atKey:aKey]]
+                    }];
+            }
         }
         isExtantClass = YES;
     }
