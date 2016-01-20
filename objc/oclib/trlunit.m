@@ -218,11 +218,12 @@ static char * mystrrchr (const char * s, int c)
 
     if (o_otb)
     {
-        gs ("struct _PRIVATE {\n");
-        gs ("  struct OTB *isa;\n");
-        gs ("  unsigned int _refcnt;\n");
-        gs ("  void *_lock;\n");
-        gs ("};\n");
+        gs ("struct _PRIVATE\n"
+            "{\n"
+            "  struct OTB *isa;\n"
+            "  unsigned int _refcnt;\n"
+            "  void *_lock;\n"
+            "};\n");
         gs ("struct OTB {\n");
         gs ("  struct _PRIVATE *ptr;\n");
         g_otbvars ();
@@ -231,11 +232,12 @@ static char * mystrrchr (const char * s, int c)
     }
     else
     {
-        gs ("struct _PRIVATE {\n");
-        gs ("  struct _PRIVATE *isa;\n");
-        gs ("  unsigned int _refcnt;\n");
-        gs ("  void *_lock;\n");
-        gs ("};\n");
+        gs ("struct _PRIVATE\n"
+            "{\n"
+            "  struct _PRIVATE *isa;\n"
+            "  unsigned int _refcnt;\n"
+            "  void *_lock;\n"
+            "};\n");
         gs ("typedef struct _PRIVATE *id;\n");
     }
 
@@ -296,8 +298,7 @@ static char * mystrrchr (const char * s, int c)
 
     /* type for Objective C modules */
     o_cplus ? gextc () : gs ("");
-    gs ("struct modDescriptor {\n");
-    /* keep the following compat. with Stepstone objcc */
+    gs ("struct modDescriptor\n{\n");
     gs ("  char *modName;\n");
     gs ("  char *modVersion;\n");
     gs ("  long modStatus;\n");
@@ -307,7 +308,6 @@ static char * mystrrchr (const char * s, int c)
     gs ("  short modSelRef;\n");
     gs ("  char **modSelTbl;\n");
     gs ("  struct methodDescriptor *modMapTbl;\n");
-    /* POC extensions if any */
     gs ("};\n");
 
     gf ("extern %s struct modDescriptor %s;\n", o_cplus ? "\"C\"" : "",
@@ -315,18 +315,35 @@ static char * mystrrchr (const char * s, int c)
     if (o_checkbind)
         [self checkbindprologue];
 
-    gs ("struct gConstantString {\n");
-    gs ("  id isa;\n  unsigned refcnt;\n  void * lock;\n  unsigned "
-        "capcompat;\n");
-    gs ("  int count;\n int capacity;\n char * ptr;\n");
-    gs ("};\n");
+    gs ("typedef struct _objC_iVar_s\n"
+        "{\n"
+        "  const char * name;\n"
+        "  const char * type;\n"
+        "  int offset;\n"
+        "} _objC_iVar;\n");
+
+    gs ("typedef struct _objC_iVarList_s\n"
+        "{\n"
+        "  int count;\n"
+        "  _objC_iVar list[];\n"
+        "} _objC_iVarList;\n");
+
+    gs ("struct gConstantString {\n"
+        "  id isa;\n"
+        "  unsigned refcnt;\n"
+        "  void * lock;\n"
+        "  unsigned capcompat;\n"
+        "  int count;\n"
+        "  int capacity;\n"
+        "  char * ptr;\n"
+        "};\n");
 
     gs ("extern id _ConstantString_classref();\n");
 
     if (o_comments)
         gs ("/* end of objc prologue */\n");
     else
-        gs ("\n\n\n");
+        gs ("\n\n");
     return self;
 }
 

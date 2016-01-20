@@ -501,6 +501,46 @@ id curclassdef;
     return self;
 }
 
+- genIVarList
+{
+
+    gf ("_objC_iVar %s_ivars[] =\n"
+        "{\n",
+        [classname str]);
+
+    if (ivars)
+        for (int i = 0, n = [ivars size]; i < n; i++)
+        {
+            gf ("{\n"
+                "  \"%s\",\n"
+                "  \"%s\",\n",
+                [[ivarnames at:i] str], [[[ivartypes at:i] encode] str]);
+
+            gs ("sizeof(");
+            [[ivartypes at:i] genabstrtype];
+            gs (")");
+
+            if (i)
+                for (int i2 = i - 1; i2 >= 0; i2--)
+                {
+                    gs ("+ sizeof(");
+                    [[ivartypes at:i2] genabstrtype];
+                    gs (")");
+                }
+
+            gs ("\n"
+                "}");
+
+            if (i == n - 1)
+                gs ("\n");
+            else
+                gs (",\n");
+        }
+
+    gs ("};\n");
+    return self;
+}
+
 - genprivtype
 {
     int i, n;
@@ -541,7 +581,6 @@ id curclassdef;
         return self;
     [trlunit addgentype:s];
 
-    /* keep this compatible with objcc's struct _SHARED */
     gf ("struct %s\n{\n", shartypename);
     gs ("  id isa;\n");
     gs ("  unsigned int _refcnt;\n");
@@ -554,11 +593,9 @@ id curclassdef;
     gs ("  struct _SLT *clsDispTable;\n");
     gs ("  long clsStatus;\n");
     gs ("  struct modDescriptor *clsMod;\n");
-    /* not all objcc 4.x have clsVersion */
     gs ("  unsigned clsVersion;\n");
-    /* POC extensions begin here */
-    gs ("  id clsCats;\n");
     gs ("  id *clsGlbl;\n");
+    gs ("  struct objC_iVarList_s * clsIVars;\n");
     [self gencvars];
     gs ("};\n");
     return self;
@@ -628,22 +665,22 @@ id curclassdef;
 #define CLS_INITIALIZED 0x4L
 #define CLS_POSING 0x8L
 #define CLS_MAPPED 0x10L
-/* POC extensions begin here */
-#define CLS_CATS 0x20L /* obsolete, will go away */
-#define CLS_CAT 0x40L
-#define CLS_REFCNT 0x80L
+#define CLS_CAT 0x20L
+#define CLS_REFCNT 0x40L
 
 - genclassimpl
 {
     long st;
 
+    [self genIVarList];
+
     if (!iscategory)
     {
-        st = CLS_FACTORY | CLS_POSING | CLS_CATS;
+        st = CLS_FACTORY | CLS_POSING;
     }
     else
     {
-        st = CLS_FACTORY | CLS_POSING | CLS_CATS | CLS_CAT;
+        st = CLS_FACTORY | CLS_POSING | CLS_CAT;
     }
     if (o_refcnt)
     {
@@ -683,24 +720,33 @@ id curclassdef;
 
     gf ("  \"%s\",", [self classname]);
     gcom ("/* clsName */");
+
     gs ("  0,");
     gcom ("/* clsTypes */");
+
     gf ("  sizeof(struct %s),", privtypename);
     gcom ("/* clsSizInstance */");
+
     gf ("  %d,", (nstdisptbl) ? [nstdisptbl size] : 0);
     gcom ("/* clsSizDict */");
+
     gf ("  %s,", nstdisptblname);
     gcom ("/* _nstDispatchTbl */");
+
     gf ("  %d,", st);
     gcom ("/* clsStatus */");
+
     gf ("  &%s,", [trlunit moddescname]);
     gcom ("/* clsMod */");
+
     gs ("  0,");
     gcom ("/* clsVersion */");
-    gs ("  (id)0,");
-    gcom ("/* OBSOLETE - clsCats */");
-    gf ("  &%s,", [self c_classname]);
+
+    gs ("  0,");
     gcom ("/* clsGlbl */");
+
+    gs ("  0,");
+    gcom ("/* clsIVarList */");
     gs ("};\n");
 
     if (o_otb)
@@ -727,7 +773,7 @@ id curclassdef;
 
 - genmetaimpl
 {
-    long st = CLS_META | CLS_CATS;
+    long st = CLS_META;
 
     if (o_refcnt)
     {
@@ -795,10 +841,10 @@ id curclassdef;
     gcom ("/* clsMod */");
     gs ("  0,");
     gcom ("/* clsVersion */");
-    gs ("  (id)0,");
-    gcom ("/* OBSOLETE clsCats */");
     gs ("  0,");
     gcom ("/* clsGlbl */");
+    gs ("  0,");
+    gcom ("/* clsIVarList */");
     gs ("};\n");
 
     if (o_otb)

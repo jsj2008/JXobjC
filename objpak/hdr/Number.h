@@ -34,6 +34,22 @@ typedef enum number_type_e
     NUMBER_PTRDIFF,
 } number_type_e;
 
+union number_value_u
+{
+    char c;
+    unsigned char C;
+    short s;
+    unsigned short S;
+    int i;
+    unsigned int I;
+    long l;
+    unsigned long L;
+    long long q;
+    unsigned long long Q;
+    float f;
+    double d;
+};
+
 /*!
  * @abstract Number
  * @discussion Number encased in an Objective-C object. Useful for adding to
@@ -42,21 +58,7 @@ typedef enum number_type_e
  */
 @interface Number : Object
 {
-    union number_value_u
-    {
-        char c;
-        unsigned char C;
-        short s;
-        unsigned short S;
-        int i;
-        unsigned int I;
-        long l;
-        unsigned long L;
-        long long q;
-        unsigned long long Q;
-        float f;
-        double d;
-    } value;
+    union number_value_u value;
     number_type_e type;
 }
 

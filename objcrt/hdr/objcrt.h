@@ -23,14 +23,8 @@
 #include "objc-defs.h"
 
 /* Types for Objective C classes.
-
  * These SHOULD MATCH what the compiler is emitting (for struct _PRIVATE
- * and struct _SHARED).
- *
- * All of this is sort of ugly, and error prone (since the types need to
- * be kept in sync), but needed for cross-compiles (different runtimes
- * & compilers)...
- */
+ * and struct _SHARED). */
 
 struct objcrt_private
 {
@@ -53,8 +47,8 @@ struct objcrt_shared
     long clsStatus;
     struct objcrt_modDescriptor * clsMod;
     unsigned clsVersion;
-    id clsCats;   /* obsolete, will go away */
     id * clsGlbl; /* only if CLS_POSING */
+    struct objC_iVarList_s * clsIVars;
 };
 
 typedef struct objcrt_shared * Cls_t; /* use only for impl */
@@ -66,9 +60,8 @@ typedef struct objcrt_shared * Cls_t; /* use only for impl */
 #define CLS_INITIALIZED 0x4L
 #define CLS_POSING 0x8L /* unused, but present in, Stepstn. */
 #define CLS_MAPPED 0x10L
-#define CLS_CATS 0x20L   /* obsoleted, will go away */
-#define CLS_CAT 0x40L    /* new category implementation 10/97 */
-#define CLS_REFCNT 0x80L /* refcnt classes 1/99 */
+#define CLS_CAT 0x20L    /* new category implementation 10/97 */
+#define CLS_REFCNT 0x40L /* refcnt classes 1/99 */
 
 /* CLS_POSING isn't actually used it seems for Stepstone
  * (although they define it).  Let's use this flag to check whether
