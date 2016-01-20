@@ -103,16 +103,7 @@
         {
             short shouldBracket = 0;
             gs ("_returnval=(");
-            if ([compound restype] && [[compound restype] isid] &&
-                (shouldBracket = 1))
-            {
-                gs ("((");
-                [[compound restype] genabstrtype];
-                gs (")(");
-            }
             [expr gen];
-            if (shouldBracket)
-                gs ("))");
             gs (");");
         }
         if (incretval)
@@ -128,21 +119,7 @@
         else
             gs ("return");
         if (expr)
-        {
-            short shouldBracket = 0;
-            /* FIXME */
-            if ([cmpdef restype] && [[cmpdef restype] isid] &&
-                !([expr isKindOf:ArrowExpr] || [expr isKindOf:DotExpr]) &&
-                [[expr type] isid] && (shouldBracket = 1))
-            {
-                gs ("((");
-                [[cmpdef restype] genabstrtype];
-                gs (")(");
-            }
             [expr gen];
-            if (shouldBracket == 1)
-                gs ("))");
-        }
         gc (';');
     }
     return self;

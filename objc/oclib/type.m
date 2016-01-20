@@ -252,7 +252,7 @@ BASIC_TYPESPECS basicSpecForSpec (id spec)
         [result sprintf:"[%d", [[d expr] asInt]];
     else if (array && [[d expr] isKindOf:IdentifierExpr])
         [result sprintf:"[%s", [[d expr] str]];
-    else
+    else if (array)
         [result sprintf:"[1"];
 
     for (ptrCount = 0; ptrCount < [p numpointers]; ptrCount++)
