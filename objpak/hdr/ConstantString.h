@@ -13,6 +13,7 @@
  * @indexgroup Collection
  */
 @interface ConstantString : String
++ class;
 @end
 
 #endif

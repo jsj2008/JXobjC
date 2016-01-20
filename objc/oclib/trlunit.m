@@ -1008,7 +1008,7 @@ static char * mystrrchr (const char * s, int c)
 
 - genLiteralDeclsForVar:(String *)aVar ofClass:(String *)aClass
 {
-    gf ("extern struct g%s %s;\n", [aClass str], [aVar str]);
+    gf ("static id %s_CONSTSTRING();\n", [aVar str]);
     return self;
 }
 
@@ -1034,12 +1034,16 @@ static char * mystrrchr (const char * s, int c)
               ofClass:(String *)aClass
                fields:(String *)fields
 {
-    gf ("struct g%s %s =\n{\n", [aClass str], [aVar str]);
-    gf ("_%s_classref(),\n ", [aClass str]);
+    gf ("static id %s_CONSTSTRING() {\n", [aVar str]);
+    gf ("static struct g%s %s ={\n", [aClass str], [aVar str]);
+    gf ("0,\n");
     gf ("0,\n");
     gf ("0,", [aVar str]);
     gs ([fields str]);
     gf ("\n};");
+    gf ("if (!%s.isa) %s.isa = _%s_classref();\n", [aVar str], [aVar str],
+        [aClass str]);
+    gf ("return (id)&%s;\n\n}", [aVar str]);
     return self;
 }
 

@@ -156,6 +156,10 @@
         fatal ("no initialization call defined (use -init)");
     }
 
+    gs (" extern void *_OBJCBIND_ConstantString(void);\n");
+    if (!o_postlink)
+        [trlunit usesentry:[Symbol str:"ConstantString"]];
+
     if (o_filer)
     {
         gs ((o_cplus) ? "extern \"C\"" : "extern");
@@ -176,6 +180,7 @@
     {
         gs ("_OBJCBIND_ascfiler();\n");
         gs ("_OBJCBIND_OCString();\n");
+        gs ("_OBJCBIND_ConstantString();\n");
     }
     if (!o_cache)
     {
