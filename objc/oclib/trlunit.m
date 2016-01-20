@@ -315,18 +315,18 @@ static char * mystrrchr (const char * s, int c)
     if (o_checkbind)
         [self checkbindprologue];
 
-    gs ("typedef struct _objC_iVar_s\n"
+    gs ("typedef struct objC_iVar_s\n"
         "{\n"
         "  const char * name;\n"
         "  const char * type;\n"
-        "  int offset;\n"
-        "} _objC_iVar;\n");
+        "  int offset, final_offset;\n"
+        "} objC_iVar;\n");
 
-    gs ("typedef struct _objC_iVarList_s\n"
+    gs ("typedef struct objC_iVarList_s\n"
         "{\n"
         "  int count;\n"
-        "  _objC_iVar list[];\n"
-        "} _objC_iVarList;\n");
+        "  objC_iVar (*list)[];\n"
+        "} objC_iVarList;\n");
 
     gs ("struct gConstantString {\n"
         "  id isa;\n"

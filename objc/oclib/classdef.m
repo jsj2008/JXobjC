@@ -501,34 +501,43 @@ id curclassdef;
     return self;
 }
 
-- genIVarList
+- genVarList_isForFactory:(BOOL)isFactory
 {
+    OrdCltn *vars, *varnames, *vartypes;
+    const char * pszName = [classname str];
+    const char cSuffix   = isFactory ? 'c' : 'i';
 
-    gf ("_objC_iVar %s_ivars[] =\n"
+    if (!isFactory)
+        (vars = ivars, varnames = ivarnames, vartypes = ivartypes);
+    else
+        (vars = cvars, varnames = cvarnames, vartypes = cvartypes);
+
+    gf ("objC_iVar %s_%cvars[] =\n"
         "{\n",
-        [classname str]);
+        pszName, cSuffix);
 
-    if (ivars)
-        for (int i = 0, n = [ivars size]; i < n; i++)
+    if (vars)
+        for (int i = 0, n = [vars size]; i < n; i++)
         {
             gf ("{\n"
                 "  \"%s\",\n"
                 "  \"%s\",\n",
-                [[ivarnames at:i] str], [[[ivartypes at:i] encode] str]);
+                [[varnames at:i] str], [[[vartypes at:i] encode] str]);
 
             gs ("sizeof(");
-            [[ivartypes at:i] genabstrtype];
+            [[vartypes at:i] genabstrtype];
             gs (")");
 
             if (i)
                 for (int i2 = i - 1; i2 >= 0; i2--)
                 {
                     gs ("+ sizeof(");
-                    [[ivartypes at:i2] genabstrtype];
+                    [[vartypes at:i2] genabstrtype];
                     gs (")");
                 }
 
-            gs ("\n"
+            gs (",\n"
+                "  0"
                 "}");
 
             if (i == n - 1)
@@ -537,6 +546,12 @@ id curclassdef;
                 gs (",\n");
         }
 
+    gs ("};\n");
+
+    gf ("objC_iVarList %s_%cvarlist =\n", pszName, cSuffix);
+    gs ("{\n");
+    gf ("  %d,\n", [vars size]);
+    gf ("  &%s_%cvars\n", pszName, cSuffix);
     gs ("};\n");
     return self;
 }
@@ -672,7 +687,7 @@ id curclassdef;
 {
     long st;
 
-    [self genIVarList];
+    [self genVarList_isForFactory:NO];
 
     if (!iscategory)
     {
@@ -745,7 +760,7 @@ id curclassdef;
     gs ("  0,");
     gcom ("/* clsGlbl */");
 
-    gs ("  0,");
+    gf ("  &%s_ivarlist,", [self classname]);
     gcom ("/* clsIVarList */");
     gs ("};\n");
 
@@ -774,6 +789,8 @@ id curclassdef;
 - genmetaimpl
 {
     long st = CLS_META;
+
+    [self genVarList_isForFactory:YES];
 
     if (o_refcnt)
     {
@@ -827,24 +844,34 @@ id curclassdef;
 
     gf ("  \"%s\",", [self classname]);
     gcom ("/* clsName */");
+
     gs ("  0,");
     gcom ("/* clsTypes */");
+
     gf ("  sizeof(struct %s),", shartypename);
     gcom ("/* clsSizInstance */");
+
     gf ("  %d,", (clsdisptbl) ? [clsdisptbl size] : 0);
     gcom ("/* clsSizDict */");
+
     gf ("  %s,", clsdisptblname);
     gcom ("/* _clsDispatchTbl */");
+
     gf ("  %d,", st);
     gcom ("/* clsStatus */");
+
     gf ("  &%s,", [trlunit moddescname]);
     gcom ("/* clsMod */");
+
     gs ("  0,");
     gcom ("/* clsVersion */");
+
     gs ("  0,");
     gcom ("/* clsGlbl */");
-    gs ("  0,");
+
+    gf ("  &%s_cvarlist,", [self classname]);
     gcom ("/* clsIVarList */");
+
     gs ("};\n");
 
     if (o_otb)
