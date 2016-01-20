@@ -167,7 +167,6 @@ void decrefordealloc (id e)
 
 id EXPORT idassign (id * lhs, id rhs)
 {
-#ifdef OBJC_REFCNT
     id e = *lhs;
     if (allocFlag)
     {
@@ -182,13 +181,11 @@ id EXPORT idassign (id * lhs, id rhs)
     }
     if (e)
         decrefordealloc (e);
-#endif
     return (*lhs = rhs);
 }
 
 id EXPORT idincref (id rhs)
 {
-#ifdef OBJC_REFCNT
     if (allocFlag)
     {
         dbg ("%p %i++\n", rhs, (rhs) ? _REFCNT (rhs) : 0);
@@ -199,20 +196,17 @@ id EXPORT idincref (id rhs)
         _REFCNT (rhs)++;
         pthread_spin_unlock (&rcLock);
     }
-#endif
     return rhs;
 }
 
 id EXPORT iddecref (id e)
 {
-#ifdef OBJC_REFCNT
     if (allocFlag)
     {
         dbg ("%p --%i\n", e, (e) ? _REFCNT (e) : 0);
     }
     if (e)
         decrefordealloc (e);
-#endif
     return nil;
 }
 
@@ -235,7 +229,6 @@ static id nstalloc (id aClass, unsigned int nBytes)
     aSize = nstsize (aClass) + nBytes;
 
 #ifndef OTBCRT
-
     anObject = gcoalloc (aSize);
 #else
     anObject      = (id)OC_Malloc (sizeof (struct OTB));
@@ -285,9 +278,7 @@ static id nstdealloc (id anObject)
     free (_LOCK (anObject));
 
 #ifndef OTBCRT
-
 /* AMGR_free (anObject); */
-
 #else
     unlinkotb (anObject);
     OC_Free (anObject->ptr);
