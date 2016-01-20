@@ -1019,10 +1019,10 @@ static char * mystrrchr (const char * s, int c)
                     String * text;
                     unsigned siz;
                     text = [stringLits atKey:aKey];
-                    siz  = [text size];
+                    siz  = [text size] - 2;
                     /* capacity, objstr_value { count, cap, ptr } */
-                    fields = [String
-                        sprintf:"%d, %d, %d, %s", siz, siz, siz, [text str]];
+                    fields = [String sprintf:"%d, %d, %d, %s", siz + 1, siz,
+                                             siz + 1, [text str]];
                     [trlunit genLiteralDefForVar:aKey
                                          ofClass:@"ConstantString"
                                           fields:fields]

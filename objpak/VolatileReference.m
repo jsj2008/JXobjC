@@ -5,7 +5,7 @@
 
 @implementation VolatileReference
 
-- initWithReference:(volatile T)ref
+- (VolatileReference<T> *)initWithReference:(volatile T)ref
 {
     [super init];
     GC_general_register_disappearing_link ((void *)&reference, ref);

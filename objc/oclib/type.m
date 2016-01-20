@@ -488,7 +488,7 @@ BASIC_TYPESPECS basicSpecForSpec (id spec)
 
     [specs do:
            { : each |
-               if ([each isvolatile])
+               if ([each respondsTo:@selector(isvolatile)] && [each isvolatile])
                    isvolatile = YES;
            }];
 

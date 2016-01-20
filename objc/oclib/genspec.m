@@ -26,6 +26,12 @@
     return [[desc concat:@">"] str];
 }
 
+- (BOOL)isid { return YES; }
+
+- (BOOL)isrefcounted { return YES; }
+
+- (BOOL)canforward { return YES; }
+
 - (BOOL)isEqual:x
 {
     if (![x isKindOf:GenericSpec])

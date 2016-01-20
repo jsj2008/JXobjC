@@ -19,7 +19,7 @@
 }
 
 /*! Initialises a new VolatileReference with the specified object reference. */
-- initWithReference:(volatile T)ref;
+- (VolatileReference<T> *)initWithReference:(volatile T)ref;
 /*! Retrieves the object reference hidden inside. */
 - (T)reference;
 /*! Answers whether the referenced object is valid and still exists. */
