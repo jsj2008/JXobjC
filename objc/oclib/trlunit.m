@@ -328,14 +328,19 @@ static char * mystrrchr (const char * s, int c)
         "  objC_iVar (*list)[];\n"
         "} objC_iVarList;\n");
 
+    gs ("struct gConstStr_value\n"
+        "{\n"
+        "  int count;\n"
+        "  int capacity;\n"
+        "  char * ptr;\n"
+        "};\n");
+
     gs ("struct gConstantString {\n"
         "  id isa;\n"
         "  unsigned refcnt;\n"
         "  void * lock;\n"
         "  unsigned capcompat;\n"
-        "  int count;\n"
-        "  int capacity;\n"
-        "  char * ptr;\n"
+        "  struct gConstStr_value value;\n"
         "};\n");
 
     gs ("extern id _ConstantString_classref();\n");
@@ -1034,12 +1039,13 @@ static char * mystrrchr (const char * s, int c)
     [stringLits keysDo:
                 { :aKey | String * fields;
                     String * text;
-                    unsigned siz;
+                    unsigned siz, cap;
                     text = [stringLits atKey:aKey];
                     siz  = [text size] - 2;
+                    cap  = siz + 1;
                     /* capacity, objstr_value { count, cap, ptr } */
-                    fields = [String sprintf:"%d, %d, %d, %s", siz + 1, siz,
-                                             siz + 1, [text str]];
+                    fields = [String sprintf:"%d,\n{ %d, %d, %s }", cap, siz,
+                                             cap, [text str]];
                     [trlunit genLiteralDefForVar:aKey
                                          ofClass:@"ConstantString"
                                           fields:fields]
@@ -1060,7 +1066,7 @@ static char * mystrrchr (const char * s, int c)
     gf ("\n};");
     gf ("if (!%s.isa) %s.isa = _%s_classref();\n", [aVar str], [aVar str],
         [aClass str]);
-    gf ("return (id)&%s;\n\n}", [aVar str]);
+    gf ("return (id)&%s;}\n", [aVar str]);
     return self;
 }
 

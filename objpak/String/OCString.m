@@ -165,7 +165,7 @@ static void copy (objstr_t dst, objstr_t src)
 {
     int n = src->count;
 
-    assert (/*n == str_len (src->ptr) &&*/ 0 <= n /*&& n < src->capacity*/);
+    assert (n == str_len (src->ptr) && 0 <= n && n < src->capacity);
 
     dst->count    = n;
     dst->capacity = n + 1;
