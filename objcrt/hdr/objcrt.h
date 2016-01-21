@@ -20,6 +20,7 @@
 #define __objcrt__
 
 #include <pthread.h>
+#include <stdint.h>
 #include "objc-defs.h"
 
 /* Types for Objective C classes.
@@ -49,6 +50,7 @@ struct objcrt_shared
     unsigned clsVersion;
     id * clsGlbl; /* only if CLS_POSING */
     struct objC_iVarList_s * clsIVars;
+    long clsIVarsOffset;
 };
 
 typedef struct objcrt_shared * Cls_t; /* use only for impl */

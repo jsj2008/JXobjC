@@ -187,7 +187,7 @@ id curstruct;
         {
             id s = [trlunit lookupstruct:self];
 
-            if (!s)
+            if (!s || s == self)
             {
                 warnat (sym, "incomplete definition of struct '%s'",
                         [name str]);

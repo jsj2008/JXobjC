@@ -611,6 +611,7 @@ id curclassdef;
     gs ("  unsigned clsVersion;\n");
     gs ("  id *clsGlbl;\n");
     gs ("  struct objC_iVarList_s * clsIVars;\n");
+    gs ("  long clsIVarsOffset;\n");
     [self gencvars];
     gs ("};\n");
     return self;
@@ -762,6 +763,10 @@ id curclassdef;
 
     gf ("  &%s_ivarlist,", [self classname]);
     gcom ("/* clsIVarList */");
+
+    gs ("  0,");
+    gcom ("/* clsIVarsOffset */");
+
     gs ("};\n");
 
     if (o_otb)
@@ -871,6 +876,9 @@ id curclassdef;
 
     gf ("  &%s_cvarlist,", [self classname]);
     gcom ("/* clsIVarList */");
+
+    gs ("  0,");
+    gcom ("/* clsIVarsOffset */");
 
     gs ("};\n");
 

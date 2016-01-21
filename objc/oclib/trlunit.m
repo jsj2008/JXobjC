@@ -39,6 +39,7 @@
 #include "classdef.h"
 #include "msgxpr.h"
 #include "structsp.h"
+#include "util.h"
 
 #define CL "C"
 
@@ -212,20 +213,26 @@ static char * mystrrchr (const char * s, int c)
 
 - prologue
 {
-    StructSpec * r;
+    StructSpec *r1, *r2;
     assert (modname != NULL);
 
-    r = [StructSpec new];
-    [r keyw:[Symbol sprintf:"struct"]];
-    [r name:[Symbol str:"objC_iVar_s"]];
-    [self defstruct:r];
-    [self def:@"objC_iVar" astype:[[[Type new] addspec:r] setIsobject:YES]];
+    /* Manually define the structure layout so that the compiler stays suitably
+     * quiet. */
+    r1 = [StructSpec new];
+    [r1 keyw:[Symbol sprintf:"struct"]];
+    [r1 name:[Symbol str:"objC_iVar_s"]];
+    [r1 defcomp:[Symbol str:"offset"] astype:t_int];
+    [r1 defcomp:[Symbol str:"final_offset"] astype:t_int];
+    [self defstruct:r1];
+    [self def:@"objC_iVar" astype:[[[Type new] addspec:r1] setIsobject:YES]];
 
-    r = [StructSpec new];
-    [r keyw:[Symbol sprintf:"struct"]];
-    [r name:[Symbol str:"objC_iVarList_s"]];
-    [self defstruct:r];
-    [self def:@"objC_iVarList" astype:[[[Type new] addspec:r] setIsobject:YES]];
+    r2 = [StructSpec new];
+    [r2 keyw:[Symbol sprintf:"struct"]];
+    [r2 name:[Symbol str:"objC_iVarList_s"]];
+    [r2 defcomp:[Symbol str:"list"]
+         astype:[[[[Type new] addspec:r1] ampersand] ampersand]];
+    [self defstruct:r2];
+    [self def:@"objC_iVarList" astype:[[Type new] addspec:r2]];
 
     if (o_comments)
         gs ("/* objc prologue */\n");

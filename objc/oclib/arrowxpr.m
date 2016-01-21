@@ -52,7 +52,10 @@
     }
 
     if (!type)
-        fatalat (rhs, "structure has no field '%s'", [rhs str]);
+    {
+        warnat (rhs, "Structure has no field '%s'", [rhs str]);
+        type = t_void;
+    }
 
     return self;
 }
