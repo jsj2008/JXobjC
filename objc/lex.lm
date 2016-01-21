@@ -84,6 +84,8 @@ DBLSUFFIX ([fFlL]{1,3})
 
 %%
 
+"_Alignof"              { return keyw(alignofop); }
+"alignof"               { return keyw(alignofop); }
 "auto"                  { return keyw(storageclass); }
 "_Bool"                 { return keyw(typeword); }
 "break"                 { return keyw(breakkeyw); }

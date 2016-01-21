@@ -662,6 +662,9 @@ void setfirstlinetag (void)
         /* the following are not really gnu, they're SUN headers */
         definebuiltinvar ("__builtin_va_alist");
         definebuiltinfun ("__builtin_va_arg_incr");
+
+        /* recent */
+        definebuiltinfun ("__alignof");
     }
 }
 

@@ -49,7 +49,7 @@ int yylex() ;
 %token enumkeyw structkeyw ifkeyw elsekeyw whilekeyw dokeyw forkeyw
 %token switchkeyw casekeyw
 %token defaultkeyw breakkeyw continuekeyw returnkeyw gotokeyw
-%token asmkeyw sizeofop typeofop
+%token asmkeyw sizeofop typeofop alignofop
 %token ellipsis
 %token dosasmstmt
 %token assignop equalop angleopen angleclose shift plusplus logand logor arrow
@@ -84,7 +84,7 @@ int yylex() ;
 %left shift
 %left '+' '-'
 %left '*' '%' '/'
-%right '!' '~' sizeofop typeofop unary plusplus 
+%right '!' '~' sizeofop typeofop alignofop unary plusplus
 %left arrow '.'
 %left hyperunary
 %left '(' '[' ')' ']'
@@ -931,7 +931,7 @@ relopexpr
 reservedword
     : enumkeyw  | structkeyw | ifkeyw | elsekeyw | whilekeyw
     | dokeyw | forkeyw | switchkeyw | casekeyw | defaultkeyw | breakkeyw
-    | continuekeyw | returnkeyw | gotokeyw | asmkeyw | sizeofop
+    | continuekeyw | returnkeyw | gotokeyw | asmkeyw | sizeofop alignofop
     | typequal
     { $$ = $1; }
     ;
@@ -1191,6 +1191,8 @@ unaryexpr
     | sizeofop unaryexpr %prec unary
     { $$ = mksizeof($2); }
     | sizeofop '(' typename ')' %prec hyperunary
+    { $$ = mkbuiltincall($1,mklist(nil,$3)); }
+    | alignofop '(' typename ')' %prec hyperunary
     { $$ = mkbuiltincall($1,mklist(nil,$3)); }
     | builtinfun '(' optbuiltinfunargs ')' %prec hyperunary
     { $$ = mkbuiltincall($1,$3); }

@@ -221,6 +221,7 @@ static char * mystrrchr (const char * s, int c)
     r1 = [StructSpec new];
     [r1 keyw:[Symbol sprintf:"struct"]];
     [r1 name:[Symbol str:"objC_iVar_s"]];
+    [r1 defcomp:[Symbol str:"size"] astype:t_int];
     [r1 defcomp:[Symbol str:"offset"] astype:t_int];
     [r1 defcomp:[Symbol str:"final_offset"] astype:t_int];
     [self defstruct:r1];
@@ -242,7 +243,7 @@ static char * mystrrchr (const char * s, int c)
         gs ("struct _PRIVATE\n"
             "{\n"
             "  struct OTB *isa;\n"
-            "  unsigned int _refcnt;\n"
+            "  long _refcnt;\n"
             "  void *_lock;\n"
             "};\n");
         gs ("struct OTB {\n");
@@ -256,7 +257,7 @@ static char * mystrrchr (const char * s, int c)
         gs ("struct _PRIVATE\n"
             "{\n"
             "  struct _PRIVATE *isa;\n"
-            "  unsigned int _refcnt;\n"
+            "  long _refcnt;\n"
             "  void *_lock;\n"
             "};\n");
         gs ("typedef struct _PRIVATE *id;\n");
@@ -340,7 +341,7 @@ static char * mystrrchr (const char * s, int c)
         "{\n"
         "  const char * name;\n"
         "  const char * type;\n"
-        "  int offset, final_offset;\n"
+        "  int size, offset, final_offset;\n"
         "} objC_iVar;\n");
 
     gs ("typedef struct objC_iVarList_s\n"

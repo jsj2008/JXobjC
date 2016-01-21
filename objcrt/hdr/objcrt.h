@@ -30,14 +30,14 @@
 struct objcrt_private
 {
     id isa;
-    unsigned int _refcnt;
+    long _refcnt;
     void * _lock;
 };
 
 struct objcrt_shared
 {
     id isa;
-    unsigned int _refcnt;
+    long _refcnt;
     void * _lock;
     id clsSuper;
     char * clsName;

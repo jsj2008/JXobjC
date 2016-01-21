@@ -29,6 +29,7 @@
 #include "access.h"
 #include "seltab.h"
 #include "mod.h"
+#include "ivar.h"
 
 #include "OutOfMem.h"
 
@@ -277,6 +278,8 @@ void initcls (id cls)
 
     if (initlzd (aCls))
         return;
+
+    ClassIVarsTotalOffset (cls, YES);
 
 #ifdef OBJC_REFCNT
     if (!isrefcntclass (aCls))

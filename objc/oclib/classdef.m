@@ -524,6 +524,12 @@ id curclassdef;
                 "  \"%s\",\n",
                 [[varnames at:i] str], [[[vartypes at:i] encode] str]);
 
+            /* size */
+            gs ("sizeof(");
+            [[vartypes at:i] genabstrtype];
+            gs ("),");
+
+            /* offset */
             gs ("sizeof(");
             [[vartypes at:i] genabstrtype];
             gs (")");
@@ -536,6 +542,7 @@ id curclassdef;
                     gs (")");
                 }
 
+            /* final_offset */
             gs (",\n"
                 "  0"
                 "}");
@@ -598,7 +605,7 @@ id curclassdef;
 
     gf ("struct %s\n{\n", shartypename);
     gs ("  id isa;\n");
-    gs ("  unsigned int _refcnt;\n");
+    gs ("  long _refcnt;\n");
     gs ("  void * _lock;\n");
     gs ("  id clsSuper;\n");
     gs ("  char *clsName;\n");
