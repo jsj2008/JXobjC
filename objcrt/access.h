@@ -20,45 +20,41 @@
 #ifndef OBJC_ACCESS_H
 #define OBJC_ACCESS_H
 
+#include "objc-defs.h"
+
+/*typedef struct objC_iVarList_s objC_iVarList;
+typedef struct objC_iVar_s objC_iVar;*/
+
 #ifdef OBJC_REFCNT
-static inline BOOL isrefcntclass (Cls_t cls)
-{
-    return (cls)->clsStatus & CLS_REFCNT;
-}
+INLINE BOOL isrefcntclass (Cls_t cls) { return (cls)->clsStatus & CLS_REFCNT; }
 #endif
 
-static inline BOOL isfactory (Cls_t cls)
-{
-    return (cls)->clsStatus & CLS_FACTORY;
-}
+INLINE BOOL isfactory (Cls_t cls) { return (cls)->clsStatus & CLS_FACTORY; }
 
-static inline BOOL ismeta (Cls_t cls) { return (cls)->clsStatus & CLS_META; }
+INLINE BOOL ismeta (Cls_t cls) { return (cls)->clsStatus & CLS_META; }
 
-static inline BOOL iscatgry (Cls_t cls) { return (cls)->clsStatus & CLS_CAT; }
+INLINE BOOL iscatgry (Cls_t cls) { return (cls)->clsStatus & CLS_CAT; }
 
-static inline Cls_t getmeta (Cls_t cls)
+INLINE Cls_t getmeta (Cls_t cls)
 {
     return ismeta (cls) ? cls : getcls (cls->isa);
 }
 
-static inline BOOL initlzd (Cls_t cls)
+INLINE BOOL initlzd (Cls_t cls)
 {
     return getmeta (cls)->clsStatus & CLS_INITIALIZED;
 }
 
-static inline void markinitlzd (Cls_t cls)
+INLINE void markinitlzd (Cls_t cls)
 {
     getmeta (cls)->clsStatus |= CLS_INITIALIZED;
 }
 
-static inline BOOL ismapped (Cls_t aCls)
-{
-    return (aCls)->clsStatus & CLS_MAPPED;
-}
+INLINE BOOL ismapped (Cls_t aCls) { return (aCls)->clsStatus & CLS_MAPPED; }
 
-static inline void markmapped (Cls_t aCls) { aCls->clsStatus |= CLS_MAPPED; }
+INLINE void markmapped (Cls_t aCls) { aCls->clsStatus |= CLS_MAPPED; }
 
-static inline id getisa (id anObject)
+INLINE id getisa (id anObject)
 {
 #if !OTBCRT
     return anObject->isa;
@@ -67,7 +63,7 @@ static inline id getisa (id anObject)
 #endif
 }
 
-static inline void setisa (id anObject, id aClass)
+INLINE void setisa (id anObject, id aClass)
 {
 #if !OTBCRT
     anObject->isa = aClass;
@@ -76,9 +72,13 @@ static inline void setisa (id anObject, id aClass)
 #endif
 }
 
-static inline long nstsize (id aClass)
+INLINE long nstsize (id aClass) { return getcls (aClass)->clsSizInstance; }
+
+INLINE objC_iVarList * clsivlist (Cls_t aClass) { return aClass->clsIVars; }
+
+INLINE objC_iVarList * nstivlist (id anObject)
 {
-    return getcls (aClass)->clsSizInstance;
+    return clsivlist ((Cls_t)getisa (anObject));
 }
 
 #endif

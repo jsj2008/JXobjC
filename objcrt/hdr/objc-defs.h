@@ -18,8 +18,8 @@
 #endif
 #endif
 
-/* The traditional Objective C types (see Brad Cox' book)
- */
+/* The traditional Objective C types as found in Dr. Brad Cox's
+ * Object Oriented Programming: An Evolutionary Approach. */
 
 typedef char * SEL;          /* Uniqued String for Selector */
 typedef char * TYP;          /* Type description for a method */
@@ -30,12 +30,14 @@ typedef id SHR;              /* type of class, for us, it's id */
 typedef double TimeInterval; /* time interval in seconds */
 
 #ifdef __cplusplus
-typedef id (*IMP) (...); /* Method pointer */
+typedef id (*IMP) (...); /* Method implementation */
+#define INLINE inline
 #else
-typedef id (*IMP) (); /* Method pointer */
+typedef id (*IMP) ();
+#define INLINE static inline
 #endif
 
-typedef void (*ARGIMP) (id, SEL, void *); /* dispatcher */
+typedef void (*ARGIMP) (id, SEL, void *); /* Despatcher */
 
 #if defined(WINDOWS) || defined(__WIN32) || defined(__WIN64)
 #define OBJC_WINDOWS 1

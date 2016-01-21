@@ -38,6 +38,7 @@
 #include "datadef.h"
 #include "classdef.h"
 #include "msgxpr.h"
+#include "structsp.h"
 
 #define CL "C"
 
@@ -211,7 +212,20 @@ static char * mystrrchr (const char * s, int c)
 
 - prologue
 {
+    StructSpec * r;
     assert (modname != NULL);
+
+    r = [StructSpec new];
+    [r keyw:[Symbol sprintf:"struct"]];
+    [r name:[Symbol str:"objC_iVar_s"]];
+    [self defstruct:r];
+    [self def:@"objC_iVar" astype:[[[Type new] addspec:r] setIsobject:YES]];
+
+    r = [StructSpec new];
+    [r keyw:[Symbol sprintf:"struct"]];
+    [r name:[Symbol str:"objC_iVarList_s"]];
+    [self defstruct:r];
+    [self def:@"objC_iVarList" astype:[[[Type new] addspec:r] setIsobject:YES]];
 
     if (o_comments)
         gs ("/* objc prologue */\n");
