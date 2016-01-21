@@ -280,6 +280,7 @@ void initcls (id cls)
         return;
 
     ClassIVarsTotalOffset (cls, YES);
+    ClassSetIVarAccessorVars (cls, (Cls_t)nil, 0);
 
 #ifdef OBJC_REFCNT
     if (!isrefcntclass (aCls))

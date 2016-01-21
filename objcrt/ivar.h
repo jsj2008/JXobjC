@@ -76,6 +76,34 @@ INLINE ptrdiff_t ClassIVarsTotalOffset (id cls, BOOL set)
     return tally + myIvars;
 }
 
+INLINE ptrdiff_t ClassSetIVarAccessorVars (id cls, Cls_t setCls,
+                                           int startingFrom)
+{
+    Cls_t aCls          = getcls (cls);
+    objC_iVarList * lst = clsivlist (aCls);
+
+    if (!setCls)
+        setCls = aCls;
+
+    if (aCls->clsSuper)
+        startingFrom +=
+            ClassSetIVarAccessorVars (aCls->clsSuper, setCls, startingFrom);
+
+    if (lst->count)
+    {
+        for (int i = 0; i < lst->count; i++)
+        {
+            objC_iVar * iV = IVarInList (lst, i);
+            dbg ("** Setting fast offset variable:\n\t iVar no. #%d (%s) of %s "
+                 "to %d\n",
+                 startingFrom + i, iV->name, setCls->clsName, iV->final_offset);
+            (*setCls->clsIVarOffsets[startingFrom + i]) = iV->final_offset;
+        }
+    }
+
+    return startingFrom + lst->count;
+}
+
 void objC_compute_ivar_offsets (Cls_t * cls);
 uintptr_t objC_compute_and_set_class_instance_size (Cls_t * cls);
 
