@@ -50,7 +50,14 @@ struct objcrt_shared
     unsigned clsVersion;
     id * clsGlbl; /* only if CLS_POSING */
     struct objC_iVarList_s * clsIVars;
-    long clsIVarsOffset;
+    /* Points to an array of pointers to the __<class>_(i/c)varname_offset
+     * variables associated with the class. Those variables store the
+     * offset value to be added to the object base address in order to access
+     * an ivar by its index when compiled (mixins are a special case; their
+     * ivars are added to the class they are being mixed into, and start their
+     * offsets at clsIVarOffsets[numofivarsintheclass]. They access other
+     * ivars through the slower name-based API. */
+    long ** clsIVarOffsets;
 };
 
 typedef struct objcrt_shared * Cls_t; /* use only for impl */

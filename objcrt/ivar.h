@@ -43,13 +43,11 @@ INLINE ptrdiff_t ClassIVarsTotalOffset (id cls, BOOL set)
                      : 0;
     if (set)
     {
-        aCls->clsIVarsOffset = tally;
-        // aCls->clsSizInstance = tally + myIvars;
         if (lst->count)
         {
-            printf (KULN KBLD "***  IVar report for class %s  ***\n" KNRM KBLD
-                              "%-16s%-18s%-8s\n" KNRM,
-                    aCls->clsName, "Type", "Name", "Offset");
+            dbg (KULN KBLD "***  IVar report for class %s  ***\n" KNRM KBLD
+                           "%-16s%-18s%-8s\n" KNRM,
+                 aCls->clsName, "Type", "Name", "Offset");
             for (int i = 0; i < lst->count; i++)
             {
                 objC_iVar * iV = IVarInList (lst, i);
@@ -60,20 +58,19 @@ INLINE ptrdiff_t ClassIVarsTotalOffset (id cls, BOOL set)
 
                 iV->final_offset = myIvars + tally;
 
-                printf (KRED "%-16s" KBLU KBLD "%-18s" KNRM "%-8d\n", iV->type,
-                        iV->name, iV->final_offset);
+                dbg (KRED "%-16s" KBLU KBLD "%-18s" KNRM "%-8d\n", iV->type,
+                     iV->name, iV->final_offset);
 
                 myIvars += siz;
             }
-            printf (KULN KBLD "***  End of IVar report  ***\n" KNRM);
+            dbg (KULN KBLD "***  End of IVar report  ***\n" KNRM);
         }
 
         myIvars += _Paddingof (void *, myIvars);
 
-        printf (
-            "Tally: %d\tivars: %d\tTtl %d\tcompiler generated %d\tClass: %s\n",
-            tally, myIvars, tally + myIvars, aCls->clsSizInstance,
-            aCls->clsName);
+        dbg ("Tally: %d\tivars: %d\tTtl %d\tcompiler generated %d\tClass: %s\n",
+             tally, myIvars, tally + myIvars, aCls->clsSizInstance,
+             aCls->clsName);
     }
 
     return tally + myIvars;

@@ -563,6 +563,57 @@ id curclassdef;
     return self;
 }
 
+- genVarOffsetVars_isForFactory:(BOOL)isFactory className:(String *)aName
+{
+    OrdCltn *vars, *varnames;
+    const char * pszName = [aName ?: classname str];
+    const char cSuffix   = isFactory ? 'c' : 'i';
+
+    if (!isFactory)
+        (vars = ivars, varnames = ivarnames);
+    else
+        (vars = cvars, varnames = cvarnames);
+
+    if (superc)
+        [superc genVarOffsetVars_isForFactory:isFactory
+                                    className:aName ?: classname];
+
+    if (vars)
+        for (int i = 0, n = [vars size]; i < n; i++)
+            gf ("static long __%s_%c_%s_offset = 0;\n", pszName, cSuffix,
+                [[varnames at:i] str]);
+
+    return self;
+}
+
+- genVarOffsetsArray_isForFactory:(BOOL)isFactory className:(String *)aName
+{
+    OrdCltn *vars, *varnames;
+    const char * pszName = [aName ?: classname str];
+    const char cSuffix   = isFactory ? 'c' : 'i';
+
+    if (!isFactory)
+        (vars = ivars, varnames = ivarnames);
+    else
+        (vars = cvars, varnames = cvarnames);
+
+    if (!aName)
+        gf ("static long * __%s_%c_offsets[] =\n{\n", pszName, cSuffix);
+
+    if (superc)
+        [superc genVarOffsetsArray_isForFactory:isFactory
+                                      className:aName ?: classname];
+
+    if (vars)
+        for (int i = 0, n = [vars size]; i < n; i++)
+            gf ("&__%s_%c_%s_offset,\n", pszName, cSuffix,
+                [[varnames at:i] str]);
+
+    if (!aName)
+        gf ("};\n");
+
+    return self;
+}
 - genprivtype
 {
     int i, n;
@@ -618,7 +669,7 @@ id curclassdef;
     gs ("  unsigned clsVersion;\n");
     gs ("  id *clsGlbl;\n");
     gs ("  struct objC_iVarList_s * clsIVars;\n");
-    gs ("  long clsIVarsOffset;\n");
+    gs ("  long ** clsIVarOffsets;\n");
     [self gencvars];
     gs ("};\n");
     return self;
@@ -696,6 +747,8 @@ id curclassdef;
     long st;
 
     [self genVarList_isForFactory:NO];
+    [self genVarOffsetVars_isForFactory:NO className:nil];
+    [self genVarOffsetsArray_isForFactory:NO className:nil];
 
     if (!iscategory)
     {
@@ -771,8 +824,8 @@ id curclassdef;
     gf ("  &%s_ivarlist,", [self classname]);
     gcom ("/* clsIVarList */");
 
-    gs ("  0,");
-    gcom ("/* clsIVarsOffset */");
+    gf ("  __%s_i_offsets,", [self classname]);
+    gcom ("/* clsIVarOffsets */");
 
     gs ("};\n");
 
@@ -803,6 +856,8 @@ id curclassdef;
     long st = CLS_META;
 
     [self genVarList_isForFactory:YES];
+    [self genVarOffsetVars_isForFactory:YES className:nil];
+    [self genVarOffsetsArray_isForFactory:YES className:nil];
 
     if (o_refcnt)
     {
@@ -884,8 +939,8 @@ id curclassdef;
     gf ("  &%s_cvarlist,", [self classname]);
     gcom ("/* clsIVarList */");
 
-    gs ("  0,");
-    gcom ("/* clsIVarsOffset */");
+    gf ("  __%s_c_offsets,", [self classname]);
+    gcom ("/* clsIVarOffsets */");
 
     gs ("};\n");
 
