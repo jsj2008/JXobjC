@@ -16,6 +16,9 @@
  * Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
  */
 
+#ifndef CLASSDEF_H_
+#define CLASSDEF_H_
+
 extern id curclassdef;
 extern id curstruct;
 
@@ -23,6 +26,8 @@ extern id curstruct;
 @class OrdCltn;
 
 #include "Dictionary.h"
+#include "node.h"
+#include "symbol.h"
 
 @interface ClassDef : Node
 {
@@ -142,3 +147,13 @@ extern id curstruct;
 - (BOOL)isRelated:(ClassDef *)aClass;
 
 @end
+
+@interface ClassDef (NFI)
+
+/*! Retrieves the index of the ivar corresponding to a specified Symbol. Returns
+ * -1 if no such iVar is found. */
+- (int)indexOfIVar:(Symbol *)aSym;
+
+@end
+
+#endif

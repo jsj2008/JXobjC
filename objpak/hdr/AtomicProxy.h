@@ -9,7 +9,7 @@
  * will behave as the proxied object does in most ways, forwarding invisibly
  * any message invocations onwards. This class makes it possible to turn
  * any object into a thread-safe object.
- * @indexgroup Proxy
+ * @indexgroup Threads
  */
 @interface AtomicProxy : Proxy
 {

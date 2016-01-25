@@ -101,7 +101,6 @@
         gs ("if (_returnflag==0) {_returnflag++;");
         if (expr)
         {
-            short shouldBracket = 0;
             gs ("_returnval=(");
             [expr gen];
             gs (");");

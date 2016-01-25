@@ -93,6 +93,11 @@ INLINE ptrdiff_t ClassSetIVarAccessorVars (id cls, Cls_t setCls,
     {
         for (int i = 0; i < lst->count; i++)
         {
+            /* This will break if new iVars were added at any point - could the
+             * ivar fast offset list be made 2-dimensional (with 0 as root
+             * class, 1 as 2nd-to-root, [...]) in order to solve this?
+             * Would this lead to problems with class swedging, posing, or other
+             * trickery ? */
             objC_iVar * iV = IVarInList (lst, i);
             dbg ("** Setting fast offset variable:\n\t iVar no. #%d (%s) of %s "
                  "to %d\n",
