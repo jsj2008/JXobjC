@@ -20,8 +20,6 @@
 #include <assert.h>
 #include "Object.h"
 #include "OCString.h"
-#include "node.h"
-#include "expr.h"
 #include "identxpr.h"
 #include "symbol.h"
 #include "type.h"
@@ -184,6 +182,8 @@
         {
             if (ism)
             {
+                printf ("<%s:%d>\n", [identifier str],
+                        [curclassdef indexOfIVar:identifier]);
                 ivar++;
                 classdef  = curclassdef;
                 infactory = [curdef factory];

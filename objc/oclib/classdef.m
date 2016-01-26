@@ -25,8 +25,6 @@
 #include "OrdCltn.h"
 #include "Set.h"
 #include "Dictionary.h"
-#include "node.h"
-#include "symbol.h"
 #include "selector.h"
 #include "classdef.h"
 #include "trlunit.h"

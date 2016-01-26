@@ -9,7 +9,7 @@
 
     if (superc)
     {
-        int potentialResult = [super indexOfIVar:aSym startingPoint:index];
+        int potentialResult = [superc indexOfIVar:aSym startingPoint:index];
         if (potentialResult != -1)
             return potentialResult;
     }
