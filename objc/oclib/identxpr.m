@@ -293,6 +293,15 @@
         gs ([heapvarblock heapvarptrname]);
         gs ("->");
     }
+    if (ivar && /*[identifier isEqual:@"classname"]*/ 0)
+    {
+        gs ("(*(");
+        [[[type copy] ampersand] genabstrtype];
+        gs (")");
+        gf ("(((char *)self) + *(__%s_i_offsets[%d])) )", [classdef classname],
+            [curclassdef indexOfIVar:identifier]);
+        return self;
+    }
     if (ivar)
     {
         gs ("self->");

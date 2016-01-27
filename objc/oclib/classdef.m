@@ -641,6 +641,10 @@ id curclassdef;
                 defcomp:[ivarnames at:i]
                  astype:[ivartypes at:i]] synth];
         }
+
+    gf ("static long * __%s_i_offsets[];\n", [self classname]);
+    gf ("static long * __%s_c_offsets[];\n", [self classname]);
+
     return self;
 }
 
