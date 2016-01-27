@@ -42,7 +42,7 @@ typedef struct objcol
  * @see Cltn
  * @indexgroup Collection
  */
-@interface OrdCltn : Cltn
+@interface OrdCltn <T> : Cltn
 {
     struct objcol value;
 }
@@ -105,7 +105,7 @@ typedef struct objcol
  * Add an object to the end of the collection.
  * @param anObject Object to add.
  */
-- add:anObject;
+- (OrdCltn<T> *)add:(T)anObject;
 
 /*!
  * Add an object as the first in the collection.

@@ -541,6 +541,7 @@
 {
     if (ksel)
         [ksel collect:{ : each | [each perform:_cmd]}];
+    /* if curclassdef, then register the method with the classdef here */
     return self;
 }
 

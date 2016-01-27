@@ -24,6 +24,7 @@ extern id curstruct;
 
 @class Selector;
 @class OrdCltn;
+@class Type;
 
 #include "Dictionary.h"
 #include "node.h"
@@ -61,9 +62,10 @@ extern id curstruct;
     id nstdisptbl; /* instance methods *implemented* (overridden) */
     id clssels;    /* selectors of class methods prototyped */
     id nstsels;    /* selectors of instance methods prototyped */
-    id compdic, compnames, comptypes;
-    id ivardic, ivarnames, ivartypes;
-    id cvardic, cvarnames, cvartypes;
+    Dictionary * methodsForSelectors;
+    Dictionary *compdic, *ivardic, *cvardic;
+    OrdCltn<Symbol *> *compnames, *ivarnames, *cvarnames;
+    OrdCltn<Type *> *comptypes, *ivartypes, *cvartypes;
     id allivarnames, allcvarnames;
     id fileinmethod, fileoutmethod;
     id decrefsmethod, increfsmethod, propmeths;
@@ -132,6 +134,7 @@ extern id curstruct;
 - genclassref;
 
 - lookupSelector:(Selector *)aSel;
+- methodForSelector:(Selector *)aSel;
 - lookupivar:sym;
 - lookupcvar:sym;
 - (BOOL)isivar:sym;

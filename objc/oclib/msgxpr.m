@@ -192,10 +192,6 @@ id msgwraps; /* VICI */
 {
     OrdCltn * generics = 0;
     int i;
-    /* find prototype */
-    method = [self method];
-    if ([self varargs])
-        [msg warnforwithmethod];
 
     if (curcompound)
     {
@@ -230,10 +226,22 @@ id msgwraps; /* VICI */
      * Later, we should check for associated categories too. */
 
     if ([[rcvr type] isNamedClass] && [[rcvr type] getClass])
-        if (![[[rcvr type] getClass] lookupSelector:[self selector]])
+    {
+        Method * meth = [[[rcvr type] getClass] lookupSelector:[self selector]];
+        if (!meth)
+        {
             warnat (msg,
                     "selector %s may not be understood by object of class %s",
                     [sel str], [[[rcvr type] getClass] classname]);
+            method = [self method];
+        }
+        method = [self method];
+        /*else
+        [self method:meth];*/
+    }
+
+    if ([self varargs])
+        [msg warnforwithmethod];
 
     if ([[rcvr type] isGenSpec])
     {
