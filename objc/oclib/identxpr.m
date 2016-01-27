@@ -182,8 +182,6 @@
         {
             if (ism)
             {
-                printf ("<%s:%d>\n", [identifier str],
-                        [curclassdef indexOfIVar:identifier]);
                 ivar++;
                 classdef  = curclassdef;
                 infactory = [curdef factory];
@@ -280,6 +278,12 @@
     return self;
 }
 
+static BOOL isReservedIVar (Symbol * aSym)
+{
+    return [aSym isEqual:@"isa"] || [aSym isEqual:@"_lock"] ||
+           [aSym isEqual:@"_refcnt"];
+}
+
 - gen
 {
     if (maybeheapvarblock)
@@ -293,13 +297,24 @@
         gs ([heapvarblock heapvarptrname]);
         gs ("->");
     }
-    if (ivar && /*[identifier isEqual:@"classname"]*/ 0)
+    if (ivar && !heapvarblock && !isReservedIVar (identifier) && 0)
     {
         gs ("(*(");
         [[[type copy] ampersand] genabstrtype];
         gs (")");
+        /* n.b. sometimes 'self' is inside a heapvar block. */
         gf ("(((char *)self) + *(__%s_i_offsets[%d])) )", [classdef classname],
             [curclassdef indexOfIVar:identifier]);
+        return self;
+    }
+    else if (cvar && !heapvarblock && isReservedIVar (identifier) && 0)
+    {
+        gs ("(*(");
+        [[[type copy] ampersand] genabstrtype];
+        gs (")");
+        gf ("(((char *)%s) + *(__%s_i_offsets[%d])) )",
+            infactory ? "self" : "self->isa", [classdef classname],
+            [curclassdef indexOfCVar:identifier]);
         return self;
     }
     if (ivar)

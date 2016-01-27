@@ -153,6 +153,7 @@ extern id curstruct;
 /*! Retrieves the index of the ivar corresponding to a specified Symbol. Returns
  * -1 if no such iVar is found. */
 - (int)indexOfIVar:(Symbol *)aSym;
+- (int)indexOfCVar:(Symbol *)aSym;
 
 @end
 

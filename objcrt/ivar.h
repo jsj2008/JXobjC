@@ -38,9 +38,8 @@ INLINE ptrdiff_t ClassIVarsTotalOffset (id cls, BOOL set)
     if (aCls->clsSuper)
         tally += ClassIVarsTotalOffset (aCls->clsSuper, set);
     else
-        tally += ismeta (aCls)
-                     ? (sizeof (struct _SHARED) - sizeof (struct _PRIVATE))
-                     : 0;
+        tally += ismeta (aCls) ? (sizeof (struct _SHARED))
+                               : (sizeof (struct _PRIVATE));
     if (set)
     {
         if (lst->count)
@@ -81,6 +80,9 @@ INLINE ptrdiff_t ClassSetIVarAccessorVars (id cls, Cls_t setCls,
 {
     Cls_t aCls          = getcls (cls);
     objC_iVarList * lst = clsivlist (aCls);
+
+    if (ismeta (aCls))
+        return 0;
 
     if (!setCls)
         setCls = aCls;

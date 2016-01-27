@@ -3,30 +3,41 @@
 
 @implementation ClassDef (NFI)
 
-- (int)indexOfIVar:(Symbol *)aSym startingPoint:(size_t *)index
+- (int)indexOfVar:(Symbol *)aSym
+    startingPoint:(size_t *)index
+        isFactory:(BOOL)isFactory
 {
     Symbol * potentialIVar = nil;
+    OrdCltn * vars         = isFactory ? cvars : ivars;
+    OrdCltn * varnames     = isFactory ? cvarnames : ivarnames;
 
     if (superc)
     {
-        int potentialResult = [superc indexOfIVar:aSym startingPoint:index];
+        int potentialResult =
+            [superc indexOfVar:aSym startingPoint:index isFactory:isFactory];
         if (potentialResult != -1)
             return potentialResult;
     }
 
-    potentialIVar = [ivarnames findMatching:aSym];
+    potentialIVar = [varnames findMatching:aSym];
 
     if (potentialIVar)
-        return *index + [ivarnames offsetOf:potentialIVar];
+        return *index + [varnames offsetOf:potentialIVar];
 
-    *index += [ivars size];
+    *index += [vars size];
     return -1;
 }
 
 - (int)indexOfIVar:(Symbol *)aSym
 {
     size_t startingPoint = 0;
-    return [self indexOfIVar:aSym startingPoint:&startingPoint];
+    return [self indexOfVar:aSym startingPoint:&startingPoint isFactory:NO];
+}
+
+- (int)indexOfCVar:(Symbol *)aSym
+{
+    size_t startingPoint = 0;
+    return [self indexOfVar:aSym startingPoint:&startingPoint isFactory:YES];
 }
 
 @end
