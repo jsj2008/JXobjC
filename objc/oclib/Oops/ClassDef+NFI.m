@@ -24,7 +24,7 @@
     if (potentialIVar)
         return *index + [varnames offsetOf:potentialIVar];
 
-    *index += [vars size];
+    *index += [varnames size];
     return -1;
 }
 

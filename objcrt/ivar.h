@@ -39,8 +39,8 @@ INLINE ptrdiff_t ClassIVarsTotalOffset (id cls, BOOL set)
         tally += ClassIVarsTotalOffset (aCls->clsSuper, set);
     else
     {
-        tally +=
-            ismeta (aCls) ? sizeof (struct _SHARED) : sizeof (struct _PRIVATE);
+        tally += ismeta (aCls) ? sizeof (struct _SHARED) : 0;
+        tally += _Paddingof (void *, tally);
     }
     if (set)
     {
@@ -73,6 +73,8 @@ INLINE ptrdiff_t ClassIVarsTotalOffset (id cls, BOOL set)
              tally, myIvars, tally + myIvars, aCls->clsSizInstance,
              aCls->clsName);
     }
+
+    // aCls->clsSizInstance = tally + myIvars + 64;
 
     return tally + myIvars;
 }

@@ -46,9 +46,6 @@
         if (!ivars)
             ivars = [OrdCltn new];
 
-        [ivars add:compdec];
-        [curclassdef ivars:ivars];
-
         for (i = 0, n = [decllist size]; i < n; i++)
         {
             id var = [[decllist at:i] identifier];
@@ -68,14 +65,18 @@
                     [t addspec:s_int]; /* C default */
                     [t decl:d];
                 }
-
                 [curclassdef defcomp:var astype:t];
+
+                [curclassdef addivars];
                 [curclassdef
                     addpropmeth:mkpropsetmeth (compdec, t, var, [d ispointer])];
                 [curclassdef
                     addpropmeth:mkpropgetmeth (compdec, t, var, [d ispointer])];
             }
         }
+
+        [ivars add:compdec];
+        [curclassdef ivars:ivars];
 
         [curclassdef synth];
         curdef = nil;

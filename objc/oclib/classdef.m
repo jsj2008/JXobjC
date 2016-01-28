@@ -435,6 +435,24 @@ id curclassdef;
     return self;
 }
 
+- addivars
+{
+    if (!ivardic)
+    {
+        ivardic   = [Dictionary new];
+        ivarnames = [OrdCltn new];
+        ivartypes = [OrdCltn new];
+    }
+    [compdic keysDo:
+             { :each |
+          dbg("Putting for %s\n", [each str]);
+                 [ivardic atKey:each put:[compdic atKey:each]]
+             }];
+    [ivarnames addContentsOf:compnames];
+    [ivartypes addContentsOf:comptypes];
+    return [self undefcomps];
+}
+
 - defivars
 {
     ivardic   = compdic;
@@ -523,7 +541,7 @@ id curclassdef;
         pszName, cSuffix);
 
     if (vars)
-        for (int i = 0, n = [vars size]; i < n; i++)
+        for (int i = 0, n = [varnames size]; i < n; i++)
         {
             gf ("{\n"
                 "  \"%s\",\n"
@@ -563,7 +581,7 @@ id curclassdef;
 
     gf ("objC_iVarList %s_%cvarlist =\n", pszName, cSuffix);
     gs ("{\n");
-    gf ("  %d,\n", [vars size]);
+    gf ("  %d,\n", [varnames size]);
     gf ("  &%s_%cvars\n", pszName, cSuffix);
     gs ("};\n");
     return self;
@@ -584,8 +602,8 @@ id curclassdef;
         [superc genVarOffsetVars_isForFactory:isFactory
                                     className:aName ?: classname];
 
-    if (vars)
-        for (int i = 0, n = [vars size]; i < n; i++)
+    if (varnames)
+        for (int i = 0, n = [varnames size]; i < n; i++)
             gf ("static long __%s_%c_%s_offset = 0;\n", pszName, cSuffix,
                 [[varnames at:i] str]);
 
@@ -610,8 +628,8 @@ id curclassdef;
         [superc genVarOffsetsArray_isForFactory:isFactory
                                       className:aName ?: classname];
 
-    if (vars)
-        for (int i = 0, n = [vars size]; i < n; i++)
+    if (varnames)
+        for (int i = 0, n = [varnames size]; i < n; i++)
             gf ("&__%s_%c_%s_offset,\n", pszName, cSuffix,
                 [[varnames at:i] str]);
 
@@ -620,6 +638,7 @@ id curclassdef;
 
     return self;
 }
+
 - genprivtype
 {
     int i, n;

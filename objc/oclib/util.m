@@ -725,7 +725,6 @@ id mkpropdef (id compdec)
     id r = [PropertyDef new];
 
     [r compdec:compdec];
-    [curclassdef synth];
     return r;
 }
 

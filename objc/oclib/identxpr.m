@@ -311,10 +311,10 @@ static BOOL isReservedIVar (Symbol * aSym)
         /* n.b. sometimes 'self' is inside a heapvar block. */
         if (ivar)
             gf ("(((void *)%s) + *(__%s_i_offsets[%d])) )", [selfAddr str],
-                [classdef classname], [curclassdef indexOfIVar:identifier]);
+                [classdef classname], [classdef indexOfIVar:identifier]);
         else
             gf ("(((void *)%s) + *(__%s_c_offsets[%d])) )", [selfAddr str],
-                [classdef classname], [curclassdef indexOfCVar:identifier]);
+                [classdef classname], [classdef indexOfCVar:identifier]);
         return self;
     }
     if (heapvarblock)
