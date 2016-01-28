@@ -292,30 +292,35 @@ static BOOL isReservedIVar (Symbol * aSym)
     if (isself && !lhsself)
         gs ("(id)");
 
-    if (heapvarblock)
+    if ((ivar || cvar) && !isReservedIVar (identifier) && 0)
     {
-        gs ([heapvarblock heapvarptrname]);
-        gs ("->");
-    }
-    if (ivar && !heapvarblock && !isReservedIVar (identifier) && 0)
-    {
+        String * selfAddr = nil;
+
+        if (heapvarblock)
+            selfAddr =
+                [[String str:[heapvarblock heapvarptrname]] concat:@"->"];
+        else
+            selfAddr = @"";
+
+        selfAddr = [selfAddr
+            stringByConcatenating:cvar && infactory ? @"self->isa" : @"self"];
+
         gs ("(*(");
         [[[type copy] ampersand] genabstrtype];
         gs (")");
         /* n.b. sometimes 'self' is inside a heapvar block. */
-        gf ("(((char *)self) + *(__%s_i_offsets[%d])) )", [classdef classname],
-            [curclassdef indexOfIVar:identifier]);
+        if (ivar)
+            gf ("(((void *)%s) + *(__%s_i_offsets[%d])) )", [selfAddr str],
+                [classdef classname], [curclassdef indexOfIVar:identifier]);
+        else
+            gf ("(((void *)%s) + *(__%s_c_offsets[%d])) )", [selfAddr str],
+                [classdef classname], [curclassdef indexOfCVar:identifier]);
         return self;
     }
-    else if (cvar && !heapvarblock && isReservedIVar (identifier) && 0)
+    if (heapvarblock)
     {
-        gs ("(*(");
-        [[[type copy] ampersand] genabstrtype];
-        gs (")");
-        gf ("(((char *)%s) + *(__%s_i_offsets[%d])) )",
-            infactory ? "self" : "self->isa", [classdef classname],
-            [curclassdef indexOfCVar:identifier]);
-        return self;
+        gs ([heapvarblock heapvarptrname]);
+        gs ("->");
     }
     if (ivar)
     {

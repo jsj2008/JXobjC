@@ -41,7 +41,6 @@ INLINE ptrdiff_t ClassIVarsTotalOffset (id cls, BOOL set)
     {
         tally +=
             ismeta (aCls) ? sizeof (struct _SHARED) : sizeof (struct _PRIVATE);
-        tally += _Paddingof (void *, tally);
     }
     if (set)
     {
