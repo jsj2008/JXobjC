@@ -15,6 +15,7 @@
 #include "classdef.h"
 #include "trlunit.h"
 #include "type.h"
+#include "compdef.h"
 
 @implementation PropertyDef
 
@@ -38,13 +39,19 @@
     }
     else
     {
-        id ivars    = [curclassdef ivars];
-        id decllist = [compdec decllist];
-        id specs    = [compdec specs];
+        OrdCltn * compDefs = [OrdCltn new];
+        id ivars           = [curclassdef ivars];
+        id decllist        = [compdec decllist];
+        id specs           = [compdec specs];
+        id oldStruct       = curstruct;
         int i, n;
+
+        curstruct = curclassdef;
 
         if (!ivars)
             ivars = [OrdCltn new];
+
+        [curclassdef undefcomps];
 
         for (i = 0, n = [decllist size]; i < n; i++)
         {
@@ -52,22 +59,27 @@
 
             if (var)
             {
-                id t = [Type new];
-                id d = [decllist at:i];
+                ComponentDef * cDef = [ComponentDef new];
+                id t                = [Type new];
+                id d                = [decllist at:i];
 
                 if (specs)
                 {
                     [t specs:specs]; /* type filters out storage class */
                     [t decl:d];      /* type makes a -abstrdecl of it */
+                    [cDef specs:specs];
+                    [cDef add:d];
                 }
                 else
                 {
                     [t addspec:s_int]; /* C default */
                     [t decl:d];
+                    [cDef specs:[OrdCltn add:s_int]];
+                    [cDef add:d];
                 }
-                [curclassdef defcomp:var astype:t];
 
-                [curclassdef addivars];
+                [compDefs add:cDef];
+
                 [curclassdef
                     addpropmeth:mkpropsetmeth (compdec, t, var, [d ispointer])];
                 [curclassdef
@@ -75,11 +87,12 @@
             }
         }
 
-        [ivars add:compdec];
-        [curclassdef ivars:ivars];
+        [compDefs elementsPerform:_cmd];
 
-        [curclassdef synth];
-        curdef = nil;
+        [curclassdef ivars:[ivars addContentsOf:compDefs]];
+        [curclassdef addivars];
+        curstruct = oldStruct;
+        curdef    = nil;
     }
 
     return self;

@@ -292,6 +292,8 @@ static BOOL isReservedIVar (Symbol * aSym)
     if (isself && !lhsself)
         gs ("(id)");
 
+    /* Why it won't work yet: property getter/setters are hardcoded to the old
+     * ABI (self->ivarname). They must now be switched over in order to work. */
     if ((ivar || cvar) && !isReservedIVar (identifier) && 0)
     {
         String * selfAddr = nil;

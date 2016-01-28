@@ -443,6 +443,7 @@ id curclassdef;
         ivarnames = [OrdCltn new];
         ivartypes = [OrdCltn new];
     }
+
     [compdic keysDo:
              { :each |
           dbg("Putting for %s\n", [each str]);
