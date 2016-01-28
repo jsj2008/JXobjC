@@ -393,6 +393,14 @@ id curclassdef;
     return self;
 }
 
+- addMethod:(Method *)aMeth
+{
+    if (!methsForSels)
+        methsForSels = [Dictionary new];
+    [methsForSels atKey:[aMeth selector] put:aMeth];
+    return self;
+}
+
 - check:sels includedin:impls factory:(BOOL)f
 {
     int i, n;
@@ -1315,33 +1323,12 @@ id curclassdef;
     return iscvar;
 }
 
-- st80
+- (Method *)methodForSelector:(Selector *)aSel
 {
-    if (isimpl && !emitimpl)
-    {
-        char * sn;
+    Method * aMeth = [methsForSels atKey:aSel];
+    printf ("AMeth: %p\n", aMeth);
 
-        gs ("\f\n");
-        emitimpl++;
-        sn = (superc) ? [superc classname] : "Meta";
-        gf ("%s subclass: #%s\n", [self classname], sn);
-        gs ("\tinstanceVariableNames: '");
-        [ivarnames elementsPerform:_cmd];
-        gs ("'\n");
-        gs ("\tclassVariableNames: '");
-        [cvarnames elementsPerform:_cmd];
-        gs ("'\n");
-        gs ("\tpoolDictionaries: ''\n");
-        gs ("\tcategory: 'POC Generated'!\n");
-        gc ('\n');
-    }
-    return self;
-}
-
-- (IMP)methodFor:(SEL)x cls:c methdef:m
-{
-    [self shouldNotImplement:_cmd];
-    return NULL;
+    return aMeth ?: superc ? [superc methodForSelector:aSel] : nil;
 }
 
 - (int)bytesizeOf:c

@@ -16,6 +16,11 @@
  * Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
  */
 
+#ifndef KEYWXPR_H_
+#define KEYWXPR_H_
+
+#include "expr.h"
+
 @interface KeywExpr : Expr
 {
     id keyw;
@@ -36,3 +41,5 @@
 - (BOOL)isVarArgs;
 
 @end
+
+#endif

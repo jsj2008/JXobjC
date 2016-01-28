@@ -116,7 +116,7 @@ void defoptions (void)
     o_warnlex            = 0;
     o_warnfwd            = 0;
     o_warnclasstype      = 1;
-    o_warntypeconflict   = 1;
+    o_warntypeconflict   = 0;
     o_warnundefined      = 1;
     o_warnnotfound       = 1;
     o_warnintvar         = 1;

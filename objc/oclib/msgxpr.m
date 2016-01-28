@@ -227,7 +227,12 @@ id msgwraps; /* VICI */
 
     if ([[rcvr type] isNamedClass] && [[rcvr type] getClass])
     {
-        Method * meth = [[[rcvr type] getClass] lookupSelector:[self selector]];
+        Selector * aSel =
+            [[[rcvr type] getClass] lookupSelector:[self selector]];
+        Method * meth = [[[rcvr type] getClass] methodForSelector:aSel];
+
+        methodfound = NO;
+
         if (!meth)
         {
             warnat (msg,
@@ -235,9 +240,8 @@ id msgwraps; /* VICI */
                     [sel str], [[[rcvr type] getClass] classname]);
             method = [self method];
         }
-        method = [self method];
-        /*else
-        [self method:meth];*/
+        else
+            [self method:meth];
     }
 
     if ([self varargs])

@@ -35,6 +35,7 @@
 #include "type.h"
 #include "expr.h"
 #include "msgxpr.h"
+#include "protodef.h"
 
 @implementation MethodDef
 
@@ -136,6 +137,14 @@
         }
         else
             [trlunit def:s asmethod:method];
+
+        /* if curclassdef, then register the method with the classdef here */
+        if (curclassdef)
+        {
+            dbg ("Declaring %s for class %s\n", [[self selector] str],
+                 [curclassdef classname]);
+            [curclassdef addMethod:method];
+        }
 
         if (factory && ![[curclassdef clssels] includes:s])
             [curclassdef addclssel:s];

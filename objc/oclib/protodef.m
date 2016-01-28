@@ -23,6 +23,8 @@
 
 @implementation ProtoDef
 
+- (char *)classname { return "Prototype"; }
+
 - (int)compare:b
 {
     int c;
@@ -31,6 +33,14 @@
     s2 = [[b protoname] str];
     c  = strcmp (s1, s2);
     return c;
+}
+
+- addMethod:(Method *)aMeth
+{
+    if (!methsForSels)
+        methsForSels = [Dictionary new];
+    [methsForSels atKey:[aMeth selector] put:aMeth];
+    return self;
 }
 
 - addclssel:method

@@ -1143,6 +1143,10 @@ id mkclassdef (id keyw, id name, id sname, id protocols, id ivars, id cvars,
                    [[prot nstsels] do:
                                    { :each | [r addnstsel: each];
                                    }];
+                   [[prot methsForSels] keysDo:
+                                        { :each |
+                                          [r addMethod:[[prot methsForSels] atKey: each]]
+                                          }];
                }];
 
     if (curclassdef)

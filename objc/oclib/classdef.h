@@ -25,6 +25,7 @@ extern id curstruct;
 @class Selector;
 @class OrdCltn;
 @class Type;
+@class Method;
 
 #include "Dictionary.h"
 #include "node.h"
@@ -62,7 +63,7 @@ extern id curstruct;
     id nstdisptbl; /* instance methods *implemented* (overridden) */
     id clssels;    /* selectors of class methods prototyped */
     id nstsels;    /* selectors of instance methods prototyped */
-    Dictionary * methodsForSelectors;
+    Dictionary * methsForSels;
     Dictionary *compdic, *ivardic, *cvardic;
     OrdCltn<Symbol *> *compnames, *ivarnames, *cvarnames;
     OrdCltn<Type *> *comptypes, *ivartypes, *cvartypes;
@@ -120,6 +121,8 @@ extern id curstruct;
 - synthrefcntmethods;
 - synthpropmethods;
 
+- addMethod:(Method *)aMeth;
+
 - (BOOL)forcegenintf;
 
 - gen;
@@ -133,8 +136,9 @@ extern id curstruct;
 - genmetasuper;
 - genclassref;
 
+/* Should this be folded into methodForSelector ? */
 - lookupSelector:(Selector *)aSel;
-- methodForSelector:(Selector *)aSel;
+- (Method *)methodForSelector:(Selector *)aSel;
 - lookupivar:sym;
 - lookupcvar:sym;
 - (BOOL)isivar:sym;

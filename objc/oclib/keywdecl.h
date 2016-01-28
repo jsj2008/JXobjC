@@ -16,6 +16,11 @@
  * Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
  */
 
+#ifndef KEYWDECL_H_
+#define KEYWDECL_H_
+
+#include "decl.h"
+
 @interface KeywDecl : Decl
 {
     id keyw, cast, arg;
@@ -38,3 +43,5 @@
 - hide:x rename:y;
 
 @end
+
+#endif
