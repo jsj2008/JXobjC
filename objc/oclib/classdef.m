@@ -1326,8 +1326,6 @@ id curclassdef;
 - (Method *)methodForSelector:(Selector *)aSel
 {
     Method * aMeth = [methsForSels atKey:aSel];
-    printf ("AMeth: %p\n", aMeth);
-
     return aMeth ?: superc ? [superc methodForSelector:aSel] : nil;
 }
 

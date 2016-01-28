@@ -19,24 +19,17 @@
 #include <assert.h>
 #include <string.h>
 #include <stdlib.h>
+#include "OCString.h"
+#include "Block.h"
 #include "OrdCltn.h"
 #include "cltnseq.h"
 #include "Set.h"
 #include "sequence.h"
 #include "ascfiler.h"
-#include "OCString.h"
-#if OBJC_BLOCKS
-#include "Block.h"
-#endif
 #include "notfound.h"
 #include "outofbnd.h"
 
 #define DEFAULT_CAPACITY (16)
-
-typedef struct
-{
-    @defs (OrdCltn)
-} TFOrdCltn;
 
 @implementation OrdCltn
 
@@ -64,13 +57,7 @@ static void init (objcol_t self, int n, int c)
 {
     int n        = DEFAULT_CAPACITY;
     id newObject = [super new];
-#if OTBCRT
-    /* this is always ok, not just for -otb */
     init ([newObject objcolvalue], 0, n);
-#else
-    /* faster, but not correct in the -otb case */
-    init (&(((TFOrdCltn *)newObject)->value), 0, n);
-#endif
     return newObject;
 }
 

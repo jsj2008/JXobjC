@@ -28,11 +28,6 @@
 #define DEFAULT_CAPACITY (16)
 #define SPRINTF_BUFSIZE (4096)
 
-typedef struct
-{
-    @defs (String)
-} TFString;
-
 @implementation String
 
 /*****************************************************************************
@@ -100,14 +95,8 @@ static void initstr (objstr_t self, char * s, int n)
     if (aString)
     {
         id newObj = [super new];
-        int n     = str_len (aString);
-#if OTBCRT
-        /* works always, also for -otb */
+        int n = str_len (aString);
         initstr ([newObj objstrvalue], aString, n);
-#else
-        /* faster, but doesn't work for -otb */
-        initstr (&(((TFString *)newObj)->value), aString, n);
-#endif
         return newObj;
     }
     else
@@ -121,13 +110,7 @@ static void initstr (objstr_t self, char * s, int n)
     if (aString)
     {
         id newObj = [super new];
-#if OTBCRT
-        /* works always, also for -otb */
         initstr ([newObj objstrvalue], aString, n);
-#else
-        /* faster, but doesn't work for -otb */
-        initstr (&(((TFString *)newObj)->value), aString, n);
-#endif
         return newObj;
     }
     else
@@ -704,7 +687,6 @@ static void objtoupper (objstr_t self) { strtoupper (self->ptr); }
  *
  ****************************************************************************/
 
-#ifdef __PORTABLE_OBJC__
 static void fileout (id aFiler, objstr_t self)
 {
     [aFiler fileOut:&self->count type:'i'];
@@ -737,32 +719,4 @@ static void filein (id aFiler, objstr_t self)
     return self;
 }
 
-#endif /* __PORTABLE_OBJC__ */
-
 @end
-
-/* some defs needed when cross-compiling with a DIFFERENT compiler */
-/* placed this here 'cause we will have a different objcrt.h and Object.h */
-
-#if !defined(__PORTABLE_OBJC__)
-#if !defined(OCLONGLONG)
-
-void * OC_Malloc (size_t n) { return malloc (n); }
-void * OC_Realloc (void * p, size_t n) { return realloc (p, n); }
-
-#endif /* OCLONGLONG */
-
-void * OC_Calloc (size_t nBytes)
-{
-    char * p = (char *)OC_Malloc (nBytes);
-    memset (p, 0, nBytes);
-    return (void *)p;
-}
-void * OC_MallocAtomic (size_t n) { return malloc (n); }
-void * OC_Free (void * p)
-{
-    free (p);
-    return NULL;
-}
-
-#endif /* __PORTABLE_OBJC__ */
