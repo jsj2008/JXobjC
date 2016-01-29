@@ -134,6 +134,9 @@ id curclassdef;
               astype:[[[Type new] addspec:r] setIsobject:YES]];
     }
 
+    /* Only actually needed when this is an implementation, not interface. */
+    [self declareOffsetTables];
+
     return self;
 }
 

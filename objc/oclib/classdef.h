@@ -148,6 +148,7 @@ extern id curstruct;
 - use;
 
 - addpropmeth:propmeth;
+- addivars;
 - propmeths;
 
 - (BOOL)checkAssign:(ClassDef *)aClass;
@@ -161,6 +162,10 @@ extern id curstruct;
  * -1 if no such iVar is found. */
 - (int)indexOfIVar:(Symbol *)aSym;
 - (int)indexOfCVar:(Symbol *)aSym;
+
+/* Declares the offset tables in the code tree.
+ * Does not generate actual delarations. */
+- declareOffsetTables;
 
 @end
 
