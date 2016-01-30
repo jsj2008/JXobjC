@@ -741,7 +741,7 @@ id mkkvonotice (id name, id old, id new)
     return mkexprstmtx (mkmesgexpr (e_self, mkmethproto (nil, nil, ksel, NO)));
 }
 
-id mkpropsetmeth (id compdec, id type, id name, int ispointer)
+id mkpropsetmeth (Symbol * name, Type * type)
 {
     id d, b, r;
     id selnam = [String sprintf:"%s%s", "set", [name str]];
@@ -799,7 +799,7 @@ id mkpropsetmeth (id compdec, id type, id name, int ispointer)
     return r;
 }
 
-id mkpropgetmeth (id compdec, id type, id name, int ispointer)
+id mkpropgetmeth (Symbol * name, Type * type)
 {
     id d, b, r;
     id usel = [Selector str:[name str]];

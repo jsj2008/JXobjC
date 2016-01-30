@@ -532,6 +532,22 @@ identorclassortype
     : identorclass
     | typename;
 
+identorclassortypelist
+    : identorclassortype { $$ = mklist(nil, $1); }
+    | identorclassortypelist ',' identorclassortype { $$ = mklist ($1, $3); }
+
+classfwd
+    : atclass identorclassortypelist ';'
+    {
+      [$2 do: { :each |
+        if (![trlunit lookupclass:each])
+        {
+            mkclassfwd(each);
+        }
+      }];
+      $$ = nil;
+    }
+
 extdef 
     : fundef
     { $$ = $1; }
@@ -555,14 +571,7 @@ extdef
     { $$ = nil; }
     | namespaceblock
     { $$ = nil; }
-    | atclass identorclassortype ';'
-    {
-        if (![trlunit lookupclass:$2])
-        {
-            mkclassfwd($2);
-        }
-        $$ = nil;
-    }
+    | classfwd
     ;
 
 externlangblock

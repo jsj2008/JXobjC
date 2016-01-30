@@ -107,10 +107,8 @@
                     [t decl:d];
                 }
 
-                [curclassdef
-                    addpropmeth:mkpropsetmeth (compdec, t, var, [d ispointer])];
-                [curclassdef
-                    addpropmeth:mkpropgetmeth (compdec, t, var, [d ispointer])];
+                [curclassdef addpropmeth:mkpropsetmeth (var, t)];
+                [curclassdef addpropmeth:mkpropgetmeth (var, t)];
             }
         }
         curstruct = oldStruct;

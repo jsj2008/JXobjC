@@ -531,20 +531,20 @@ id curclassdef;
 
 - genVarList_isForFactory:(BOOL)isFactory
 {
-    OrdCltn *vars, *varnames, *vartypes;
+    OrdCltn *varnames, *vartypes;
     const char * pszName = [classname str];
     const char cSuffix   = isFactory ? 'c' : 'i';
 
     if (!isFactory)
-        (vars = ivars, varnames = ivarnames, vartypes = ivartypes);
+        (varnames = ivarnames, vartypes = ivartypes);
     else
-        (vars = cvars, varnames = cvarnames, vartypes = cvartypes);
+        (varnames = cvarnames, vartypes = cvartypes);
 
     gf ("objC_iVar %s_%cvars[] =\n"
         "{\n",
         pszName, cSuffix);
 
-    if (vars)
+    if (varnames)
         for (int i = 0, n = [varnames size]; i < n; i++)
         {
             gf ("{\n"
@@ -593,14 +593,14 @@ id curclassdef;
 
 - genVarOffsetVars_isForFactory:(BOOL)isFactory className:(String *)aName
 {
-    OrdCltn *vars, *varnames;
+    OrdCltn * varnames;
     const char * pszName = [aName ?: classname str];
     const char cSuffix   = isFactory ? 'c' : 'i';
 
     if (!isFactory)
-        (vars = ivars, varnames = ivarnames);
+        (varnames = ivarnames);
     else
-        (vars = cvars, varnames = cvarnames);
+        (varnames = cvarnames);
 
     if (superc)
         [superc genVarOffsetVars_isForFactory:isFactory
@@ -616,14 +616,14 @@ id curclassdef;
 
 - genVarOffsetsArray_isForFactory:(BOOL)isFactory className:(String *)aName
 {
-    OrdCltn *vars, *varnames;
+    OrdCltn * varnames;
     const char * pszName = [aName ?: classname str];
     const char cSuffix   = isFactory ? 'c' : 'i';
 
     if (!isFactory)
-        (vars = ivars, varnames = ivarnames);
+        (varnames = ivarnames);
     else
-        (vars = cvars, varnames = cvarnames);
+        (varnames = cvarnames);
 
     if (!aName)
         gf ("static long * __%s_%c_offsets[] =\n{\n", pszName, cSuffix);

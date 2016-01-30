@@ -25,7 +25,7 @@ FILE * reopenfile (STR name, STR modfs, FILE * of);
 
 extern int okblock;
 
-@class OrdCltn;
+@class OrdCltn, Symbol, Type;
 
 id mkcppdirect (char * s);
 id mkexprstmt (id expr);
@@ -66,8 +66,8 @@ void declaremeth (BOOL factory, id decl);
 id mkfundef (id specs, id decl, id body);
 id mkmethdef (BOOL factory, id decl, id body);
 id mkpropdef (id compdec);
-id mkpropgetmeth (id compdec, id type, id name, int ispointer);
-id mkpropsetmeth (id compdec, id type, id name, int ispointer);
+id mkpropgetmeth (Symbol * name, Type * type);
+id mkpropsetmeth (Symbol * name, Type * type);
 id mkprotodef (id name);
 id mkmesgexpr (id receiver, id args);
 id mkdecl (id ident);

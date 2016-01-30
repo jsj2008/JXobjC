@@ -249,7 +249,8 @@
     if (type == t_str)
         sprintf (buffer, "%s", u.un_str);
 
-    return buffer ?: ([self error:"don't know how to format scalar"], 0);
+    return *buffer ? buffer
+                   : ([self error:"don't know how to format scalar"], (STR)0);
 }
 
 - printOn:(IOD)x

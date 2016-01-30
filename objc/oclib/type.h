@@ -34,10 +34,7 @@ extern id t_id;
 #ifndef TYPE__H__
 #define TYPE__H__
 
-@class GenericSpec;
-@class GenericDecl;
-@class ClassDef;
-@class String;
+@class GenericSpec, GenericDecl, ClassDef, String;
 
 @interface Type : Node
 {

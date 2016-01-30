@@ -22,11 +22,7 @@
 extern id curclassdef;
 extern id curstruct;
 
-@class Selector;
-@class OrdCltn;
-@class Type;
-@class Method;
-@class Expr;
+@class Selector, OrdCltn, Type, Method, Expr;
 
 #include "Dictionary.h"
 #include "node.h"
