@@ -21,7 +21,7 @@ OCLIB_SRCS="../objc/oclib/addrof.m ../objc/oclib/classdef.m ../objc/oclib/def.m 
 ../objc/oclib/btincall.m ../objc/oclib/dasmstmt.m ../objc/oclib/exprstmt.m ../objc/oclib/gotostmt.m ../objc/oclib/msgxpr.m ../objc/oclib/propdef.m ../objc/oclib/stmt.m
 ../objc/oclib/casestmt.m ../objc/oclib/datadef.m ../objc/oclib/forstmt.m ../objc/oclib/identxpr.m ../objc/oclib/namedecl.m ../objc/oclib/relxpr.m ../objc/oclib/structsp.m
 ../objc/oclib/castxpr.m ../objc/oclib/decl.m ../objc/oclib/funbody.m ../objc/oclib/ifstmt.m ../objc/oclib/node.m ../objc/oclib/rtrnstmt.m ../objc/oclib/switstmt.m
-../objc/oclib/propdef.m ../objc/oclib/protodef.m ../objc/oclib/prdotxpr.m ../objc/oclib/encxpr.m ../objc/oclib/gendecl.m ../objc/oclib/genspec.m"
+../objc/oclib/propdef.m ../objc/oclib/protodef.m ../objc/oclib/prdotxpr.m ../objc/oclib/encxpr.m ../objc/oclib/gendecl.m ../objc/oclib/genspec.m ../objc/oclib/Oops/ClassDef+NFI.m"
 OBJC_SRCS="../../objc/objc1.m ../../objc/lexfiltr.m yacc.m lex.m"
 PLINK_SRCS="../../objc/postlink.m"
 
@@ -35,7 +35,7 @@ ${OBJC} -I../objcrt/hdr -I../objpak -I../objpak/hdr -I../objpak/Collection \
         -I../objpak/KVCoding \
     ../objpak/*.m \
     ../objpak/Collection/*.m ../objpak/Exception/*.m ../objpak/IODevice/*.m \
-    ../objpak/KVCoding/*.m ../objpak/Notification/*.m
+    ../objpak/KVCoding/*.m ../objpak/Notification/*.m ../objpak/String/*.m
 ${OBJC} -I../objcrt/hdr -I../objpak/hdr -I../objc/oclib ${OCLIB_SRCS}
 
 cd objc
@@ -54,14 +54,15 @@ cp ../util/_plink.c ./plink
 cat <<'EOF' > build.sh
 #!/bin/sh
 
-CC="gcc -x c"
+CCEXE="gcc"
+CC="${CCEXE} -std=c99 -x c"
 
 ${CC} -c *.i
 cd objc && ${CC} -pthread -lgc -c *.i *.c && cd ../plink
 ${CC} -c *.i *.c -pthread -lgc && cd ../
 
-gcc *.o objc/*.o -lm  -lgc -lpthread -o objc1
-gcc *.o plink/*.o -lm -lgc -lpthread -o postlink
+${CCEXE} *.o objc/*.o -lm  -lgc -lpthread -o objc1
+${CCEXE} *.o plink/*.o -lm -lgc -lpthread -o postlink
 
 EOF
 

@@ -15,3 +15,5 @@
 
 #pragma OCbuiltInType intmax_t
 #pragma OCbuiltInType uintmax_t
+
+#pragma OCbuiltInType ptrdiff_t
