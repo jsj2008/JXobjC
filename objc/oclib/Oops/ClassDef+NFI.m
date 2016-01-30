@@ -1,7 +1,7 @@
 #include "Exceptn.h"
 #include "OrdCltn.h"
 #include "classdef.h"
-#include "expr.h"
+#include "identxpr.h"
 #include "indexxpr.h"
 #include "constxpr.h"
 #include "trlunit.h"
@@ -55,9 +55,10 @@
 - declareOffsetTables
 {
     Type * longPtrsArray =
-        [[[t_int deepCopy] ampersand] decl:mkarraydecl (nil, nil)];
-    [trlunit def:[self offsetsTableSymbol_factory:NO] astype:longPtrsArray];
-    [trlunit def:[self offsetsTableSymbol_factory:YES] astype:longPtrsArray];
+        [[[t_int deepCopy] decl:mkarraydecl (nil, nil)] ampersand];
+    [trlunit defdata:[self offsetsTableSymbol_factory:NO] astype:longPtrsArray];
+    [trlunit defdata:[self offsetsTableSymbol_factory:YES]
+              astype:longPtrsArray];
     return self;
 }
 
@@ -70,7 +71,33 @@
         [Exception signal:"Var not found"];
     subXpr = mkconstexpr ([[Symbol sprintf:"%d", idx] type:t_int], nil);
 
-    return mkindexexpr ([self offsetsTableSymbol_factory:NO], subXpr);
+    return mkindexexpr (mkidentexpr ([self offsetsTableSymbol_factory:NO]),
+                        subXpr);
+}
+
+- (Expr *)fastAddressForVar:(Symbol *)aVar isFactory:(BOOL)isFactory
+{
+    Type * charPtrT = [[t_char deepCopy] ampersand];
+    /* Note: if this is a cVar being accessed from an instance, this should
+     * instead use self->isa. */
+    Expr * castedSelf =
+        mkprecexpr (mkcastexpr (charPtrT, [[e_self copy] lhsself:1]));
+    Expr * offs =
+        mkdereference ([self offsetEntryForVar:aVar isFactory:isFactory]);
+    Type * varType =
+        isFactory ? [self lookupcvar:aVar] : [self lookupivar:aVar];
+    return mkdereference (mkcastexpr (
+        [varType ampersand], mkprecexpr (mkbinexpr (castedSelf, "+", offs))));
+}
+
+- (Expr *)fastAddressForIVar:(Symbol *)aVar
+{
+    return [self fastAddressForVar:aVar isFactory:NO];
+}
+
+- (Expr *)fastAddressForCVar:(Symbol *)aVar
+{
+    return [self fastAddressForVar:aVar isFactory:YES];
 }
 
 @end

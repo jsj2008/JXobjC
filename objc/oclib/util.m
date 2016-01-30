@@ -765,8 +765,8 @@ id mkpropsetmeth (id compdec, id type, id name, int ispointer)
         OrdCltn *s = [OrdCltn new], *dd = [OrdCltn new];
         BOOL doKVO = [type isid];
         /* (((void *)%s) + *(__%s_i_offsets[%d])) )" */
-        Expr * vartoset =
-            [mkarrowexpr ([[e_self copy] lhsself:1], name) type:type];
+        Expr * vartoset = [curclassdef fastAddressForIVar:name];
+        // [mkarrowexpr ([[e_self copy] lhsself:1], name) type:type];
         id rdecl        = [type decl];
         Symbol * tmpsym = [Symbol sprintf:"%s_s", [name str]];
         Decl * decl     = rdecl

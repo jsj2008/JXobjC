@@ -25,6 +25,7 @@
 - specs;
 - specs:aList;
 - add:aDecl;
+- decllist;
 - gen;
 - synth;
 

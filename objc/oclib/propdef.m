@@ -79,11 +79,6 @@
                 }
 
                 [compDefs add:cDef];
-
-                [curclassdef
-                    addpropmeth:mkpropsetmeth (compdec, t, var, [d ispointer])];
-                [curclassdef
-                    addpropmeth:mkpropgetmeth (compdec, t, var, [d ispointer])];
             }
         }
 
@@ -91,6 +86,33 @@
 
         [curclassdef ivars:[ivars addContentsOf:compDefs]];
         [curclassdef addivars];
+
+        for (i = 0, n = [decllist size]; i < n; i++)
+        {
+            id var = [[decllist at:i] identifier];
+
+            if (var)
+            {
+                id t = [Type new];
+                id d = [decllist at:i];
+
+                if (specs)
+                {
+                    [t specs:specs]; /* type filters out storage class */
+                    [t decl:d];      /* type makes a -abstrdecl of it */
+                }
+                else
+                {
+                    [t addspec:s_int]; /* C default */
+                    [t decl:d];
+                }
+
+                [curclassdef
+                    addpropmeth:mkpropsetmeth (compdec, t, var, [d ispointer])];
+                [curclassdef
+                    addpropmeth:mkpropgetmeth (compdec, t, var, [d ispointer])];
+            }
+        }
         curstruct = oldStruct;
         curdef    = nil;
     }

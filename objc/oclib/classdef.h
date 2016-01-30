@@ -26,6 +26,7 @@ extern id curstruct;
 @class OrdCltn;
 @class Type;
 @class Method;
+@class Expr;
 
 #include "Dictionary.h"
 #include "node.h"
@@ -158,7 +159,7 @@ extern id curstruct;
 
 @interface ClassDef (NFI)
 
-/*! Retrieves the index of the ivar corresponding to a specified Symbol. Returns
+/*! Retrieves the index of the iVar corresponding to a specified Symbol. Returns
  * -1 if no such iVar is found. */
 - (int)indexOfIVar:(Symbol *)aSym;
 - (int)indexOfCVar:(Symbol *)aSym;
@@ -166,6 +167,10 @@ extern id curstruct;
 /* Declares the offset tables in the code tree.
  * Does not generate actual delarations. */
 - declareOffsetTables;
+
+/* Retrieves a fast accessor for the specified iVar. */
+- (Expr *)fastAddressForIVar:(Symbol *)aVar;
+- (Expr *)fastAddressForCVar:(Symbol *)aVar;
 
 @end
 

@@ -292,9 +292,7 @@ static BOOL isReservedIVar (Symbol * aSym)
     if (isself && !lhsself)
         gs ("(id)");
 
-    /* Why it won't work yet: property getter/setters are hardcoded to the old
-     * ABI (self->ivarname). They must now be switched over in order to work. */
-    if ((ivar || cvar) && !isReservedIVar (identifier) && 0)
+    if ((ivar || cvar) && !isReservedIVar (identifier))
     {
         String * selfAddr = nil;
 
@@ -312,10 +310,10 @@ static BOOL isReservedIVar (Symbol * aSym)
         gs (")");
         /* n.b. sometimes 'self' is inside a heapvar block. */
         if (ivar)
-            gf ("(((void *)%s) + *(__%s_i_offsets[%d])) )", [selfAddr str],
+            gf ("(((char *)%s) + *(__%s_i_offsets[%d])) )", [selfAddr str],
                 [classdef classname], [classdef indexOfIVar:identifier]);
         else
-            gf ("(((void *)%s) + *(__%s_c_offsets[%d])) )", [selfAddr str],
+            gf ("(((char *)%s) + *(__%s_c_offsets[%d])) )", [selfAddr str],
                 [classdef classname], [classdef indexOfCVar:identifier]);
         return self;
     }
