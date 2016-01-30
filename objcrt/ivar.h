@@ -74,7 +74,7 @@ INLINE ptrdiff_t ClassIVarsTotalOffset (id cls, BOOL set)
              aCls->clsName);
     }
 
-    // aCls->clsSizInstance = tally + myIvars + 64;
+    aCls->clsSizInstance = tally + myIvars;
 
     return tally + myIvars;
 }

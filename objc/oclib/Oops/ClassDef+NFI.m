@@ -100,4 +100,56 @@
     return [self fastAddressForVar:aVar isFactory:YES];
 }
 
+- genVarOffsetVars_isForFactory:(BOOL)isFactory className:(String *)aName
+{
+    OrdCltn * varnames;
+    const char * pszName = [aName ?: classname str];
+    const char cSuffix   = isFactory ? 'c' : 'i';
+
+    if (!isFactory)
+        (varnames = ivarnames);
+    else
+        (varnames = cvarnames);
+
+    if (superc)
+        [superc genVarOffsetVars_isForFactory:isFactory
+                                    className:aName ?: classname];
+
+    if (varnames)
+        for (int i = 0, n = [varnames size]; i < n; i++)
+            gf ("static long __%s_%c_%s_offset = 0;\n", pszName, cSuffix,
+                [[varnames at:i] str]);
+
+    return self;
+}
+
+- genVarOffsetsArray_isForFactory:(BOOL)isFactory className:(String *)aName
+{
+    OrdCltn * varnames;
+    const char * pszName = [aName ?: classname str];
+    const char cSuffix   = isFactory ? 'c' : 'i';
+
+    if (!isFactory)
+        (varnames = ivarnames);
+    else
+        (varnames = cvarnames);
+
+    if (!aName)
+        gf ("static long * __%s_%c_offsets[] =\n{\n", pszName, cSuffix);
+
+    if (superc)
+        [superc genVarOffsetsArray_isForFactory:isFactory
+                                      className:aName ?: classname];
+
+    if (varnames)
+        for (int i = 0, n = [varnames size]; i < n; i++)
+            gf ("&__%s_%c_%s_offset,\n", pszName, cSuffix,
+                [[varnames at:i] str]);
+
+    if (!aName)
+        gf ("};\n");
+
+    return self;
+}
+
 @end

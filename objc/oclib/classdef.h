@@ -168,6 +168,10 @@ extern id curstruct;
 - (Expr *)fastAddressForIVar:(Symbol *)aVar;
 - (Expr *)fastAddressForCVar:(Symbol *)aVar;
 
+/* Internal use by ClassDef: */
+- genVarOffsetVars_isForFactory:(BOOL)isFactory className:(String *)aName;
+- genVarOffsetsArray_isForFactory:(BOOL)isFactory className:(String *)aName;
+
 @end
 
 #endif
