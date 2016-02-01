@@ -47,7 +47,7 @@
 
 @end
 
-@interface KPObserverRef : VolatileReference
+@interface KPObserverRef <T> : VolatileReference
 
 /* This specifies the index within the components of a keypath that
 * this entry represents.

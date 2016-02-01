@@ -1443,16 +1443,7 @@ static BOOL checkUpCast (ClassDef * one, ClassDef * two)
 
 static BOOL checkRelation (ClassDef * one, ClassDef * two)
 {
-    ClassDef * superOne;
-    if (!one || !two)
-        return YES;
-    else if (one == two)
-        return YES;
-    else if ((superOne = [one superclassdef]) && (two == superOne))
-        return YES;
-    else if (superOne)
-        return checkRelation (superOne, two);
-    return NO;
+    return checkUpCast (one, two) || checkUpCast (two, one);
 }
 
 - (BOOL)checkAssign:(ClassDef *)aClass { return checkUpCast (self, aClass); }

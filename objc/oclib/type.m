@@ -418,6 +418,28 @@ BASIC_TYPESPECS basicSpecForSpec (id spec)
     }
 }
 
+- (BOOL)isNamedClassEqual:(Type *)aType
+{
+    if (![[self getClass] checkAssign:[aType getClass]])
+        return NO;
+
+    if ([self isGenSpec] && [aType isGenSpec])
+    {
+        GenericSpec *one = [self getGenSpec], *two = [aType getGenSpec];
+        if ([[one types] size] != [[two types] size])
+            return NO;
+        else
+            for (int i = 0, n = [[one types] size]; i < n; i++)
+            {
+                Type *tOne = [[one types] at:i], *tTwo = [[two types] at:i];
+                if ([[tOne getClass] checkAssign:[tTwo getClass]])
+                    return NO;
+            }
+    }
+
+    return YES;
+}
+
 - (BOOL)isTypeEqual:x
 {
     int i, n;
@@ -428,8 +450,7 @@ BASIC_TYPESPECS basicSpecForSpec (id spec)
     else if (self == t_unknown || x == t_unknown)
         return YES;
     else if ([self isNamedClass] && [x isNamedClass])
-        return [[self getClass] checkAssign:[x getClass]] &&
-               [[self getClass] isRelated:[x getClass]];
+        return [self isNamedClassEqual:x];
 
     for (i = 0, n = [specs size]; i < n; i++)
     {
