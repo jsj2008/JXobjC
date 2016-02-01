@@ -285,7 +285,6 @@ void fatalat (id sym, char * s, ...)
         fprintf (stderr, ERRO, fn ?: "(std-in)", no);
     vfatal (s, ap);
     OC_VA_END (ap);
-    abort ();
 }
 
 @implementation Node

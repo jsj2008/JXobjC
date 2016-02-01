@@ -1062,8 +1062,8 @@ void mkclassfwd (id name)
 id mkclassdef (id keyw, id name, id sname, id protocols, id ivars, id cvars,
                OrdCltn * generics, BOOL iscategory)
 {
-    ClassDef * r;
-    BOOL isExtantClass = NO;
+    ClassDef *r, *superClass = nil;
+    BOOL isExtantClass       = NO;
     BOOL intfkeyw = (keyw != nil && strstr ([keyw str], "interface") != NULL);
     BOOL implkeyw =
         (keyw != nil && strstr ([keyw str], "implementation") != NULL);
@@ -1072,6 +1072,9 @@ id mkclassdef (id keyw, id name, id sname, id protocols, id ivars, id cvars,
     {
         [name at:0 insert:sname];
     }
+
+    if (sname)
+        superClass = [trlunit lookupclass:sname];
 
     if ((r = [trlunit lookupclass:name]))
     {
@@ -1114,6 +1117,14 @@ id mkclassdef (id keyw, id name, id sname, id protocols, id ivars, id cvars,
         [r ivars:ivars];
         [r cvars:cvars];
     }
+
+    if ([superClass generics])
+        if (!generics || !([generics size] >= [[superClass generics] size]))
+            fatalat (
+                keyw,
+                "Classes inheriting from %s must be genericised on at least "
+                "%d types",
+                [superClass classname], [[superClass generics] size]);
 
     if (generics)
     {

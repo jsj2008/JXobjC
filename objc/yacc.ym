@@ -33,6 +33,7 @@
 
 #ifndef __WATCOMC__
 /* breaks compile wcc386 */
+extern char * yytext;
 int yyerror(char*);
 int yylex() ;
 #endif
@@ -1134,6 +1135,8 @@ typename
     { $$ = mktypename($1,nil); }
     | typespeclist abstrdecl /* unsigned char* */
     { $$ = mktypename($1,$2); }
+    | error
+    { fatal("(expected typename; found '%s')", yytext); }
     ;
 
 typenamelist
