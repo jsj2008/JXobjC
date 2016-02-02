@@ -39,7 +39,7 @@
 #include "options.h"
 #include "casestmt.h"
 
-id curcompound;
+CompoundStmt * curcompound;
 id curloopcompound;
 
 @implementation CompoundStmt
@@ -215,6 +215,8 @@ id curloopcompound;
     }
     if (datadefs)
         datadefs = [datadefs collect:{ : each | [each perform:_cmd]}];
+    if (subblock)
+        [subblock synth];
     if (stmts)
         stmts = [stmts collect:{ : each | [each perform:_cmd]}];
     if (heapvars)
