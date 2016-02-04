@@ -36,6 +36,5 @@ out/*
 bld/*
 tmp/*
 *.tar.gz
-BootDist/*
 doc/olddocs
 test/*
