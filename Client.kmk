@@ -20,6 +20,7 @@ updatePLink: install
 package:
 	$(TAR) -C $(PATH_INS) -cvzf $(PKGNAME) $(PKGDIRS)
 	@$(PRINTF) "$(BLUE)Packaged binary distribution for target $(KBUILD_TARGET).\n"
+	@$(PRINTF) "$(BLUE)Packaging completed on: $(RED)$(date).\n"
 	@$(PRINTF) "Package: $(RED)$(PKGNAME)$(NORMAL)\n"
 
 docs:
@@ -30,5 +31,20 @@ cleandoc:
 
 commit: clean cleandoc
 	$(ASH) util/format.ksh
+	$(BOOTMK)
+	cd BootDist; $(GIT) add .; git commit --amend -m"Distribution for commit on date $(date)";
 	$(GIT) add .
-	$(GIT) commit
+	$(GIT) commit;
+
+amendCommit: clean cleandoc
+	$(ASH) util/format.ksh
+	$(BOOTMK)
+	cd BootDist; $(GIT) add . ; git commit --amend -m"Distribution for commit on date $(date)";
+	$(GIT) add .
+	$(GIT) commit --amend;
+
+push:
+	git push --recurse-submodules=on-demand
+
+forcePush:
+	git push -f --recurse-submodules=on-demand

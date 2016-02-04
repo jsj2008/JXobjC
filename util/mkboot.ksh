@@ -6,8 +6,7 @@ export OBJCOPT="${OBJCOPT} -I../../util/hdr -Wno-deprecated -D__dead2="
 
 OBJC="objc ${OBJCOPT}"
 
-rm -rf BootDist
-mkdir BootDist
+rm -rf BootDist/*.i BootDist/objc BootDist/plink BootDist/build.sh
 cd BootDist
 
 OCLIB_SRCS="../objc/oclib/addrof.m ../objc/oclib/classdef.m ../objc/oclib/def.m ../objc/oclib/funcall.m ../objc/oclib/indexxpr.m ../objc/oclib/options.m ../objc/oclib/scalar.m ../objc/oclib/symbol.m

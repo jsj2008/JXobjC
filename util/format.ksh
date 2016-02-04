@@ -1,1 +1,1 @@
-find . -name '*.cpp' -o  -name '*.hpp' -o -name '*.inl' -o -name '*.i' -o -name '*.cxx' -o -name '*.h' -o -name '*.cc' -o -name '*.c' -o -name '*.m' | grep -v Tools | grep -v .git |grep -v out/ | grep -v util/hdr |xargs clang-format37 -i 
+find . -name '*.cpp' -o  -name '*.hpp' -o -name '*.inl' -o -name '*.i' -o -name '*.cxx' -o -name '*.h' -o -name '*.cc' -o -name '*.c' -o -name '*.m' | grep -v Tools | grep -v .git |grep -v out/ | grep -v util/hdr | grep -v BootDist | xargs clang-format37 -i 
