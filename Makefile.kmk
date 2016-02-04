@@ -8,13 +8,6 @@ include $(PATH_CURRENT)/objpak/Makefile.kmk
 
 include $(PATH_CURRENT)/objc/Makefile.kmk
 
-PKGNAME = JXObjC-$(KBUILD_TARGET)_$(KBUILD_TARGET_ARCH).tar.gz
-PKGDIRS = lib bin include
-
-package:
-	tar -C $(PATH_INS) -cvzf $(PKGNAME) $(PKGDIRS)
-
-cleandoc:
-	rm -rf doc/Runtime doc/ObjectKit
+include $(PATH_CURRENT)/Client.kmk
 
 include $(FILE_KBUILD_SUB_FOOTER)

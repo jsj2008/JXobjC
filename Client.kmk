@@ -1,0 +1,34 @@
+OBJCDIR ?= $(PATH_INS)
+PLINK ?= $(PATH_INS)/bin/postlink
+OBJC1 ?= $(PATH_INS)/bin/objc1
+TAR ?= tar
+GIT ?= git
+NM ?= nm
+DOCMK = $(ASH) util/mkdoc.ksh
+BOOTMK = $(ASH) util/mkboot.ksh
+PKGNAME ?= JXObjC-$(KBUILD_TARGET)_$(KBUILD_TARGET_ARCH).tar.gz
+PKGDIRS = lib bin include
+
+BLUE = \e[1;34m
+RED = \e[1;31m
+NORMAL = \033[0m
+
+updatePLink: install
+	$(NM) $(OBJC1) | $(PLINK) > util/_objc1.c
+	$(NM) $(PLINK) | $(PLINK) > util/_plink.c
+
+package:
+	$(TAR) -C $(PATH_INS) -cvzf $(PKGNAME) $(PKGDIRS)
+	@$(PRINTF) "$(BLUE)Packaged binary distribution for target $(KBUILD_TARGET).\n"
+	@$(PRINTF) "Package: $(RED)$(PKGNAME)$(NORMAL)\n"
+
+docs:
+	$(DOCMK)
+
+cleandoc:
+	rm -rf doc/Runtime doc/ObjectKit
+
+commit: clean cleandoc
+	$(ASH) util/format.ksh
+	$(GIT) add .
+	$(GIT) commit
