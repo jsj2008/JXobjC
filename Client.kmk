@@ -25,7 +25,7 @@ bootDist: updatePLink
 package:
 	$(TAR) -C $(PATH_INS) -cvzf $(PKGNAME) $(PKGDIRS)
 	@$(PRINTF) "$(BLUE)Packaged binary distribution for target $(KBUILD_TARGET).\n"
-	@$(PRINTF) "$(BLUE)Packaging completed on: $(RED)$(date).\n"
+	@$(PRINTF) "$(BLUE)Packaging completed at: $(RED)$(date $(DATEFMT)).\n"
 	@$(PRINTF) "Package: $(RED)$(PKGNAME)$(NORMAL)\n"
 
 docs:
@@ -36,6 +36,8 @@ cleandoc:
 
 bootstrap1: BootDist/build.sh
 	cd BootDist && $(ASH) ./build.sh
+	@$(PRINTF) "$(BLUE)Stage 1 bootstrap completed for target $(KBUILD_TARGET).\n"
+	@$(PRINTF) "$(BLUE)Stage 1 bootstrap completed at: $(RED)$(date $(DATEFMT)).\n"
 
 bootstrap2: BootDist/bin/objc1
 	$(eval OBJCDIR = $(PATH_BOOT))
@@ -43,6 +45,8 @@ bootstrap2: BootDist/bin/objc1
 	$(eval USESHELL = $(ASH))
 	$(eval export OBJCDIR OBJCBINDIR)
 	$(MAKE) $(MAKEFLAGS) install
+	@$(PRINTF) "$(BLUE)Stage 2 bootstrap completed for target $(KBUILD_TARGET).\n"
+	@$(PRINTF) "$(BLUE)Stage 2 bootstrap completed at: $(RED)$(date $(DATEFMT)).\n"
 
 format:
 	$(ASH) util/format.ksh

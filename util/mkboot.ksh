@@ -42,6 +42,7 @@ cd objc
 byacc -dtv -o yacc.m ../../objc/yacc.ym
 flex -o lex.m ../../objc/lex.lm
 ${OBJC} -I../../objc/oclib -I../../objcrt/hdr -I../../objpak/hdr ${OBJC_SRCS}
+rm -f lex.m yacc.m
 
 cd ../plink
 ${OBJC} -I../../objc/oclib -I../../objpak/hdr  -I../../objcrt/hdr ${PLINK_SRCS}
