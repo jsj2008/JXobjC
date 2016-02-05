@@ -50,14 +50,14 @@ format:
 commit: clean cleandoc
 	$(BOOTMK)
 	$(ASH) util/format.ksh
-	cd BootDist; $(GIT) add .; git commit --amend -m"Distribution for commit on date $(date $(DATEFMT))";
+	-cd BootDist; $(GIT) add .; git commit -m"Distribution for commit on date $(date $(DATEFMT))";
 	$(GIT) add .
 	$(GIT) commit;
 
 amendCommit: clean cleandoc
 	$(BOOTMK)
 	$(ASH) util/format.ksh
-	cd BootDist; $(GIT) add . ; git commit --amend -m"Distribution for commit on date $(date $(DATEFMT))";
+	-cd BootDist; $(GIT) add . ; git commit --amend -m"Distribution for commit on date $(date $(DATEFMT))";
 	$(GIT) add .
 	$(GIT) commit --amend;
 
