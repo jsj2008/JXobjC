@@ -1,4 +1,3 @@
-OBJCDIR ?= $(PATH_INS)
 PLINK ?= $(PATH_INS)/bin/postlink
 OBJC1 ?= $(PATH_INS)/bin/objc1
 TAR ?= tar
@@ -13,9 +12,15 @@ BLUE = \e[1;34m
 RED = \e[1;31m
 NORMAL = \033[0m
 
+DATEFMT = %Y-%m-%dT%H:%M:%S
+
 updatePLink: install
 	$(NM) $(OBJC1) | $(PLINK) > util/_objc1.c
 	$(NM) $(PLINK) | $(PLINK) > util/_plink.c
+
+
+bootDist: updatePLink
+	$(BOOTMK)
 
 package:
 	$(TAR) -C $(PATH_INS) -cvzf $(PKGNAME) $(PKGDIRS)
@@ -29,17 +34,30 @@ docs:
 cleandoc:
 	rm -rf doc/Runtime doc/ObjectKit
 
-commit: clean cleandoc
+bootstrap1: BootDist/build.sh
+	cd BootDist && $(ASH) ./build.sh
+
+bootstrap2: BootDist/bin/objc1
+	$(eval OBJCDIR = $(PATH_BOOT))
+	$(eval OBJCBINDIR = $(OBJCDIR)/bin)
+	$(eval USESHELL = $(ASH))
+	$(eval export OBJCDIR OBJCBINDIR)
+	$(MAKE) $(MAKEFLAGS) install
+
+format:
 	$(ASH) util/format.ksh
+
+commit: clean cleandoc
 	$(BOOTMK)
-	cd BootDist; $(GIT) add .; git commit --amend -m"Distribution for commit on date $(date)";
+	$(ASH) util/format.ksh
+	cd BootDist; $(GIT) add .; git commit --amend -m"Distribution for commit on date $(date $(DATEFMT))";
 	$(GIT) add .
 	$(GIT) commit;
 
 amendCommit: clean cleandoc
-	$(ASH) util/format.ksh
 	$(BOOTMK)
-	cd BootDist; $(GIT) add . ; git commit --amend -m"Distribution for commit on date $(date)";
+	$(ASH) util/format.ksh
+	cd BootDist; $(GIT) add . ; git commit --amend -m"Distribution for commit on date $(date $(DATEFMT))";
 	$(GIT) add .
 	$(GIT) commit --amend;
 
@@ -47,4 +65,5 @@ push:
 	git push --recurse-submodules=on-demand
 
 forcePush:
-	git push -f --recurse-submodules=on-demand
+	cd BootDist; git push -f;
+	git push --recurse-submodules=on-demand --force

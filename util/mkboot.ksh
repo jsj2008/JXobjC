@@ -6,7 +6,7 @@ export OBJCOPT="${OBJCOPT} -I../../util/hdr -Wno-deprecated -D__dead2="
 
 OBJC="objc ${OBJCOPT}"
 
-rm -rf BootDist/*.i BootDist/objc BootDist/plink BootDist/build.sh
+rm -rf BootDist/*.i BootDist/objc BootDist/plink BootDist/build.sh BootDist/bin
 cd BootDist
 
 OCLIB_SRCS="../objc/oclib/addrof.m ../objc/oclib/classdef.m ../objc/oclib/def.m ../objc/oclib/funcall.m ../objc/oclib/indexxpr.m ../objc/oclib/options.m ../objc/oclib/scalar.m ../objc/oclib/symbol.m
@@ -60,12 +60,13 @@ ${CC} -c *.i
 cd objc && ${CC} -pthread -lgc -c *.i *.c && cd ../plink
 ${CC} -c *.i *.c -pthread -lgc && cd ../
 
-${CCEXE} *.o objc/*.o -lm  -lgc -lpthread -o objc1
-${CCEXE} *.o plink/*.o -lm -lgc -lpthread -o postlink
+${CCEXE} *.o objc/*.o -lm  -lgc -lpthread -o bin/objc1
+${CCEXE} *.o plink/*.o -lm -lgc -lpthread -o bin/postlink
 
 EOF
 
 chmod +x build.sh
-cp ../objc/drv/jxobjc .
+mkdir -p bin
+cp ../objc/drv/jxobjc ./bin
 
 cd ../

@@ -15,3 +15,16 @@ TEMPLATE_OBJC_CXXFLAGS = $(ALLFLAGS)
 TEMPLATE_OBJC_CFLAGS = $(ALLFLAGS)
 TEMPLATE_OBJC_OBJCFLAGS = $(ALLFLAGS)
 TEMPLATE_OBJC_INCS = $(PATH_ROOT)/objcrt/hdr $(PATH_ROOT)/objpak/hdr . hdr
+
+PATH_BOOT = $(PATH_ROOT)/BootDist
+
+ifndef $(SYSTEMOBJC)
+ifneq ($(wildcard $(PATH_INS)/bin/objc1),)
+OBJCDIR = $(PATH_INS)
+endif
+endif
+
+ifdef OBJCDIR
+OBJCBINDIR = $(OBJCDIR)/bin/
+USESHELL = $(ASH)
+endif
