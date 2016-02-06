@@ -22,11 +22,11 @@ updatePLink: install
 bootDist: updatePLink
 	$(BOOTMK)
 
-package:
+package: install
 	$(TAR) -C $(PATH_INS) -cvzf $(PKGNAME) $(PKGDIRS)
 	@$(PRINTF) "$(BLUE)Packaged binary distribution for target $(KBUILD_TARGET).\n"
-	@$(PRINTF) "$(BLUE)Packaging completed at: $(RED)$(date $(DATEFMT)).\n"
-	@$(PRINTF) "Package: $(RED)$(PKGNAME)$(NORMAL)\n"
+	@$(PRINTF) "$(BLUE)Packaging completed at: $(RED)$(date $(DATEFMT)).$(NORMAL)\n"
+	@$(PRINTF) "$(BLUE)Package: $(RED)$(PKGNAME)$(NORMAL)\n"
 
 docs:
 	$(DOCMK)
@@ -37,16 +37,23 @@ cleandoc:
 bootstrap1: BootDist/build.sh
 	cd BootDist && $(ASH) ./build.sh
 	@$(PRINTF) "$(BLUE)Stage 1 bootstrap completed for target $(KBUILD_TARGET).\n"
-	@$(PRINTF) "$(BLUE)Stage 1 bootstrap completed at: $(RED)$(date $(DATEFMT)).\n"
+	@$(PRINTF) "$(BLUE)Stage 1 bootstrap completed at: $(RED)$(date $(DATEFMT)).$(NORMAL)\n"
 
 bootstrap2: BootDist/bin/objc1
 	$(eval OBJCDIR = $(PATH_BOOT))
-	$(eval OBJCBINDIR = $(OBJCDIR)/bin)
-	$(eval USESHELL = $(ASH))
-	$(eval export OBJCDIR OBJCBINDIR)
+	$(eval export OBJCDIR)
 	$(MAKE) $(MAKEFLAGS) install
 	@$(PRINTF) "$(BLUE)Stage 2 bootstrap completed for target $(KBUILD_TARGET).\n"
-	@$(PRINTF) "$(BLUE)Stage 2 bootstrap completed at: $(RED)$(date $(DATEFMT)).\n"
+	@$(PRINTF) "$(BLUE)Stage 2 bootstrap completed at: $(RED)$(date $(DATEFMT)).$(NORMAL)\n"
+
+bootstrap3:
+	$(eval OBJCDIR = $(PATH_INS))
+	$(eval export OBJCDIR)
+	$(MAKE) $(MAKEFLAGS) install
+	@$(PRINTF) "$(BLUE)Stage 3 bootstrap completed for target $(KBUILD_TARGET).\n"
+	@$(PRINTF) "$(BLUE)Stage 3 bootstrap completed at: $(RED)$(date $(DATEFMT))$(NORMAL).\n"
+	@$(PRINTF) "$(BLUE)You may now run $(RED)`kmk package`$(BLUE) and "
+	@$(PRINTF) "install the produced package.$(NORMAL)\n"
 
 format:
 	$(ASH) util/format.ksh

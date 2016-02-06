@@ -18,12 +18,6 @@ TEMPLATE_OBJC_INCS = $(PATH_ROOT)/objcrt/hdr $(PATH_ROOT)/objpak/hdr . hdr
 
 PATH_BOOT = $(PATH_ROOT)/BootDist
 
-ifndef $(OBJCDIR)
-ifneq ($(wildcard $(PATH_INS)/bin/objc1),)
-OBJCDIR = $(PATH_INS)
-endif
-endif
-
 ifdef OBJCDIR
 OBJCBINDIR = $(OBJCDIR)/bin/
 USESHELL = $(ASH)

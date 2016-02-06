@@ -5,6 +5,11 @@ include $(PATH_SUB_CURRENT)/oclib/Makefile.kmk
 
 PROGRAMS += objc1 postlink fixwcpp
 
+#newobjc_TEMPLATE = OBJC
+#newobjc_INCS = $(INTERNAL_INCS)
+#newobjc_LIBS = $(INTERNAL_LIBS) pthread
+#newobjc_SOURCES = drv/jxobjc.m
+
 fixwcpp_TEMPLATE = OBJC
 fixwcpp_INCS = $(INTERNAL_INCS)
 fixwcpp_LIBS = $(INTERNAL_LIBS) pthread
