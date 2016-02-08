@@ -171,6 +171,7 @@ static void setUp (id * associations) { *associations = [Set new]; }
     id aCarrier = [ValueSequence over:[associations eachElement]];
     return [Sequence over:aCarrier];
 }
+
 /*****************************************************************************
  *
  * Adding and Removing Keys
