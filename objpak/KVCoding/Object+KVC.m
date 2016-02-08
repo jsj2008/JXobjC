@@ -54,6 +54,24 @@
          * not just id. */
         [self perform:set with:value];
     }
+    else
+    {
+#ifndef OBJC_REFCNT
+        [strSet free];
+#endif
+        strSet = [[key mutableCopy] concatSTR:":"];
+        set    = selUid ([strSet str]);
+
+        if ([self respondsTo:set])
+        {
+            /* Later, it will be a good idea to take advantage of type
+            * information
+             * associated with a class, that we can handle arbitrary return
+            * types,
+            * not just id. */
+            [self perform:set with:value];
+        }
+    }
 
 #ifndef OBJC_REFCNT
     [strSet free];
