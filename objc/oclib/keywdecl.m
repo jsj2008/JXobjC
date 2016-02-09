@@ -88,7 +88,7 @@
     return self;
 }
 
-- encode { return [[self type] ?: t_id encode]; }
+- encode { return [[self type] ?: [self cast] ?: t_id encode]; }
 
 - genparm
 {

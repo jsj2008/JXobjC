@@ -92,6 +92,8 @@ BASIC_TYPESPECS basicSpecForSpec (id spec)
         return T_UNS;
     else if ([spec isEqual:s_long])
         return T_LONG;
+    else if ([spec isEqual:@"float"])
+        return T_FLOAT;
     else if ([spec isEqual:s_double])
         return T_DOUBLE;
     else if ([spec isEqual:s_str])
@@ -240,7 +242,7 @@ BASIC_TYPESPECS basicSpecForSpec (id spec)
          : /*_*/ nil;
     // clang-format on
     short ptrCount, i, n;
-    BOOL unsignedMod = NO, array = NO;
+    BOOL unsignedMod = NO, longmod = NO, array = NO;
 
     if ([self isid] || [self isrefcounted])
         return [result sprintf:"@"];
@@ -288,16 +290,30 @@ BASIC_TYPESPECS basicSpecForSpec (id spec)
                 found = YES;
                 break;
             case T_INT:
-                [result concatSTR:"i"];
-                found = YES;
+                if (!longmod)
+                {
+                    [result concatSTR:"i"];
+                    found = YES;
+                }
                 break;
             case T_LONG:
-                [result concatSTR:"l"];
-                found = YES;
+                if (longmod)
+                {
+                    short endLoc = [result size] - 1;
+                    [result charAt:endLoc put:unsignedMod ? 'Q' : 'q'];
+                    found = YES;
+                }
+                else
+                {
+                    [result concatSTR:"l"];
+                    found   = YES;
+                    longmod = YES;
+                }
                 break;
             case T_LONGLONG:
                 [result concatSTR:"q"];
-                found = YES;
+                found   = YES;
+                longmod = YES;
                 break;
             case T_FLOAT:
                 [result concatSTR:"f"];
@@ -323,18 +339,27 @@ BASIC_TYPESPECS basicSpecForSpec (id spec)
 
             if (!found && (potentialType = [trlunit lookuptype:each]))
                 [result concat:[potentialType encode]];
+            else if (!found)
+                [result concat:@"i"];
 
-            if (unsignedMod)
+            if (unsignedMod && [result size])
             {
                 short endLoc = [result size] - 1;
                 [result charAt:endLoc put:toupper ([result charAt:endLoc])];
             }
+            else if (unsignedMod)
+                [result concat:@"I"];
         }
         else if ([each isKindOf:StructSpec])
-        {
             [result concat:[each encode]];
-        }
+        else if ([each isKindOf:EnumSpec])
+            [result concat:@"i"];
     }
+
+    if (unsignedMod && ![result size])
+        [result concat:@"I"];
+    else if (![result size])
+        [result concat:@"i"];
 
     if (array)
         [result concatSTR:"]"];
@@ -655,7 +680,7 @@ BASIC_TYPESPECS basicSpecForSpec (id spec)
 
 - (BOOL)isselptr
 {
-    if ([decl ispointer])
+    if ([decl ispointer] || [self isNamedClass])
     {
         return YES;
     }
