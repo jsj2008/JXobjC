@@ -13,13 +13,67 @@
     return [anObject doubleValue] == [self doubleValue];
 }
 
-- (number_type_e)type { return type; }
+- (BOOL)isInteger { return ![self isFloat]; }
 
-- setType:(number_type_e)aType
+- (BOOL)isFloat
 {
-    type = aType;
-    return self;
+    switch (type)
+    {
+    case NUMBER_CHAR:
+    case NUMBER_UCHAR:
+    case NUMBER_USHORT:
+    case NUMBER_INT:
+    case NUMBER_UINT:
+    case NUMBER_LONG:
+    case NUMBER_ULONG:
+    case NUMBER_LONGLONG:
+    case NUMBER_ULONGLONG: return NO;
+
+    default: return YES;
+    }
 }
+
+- (long)valueAsLong
+{
+    /* clang-format off */
+    return
+        type == NUMBER_CHAR         ? value.c
+      : type == NUMBER_UCHAR        ? value.C
+      : type == NUMBER_SHORT        ? value.s
+      : type == NUMBER_USHORT       ? value.S
+      : type == NUMBER_INT          ? value.i
+      : type == NUMBER_UINT         ? value.I
+      : type == NUMBER_LONG         ? value.l
+      : type == NUMBER_ULONG        ? value.L
+      : type == NUMBER_LONGLONG     ? value.q
+      : type == NUMBER_ULONGLONG    ? value.Q
+      : type == NUMBER_FLOAT        ? value.f
+      : type == NUMBER_DOUBLE       ? value.d
+      : /* _ */                       0;
+    /* clang-format on */
+}
+
+- (double)valueAsDouble
+{
+    /* clang-format off */
+    return
+        type == NUMBER_CHAR         ? value.c
+      : type == NUMBER_UCHAR        ? value.C
+      : type == NUMBER_SHORT        ? value.s
+      : type == NUMBER_USHORT       ? value.S
+      : type == NUMBER_INT          ? value.i
+      : type == NUMBER_UINT         ? value.I
+      : type == NUMBER_LONG         ? value.l
+      : type == NUMBER_ULONG        ? value.L
+      : type == NUMBER_LONGLONG     ? value.q
+      : type == NUMBER_ULONGLONG    ? value.Q
+      : type == NUMBER_FLOAT        ? value.f
+      : type == NUMBER_DOUBLE       ? value.d
+      : /* _ */                       0;
+    /* clang-format on */
+}
+
+- (number_type_e)type { return type; }
 
 #define NumSet(typ, nam, ch, te)                                               \
     -initWith##nam : (typ)val                                                  \

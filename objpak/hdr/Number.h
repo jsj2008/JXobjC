@@ -65,8 +65,17 @@ union number_value_u
 /*! Returns the type of number stored within. */
 - (number_type_e)type;
 
-/*! Sets the type of number stored within. */
-- (id)setType:(number_type_e)aType;
+/*! Returns YES if the number is a type of Integer. */
+- (BOOL)isInteger;
+
+/*! Returns YES if the number is a type of Floating-Point. */
+- (BOOL)isFloat;
+
+/*! Returns the integer (as a Long) value of the number. */
+- (long)valueAsLong;
+
+/*! Returns the floating-point (as a Double) value of the number. */
+- (double)valueAsDouble;
 
 #define NumFrom(typ, nam)                                                      \
     +numberWith##nam : (typ)val;                                               \
