@@ -38,3 +38,5 @@ tmp/*
 *.tar.gz
 doc/olddocs
 test/*
+*.i
+y.output

@@ -43,6 +43,7 @@
 #include "classdef.h"
 #include "genspec.h"
 #include "gendecl.h"
+#include "fundecl.h"
 
 id t_unknown;
 id t_void;
@@ -245,7 +246,9 @@ BASIC_TYPESPECS basicSpecForSpec (id spec)
     BOOL unsignedMod = NO, longmod = NO, array = NO;
 
     if ([self isid] || [self isrefcounted])
-        return [result sprintf:"@"];
+        return [result concat:@"@"];
+    else if ([decl isKindOf:FunctionDecl])
+        return [result concat:@"?"];
 
     if ([d isKindOf:ArrayDecl])
         array = YES;
