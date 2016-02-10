@@ -4,6 +4,22 @@
 
 @implementation Number
 
++ true
+{
+    static Number * aNum = 0;
+    if (!aNum)
+        aNum = [self numberWithBool:YES];
+    return aNum;
+}
+
++ false
+{
+    static Number * aNum = 0;
+    if (!aNum)
+        aNum = [self numberWithBool:NO];
+    return aNum;
+}
+
 - (uintptr_t)hash { return (type * 4) % value.I; }
 
 - (BOOL)isEqual:anObject
@@ -13,12 +29,23 @@
     return [anObject doubleValue] == [self doubleValue];
 }
 
+- (BOOL)isTrue
+{
+    if ([self isFloat] && [self valueAsDouble])
+        return YES;
+    else if ([self isInteger] && [self valueAsLong])
+        return YES;
+    else
+        return NO;
+}
+
 - (BOOL)isInteger { return ![self isFloat]; }
 
 - (BOOL)isFloat
 {
     switch (type)
     {
+    case NUMBER_BOOL:
     case NUMBER_CHAR:
     case NUMBER_UCHAR:
     case NUMBER_USHORT:
@@ -37,7 +64,8 @@
 {
     /* clang-format off */
     return
-        type == NUMBER_CHAR         ? value.c
+        type == NUMBER_BOOL         ? value.b
+      : type == NUMBER_CHAR         ? value.c
       : type == NUMBER_UCHAR        ? value.C
       : type == NUMBER_SHORT        ? value.s
       : type == NUMBER_USHORT       ? value.S
@@ -57,7 +85,8 @@
 {
     /* clang-format off */
     return
-        type == NUMBER_CHAR         ? value.c
+        type == NUMBER_BOOL         ? value.b
+      : type == NUMBER_CHAR         ? value.c
       : type == NUMBER_UCHAR        ? value.C
       : type == NUMBER_SHORT        ? value.s
       : type == NUMBER_USHORT       ? value.S
@@ -83,6 +112,7 @@
         return self;                                                           \
     }                                                                          \
     +numberWith##nam : (typ)val { return [[super new] initWith##nam:val]; }
+NumSet (BOOL, Bool, b, NUMBER_BOOL);
 NumSet (char, Char, c, NUMBER_CHAR);
 NumSet (unsigned char, UChar, C, NUMBER_UCHAR);
 NumSet (short, Short, s, NUMBER_SHORT);
@@ -99,6 +129,7 @@ NumSet (double, Double, d, NUMBER_DOUBLE);
 
 #define NumVal(typ, nam, ch)                                                   \
     -(typ)nam##Value { return value.ch; }
+NumVal (BOOL, bool, b);
 NumVal (char, char, c);
 NumVal (unsigned char, uChar, C);
 NumVal (short, short, s);

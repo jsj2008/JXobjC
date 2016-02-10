@@ -2,7 +2,7 @@
 
 #include "Dictionary.h"
 
-@implementation Dictionary (KVC)
+@implementation Dictionary (KVC) <Tkey, Tval>
 
 - valueForKey:key { return [self atKey:key] ?: [super valueForKey:key]; }
 

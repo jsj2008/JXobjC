@@ -8,6 +8,7 @@
 
 typedef enum number_type_e
 {
+    NUMBER_BOOL,
     NUMBER_CHAR,
     NUMBER_UCHAR,
     NUMBER_SHORT,
@@ -36,6 +37,7 @@ typedef enum number_type_e
 
 union number_value_u
 {
+    BOOL b;
     char c;
     unsigned char C;
     short s;
@@ -62,8 +64,17 @@ union number_value_u
     number_type_e type;
 }
 
+/*! Returns a YES number. */
++ true;
+
+/*! Returns a NO number. */
++ false;
+
 /*! Returns the type of number stored within. */
 - (number_type_e)type;
+
+/*! Returns YES if value is not 0; NO otherwise. */
+- (BOOL)isTrue;
 
 /*! Returns YES if the number is a type of Integer. */
 - (BOOL)isInteger;
@@ -80,6 +91,7 @@ union number_value_u
 #define NumFrom(typ, nam)                                                      \
     +numberWith##nam : (typ)val;                                               \
     -initWith##nam : (typ)val
+NumFrom (BOOL, Bool);
 NumFrom (char, Char);
 NumFrom (unsigned char, UChar);
 NumFrom (short, Short);
@@ -95,6 +107,7 @@ NumFrom (double, Double);
 #undef NumFrom
 
 #define NumVal(typ, nam) -(typ)nam##Value
+NumVal (BOOL, bool);
 NumVal (char, char);
 NumVal (unsigned char, uChar);
 NumVal (short, short);

@@ -27,7 +27,7 @@
  and with that key the value may be accessed.
  @indexgroup Collection
  */
-@interface Dictionary : Object
+@interface Dictionary <Tkey, Tval> : Object
 {
     id associations;
 }
