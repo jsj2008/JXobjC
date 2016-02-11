@@ -6,6 +6,8 @@
 
 #import <Object.h>
 
+@class String;
+
 typedef enum number_type_e
 {
     NUMBER_BOOL,
@@ -87,6 +89,9 @@ union number_value_u
 
 /*! Returns the floating-point (as a Double) value of the number. */
 - (double)valueAsDouble;
+
+/*! Returns the String representation of the number. */
+- (String *)fmt;
 
 #define NumFrom(typ, nam)                                                      \
     +numberWith##nam : (typ)val;                                               \

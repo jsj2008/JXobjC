@@ -1,6 +1,7 @@
 /* Copyright (c) 2015 D. Mackay. All rights reserved. */
 
 #import <Number.h>
+#import <OCString.h>
 
 @implementation Number
 
@@ -100,6 +101,16 @@
       : type == NUMBER_DOUBLE       ? value.d
       : /* _ */                       0;
     /* clang-format on */
+}
+
+- (String *)fmt
+{
+    if ([self isFloat])
+        return [String sprintf:"%G", [self valueAsDouble]];
+    else if ([self isInteger] && [self valueAsLong])
+        return [String sprintf:"%li", [self valueAsLong]];
+    else
+        return 0;
 }
 
 - (number_type_e)type { return type; }

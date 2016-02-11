@@ -191,5 +191,17 @@ static SEL cvtToSel (STR aString)
     return selUid (aString);
 }
 
+static SEL cvtAsSel (STR aString)
+{
+    PHASH retVal;
+    long slot;
+
+    if (!(retVal = hashLookup (aString, &slot)))
+        retVal = hashEnter (aString, slot);
+
+    return retVal->key;
+}
+
 /* for cplusplus the (STR) cannot be () */
 SEL (*JX_cvtToSel) (STR) = cvtToSel;
+SEL (*JX_cvtAsSel) (STR) = cvtAsSel;

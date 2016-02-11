@@ -12,6 +12,7 @@ extern id (*JX_error) (id, STR, OC_VA_LIST); /* error handler */
 
 extern id (*JX_cvtToId) (STR);   /* convert string name to class id */
 extern SEL (*JX_cvtToSel) (STR); /* convert string to selector */
+extern SEL (*JX_cvtAsSel) (STR); /* get selector for string */
 
 extern id (*JX_fileIn) (FILE *);
 extern BOOL (*JX_fileOut) (FILE *, id);
