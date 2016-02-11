@@ -61,7 +61,7 @@ int yylex() ;
 %token atprotocol atblkreturn atsynchronised atclass nosuper
 %token blockbegin
 %token pcstringlit
-%token propreadonly
+%token READONLY
 
 /* C++ */
 %token namespace usingkeyw
@@ -1225,11 +1225,21 @@ protodef
  /* Objective-C 2.0 */
 
 propspec
-    : propreadonly
+    : READONLY
+    ;
+
+propspec_commalist
+    : propspec { $$ = mklist(nil, $1); }
+    | propspec ',' propspec { $$ = mklist($1, $3); }
+    ;
+
+optpropspeclist
+    : '(' propspec_commalist ')' { $$ = $2; }
+    | /* epsilon */
     ;
 
 propdecl
-    : atproperty componentdefx ';' { $$ = mkpropdef($2); }
+    : atproperty optpropspeclist componentdefx ';' { $$ = mkpropdef($3); }
     ;
 
 syncstmt

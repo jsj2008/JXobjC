@@ -43,7 +43,7 @@ typedef struct objset
  * @see Cltn
  * @indexgroup Collection
  */
-@interface Set : Cltn
+@interface Set <T> : Cltn
 {
     struct objset value;
 }
@@ -52,7 +52,7 @@ typedef struct objset
 + new:(unsigned)n;
 + with:(int)nArgs, ...;
 + with:firstObject with:nextObject;
-+ add:firstObject;
++ add:(T)firstObject;
 - copy;
 - deepCopy;
 - emptyYourself;
@@ -65,7 +65,7 @@ typedef struct objset
 
 - (BOOL)isEqual:set;
 
-- add:anObject;
+- add:(T)anObject;
 - addNTest:anObject;
 - filter:anObject;
 #if OBJC_BLOCKS

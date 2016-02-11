@@ -1290,6 +1290,19 @@ id mktypename (id specs, id decl)
         [nType specs:specs];
         [nType decl:decl];
     }
+
+    if ([nType isNamedClass] && [nType isGenSpec])
+    {
+        int S1, S2;
+        /* It would be nice to handle this for componentdefs, too. */
+        if ((S1 = [[nType getGenSpec] size]) !=
+                (S2 = [[[nType getClass] generics] size]) &&
+            S1)
+            fatalat ([specs at:0], "%d generic specialisers specified to class "
+                                   "%s which expects %d",
+                     S1, [[nType getClass] classname], S2);
+    }
+
     return nType;
 }
 

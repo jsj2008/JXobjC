@@ -122,7 +122,7 @@ static void initzero (objset_t self, int c) { init (self, 0, c); }
     return [[[self new] add:firstObject] add:nextObject];
 }
 
-+ add:firstObject { return [[self new] add:firstObject]; }
++ add:(T)firstObject { return [[self new] add:firstObject]; }
 
 static void ptrcopy (id * p, id * q, int c)
 {
@@ -371,7 +371,7 @@ static id * find (objset_t self, id obj)
     return ptrfind (self->ptr, obj, self->capacity);
 }
 
-- add:anObject
+- add:(T)anObject
 {
     [self addNTest:anObject];
     return self;
