@@ -370,27 +370,35 @@ static BOOL inherits (Cls_t aCls, STR name)
 
 - perform:(SEL)aSelector
 {
+    /* the usual all C cast */
     return (*fwdimp (self, aSelector, selptrfwd)) (self, aSelector);
 }
 
 - perform:(SEL)aSelector with:anObject
 {
-    /* the usual all C cast */
     return (*fwdimp (self, aSelector, selptrfwd)) (self, aSelector, anObject);
 }
 
 - perform:(SEL)aSelector with:anObject with:otherObject
 {
-    /* the usual all C cast */
     return (*fwdimp (self, aSelector, selptrfwd)) (self, aSelector, anObject,
                                                    otherObject);
 }
 
 - perform:(SEL)aSelector with:anObject with:otherObject with:thirdObj
 {
-    /* the usual all C cast */
     return (*fwdimp (self, aSelector, selptrfwd)) (self, aSelector, anObject,
                                                    otherObject, thirdObj);
+}
+
+- perform:(SEL)aSelector
+     with:anObject
+     with:otherObject
+     with:thirdObj
+     with:fourthObj
+{
+    return (*fwdimp (self, aSelector, selptrfwd)) (
+        self, aSelector, anObject, otherObject, thirdObj, fourthObj);
 }
 /*****************************************************************************
  *

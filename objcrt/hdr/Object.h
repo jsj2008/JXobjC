@@ -223,6 +223,12 @@
     @param thirdObj The third parameter. */
 - (id)perform:(SEL)aSelector with:anObject with:otherObject with:thirdObj;
 
+- (id)perform:(SEL)aSelector
+         with:anObject
+         with:otherObject
+         with:thirdObj
+         with:fourthObj;
+
 - print;
 + print;
 - printLine;
