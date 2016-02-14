@@ -116,6 +116,5 @@ INLINE ptrdiff_t ClassSetIVarAccessorVars (id cls, Cls_t setCls,
 }
 
 void objC_compute_ivar_offsets (Cls_t * cls);
-uintptr_t objC_compute_and_set_class_instance_size (Cls_t * cls);
 
 #endif
