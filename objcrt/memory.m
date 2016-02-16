@@ -175,7 +175,7 @@ static id nstalloc (id aClass, unsigned int nBytes)
 #endif
 
     setisa (anObject, aClass);
-    _LOCK (anObject) = allocMtx ();
+    //_LOCK (anObject) = allocMtx ();
 
     return anObject;
 }
@@ -202,7 +202,7 @@ static id nstcopy (id anObject, unsigned int nBytes)
 #endif
 
     memcpy (p, q, aSize);
-    _LOCK (newObject) = allocMtx ();
+    //_LOCK (newObject) = allocMtx ();
 
     assert (getisa (newObject) == aClass);
     return newObject;
@@ -211,8 +211,8 @@ static id nstcopy (id anObject, unsigned int nBytes)
 static id nstdealloc (id anObject)
 {
     setisa (anObject, nil);
-    pthread_mutex_destroy (_LOCK (anObject));
-    free (_LOCK (anObject));
+// pthread_mutex_destroy (_LOCK (anObject));
+// free (_LOCK (anObject));
 
 #ifndef OTBCRT
 /* AMGR_free (anObject); */

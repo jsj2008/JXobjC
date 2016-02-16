@@ -121,13 +121,13 @@
 
 - _lock
 {
-    pthread_mutex_lock (_lock);
+    // pthread_mutex_lock (_lock);
     return self;
 }
 
 - _unlock
 {
-    pthread_mutex_unlock (_lock);
+    // pthread_mutex_unlock (_lock);
     return self;
 }
 

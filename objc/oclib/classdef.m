@@ -637,7 +637,6 @@ id curclassdef;
 
     gf ("struct %s\n{\n", shartypename);
     gs ("  id isa;\n");
-    gs ("  void * _lock;\n");
     gs ("  id clsSuper;\n");
     gs ("  char *clsName;\n");
     gs ("  char *clsTypes;\n");
@@ -756,9 +755,6 @@ id curclassdef;
     gf ("  (id)&%s,", _m_classname);
     gcom ("/* isa */");
 
-    gs ("  0,");
-    gcom ("/* _lock */");
-
     /* if no shareddata (DLL's), then this field is set at runtime */
     if (superc != nil && o_shareddata)
     {
@@ -859,9 +855,6 @@ id curclassdef;
         gs ("  (id)0,");
         gcom ("/* isa */"); /* field set in BIND() */
     }
-
-    gs ("  0,");
-    gcom ("/* _lock */");
 
     if (o_shareddata)
     {

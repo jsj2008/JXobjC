@@ -18,7 +18,6 @@
 @interface RtObject : nosuper
 {
     id isa;
-    void * _lock;
 }
 
 /*! @group Creating, copying, and deallocating instances */

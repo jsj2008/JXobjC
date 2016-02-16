@@ -30,13 +30,11 @@
 struct objcrt_private
 {
     id isa;
-    void * _lock;
 };
 
 struct objcrt_shared
 {
     id isa;
-    void * _lock;
     id clsSuper;
     char * clsName;
     char * clsTypes;

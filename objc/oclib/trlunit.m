@@ -243,7 +243,6 @@ static char * mystrrchr (const char * s, int c)
         gs ("struct _PRIVATE\n"
             "{\n"
             "  struct OTB *isa;\n"
-            "  void *_lock;\n"
             "};\n");
         gs ("struct OTB {\n");
         gs ("  struct _PRIVATE *ptr;\n");
@@ -256,7 +255,6 @@ static char * mystrrchr (const char * s, int c)
         gs ("struct _PRIVATE\n"
             "{\n"
             "  struct _PRIVATE *isa;\n"
-            "  void *_lock;\n"
             "};\n");
         gs ("typedef struct _PRIVATE *id;\n");
     }
@@ -357,7 +355,6 @@ static char * mystrrchr (const char * s, int c)
 
     gs ("struct gConstantString {\n"
         "  id isa;\n"
-        "  void * lock;\n"
         "  unsigned capcompat;\n"
         "  struct gConstStr_value value;\n"
         "};\n");
@@ -1079,7 +1076,7 @@ static char * mystrrchr (const char * s, int c)
     gf ("static id %s_CONSTSTRING() {\n", [aVar str]);
     gf ("static struct g%s %s ={\n", [aClass str], [aVar str]);
     gf ("0,\n"); /* ISA */
-    gf ("0,\n"); /* LOCK */
+    // gf ("0,\n"); /* LOCK */
     gs ([fields str]);
     gf ("\n};");
     gf ("if (!%s.isa) %s.isa = _%s_classref();\n", [aVar str], [aVar str],
