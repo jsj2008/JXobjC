@@ -136,79 +136,17 @@ static void unlinkotb (id a)
 }
 #endif /* OTBCRT */
 
-/* Reference counting functions */
-
 #ifndef OTBCRT
-#define _REFCNT(x) (x)->_refcnt
 #define _LOCK(x) (x)->_lock
 #else
-#define _REFCNT(x) (x)->ptr->_refcnt
 #define _LOCK(x) (x)->ptr->_lock
 #endif
 
-void decrefordealloc (id e)
-{
-    pthread_spin_lock (&rcLock);
-    if (!e)
-        pthread_spin_unlock (&rcLock);
-    else if (_REFCNT (e))
-    {
-        _REFCNT (e)--;
-        pthread_spin_unlock (&rcLock);
-    }
-    else
-    {
-        pthread_spin_unlock (&rcLock);
-        [e ARC_dealloc];
-    }
+id EXPORT idassign (id * lhs, id rhs) { return (*lhs = rhs); }
 
-    return;
-}
+id EXPORT idincref (id rhs) { return rhs; }
 
-id EXPORT idassign (id * lhs, id rhs)
-{
-    id e = *lhs;
-    if (allocFlag)
-    {
-        dbg ("%p --%i %p %i++\n", e, (e) ? _REFCNT (e) : 0, rhs,
-             (rhs) ? _REFCNT (rhs) : 0);
-    }
-    if (rhs)
-    {
-        pthread_spin_lock (&rcLock);
-        _REFCNT (rhs)++;
-        pthread_spin_unlock (&rcLock);
-    }
-    if (e)
-        decrefordealloc (e);
-    return (*lhs = rhs);
-}
-
-id EXPORT idincref (id rhs)
-{
-    if (allocFlag)
-    {
-        dbg ("%p %i++\n", rhs, (rhs) ? _REFCNT (rhs) : 0);
-    }
-    if (rhs)
-    {
-        pthread_spin_lock (&rcLock);
-        _REFCNT (rhs)++;
-        pthread_spin_unlock (&rcLock);
-    }
-    return rhs;
-}
-
-id EXPORT iddecref (id e)
-{
-    if (allocFlag)
-    {
-        dbg ("%p --%i\n", e, (e) ? _REFCNT (e) : 0);
-    }
-    if (e)
-        decrefordealloc (e);
-    return nil;
-}
+id EXPORT iddecref (id e) { return nil; }
 
 static void gcfinalise (GC_PTR obj, GC_PTR env) { [(id)obj finalise]; }
 
@@ -264,7 +202,6 @@ static id nstcopy (id anObject, unsigned int nBytes)
 #endif
 
     memcpy (p, q, aSize);
-    _REFCNT (newObject) = 0;
     _LOCK (newObject) = allocMtx ();
 
     assert (getisa (newObject) == aClass);

@@ -18,7 +18,6 @@
 @interface RtObject : nosuper
 {
     id isa;
-    long _refcnt;
     void * _lock;
 }
 

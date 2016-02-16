@@ -73,6 +73,8 @@
 
 + (STR)name { return getcls (self)->clsName; }
 
++ (STR)str { return [self name]; }
+
 - findClass:(STR)name { return (*JX_cvtToId) (name); }
 
 - (SEL)findSel:(STR)name { return (*JX_cvtToSel) (name); }

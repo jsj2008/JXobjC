@@ -637,7 +637,6 @@ id curclassdef;
 
     gf ("struct %s\n{\n", shartypename);
     gs ("  id isa;\n");
-    gs ("  long _refcnt;\n");
     gs ("  void * _lock;\n");
     gs ("  id clsSuper;\n");
     gs ("  char *clsName;\n");
@@ -757,9 +756,6 @@ id curclassdef;
     gf ("  (id)&%s,", _m_classname);
     gcom ("/* isa */");
 
-    gs ("  1,");
-    gcom ("/* _refcnt */");
-
     gs ("  0,");
     gcom ("/* _lock */");
 
@@ -863,9 +859,6 @@ id curclassdef;
         gs ("  (id)0,");
         gcom ("/* isa */"); /* field set in BIND() */
     }
-
-    gs ("  1,");
-    gcom ("/* _refcnt */");
 
     gs ("  0,");
     gcom ("/* _lock */");

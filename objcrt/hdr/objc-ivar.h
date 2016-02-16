@@ -5,6 +5,6 @@
 #ifndef OBJC_IVAR_H_
 #define OBJC_IVAR_H_
 
-void * JX_getIVarOffset (id obj, const char * ivarName);
+void * JX_getIVarAddress (id obj, const char * ivarName);
 
 #endif

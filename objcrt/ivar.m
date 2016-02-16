@@ -5,10 +5,16 @@
 #include "objc-ivar.h"
 #include "ivar.h"
 
-void * JX_getIVarOffset (id obj, const char * iVarName)
+void * JX_getIVarAddress (id obj, const char * iVarName)
 {
-    Cls_t aCls          = getcls (obj);
-    objC_iVarList * lst = clsivlist (aCls);
+    Cls_t aCls;
+    objC_iVarList * lst;
+
+    if (!obj)
+        return 0;
+
+    aCls = getcls (obj);
+    lst  = clsivlist (aCls);
 
 search:
     if (lst->count)
