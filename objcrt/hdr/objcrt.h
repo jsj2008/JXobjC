@@ -146,6 +146,8 @@ EXTERNC id EXPORT iddecref (id obj);
 
 void EXPORT * OC_Malloc (size_t);
 void EXPORT * OC_MallocAtomic (size_t);
+void EXPORT * OC_MallocUncollectable (size_t);
+void EXPORT * OC_MallocAtomicUncollectable (size_t);
 void EXPORT * OC_Calloc (size_t);
 void EXPORT * OC_Realloc (void *, size_t);
 void EXPORT * OC_Free (void * data);

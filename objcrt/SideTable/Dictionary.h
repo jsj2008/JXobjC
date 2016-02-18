@@ -28,6 +28,7 @@ typedef struct Dictionary
     List_t_ **
         entries; /* array of list_t*s pointing to of dictionary_entry_ts */
     mtx_t * Lock;
+    BOOL isAtomic : 1, isCollectable : 1, stringKey : 1;
 } Dictionary_t;
 
 #define DICTIONARY_ITERATE_OPEN(DICT)                                          \
@@ -46,7 +47,8 @@ typedef struct Dictionary
     }                                                                          \
     mtx_unlock ((DICT)->Lock);
 
-Dictionary_t * Dictionary_new ();
+Dictionary_t * Dictionary_new (BOOL isAtomic, BOOL isCollectable,
+                               BOOL stringKey);
 void Dictionary_delete (Dictionary_t * dict, BOOL delcontents);
 const void * Dictionary_set (Dictionary_t * dict, const char * key,
                              const void * value);

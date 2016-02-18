@@ -76,6 +76,40 @@ void EXPORT * OC_MallocAtomic (size_t nBytes)
     return data;
 }
 
+void EXPORT * OC_MallocUncollectable (size_t nBytes)
+{
+    void * data;
+    /* DEC alpha malloc() returns NULL for 0 bytes */
+    if (!nBytes)
+        nBytes = sizeof (void *);
+    if (nBytes > 32 * 1024)
+        dbg ("OC_MallocAtomic call for %i bytes\n", nBytes);
+
+    data = GC_malloc_uncollectable (nBytes);
+
+    /* signal the OutOfMemory exception */
+    if (!data)
+        [outOfMem signal];
+    return data;
+}
+
+void EXPORT * OC_MallocAtomicUncollectable (size_t nBytes)
+{
+    void * data;
+    /* DEC alpha malloc() returns NULL for 0 bytes */
+    if (!nBytes)
+        nBytes = sizeof (void *);
+    if (nBytes > 32 * 1024)
+        dbg ("OC_MallocAtomic call for %i bytes\n", nBytes);
+
+    data = GC_malloc_atomic_uncollectable (nBytes);
+
+    /* signal the OutOfMemory exception */
+    if (!data)
+        [outOfMem signal];
+    return data;
+}
+
 void EXPORT * OC_Calloc (size_t nBytes)
 {
     char * p;

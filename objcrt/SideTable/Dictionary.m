@@ -10,9 +10,20 @@
 
 #include "List.h"
 #include "Dictionary.h"
+#include "objcrt.h"
 
 #define _Lock_Dictionary mtx_lock (dict->Lock);
 #define _Unlock_Dictionary mtx_unlock (dict->Lock);
+
+#define _NewAlloc(x)                                                           \
+    isCollectable ? (isAtomic ? OC_MallocAtomic (x) : OC_Malloc (x))           \
+                  : (isAtomic ? OC_MallocAtomicUncollectable (x)               \
+                              : OC_MallocUncollectable (x))
+#define _Alloc(x)                                                              \
+    dict->isCollectable                                                        \
+        ? (dict->isAtomic ? OC_MallocAtomic (x) : OC_Malloc (x))               \
+        : (dict->isAtomic ? OC_MallocAtomicUncollectable (x)                   \
+                          : OC_MallocUncollectable (x))
 
 /* internal functions */
 
@@ -35,7 +46,8 @@ jenkins_hash (const char * key) /* Jenkins One-at-a-Time Hash function */
     return hash;
 }
 
-Dictionary_t * Dictionary_new_i (int size);
+Dictionary_t * Dictionary_new_i (int size, BOOL isAtomic, BOOL isCollectable,
+                                 BOOL stringKey);
 
 static Dictionary_t * resize (Dictionary_t * dict)
 {
@@ -45,7 +57,8 @@ static Dictionary_t * resize (Dictionary_t * dict)
     Dictionary_entry_t * entry;
     mtx_t * lock = dict->Lock;
 
-    newdict = Dictionary_new_i (dict->size * 2);
+    newdict = Dictionary_new_i (dict->size * 2, dict->isAtomic,
+                                dict->isCollectable, dict->stringKey);
 
     for (int i = 0; i < dict->size; i++)
     {
@@ -67,20 +80,28 @@ static Dictionary_t * resize (Dictionary_t * dict)
 
 /* primary functions */
 
-Dictionary_t * Dictionary_new_i (int size)
+Dictionary_t * Dictionary_new_i (int size, BOOL isAtomic, BOOL isCollectable,
+                                 BOOL stringKey)
 {
-    Dictionary_t * newdict = calloc (1, sizeof (Dictionary_t));
+    Dictionary_t * newdict = _NewAlloc (sizeof (Dictionary_t));
 
-    newdict->size    = size;
-    newdict->entries = calloc (1, sizeof (List_t_ *) * newdict->size);
+    newdict->isAtomic      = isAtomic;
+    newdict->isCollectable = isCollectable;
+    newdict->stringKey     = stringKey;
+    newdict->size          = size;
+    newdict->entries       = _NewAlloc (sizeof (List_t_ *) * newdict->size);
 
-    newdict->Lock = calloc (1, sizeof (mtx_t));
+    newdict->Lock = _NewAlloc (sizeof (mtx_t));
     mtx_init (newdict->Lock, mtx_plain);
 
     return newdict;
 }
 
-Dictionary_t * Dictionary_new () { return Dictionary_new_i (32); }
+Dictionary_t * Dictionary_new (BOOL isAtomic, BOOL isCollectable,
+                               BOOL stringKey)
+{
+    return Dictionary_new_i (32, isAtomic, isCollectable, stringKey);
+}
 
 void Dictionary_delete (Dictionary_t * dict, BOOL delcontents)
 {
@@ -113,8 +134,8 @@ const void * Dictionary_set (Dictionary_t * dict, const char * key,
 
     _Lock_Dictionary;
 
-    new    = calloc (1, sizeof (Dictionary_entry_t));
-    lentry = calloc (1, sizeof (List_t_));
+    new    = _Alloc (sizeof (Dictionary_entry_t));
+    lentry = _Alloc (sizeof (List_t_));
 
     new->key   = strdup (key);
     new->value = strdup (value);
