@@ -12,7 +12,7 @@ extern "C" {
 #endif
 
 #include <objc-defs.h>
-#include <threads.h>
+#include <pthread.h>
 #include "List.h"
 
 typedef struct Dictionary_entry
@@ -27,7 +27,7 @@ typedef struct Dictionary
     int count;
     List_t_ **
         entries; /* array of list_t*s pointing to of dictionary_entry_ts */
-    mtx_t * Lock;
+    pthread_mutex_t Lock;
     BOOL isAtomic : 1, isCollectable : 1, stringKey : 1;
 } Dictionary_t;
 

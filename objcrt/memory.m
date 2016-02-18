@@ -137,9 +137,7 @@ void EXPORT * OC_Realloc (void * data, size_t nBytes)
 
 void EXPORT * OC_Free (void * data)
 {
-#ifdef OBJCRT_BOEHM
-/* do not call GC_free */
-#endif
+    GC_free (data);
     return NULL;
 }
 

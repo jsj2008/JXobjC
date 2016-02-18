@@ -5,15 +5,17 @@
  */
 
 #include <assert.h>
+#include <gc.h>
+#include <pthread.h>
 #include <stdlib.h>
 #include <string.h>
 
+#include "dictionary.h"
 #include "List.h"
-#include "Dictionary.h"
 #include "objcrt.h"
 
-#define _Lock_Dictionary mtx_lock (dict->Lock);
-#define _Unlock_Dictionary mtx_unlock (dict->Lock);
+#define _Lock_Dictionary pthread_mutex_lock (&dict->Lock)
+#define _Unlock_Dictionary pthread_mutex_unlock (&dict->Lock)
 
 #define _NewAlloc(x)                                                           \
     isCollectable ? (isAtomic ? OC_MallocAtomic (x) : OC_Malloc (x))           \
@@ -56,30 +58,34 @@ Dictionary_t * Dictionary_new_i (int size, BOOL isAtomic, BOOL isCollectable,
 
 static Dictionary_t * resize (Dictionary_t * dict)
 {
-    Dictionary_t * newdict;
-    Dictionary_t tmp;
     List_t_ * e;
     Dictionary_entry_t * entry;
-    mtx_t * lock = dict->Lock;
+    size_t oldSize        = dict->size;
+    List_t_ ** oldEntries = dict->entries;
 
-    newdict = Dictionary_new_i (dict->size * 2, dict->isAtomic,
-                                dict->isCollectable, dict->stringKey);
+    dict->entries = _Alloc (sizeof (List_t_ *) * dict->size * 2);
 
-    for (int i = 0; i < dict->size; i++)
+    for (int i = 0; i < oldSize; i++)
     {
-        for (e = dict->entries[i]; e != 0; e = e->Link)
+        for (e = oldEntries[i]; e != 0; e = e->Link)
         {
             entry = e->data;
-            Dictionary_set (newdict, entry->key, entry->value);
+            Dictionary_set (dict, entry->key, entry->value);
         }
     }
 
-    tmp      = *dict;
-    *dict    = *newdict;
-    *newdict = tmp;
+    for (int i = 0; i < oldSize; i++)
+    {
+        List_t_ * next;
+        for (e = oldEntries[i]; e != 0; e = next)
+        {
+            next  = e->Link;
+            entry = e->data;
+            OC_Free (entry);
+            OC_Free (e);
+        }
+    }
 
-    Dictionary_delete (newdict, NO);
-    dict->Lock = lock;
     return dict;
 }
 
@@ -88,7 +94,8 @@ static Dictionary_t * resize (Dictionary_t * dict)
 Dictionary_t * Dictionary_new_i (int size, BOOL isAtomic, BOOL isCollectable,
                                  BOOL stringKey)
 {
-    Dictionary_t * newdict = _NewAlloc (sizeof (Dictionary_t));
+    pthread_mutexattr_t recursiveAttr = {0};
+    Dictionary_t * newdict            = _NewAlloc (sizeof (Dictionary_t));
 
     newdict->isAtomic      = isAtomic;
     newdict->isCollectable = isCollectable;
@@ -96,8 +103,8 @@ Dictionary_t * Dictionary_new_i (int size, BOOL isAtomic, BOOL isCollectable,
     newdict->size          = size;
     newdict->entries       = _NewAlloc (sizeof (List_t_ *) * newdict->size);
 
-    newdict->Lock = _NewAlloc (sizeof (mtx_t));
-    mtx_init (newdict->Lock, mtx_plain);
+    pthread_mutexattr_settype (&recursiveAttr, PTHREAD_MUTEX_RECURSIVE);
+    pthread_mutex_init (&newdict->Lock, &recursiveAttr);
 
     return newdict;
 }
@@ -118,16 +125,17 @@ void Dictionary_delete (Dictionary_t * dict, BOOL delcontents)
         {
             next  = e->Link;
             entry = e->data;
-            free (entry->key);
+            if (dict->stringKey)
+                OC_Free (entry->key);
             if (delcontents)
-                free (entry->value);
-            free (entry);
-            free (e);
+                OC_Free (entry->value);
+            OC_Free (entry);
+            OC_Free (e);
         }
     }
 
-    free (dict->entries);
-    free (dict);
+    OC_Free (dict->entries);
+    OC_Free (dict);
 }
 
 const void * Dictionary_set (Dictionary_t * dict, const char * key,
@@ -142,7 +150,7 @@ const void * Dictionary_set (Dictionary_t * dict, const char * key,
     new    = _Alloc (sizeof (Dictionary_entry_t));
     lentry = _Alloc (sizeof (List_t_));
 
-    new->key   = dict->stringKey ? strdup (key) : (char *)key;
+    new->key   = dict->stringKey ? GC_strdup (key) : (char *)key;
     new->value = (char *)value;
 
     hash = hashKey (key);
@@ -164,8 +172,8 @@ const void * Dictionary_set (Dictionary_t * dict, const char * key,
         {
             void * r = e->value;
             e->value = new->value;
-            free (new);
-            free (lentry);
+            OC_Free (new);
+            OC_Free (lentry);
             _Unlock_Dictionary;
             return r; /* reassigned value of an entry */
         }
@@ -188,19 +196,22 @@ const void * Dictionary_get (Dictionary_t * dict, const char * key)
     List_t_ * l;
     Dictionary_entry_t * e;
 
-    _Lock_Dictionary
+    _Lock_Dictionary;
 
-        for (l = dict->entries[hashKey (key)]; l != 0; l = l->Link)
+    for (l = dict->entries[hashKey (key)]; l != 0; l = l->Link)
     {
         e = l->data;
 
-        if (!strcmp (e->key, key))
+        if ((dict->stringKey && !strcmp (e->key, key)) ||
+            (!dict->stringKey && e->key == key))
         {
-            _Unlock_Dictionary return e->value;
+            _Unlock_Dictionary;
+            return e->value;
         }
     }
 
-    _Unlock_Dictionary return 0;
+    _Unlock_Dictionary;
+    return 0;
 }
 
 void Dictionary_unset (Dictionary_t * dict, const char * key, BOOL del)
@@ -209,29 +220,29 @@ void Dictionary_unset (Dictionary_t * dict, const char * key, BOOL del)
     List_t_ * e;
     Dictionary_entry_t * entry;
 
-    _Lock_Dictionary
+    _Lock_Dictionary;
 
-        for (p = &(dict->entries[hashKey (key)]); *p != 0; p = &((*p)->Link))
+    for (p = &(dict->entries[hashKey (key)]); *p != 0; p = &((*p)->Link))
     {
 
         entry = (*p)->data;
 
-        if (!strcmp (entry->key, key))
+        if ((dict->stringKey && !strcmp (entry->key, key)) ||
+            (!dict->stringKey && entry->key == key))
         {
             e  = *p;
             *p = e->Link;
 
             if (dict->stringKey)
-                ;
-            free (entry->key);
+                OC_Free (entry->key);
             if (del)
-                free (entry->value);
-            free (entry);
-            free (e);
-            _Unlock_Dictionary
+                OC_Free (entry->value);
+            OC_Free (entry);
+            OC_Free (e);
+            _Unlock_Dictionary;
 
-                return;
+            return;
         }
     }
-    _Unlock_Dictionary
+    _Unlock_Dictionary;
 }

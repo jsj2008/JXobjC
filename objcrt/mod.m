@@ -406,6 +406,8 @@ int EXPORT JX_objcInitNoShared (Mentry_t _objcModules,
         pthread_mutex_init (&cLock, NULL);
         pthread_spin_init (&rcLock, PTHREAD_PROCESS_SHARED);
 
+        sideTable_init ();
+
         /* Do auto-initialisation if _objcModules is zero.  Otherwise,
          * assume that it is the list of all bind functions to be called.
          */
