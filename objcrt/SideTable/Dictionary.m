@@ -46,6 +46,11 @@ jenkins_hash (const char * key) /* Jenkins One-at-a-Time Hash function */
     return hash;
 }
 
+#define hashKey(aKey)                                                          \
+    dict->stringKey                                                            \
+        ? (((13 * (uintptr_t)aKey) ^ ((uintptr_t)aKey >> 15)) % dict->size)    \
+        : (jenkins_hash (aKey) % dict->size)
+
 Dictionary_t * Dictionary_new_i (int size, BOOL isAtomic, BOOL isCollectable,
                                  BOOL stringKey);
 
@@ -137,10 +142,10 @@ const void * Dictionary_set (Dictionary_t * dict, const char * key,
     new    = _Alloc (sizeof (Dictionary_entry_t));
     lentry = _Alloc (sizeof (List_t_));
 
-    new->key   = strdup (key);
-    new->value = strdup (value);
+    new->key   = dict->stringKey ? strdup (key) : (char *)key;
+    new->value = (char *)value;
 
-    hash = jenkins_hash (key) % dict->size;
+    hash = hashKey (key);
 
     if ((dict->count + 2) >= dict->size)
     {
@@ -154,7 +159,8 @@ const void * Dictionary_set (Dictionary_t * dict, const char * key,
     {
         e = l->data;
 
-        if (!strcmp (e->key, key))
+        if ((dict->stringKey && !strcmp (e->key, key)) ||
+            (!dict->stringKey && e->key == key))
         {
             void * r = e->value;
             e->value = new->value;
@@ -184,8 +190,7 @@ const void * Dictionary_get (Dictionary_t * dict, const char * key)
 
     _Lock_Dictionary
 
-        for (l = dict->entries[jenkins_hash (key) % dict->size]; l != 0;
-             l = l->Link)
+        for (l = dict->entries[hashKey (key)]; l != 0; l = l->Link)
     {
         e = l->data;
 
@@ -206,8 +211,7 @@ void Dictionary_unset (Dictionary_t * dict, const char * key, BOOL del)
 
     _Lock_Dictionary
 
-        for (p = &(dict->entries[jenkins_hash (key) % dict->size]); *p != 0;
-             p = &((*p)->Link))
+        for (p = &(dict->entries[hashKey (key)]); *p != 0; p = &((*p)->Link))
     {
 
         entry = (*p)->data;
@@ -217,6 +221,8 @@ void Dictionary_unset (Dictionary_t * dict, const char * key, BOOL del)
             e  = *p;
             *p = e->Link;
 
+            if (dict->stringKey)
+                ;
             free (entry->key);
             if (del)
                 free (entry->value);
