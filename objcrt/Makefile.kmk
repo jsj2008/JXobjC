@@ -7,7 +7,9 @@ INSTALLS += objcrthdr
 objcrt_TEMPLATE = OBJC
 objcrt_SOURCES = Object/Block.m Object/Exceptn.m Object/Message.m \
 	Object/Object.m Object/OutOfMem.m Object/Proxy.m Object/RtObject.m \
-	crt.m stktrace.m memory.m seltab.m mod.m messenger.m ivar.m type.m
+	crt.m stktrace.m memory.m seltab.m mod.m messenger.m ivar.m type.m \
+	Table/Dictionary.m Table/List.m
+objcrt_INCS = Table
 
 objcrt_s_EXTENDS = objcrt
 objcrt_s_EXTENDS_BY = appending
