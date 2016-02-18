@@ -30,6 +30,7 @@
 #include "seltab.h"
 #include "mod.h"
 #include "ivar.h"
+#include "SideTable.h"
 
 #include "OutOfMem.h"
 

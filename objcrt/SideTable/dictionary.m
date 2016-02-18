@@ -138,7 +138,7 @@ void Dictionary_delete (Dictionary_t * dict, BOOL delcontents)
     OC_Free (dict);
 }
 
-const void * Dictionary_set (Dictionary_t * dict, const char * key,
+const void * Dictionary_set (Dictionary_t * dict, const void * key,
                              const void * value)
 {
     Dictionary_entry_t * new, *e;
@@ -150,8 +150,8 @@ const void * Dictionary_set (Dictionary_t * dict, const char * key,
     new    = _Alloc (sizeof (Dictionary_entry_t));
     lentry = _Alloc (sizeof (List_t_));
 
-    new->key   = dict->stringKey ? GC_strdup (key) : (char *)key;
-    new->value = (char *)value;
+    new->key   = dict->stringKey ? GC_strdup (key) : (void *)key;
+    new->value = (void *)value;
 
     hash = hashKey (key);
 
@@ -191,7 +191,7 @@ const void * Dictionary_set (Dictionary_t * dict, const char * key,
     }
 }
 
-const void * Dictionary_get (Dictionary_t * dict, const char * key)
+const void * Dictionary_get (Dictionary_t * dict, const void * key)
 {
     List_t_ * l;
     Dictionary_entry_t * e;
@@ -214,7 +214,7 @@ const void * Dictionary_get (Dictionary_t * dict, const char * key)
     return 0;
 }
 
-void Dictionary_unset (Dictionary_t * dict, const char * key, BOOL del)
+void Dictionary_unset (Dictionary_t * dict, const void * key, BOOL del)
 {
     List_t_ ** p;
     List_t_ * e;

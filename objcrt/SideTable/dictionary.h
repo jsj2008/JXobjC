@@ -17,8 +17,8 @@ extern "C" {
 
 typedef struct Dictionary_entry
 {
-    char * key;
-    char * value;
+    void * key;
+    void * value;
 } Dictionary_entry_t;
 
 typedef struct Dictionary
@@ -50,10 +50,10 @@ typedef struct Dictionary
 Dictionary_t * Dictionary_new (BOOL isAtomic, BOOL isCollectable,
                                BOOL stringKey);
 void Dictionary_delete (Dictionary_t * dict, BOOL delcontents);
-const void * Dictionary_set (Dictionary_t * dict, const char * key,
+const void * Dictionary_set (Dictionary_t * dict, const void * key,
                              const void * value);
-const void * Dictionary_get (Dictionary_t * dict, const char * key);
-void Dictionary_unset (Dictionary_t * dict, const char * key, BOOL delvalue);
+const void * Dictionary_get (Dictionary_t * dict, const void * key);
+void Dictionary_unset (Dictionary_t * dict, const void * key, BOOL delvalue);
 
 #ifdef __cplusplus
 }
