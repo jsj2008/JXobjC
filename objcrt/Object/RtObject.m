@@ -21,6 +21,7 @@
 
 #include "RtObject.h"
 #include "Message.h" /* doesNotUnderstand: stuff */
+#include "SideTable/SideTable.h"
 
 @implementation RtObject
 /*****************************************************************************
@@ -60,6 +61,7 @@
 - free
 {
     isa = nil;
+    destroySideTableForObject (self);
     return (JX_dealloc) ? (*JX_dealloc) (self) : nil;
 }
 
@@ -71,7 +73,7 @@
     return (*JX_dealloc) (self);
 }
 
-- finalise { return (*JX_dealloc) (self); }
+- finalise { return [self free]; }
 
 - retain { return idincref (self); }
 
@@ -121,13 +123,13 @@
 
 - _lock
 {
-    // pthread_mutex_lock (_lock);
+    pthread_mutex_lock (mutexForObject (self));
     return self;
 }
 
 - _unlock
 {
-    // pthread_mutex_unlock (_lock);
+    pthread_mutex_unlock (mutexForObject (self));
     return self;
 }
 

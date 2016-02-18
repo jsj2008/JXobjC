@@ -77,4 +77,32 @@ void * iVarAddressFromSideTable (id anObject, const char * iVarName,
         return 0;
 }
 
+pthread_mutex_t * mutexForObject (id anObject)
+{
+    SideTableEntry * sTable = sideTableForObject (anObject, YES);
+
+    if (!sTable->lockIsReady)
+    {
+        pthread_mutexattr_t recursiveAttr = {0};
+        pthread_mutexattr_settype (&recursiveAttr, PTHREAD_MUTEX_RECURSIVE);
+        pthread_mutex_init (&sTable->lock, &recursiveAttr);
+    }
+
+    return &sTable->lock;
+}
+
+void destroySideTableForObject (id anObject)
+{
+    SideTableEntry * sTable = sideTableForObject (anObject, NO);
+
+    if (!sTable)
+        return;
+
+    if (sTable->lockIsReady)
+        pthread_mutex_destroy (&sTable->lock);
+    if (sTable->additional_ivars)
+        Dictionary_delete (sTable->additional_ivars, NO);
+    Dictionary_unset (sideTable, sTable, YES);
+}
+
 void sideTable_init () { sideTable = Dictionary_new (YES, NO, NO); }

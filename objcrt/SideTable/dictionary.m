@@ -63,15 +63,13 @@ static Dictionary_t * resize (Dictionary_t * dict)
     size_t oldSize        = dict->size;
     List_t_ ** oldEntries = dict->entries;
 
+    dict->size    = oldSize * 2;
     dict->entries = _Alloc (sizeof (List_t_ *) * dict->size * 2);
 
     for (int i = 0; i < oldSize; i++)
     {
         for (e = oldEntries[i]; e != 0; e = e->Link)
-        {
-            entry = e->data;
             Dictionary_set (dict, entry->key, entry->value);
-        }
     }
 
     for (int i = 0; i < oldSize; i++)
@@ -79,9 +77,7 @@ static Dictionary_t * resize (Dictionary_t * dict)
         List_t_ * next;
         for (e = oldEntries[i]; e != 0; e = next)
         {
-            next  = e->Link;
-            entry = e->data;
-            OC_Free (entry);
+            next = e->Link;
             OC_Free (e);
         }
     }
@@ -133,6 +129,8 @@ void Dictionary_delete (Dictionary_t * dict, BOOL delcontents)
             OC_Free (e);
         }
     }
+
+    pthread_mutex_destroy (&dict->Lock);
 
     OC_Free (dict->entries);
     OC_Free (dict);
