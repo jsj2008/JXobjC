@@ -55,24 +55,23 @@ Dictionary_t * additionalIVarDictionaryForObject (id anObject, BOOL create)
         return 0;
 }
 
-void * iVarAddressFromSideTable (id anObject, const char * iVarName,
-                                 BOOL create)
+void * iVarAddressFromSideTable (id anObject, const char * iVarName)
 {
     void * candidate;
     Dictionary_t * additionals =
-        additionalIVarDictionaryForObject (anObject, create);
+        additionalIVarDictionaryForObject (anObject, NO);
 
     if (!additionals)
         return 0;
 
     if ((candidate = (void *)Dictionary_get (additionals, iVarName)))
         return candidate;
-    else if (create)
+    /*else if (create)
     {
         candidate = OC_Malloc (8);
         Dictionary_set (sideTable, (char *)anObject, (char *)candidate);
         return candidate;
-    }
+    }*/
     else
         return 0;
 }

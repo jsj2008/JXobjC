@@ -2,8 +2,9 @@
 
 #include <string.h>
 
-#include "objc-ivar.h"
 #include "ivar.h"
+#include "objc-ivar.h"
+#include "SideTable.h"
 
 void * JX_getIVarAddress (id obj, const char * iVarName)
 {
@@ -31,5 +32,7 @@ search:
         goto search;
     }
     else
-        return 0;
+    {
+        return iVarAddressFromSideTable (obj, iVarName);
+    }
 }

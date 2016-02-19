@@ -4,6 +4,8 @@
 
 ### Overview ###
 
+![Basic overview](doc/res/duckexpl.jpg)
+
 **JX Objective-C** is a powerful development suite implementing the programming
 language Objective-C *(JX)* (abbreviated **JXobjC**.) It is a derivative
 project of David Stes' *Portable Object Compiler*, and is the reference
