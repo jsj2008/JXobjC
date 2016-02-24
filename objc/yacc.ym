@@ -117,8 +117,8 @@ identifier_commalist
     ;
 
 identorclassortype
-    : identorclass
-    | typename
+    : identifier
+    | typespec
     ;
 
 identorclassortype_commalist
@@ -443,7 +443,6 @@ datadefspecs
     { $$ = mklist($1,$2);$$ = mklist($$,$3); $$ = mklist($$,$4); $$ = mklist($$,$5); $$ = mklist($$,$6); $$ = mklist($$,$7); }
     | externlang
     { $$ = mklist(nil,$1); /* o_cplus case */ }
-    | templdecl
     ;
 
 datadefx
@@ -456,13 +455,6 @@ datadefx
     optinitializer
     { okblock=0;$$ = mkdatadef($1,nil,$3,$5); }
     ;
-
-templdecl
-    : identifier relop optparmdeflist relop
-    {
-       [$1 gen]; [$2 gen]; [$3 gen]; [$4 gen];
-       $$ = mklist(nil, nil);
-    }
 
 decl
     : declx
@@ -973,9 +965,9 @@ shiftexpr
     ;
 
 structspec
-    : structkeyw identifier opttemplinst '{' optcomponentdeflist '}'
+    : structkeyw identifier '{' optcomponentdeflist '}'
     {
-       $$ = mkstructspec($1,$2,$3,$4,$5,$6);
+       $$ = mkstructspec($1,$2,nil,$3,$4,$5);
     }
     | structkeyw typeword '{' optcomponentdeflist '}'
     { $$ = mkstructspec($1,$2,nil,$3,$4,$5); }
@@ -1005,19 +997,6 @@ componentdeflist
     { $$ = atdefsaddall(nil,$3); }
     | componentdeflist atdefs '(' classname ')'
     { $$ = atdefsaddall($1,$4); }
-    ;
-
-opttemplinst
-    : /* Epsilon*/ { $$ = nil; }
-    | templinst { $$ = $1; }
-    ;
-
-templinst
-    : relop identifier relop
-    {
-       $$ = mklist2 (nil, $1, $2);
-       $$ = mklist ($$, $3);
-    }
     ;
 
 componentdef
