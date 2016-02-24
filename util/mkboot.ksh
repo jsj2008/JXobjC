@@ -27,7 +27,8 @@ PLINK_SRCS="../../objc/postlink.m"
 mkdir objc
 mkdir plink
 
-${OBJC} -I../objcrt/hdr  -I../objcrt/ ../objcrt/*.m ../objcrt/Object/*.m
+${OBJC} -I../objcrt/hdr  -I../objcrt/ -I../objcrt/SideTable ../objcrt/*.m \
+    ../objcrt/Object/*.m ../objcrt/SideTable/*.m
 
 echo "DONE OBJECT"
 ${OBJC} -I../objcrt/hdr -I../objpak -I../objpak/hdr -I../objpak/Collection \

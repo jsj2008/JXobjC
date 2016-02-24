@@ -9,6 +9,7 @@ extern struct modDescriptor * _OBJCBIND_scalar ();
 extern struct modDescriptor * _OBJCBIND_prdotxpr ();
 extern struct modDescriptor * _OBJCBIND_pointer ();
 extern struct modDescriptor * _OBJCBIND_compdef ();
+extern struct modDescriptor * _OBJCBIND_SideTable ();
 extern struct modDescriptor * _OBJCBIND_exprstmt ();
 extern struct modDescriptor * _OBJCBIND_dfltstmt ();
 extern struct modDescriptor * _OBJCBIND_OutOfMem ();
@@ -109,14 +110,15 @@ extern struct modDescriptor * _OBJCBIND_parmlist ();
 extern struct modDescriptor * _OBJCBIND_ValueSequence ();
 extern struct modDescriptor * _OBJCBIND_commaxpr ();
 extern struct modDescriptor * _OBJCBIND_stardecl ();
+extern struct modDescriptor * _OBJCBIND_dictionary ();
 extern struct modDescriptor * _OBJCBIND_ClassDef_NFI ();
 extern struct modDescriptor * _OBJCBIND_gotostmt ();
-extern struct modDescriptor * _OBJCBIND_typeinc ();
 extern struct modDescriptor * _OBJCBIND_addrof ();
 extern struct modDescriptor * _OBJCBIND_indexxpr ();
 extern struct modDescriptor * _OBJCBIND_selxpr ();
 extern struct modDescriptor * _OBJCBIND_sequence ();
 extern struct modDescriptor * _OBJCBIND_stmt ();
+extern struct modDescriptor * _OBJCBIND_typeinc ();
 extern struct modDescriptor * _OBJCBIND_msgxpr ();
 extern struct modDescriptor * _OBJCBIND_gendecl ();
 extern struct modDescriptor * _OBJCBIND_encxpr ();
@@ -141,6 +143,7 @@ static struct modEntry
                    {_OBJCBIND_prdotxpr, 0},
                    {_OBJCBIND_pointer, 0},
                    {_OBJCBIND_compdef, 0},
+                   {_OBJCBIND_SideTable, 0},
                    {_OBJCBIND_exprstmt, 0},
                    {_OBJCBIND_dfltstmt, 0},
                    {_OBJCBIND_OutOfMem, 0},
@@ -241,14 +244,15 @@ static struct modEntry
                    {_OBJCBIND_ValueSequence, 0},
                    {_OBJCBIND_commaxpr, 0},
                    {_OBJCBIND_stardecl, 0},
+                   {_OBJCBIND_dictionary, 0},
                    {_OBJCBIND_ClassDef_NFI, 0},
                    {_OBJCBIND_gotostmt, 0},
-                   {_OBJCBIND_typeinc, 0},
                    {_OBJCBIND_addrof, 0},
                    {_OBJCBIND_indexxpr, 0},
                    {_OBJCBIND_selxpr, 0},
                    {_OBJCBIND_sequence, 0},
                    {_OBJCBIND_stmt, 0},
+                   {_OBJCBIND_typeinc, 0},
                    {_OBJCBIND_msgxpr, 0},
                    {_OBJCBIND_gendecl, 0},
                    {_OBJCBIND_encxpr, 0},
