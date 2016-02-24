@@ -58,24 +58,26 @@ Dictionary_t * Dictionary_new_i (int size, BOOL isAtomic, BOOL isCollectable,
 
 static Dictionary_t * resize (Dictionary_t * dict)
 {
-    List_t_ * e;
-    Dictionary_entry_t * entry;
     size_t oldSize        = dict->size;
     List_t_ ** oldEntries = dict->entries;
 
+    dict->count   = 0;
     dict->size    = oldSize * 2;
     dict->entries = _Alloc (sizeof (List_t_ *) * dict->size * 2);
 
     for (int i = 0; i < oldSize; i++)
     {
-        for (e = oldEntries[i]; e != 0; e = e->Link)
+        Dictionary_entry_t * entry;
+        for (List_t_ * e = oldEntries[i]; e != 0; e = e->Link)
+        {
+            entry = e->data;
             Dictionary_set (dict, entry->key, entry->value);
+        }
     }
 
     for (int i = 0; i < oldSize; i++)
     {
-        List_t_ * next;
-        for (e = oldEntries[i]; e != 0; e = next)
+        for (List_t_ *e = oldEntries[i], *next = 0; e != 0; e = next)
         {
             next = e->Link;
             OC_Free (e);
@@ -97,7 +99,9 @@ Dictionary_t * Dictionary_new_i (int size, BOOL isAtomic, BOOL isCollectable,
     newdict->isCollectable = isCollectable;
     newdict->stringKey     = stringKey;
     newdict->size          = size;
-    newdict->entries       = _NewAlloc (sizeof (List_t_ *) * newdict->size);
+    newdict->entries = _NewAlloc (sizeof (List_t_ *) * newdict->size);
+    if (isAtomic)
+        memset (newdict->entries, 0, sizeof (List_t_ *) * newdict->size);
 
     pthread_mutexattr_settype (&recursiveAttr, PTHREAD_MUTEX_RECURSIVE);
     pthread_mutex_init (&newdict->Lock, &recursiveAttr);
