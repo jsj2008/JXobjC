@@ -82,7 +82,8 @@ pthread_mutex_t * mutexForObject (id anObject)
 
     if (!sTable->lockIsReady)
     {
-        pthread_mutexattr_t recursiveAttr = {0};
+        pthread_mutexattr_t recursiveAttr;
+        pthread_mutexattr_init (&recursiveAttr);
         pthread_mutexattr_settype (&recursiveAttr, PTHREAD_MUTEX_RECURSIVE);
         pthread_mutex_init (&sTable->lock, &recursiveAttr);
     }

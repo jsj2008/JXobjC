@@ -52,6 +52,7 @@ pthread_mutex_t * allocMtx ()
 {
     pthread_mutex_t * mutx = malloc (sizeof (pthread_mutex_t));
 
+    pthread_mutexattr_init (&recursiveAttr);
     pthread_mutexattr_settype (&recursiveAttr, PTHREAD_MUTEX_RECURSIVE);
 #if 0
 	pthread_mutexattr_setrobust (&recursiveAttr, PTHREAD_MUTEX_ROBUST);

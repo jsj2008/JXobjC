@@ -92,8 +92,8 @@ static Dictionary_t * resize (Dictionary_t * dict)
 Dictionary_t * Dictionary_new_i (int size, BOOL isAtomic, BOOL isCollectable,
                                  BOOL stringKey)
 {
-    pthread_mutexattr_t recursiveAttr = {0};
-    Dictionary_t * newdict            = _NewAlloc (sizeof (Dictionary_t));
+    pthread_mutexattr_t recursiveAttr;
+    Dictionary_t * newdict = _NewAlloc (sizeof (Dictionary_t));
 
     newdict->isAtomic      = isAtomic;
     newdict->isCollectable = isCollectable;
@@ -103,6 +103,7 @@ Dictionary_t * Dictionary_new_i (int size, BOOL isAtomic, BOOL isCollectable,
     if (isAtomic)
         memset (newdict->entries, 0, sizeof (List_t_ *) * newdict->size);
 
+    pthread_mutexattr_init (&recursiveAttr);
     pthread_mutexattr_settype (&recursiveAttr, PTHREAD_MUTEX_RECURSIVE);
     pthread_mutex_init (&newdict->Lock, &recursiveAttr);
 
