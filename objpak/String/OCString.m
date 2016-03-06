@@ -373,7 +373,7 @@ static char putcharat (objstr_t self, int i, char c)
     return r;
 }
 
-- (OrdCltn *)componentsSeparatedByString:separator
+- (OrdCltn)componentsSeparatedByString:separator
 {
     size_t i, si, sepsize = [separator size];
     STR sepstr            = [separator str];

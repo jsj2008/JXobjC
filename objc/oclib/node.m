@@ -56,7 +56,7 @@ char * browsepath (char * filename)
     }
     else
     {
-        MutableString * buf = [MutableString str:o_browsedir];
+        MutableString buf = [MutableString str:o_browsedir];
         [buf concatSTR:o_pathsep];
         [buf concatSTR:filename];
         return [buf str];

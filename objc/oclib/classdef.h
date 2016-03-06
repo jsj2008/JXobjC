@@ -22,7 +22,7 @@
 extern id curclassdef;
 extern id curstruct;
 
-@class Selector, OrdCltn, Type, Method, Expr;
+@class Selector, OrdCltn, Type, Method, Expr, Decl;
 
 #include "Dictionary.h"
 #include "node.h"
@@ -64,6 +64,7 @@ extern id curstruct;
     Dictionary compdic, ivardic, cvardic;
     OrdCltn<Symbol> compnames, ivarnames, cvarnames;
     OrdCltn<Type> comptypes, ivartypes, cvartypes;
+    OrdCltn<Symbol> delegates;
     id allivarnames, allcvarnames;
     id fileinmethod, fileoutmethod;
     id decrefsmethod, increfsmethod, propmeths;
@@ -134,7 +135,7 @@ extern id curstruct;
 - genclassref;
 
 /* Should this be folded into methodForSelector ? */
-- lookupSelector:(Selector)aSel;
+- lookupSelector:(Selector)aSel forDecl:(Decl)aDecl;
 - (Method)methodForSelector:(Selector)aSel;
 - lookupivar:sym;
 - lookupcvar:sym;

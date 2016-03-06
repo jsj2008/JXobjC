@@ -96,7 +96,7 @@
 - concatstringchain
 {
     int i, n;
-    Symbol * s = [Symbol new];
+    Symbol s = [Symbol new];
     for (i = 0, n = [stringchain size]; i < n; i++)
     {
         id o = [stringchain at:i];

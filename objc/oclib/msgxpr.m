@@ -227,8 +227,10 @@ id msgwraps; /* VICI */
 
     if ([[rcvr type] isNamedClass] && [[rcvr type] getClass])
     {
-        Selector aSel = [[[rcvr type] getClass] lookupSelector:[self selector]];
-        Method meth   = [[[rcvr type] getClass] methodForSelector:aSel];
+        Selector aSel =
+            [[[rcvr type] getClass] lookupSelector:[self selector]
+                                           forDecl:[[rcvr type] decl]];
+        Method meth = [[[rcvr type] getClass] methodForSelector:aSel];
 
         methodfound = NO;
 

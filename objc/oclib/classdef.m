@@ -415,7 +415,7 @@ id curclassdef;
         if (![impls includes:t])
         {
             if (superc)
-                if (![superc lookupSelector:t])
+                if (![superc lookupSelector:t forDecl:nil])
                     warn ("can't find implementation of %s%s", (f) ? "+" : "-",
                           [t str]);
         }
@@ -1436,7 +1436,7 @@ static BOOL checkRelation (ClassDef one, ClassDef two)
 
 - (BOOL)isRelated:(ClassDef)aClass { return checkRelation (self, aClass); }
 
-- lookupSelector:(Selector)aSel
+- lookupSelector:(Selector)aSel forDecl:(Decl)aDecl
 {
     if (!aSel)
         return nil;
@@ -1446,7 +1446,7 @@ static BOOL checkRelation (ClassDef one, ClassDef two)
         if (!candidate)
             candidate = [nstsels findMatching:aSel];
         if (!candidate && superc)
-            return [superc lookupSelector:aSel];
+            return [superc lookupSelector:aSel forDecl:aDecl];
         else
             return candidate;
     }

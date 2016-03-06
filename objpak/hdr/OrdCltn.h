@@ -105,7 +105,7 @@ typedef struct objcol
  * Add an object to the end of the collection.
  * @param anObject Object to add.
  */
-- (OrdCltn<T> *)add:(T)anObject;
+- (OrdCltn<T>)add:(T)anObject;
 
 /*!
  * Add an object as the first in the collection.
