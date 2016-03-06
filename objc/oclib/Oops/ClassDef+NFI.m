@@ -10,12 +10,12 @@
 
 @implementation ClassDef (NFI)
 
-- (int)indexOfVar:(Symbol *)aSym
+- (int)indexOfVar:(Symbol)aSym
     startingPoint:(size_t *)index
         isFactory:(BOOL)isFactory
 {
-    Symbol * potentialIVar = nil;
-    OrdCltn * varnames     = isFactory ? cvarnames : ivarnames;
+    Symbol potentialIVar = nil;
+    OrdCltn varnames     = isFactory ? cvarnames : ivarnames;
 
     if (superc)
     {
@@ -34,19 +34,19 @@
     return -1;
 }
 
-- (int)indexOfIVar:(Symbol *)aSym
+- (int)indexOfIVar:(Symbol)aSym
 {
     size_t startingPoint = 0;
     return [self indexOfVar:aSym startingPoint:&startingPoint isFactory:NO];
 }
 
-- (int)indexOfCVar:(Symbol *)aSym
+- (int)indexOfCVar:(Symbol)aSym
 {
     size_t startingPoint = 0;
     return [self indexOfVar:aSym startingPoint:&startingPoint isFactory:YES];
 }
 
-- (Symbol *)offsetsTableSymbol_factory:(BOOL)isFactory
+- (Symbol)offsetsTableSymbol_factory:(BOOL)isFactory
 {
     return [Symbol
         sprintf:"__%s_%c_offsets", [self classname], isFactory ? 'c' : 'i'];
@@ -54,7 +54,7 @@
 
 - declareOffsetTables
 {
-    Type * longPtrsArray =
+    Type longPtrsArray =
         [[[t_int deepCopy] decl:mkarraydecl (nil, nil)] ampersand];
     [trlunit defdata:[self offsetsTableSymbol_factory:NO] astype:longPtrsArray];
     [trlunit defdata:[self offsetsTableSymbol_factory:YES]
@@ -62,10 +62,10 @@
     return self;
 }
 
-- (IndexExpr *)offsetEntryForVar:(Symbol *)aVar isFactory:(BOOL)isFactory
+- (IndexExpr)offsetEntryForVar:(Symbol)aVar isFactory:(BOOL)isFactory
 {
-    ConstantExpr * subXpr = nil;
-    int idx               = isFactory ? [self indexOfCVar:aVar] : [self indexOfIVar:aVar];
+    ConstantExpr subXpr = nil;
+    int idx             = isFactory ? [self indexOfCVar:aVar] : [self indexOfIVar:aVar];
 
     if (idx == -1)
         [Exception signal:"Var not found"];
@@ -75,34 +75,33 @@
                         subXpr);
 }
 
-- (Expr *)fastAddressForVar:(Symbol *)aVar isFactory:(BOOL)isFactory
+- (Expr)fastAddressForVar:(Symbol)aVar isFactory:(BOOL)isFactory
 {
-    Type * charPtrT = [[t_char deepCopy] ampersand];
+    Type charPtrT = [[t_char deepCopy] ampersand];
     /* Note: if this is a cVar being accessed from an instance, this should
      * instead use self->isa. */
-    Expr * castedSelf =
+    Expr castedSelf =
         mkprecexpr (mkcastexpr (charPtrT, [[e_self copy] lhsself:1]));
-    Expr * offs =
+    Expr offs =
         mkdereference ([self offsetEntryForVar:aVar isFactory:isFactory]);
-    Type * varType =
-        isFactory ? [self lookupcvar:aVar] : [self lookupivar:aVar];
+    Type varType = isFactory ? [self lookupcvar:aVar] : [self lookupivar:aVar];
     return mkdereference (mkcastexpr (
         [varType ampersand], mkprecexpr (mkbinexpr (castedSelf, "+", offs))));
 }
 
-- (Expr *)fastAddressForIVar:(Symbol *)aVar
+- (Expr)fastAddressForIVar:(Symbol)aVar
 {
     return [self fastAddressForVar:aVar isFactory:NO];
 }
 
-- (Expr *)fastAddressForCVar:(Symbol *)aVar
+- (Expr)fastAddressForCVar:(Symbol)aVar
 {
     return [self fastAddressForVar:aVar isFactory:YES];
 }
 
-- genVarOffsetVars_isForFactory:(BOOL)isFactory className:(String *)aName
+- genVarOffsetVars_isForFactory:(BOOL)isFactory className:(String)aName
 {
-    OrdCltn * varnames;
+    OrdCltn varnames;
     const char * pszName = [aName ?: classname str];
     const char cSuffix   = isFactory ? 'c' : 'i';
 
@@ -123,9 +122,9 @@
     return self;
 }
 
-- genVarOffsetsArray_isForFactory:(BOOL)isFactory className:(String *)aName
+- genVarOffsetsArray_isForFactory:(BOOL)isFactory className:(String)aName
 {
-    OrdCltn * varnames;
+    OrdCltn varnames;
     const char * pszName = [aName ?: classname str];
     const char cSuffix   = isFactory ? 'c' : 'i';
 

@@ -1413,7 +1413,7 @@ id curclassdef;
 - clssels { return clssels; }
 - nstsels { return nstsels; }
 
-static BOOL checkUpCast (ClassDef * one, ClassDef * two)
+static BOOL checkUpCast (ClassDef one, ClassDef two)
 {
     ClassDef * superOne;
     if (!one || !two)
@@ -1427,22 +1427,22 @@ static BOOL checkUpCast (ClassDef * one, ClassDef * two)
     return YES;
 }
 
-static BOOL checkRelation (ClassDef * one, ClassDef * two)
+static BOOL checkRelation (ClassDef one, ClassDef two)
 {
     return checkUpCast (one, two) || checkUpCast (two, one);
 }
 
-- (BOOL)checkAssign:(ClassDef *)aClass { return checkUpCast (self, aClass); }
+- (BOOL)checkAssign:(ClassDef)aClass { return checkUpCast (self, aClass); }
 
-- (BOOL)isRelated:(ClassDef *)aClass { return checkRelation (self, aClass); }
+- (BOOL)isRelated:(ClassDef)aClass { return checkRelation (self, aClass); }
 
-- lookupSelector:(Selector *)aSel
+- lookupSelector:(Selector)aSel
 {
     if (!aSel)
         return nil;
     else
     {
-        Selector * candidate = [clssels findMatching:aSel];
+        Selector candidate = [clssels findMatching:aSel];
         if (!candidate)
             candidate = [nstsels findMatching:aSel];
         if (!candidate && superc)

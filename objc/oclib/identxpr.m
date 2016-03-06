@@ -278,7 +278,7 @@
     return self;
 }
 
-static BOOL isReservedIVar (Symbol * aSym)
+static BOOL isReservedIVar (Symbol aSym)
 {
     return [aSym isEqual:@"isa"] || [aSym isEqual:@"_lock"] ||
            [aSym isEqual:@"_refcnt"];
@@ -294,7 +294,7 @@ static BOOL isReservedIVar (Symbol * aSym)
 
     if ((ivar || cvar) && !isReservedIVar (identifier))
     {
-        String * selfAddr = nil;
+        String selfAddr = nil;
 
         if (heapvarblock)
             selfAddr =

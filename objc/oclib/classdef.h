@@ -60,10 +60,10 @@ extern id curstruct;
     id nstdisptbl; /* instance methods *implemented* (overridden) */
     id clssels;    /* selectors of class methods prototyped */
     id nstsels;    /* selectors of instance methods prototyped */
-    Dictionary * methsForSels;
-    Dictionary *compdic, *ivardic, *cvardic;
-    OrdCltn<Symbol *> *compnames, *ivarnames, *cvarnames;
-    OrdCltn<Type *> *comptypes, *ivartypes, *cvartypes;
+    Dictionary methsForSels;
+    Dictionary compdic, ivardic, cvardic;
+    OrdCltn<Symbol> compnames, ivarnames, cvarnames;
+    OrdCltn<Type> comptypes, ivartypes, cvartypes;
     id allivarnames, allcvarnames;
     id fileinmethod, fileoutmethod;
     id decrefsmethod, increfsmethod, propmeths;
@@ -134,8 +134,8 @@ extern id curstruct;
 - genclassref;
 
 /* Should this be folded into methodForSelector ? */
-- lookupSelector:(Selector *)aSel;
-- (Method *)methodForSelector:(Selector *)aSel;
+- lookupSelector:(Selector)aSel;
+- (Method)methodForSelector:(Selector)aSel;
 - lookupivar:sym;
 - lookupcvar:sym;
 - (BOOL)isivar:sym;
@@ -148,8 +148,8 @@ extern id curstruct;
 - addivars;
 - propmeths;
 
-- (BOOL)checkAssign:(ClassDef *)aClass;
-- (BOOL)isRelated:(ClassDef *)aClass;
+- (BOOL)checkAssign:(ClassDef)aClass;
+- (BOOL)isRelated:(ClassDef)aClass;
 
 @end
 
@@ -157,20 +157,20 @@ extern id curstruct;
 
 /*! Retrieves the index of the iVar corresponding to a specified Symbol. Returns
  * -1 if no such iVar is found. */
-- (int)indexOfIVar:(Symbol *)aSym;
-- (int)indexOfCVar:(Symbol *)aSym;
+- (int)indexOfIVar:(Symbol)aSym;
+- (int)indexOfCVar:(Symbol)aSym;
 
 /* Declares the offset tables in the code tree.
  * Does not generate actual delarations. */
 - declareOffsetTables;
 
 /* Retrieves a fast accessor for the specified iVar. */
-- (Expr *)fastAddressForIVar:(Symbol *)aVar;
-- (Expr *)fastAddressForCVar:(Symbol *)aVar;
+- (Expr)fastAddressForIVar:(Symbol)aVar;
+- (Expr)fastAddressForCVar:(Symbol)aVar;
 
 /* Internal use by ClassDef: */
-- genVarOffsetVars_isForFactory:(BOOL)isFactory className:(String *)aName;
-- genVarOffsetsArray_isForFactory:(BOOL)isFactory className:(String *)aName;
+- genVarOffsetVars_isForFactory:(BOOL)isFactory className:(String)aName;
+- genVarOffsetsArray_isForFactory:(BOOL)isFactory className:(String)aName;
 
 @end
 

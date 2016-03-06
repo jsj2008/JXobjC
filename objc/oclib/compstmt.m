@@ -39,7 +39,7 @@
 #include "options.h"
 #include "casestmt.h"
 
-CompoundStmt * curcompound;
+CompoundStmt curcompound;
 id curloopcompound;
 
 @implementation CompoundStmt

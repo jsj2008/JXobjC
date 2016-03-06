@@ -190,7 +190,7 @@ id msgwraps; /* VICI */
 
 - synth
 {
-    OrdCltn * generics = 0;
+    OrdCltn generics = 0;
     int i;
 
     if (curcompound)
@@ -227,9 +227,8 @@ id msgwraps; /* VICI */
 
     if ([[rcvr type] isNamedClass] && [[rcvr type] getClass])
     {
-        Selector * aSel =
-            [[[rcvr type] getClass] lookupSelector:[self selector]];
-        Method * meth = [[[rcvr type] getClass] methodForSelector:aSel];
+        Selector aSel = [[[rcvr type] getClass] lookupSelector:[self selector]];
+        Method meth   = [[[rcvr type] getClass] methodForSelector:aSel];
 
         methodfound = NO;
 
@@ -263,12 +262,12 @@ id msgwraps; /* VICI */
     if (method)
         for (i = [msg numArgs] - 1; i >= 0; i--)
         {
-            Type *argType, *methType;
+            Type argType, methType;
             if ([[[msg argAt:i] expr] isKindOf:ArrowExpr])
                 continue;
             argType = [[[msg argAt:i] expr] type];
             methType =
-                ([(KeywDecl *)[method argAt:i] cast] ?: [[method argAt:i] type])
+                ([(KeywDecl)[method argAt:i] cast] ?: [[method argAt:i] type])
                     ?: t_id;
 
             if (!argType || !methType)
@@ -276,8 +275,7 @@ id msgwraps; /* VICI */
 
             if (generics)
             {
-                Type * pType =
-                    [methType genDeclForClass:[[rcvr type] getClass]];
+                Type pType = [methType genDeclForClass:[[rcvr type] getClass]];
                 methType =
                     pType ? [generics at:[[pType decl] index]] : methType;
                 dbg ("pType: %p\n", pType);

@@ -39,11 +39,11 @@
     }
     else
     {
-        OrdCltn * compDefs = [OrdCltn new];
-        id ivars           = [curclassdef ivars];
-        id decllist        = [compdec decllist];
-        id specs           = [compdec specs];
-        id oldStruct       = curstruct;
+        OrdCltn compDefs = [OrdCltn new];
+        id ivars         = [curclassdef ivars];
+        id decllist      = [compdec decllist];
+        id specs         = [compdec specs];
+        id oldStruct     = curstruct;
         int i, n;
 
         curstruct = curclassdef;
@@ -59,9 +59,9 @@
 
             if (var)
             {
-                ComponentDef * cDef = [ComponentDef new];
-                id t                = [Type new];
-                id d                = [decllist at:i];
+                ComponentDef cDef = [ComponentDef new];
+                id t              = [Type new];
+                id d              = [decllist at:i];
 
                 if (specs)
                 {
