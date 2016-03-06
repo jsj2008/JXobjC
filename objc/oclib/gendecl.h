@@ -8,10 +8,10 @@
 
 @interface GenericDecl : Decl
 {
-    Decl * decl;
+    Decl decl;
 }
 
-@property Symbol * sym;
+@property Symbol sym;
 @property int index;
 
 - decl:aDecl;

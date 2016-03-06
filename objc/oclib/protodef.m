@@ -35,7 +35,7 @@
     return c;
 }
 
-- addMethod:(Method *)aMeth
+- addMethod:(Method)aMeth
 {
     if (!methsForSels)
         methsForSels = [Dictionary new];

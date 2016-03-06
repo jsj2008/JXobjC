@@ -47,11 +47,9 @@ id trlunit;
 
 @interface TranslationUnit ()
 - genLiteralDecls;
-- genLiteralDeclsForVar:(String *)aVar ofClass:(String *)aClass;
+- genLiteralDeclsForVar:(String)aVar ofClass:(String)aClass;
 - genLiteralDefs;
-- genLiteralDefForVar:(String *)aVar
-              ofClass:(String *)aClass
-               fields:(String *)fields;
+- genLiteralDefForVar:(String)aVar ofClass:(String)aClass fields:(String)fields;
 @end
 
 @implementation TranslationUnit
@@ -78,7 +76,7 @@ id trlunit;
 
 - (BOOL)usingselfassign { return usingselfassign; }
 
-- addCode:(Node *)someCode
+- addCode:(Node)someCode
 {
     if (!code)
         code = [OrdCltn new];
@@ -213,7 +211,7 @@ static char * mystrrchr (const char * s, int c)
 
 - prologue
 {
-    StructSpec *r1, *r2;
+    StructSpec r1, r2;
     assert (modname != NULL);
 
     /* Manually define the structure layout so that the compiler stays suitably
@@ -1017,9 +1015,9 @@ static char * mystrrchr (const char * s, int c)
     return self;
 }
 
-- (String *)defStringLit:(String *)aStr
+- (String)defStringLit:(String)aStr
 {
-    String * var = [self gettmpvar];
+    String var = [self gettmpvar];
     if (!stringLits)
         stringLits = [Dictionary new];
     [stringLits atKey:var put:aStr];
@@ -1044,7 +1042,7 @@ static char * mystrrchr (const char * s, int c)
     return self;
 }
 
-- genLiteralDeclsForVar:(String *)aVar ofClass:(String *)aClass
+- genLiteralDeclsForVar:(String)aVar ofClass:(String)aClass
 {
     gf ("static id %s_CONSTSTRING();\n", [aVar str]);
     return self;
@@ -1053,8 +1051,8 @@ static char * mystrrchr (const char * s, int c)
 - genLiteralDefs
 {
     [stringLits keysDo:
-                { :aKey | String * fields;
-                    String * text;
+                { :aKey | String fields;
+                    String text;
                     unsigned siz, cap;
                     text = [stringLits atKey:aKey];
                     siz  = [text size] - 2;
@@ -1069,9 +1067,7 @@ static char * mystrrchr (const char * s, int c)
     return self;
 }
 
-- genLiteralDefForVar:(String *)aVar
-              ofClass:(String *)aClass
-               fields:(String *)fields
+- genLiteralDefForVar:(String)aVar ofClass:(String)aClass fields:(String)fields
 {
     gf ("static id %s_CONSTSTRING() {\n", [aVar str]);
     gf ("static struct g%s %s ={\n", [aClass str], [aVar str]);

@@ -116,9 +116,9 @@
     return self;
 }
 
-- (String *)asDefFor:sym
+- (String)asDefFor:sym
 {
-    MutableString * aType = [MutableString str:"*"];
+    MutableString aType = [MutableString str:"*"];
 
     [specs do:{ : each | [aType concat:each]}];
     if (pointer)

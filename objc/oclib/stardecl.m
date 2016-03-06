@@ -142,9 +142,9 @@
     return self;
 }
 
-- (String *)asDefFor:sym
+- (String)asDefFor:sym
 {
-    MutableString * aType = [MutableString new];
+    MutableString aType = [MutableString new];
 
     if (decl)
     {

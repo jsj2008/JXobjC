@@ -11,7 +11,7 @@
 
 /* Ordered from 0 upwards, the OrdCltn here stores a Type * for each generic
  * argument (i.e. <arg0, arg1, ... arg99). */
-@property OrdCltn * types;
+@property OrdCltn types;
 
 - synth;
 - gen;

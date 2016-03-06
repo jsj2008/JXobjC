@@ -44,7 +44,7 @@ extern id trlunit;
     id msgdic, fwdcltn;
     id protocols;
     id cats;
-    Dictionary * stringLits; /* Variable name as value, string as value */
+    Dictionary stringLits; /* Variable name as value, string as value */
     char * modname;
     char * modversion;
     char * bindfunname;
@@ -52,11 +52,11 @@ extern id trlunit;
     id usesentries;
     id definesentries;
     id methods;
-    Dictionary * classdefs;
+    Dictionary classdefs;
     id structdefs;
     id gentypes;
     id enumtors;
-    OrdCltn * code;
+    OrdCltn code;
     BOOL usingblocks;
     BOOL usingselfassign;
 }
@@ -85,7 +85,7 @@ extern id trlunit;
 - allclsimpls;
 - addclsimpl:c;
 - genglobfuncall;
-- addCode:(Node *)someCode;
+- addCode:(Node)someCode;
 
 - usesentry:name;
 - definesentry:name;
@@ -106,7 +106,7 @@ extern id trlunit;
 - def:sel asmethod:method;
 - def:sym as:def;
 /* Returns the name of this string literal's associated variable. */
-- (String *)defStringLit:(String *)aStr;
+- (String)defStringLit:(String)aStr;
 - defasclassfwd:sym;
 - defenumtor:e;
 - lookupprotocol:sym;

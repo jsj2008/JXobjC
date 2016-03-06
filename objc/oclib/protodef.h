@@ -13,13 +13,13 @@
 }
 
 @property id protoname;
-@property Dictionary * generics;
-@property Dictionary * methsForSels;
+@property Dictionary generics;
+@property Dictionary methsForSels;
 
 - (char *)classname;
 - (int)compare:c;
 
-- addMethod:(Method *)aMeth;
+- addMethod:(Method)aMeth;
 
 - addclssel:method;
 - addnstsel:method;

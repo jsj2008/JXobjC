@@ -741,7 +741,7 @@ id mkkvonotice (id name, id old, id new)
     return mkexprstmtx (mkmesgexpr (e_self, mkmethproto (nil, nil, ksel, NO)));
 }
 
-id mkpropsetmeth (Symbol * name, Type * type)
+id mkpropsetmeth (Symbol name, Type type)
 {
     id d, b, r;
     id selnam = [String sprintf:"%s%s", "set", [name str]];
@@ -762,19 +762,19 @@ id mkpropsetmeth (Symbol * name, Type * type)
     [r prototype];
     if ((b = [CompoundStmt new]))
     {
-        OrdCltn *s = [OrdCltn new], *dd = [OrdCltn new];
+        OrdCltn s = [OrdCltn new], dd = [OrdCltn new];
         BOOL doKVO = [type isid];
         /* (((void *)%s) + *(__%s_i_offsets[%d])) )" */
-        Expr * vartoset = [curclassdef fastAddressForIVar:name];
+        Expr vartoset = [curclassdef fastAddressForIVar:name];
         // [mkarrowexpr ([[e_self copy] lhsself:1], name) type:type];
-        id rdecl        = [type decl];
-        Symbol * tmpsym = [Symbol sprintf:"%s_s", [name str]];
-        Decl * decl     = rdecl
-                          ? [rdecl isKindOf:Pointer]
-                                ? mkstardecl (rdecl, mkdecl (tmpsym))
-                                : [[rdecl copy] identifier:tmpsym]
-                          : mkdecl (tmpsym);
-        DataDef * datadef = mkdatadef (nil, [type specs], decl, nil);
+        id rdecl      = [type decl];
+        Symbol tmpsym = [Symbol sprintf:"%s_s", [name str]];
+        Decl decl     = rdecl
+                        ? [rdecl isKindOf:Pointer]
+                              ? mkstardecl (rdecl, mkdecl (tmpsym))
+                              : [[rdecl copy] identifier:tmpsym]
+                        : mkdecl (tmpsym);
+        DataDef datadef = mkdatadef (nil, [type specs], decl, nil);
         id tassign =
             mkexprstmtx (mkassignexpr (mkidentexpr (tmpsym), "=", vartoset));
 
@@ -799,7 +799,7 @@ id mkpropsetmeth (Symbol * name, Type * type)
     return r;
 }
 
-id mkpropgetmeth (Symbol * name, Type * type)
+id mkpropgetmeth (Symbol name, Type type)
 {
     id d, b, r;
     id usel = [Selector str:[name str]];
@@ -1061,10 +1061,10 @@ void mkclassfwd (id name)
 }
 
 id mkclassdef (id keyw, id name, id sname, id protocols, id ivars, id cvars,
-               OrdCltn * generics, BOOL iscategory)
+               OrdCltn generics, BOOL iscategory)
 {
-    ClassDef *r, *superClass = nil;
-    BOOL isExtantClass       = NO;
+    ClassDef r, superClass = nil;
+    BOOL isExtantClass     = NO;
     BOOL intfkeyw = (keyw != nil && strstr ([keyw str], "interface") != NULL);
     BOOL implkeyw =
         (keyw != nil && strstr ([keyw str], "implementation") != NULL);
@@ -1129,14 +1129,14 @@ id mkclassdef (id keyw, id name, id sname, id protocols, id ivars, id cvars,
 
     if (generics)
     {
-        Dictionary * clsGenerics = [Dictionary new];
-        short i                  = 0;
+        Dictionary clsGenerics = [Dictionary new];
+        short i                = 0;
 
         [generics do:
                   { :each |
-                      GenericDecl * gDecl =  [[[GenericDecl new] 
+                      GenericDecl gDecl =  [[[GenericDecl new] 
                                                setIndex:i++] setSym:each];
-                      Type * newType = [[t_id deepCopy] decl:gDecl];
+                      Type newType = [[t_id deepCopy] decl:gDecl];
                       [trlunit def:each astype:newType];
                       [clsGenerics atKey:each put:newType];
                   }];
@@ -1276,11 +1276,11 @@ id mklistexpr (id lb, id x, id rb)
 
 id mktypename (id specs, id decl)
 {
-    Type * nType = nil;
+    Type nType = nil;
 
     if (curclassdef) /* handle case of generics as early as possible */
         [specs do:
-               { :each | Type * tmpT;
+               { :each | Type tmpT;
                    if ((tmpT = [[curclassdef generics] atKey:each]))
                        nType = tmpT;
                }];
@@ -1623,8 +1623,8 @@ id mkinstringlit (id string)
 
 id mkpcstringlit (id string)
 {
-    Symbol * sym;
-    String * tFun = [[[trlunit defStringLit:[string deleteFrom:0 to:0]]
+    Symbol sym;
+    String tFun = [[[trlunit defStringLit:[string deleteFrom:0 to:0]]
         mutableCopy] concatSTR:"_CONSTSTRING"];
 
     [trlunit defbuiltinfun:(sym = [Symbol str:[tFun str]])];

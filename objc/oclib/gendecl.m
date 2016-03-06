@@ -81,9 +81,9 @@
     return self;
 }
 
-- (String *)asDefFor:sym
+- (String)asDefFor:sym
 {
-    MutableString * aType = [String sprintf:"<%s>", [sym str]];
+    MutableString aType = [String sprintf:"<%s>", [sym str]];
 
     if (decl)
     {

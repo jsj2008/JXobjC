@@ -205,7 +205,7 @@
 
 - (int)numArgs { return ksel ? [ksel size] : 0; }
 
-- (KeywExpr *)argAt:(int)i { return [ksel at:i]; }
+- (KeywExpr)argAt:(int)i { return [ksel at:i]; }
 
 - calcneedscast
 {
@@ -364,7 +364,7 @@
 
 - encode
 {
-    MutableString * result = [MutableString new];
+    MutableString result = [MutableString new];
 
     if (restype)
     {

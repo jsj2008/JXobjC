@@ -70,7 +70,7 @@ extern id curstruct;
     long offset;
 }
 
-@property Dictionary * generics;
+@property Dictionary generics;
 
 - (int)compare:c;
 
@@ -118,7 +118,7 @@ extern id curstruct;
 - synthrefcntmethods;
 - synthpropmethods;
 
-- addMethod:(Method *)aMeth;
+- addMethod:(Method)aMeth;
 
 - (BOOL)forcegenintf;
 

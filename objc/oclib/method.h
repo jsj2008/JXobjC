@@ -58,7 +58,7 @@
 - (BOOL)varargs;
 - varargs:(BOOL)flag;
 - (int)numArgs;
-- (KeywExpr *)argAt:(int)i;
+- (KeywExpr)argAt:(int)i;
 
 - gen;
 - gencast;

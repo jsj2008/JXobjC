@@ -12,9 +12,9 @@
 
 - (STR)str
 {
-    Type * aType;
-    Sequence * typeSeq   = [types eachElement];
-    MutableString * desc = [@"<" mutableCopy];
+    Type aType;
+    Sequence typeSeq   = [types eachElement];
+    MutableString desc = [@"<" mutableCopy];
 
     while ((aType = [typeSeq next]))
     {

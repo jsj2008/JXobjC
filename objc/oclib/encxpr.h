@@ -9,7 +9,7 @@
 
 @interface Encode : UnaryExpr
 
-@property Type * typeForEncoding;
+@property Type typeForEncoding;
 
 + new;
 - typesynth;

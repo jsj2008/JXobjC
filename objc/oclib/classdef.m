@@ -531,7 +531,7 @@ id curclassdef;
 
 - genVarList_isForFactory:(BOOL)isFactory
 {
-    OrdCltn *varnames, *vartypes;
+    OrdCltn varnames, vartypes;
     const char * pszName = [classname str];
     const char cSuffix   = isFactory ? 'c' : 'i';
 
@@ -594,7 +594,7 @@ id curclassdef;
 - genprivtype
 {
     int i, n;
-    id s = [String str:privtypename];
+    String s = [String str:privtypename];
 
     if ([trlunit isgentype:s])
         return self;
@@ -1280,9 +1280,9 @@ id curclassdef;
     return iscvar;
 }
 
-- (Method *)methodForSelector:(Selector *)aSel
+- (Method)methodForSelector:(Selector)aSel
 {
-    Method * aMeth = [methsForSels atKey:aSel];
+    Method aMeth = [methsForSels atKey:aSel];
     return aMeth ?: superc ? [superc methodForSelector:aSel] : nil;
 }
 
@@ -1415,7 +1415,7 @@ id curclassdef;
 
 static BOOL checkUpCast (ClassDef one, ClassDef two)
 {
-    ClassDef * superOne;
+    ClassDef superOne;
     if (!one || !two)
         return YES;
     else if (one == two)

@@ -65,7 +65,7 @@ extern id t_id;
 - gendef:sym;
 - genabstrtype;
 
-- (String *)asDefFor:sym;
+- (String)asDefFor:sym;
 
 - max:aType;
 - (uintptr_t)hash;
@@ -84,9 +84,9 @@ extern id t_id;
 - (BOOL)isGenSpec;
 - (BOOL)isTypeEqual:x;
 
-- (ClassDef *)getClass;
-- (GenericSpec *)getGenSpec;
-- (Type *)genDeclForClass:aClass;
+- (ClassDef)getClass;
+- (GenericSpec)getGenSpec;
+- (Type)genDeclForClass:aClass;
 
 - encode:nested;
 - encode;

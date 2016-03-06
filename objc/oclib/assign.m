@@ -90,8 +90,7 @@
 
     if ([[lhs type] isNamedClass] && [[rhs type] isNamedClass])
     {
-        ClassDef *lhsCls = [[lhs type] getClass],
-                 *rhsCls = [[rhs type] getClass];
+        ClassDef lhsCls = [[lhs type] getClass], rhsCls = [[rhs type] getClass];
         if (![lhsCls checkAssign:rhsCls])
             warn ("downcasting object of parent class %s to derived class %s",
                   [lhsCls classname], [rhsCls classname]);

@@ -235,10 +235,10 @@ BASIC_TYPESPECS basicSpecForSpec (id spec)
 
 - encode:nested
 {
-    MutableString * result = [MutableString new];
-    id d                   = decl;
+    MutableString result = [MutableString new];
+    id d                 = decl;
     // clang-format off
-    Pointer * p = [decl isKindOf:Pointer] ? decl
+    Pointer p = [decl isKindOf:Pointer] ? decl
          : [decl isKindOf:StarDecl] ? (d = [decl decl], [decl pointer])
          : /*_*/ nil;
     // clang-format on
@@ -446,20 +446,20 @@ BASIC_TYPESPECS basicSpecForSpec (id spec)
     }
 }
 
-- (BOOL)isNamedClassEqual:(Type *)aType
+- (BOOL)isNamedClassEqual:(Type)aType
 {
     if (![[self getClass] checkAssign:[aType getClass]])
         return NO;
 
     if ([self isGenSpec] && [aType isGenSpec])
     {
-        GenericSpec *one = [self getGenSpec], *two = [aType getGenSpec];
+        GenericSpec one = [self getGenSpec], two = [aType getGenSpec];
         if ([[one types] size] != [[two types] size])
             return NO;
         else
             for (int i = 0, n = [[one types] size]; i < n; i++)
             {
-                Type *tOne = [[one types] at:i], *tTwo = [[two types] at:i];
+                Type tOne = [[one types] at:i], tTwo = [[two types] at:i];
                 if ([[tOne getClass] checkAssign:[tTwo getClass]])
                     return NO;
             }
@@ -482,7 +482,7 @@ BASIC_TYPESPECS basicSpecForSpec (id spec)
 
     for (i = 0, n = [specs size]; i < n; i++)
     {
-        Type * potentialType;
+        Type potentialType;
         id each = [specs at:i];
 
         if (basicSpecForSpec (each))
@@ -554,7 +554,7 @@ BASIC_TYPESPECS basicSpecForSpec (id spec)
 - (BOOL)isNamedClass
 {
     BOOL isObj = NO;
-    Decl * viewDecl;
+    Decl viewDecl;
 
     [specs do:
            { : each |
@@ -573,7 +573,7 @@ BASIC_TYPESPECS basicSpecForSpec (id spec)
     return NO;
 }
 
-- (Type *)genDeclForClass:aClass
+- (Type)genDeclForClass:aClass
 {
     if ([decl isKindOf:GenericDecl])
         return self;
@@ -593,12 +593,12 @@ BASIC_TYPESPECS basicSpecForSpec (id spec)
     return isGenSpec;
 }
 
-- (ClassDef *)getClass
+- (ClassDef)getClass
 {
-    ClassDef * cl = nil;
+    ClassDef cl = nil;
 
     [specs do:
-           { : each | ClassDef * clTmp;
+           { : each | ClassDef clTmp;
                if ((clTmp = [trlunit lookupclass:[String str:[each str]]]))
                    cl = clTmp;
            }];
@@ -606,9 +606,9 @@ BASIC_TYPESPECS basicSpecForSpec (id spec)
     return cl;
 }
 
-- (GenericSpec *)getGenSpec
+- (GenericSpec)getGenSpec
 {
-    GenericSpec * gSpec = nil;
+    GenericSpec gSpec = nil;
 
     [specs do:
            { : each |
@@ -745,9 +745,9 @@ BASIC_TYPESPECS basicSpecForSpec (id spec)
     return self;
 }
 
-- (String *)asDefFor:sym
+- (String)asDefFor:sym
 {
-    MutableString * aType = [String new];
+    MutableString aType = [String new];
     [specs do:{ : each | [aType concat:each]}];
     if (decl)
     {

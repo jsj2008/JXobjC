@@ -42,7 +42,7 @@
 - genabstrtype;
 - hide:sym rename:x;
 
-- (String *)asDefFor:sym;
+- (String)asDefFor:sym;
 
 @end
 

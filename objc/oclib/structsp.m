@@ -147,7 +147,7 @@ id curstruct;
     }
     else if (comptypes)
     {
-        MutableString * result = [MutableString sprintf:"{%s=", [name str]];
+        MutableString result = [MutableString sprintf:"{%s=", [name str]];
 
         [comptypes do:{ : each | [result concat:[each encode:self]]}];
 
