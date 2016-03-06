@@ -11,6 +11,6 @@
 - (id)valueForKeyPath:keyPath;
 - (void)setValue:value forKeyPath:keyPath;
 
-- (Pair *)resolveKeyPathFirst:keyPath;
+- (Pair)resolveKeyPathFirst:keyPath;
 
 @end

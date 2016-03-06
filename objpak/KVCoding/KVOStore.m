@@ -14,8 +14,8 @@
              ofObject:object
             withIndex:(unsigned int)index
 {
-    Pair * key = [Pair pairWithVolatileFirst:object second:propStr];
-    KPObserverRef * value =
+    Pair key = [Pair pairWithVolatileFirst:object second:propStr];
+    KPObserverRef value =
         [KPObserverRef kpoRefWithKPO:(volatile id)kpo pathIndex:index];
     id obsSet;
 
@@ -35,7 +35,7 @@
                       withKPO:KPO
                     fromIndex:(unsigned int)index
 {
-    OrdCltn * components = [KPO keyPathComponents];
+    OrdCltn components = [KPO keyPathComponents];
 
     /**
       * The following procedure must be followed for a key of X.Y.Z
@@ -87,9 +87,9 @@
                fromIndex:(unsigned int)index
              withNewRoot:newRoot
 {
-    id tSelf            = self;
-    Dictionary * kToObs = keyToObservers;
-    id matchDetector    = {
+    id tSelf          = self;
+    Dictionary kToObs = keyToObservers;
+    id matchDetector  = {
         : candidate | [candidate.reference matchesRoot:object] &&
               [candidate.reference matchesKeyPath:keyPath] /* &&
               candidate.reference.pathIndex >= index */
@@ -134,8 +134,8 @@
                 oldValue:oldValue
                 newValue:newValue
 {
-    Pair * key = (Pair *)[Pair pairWithVolatileFirst:object second:propStr];
-    Set * obs  = (Set *)[keyToObservers atKey:key];
+    Pair key = [Pair pairWithVolatileFirst:object second:propStr];
+    Set obs  = [keyToObservers atKey:key];
 
     [obs do:
          { :each | [each.reference fireForOldValue:oldValue newValue:newValue];
@@ -183,7 +183,7 @@
 
 + (void)removeObserversByObserverFilter:aBlk
 {
-    Dictionary * kToObs = keyToObservers;
+    Dictionary kToObs = keyToObservers;
     id subset;
 
     subset = [observers select:{ : c | [aBlk value:c]}];

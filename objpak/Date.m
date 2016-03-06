@@ -94,7 +94,7 @@ struct timeval JXtimevalFromTimeInterval (TimeInterval ti)
     return self;
 }
 
-- initWithTimeInterval:(TimeInterval)secsToBeAdded sinceDate:(Date *)anotherDate
+- initWithTimeInterval:(TimeInterval)secsToBeAdded sinceDate:(Date)anotherDate
 {
     [super init];
     seconds = anotherDate.seconds + secsToBeAdded;
@@ -129,26 +129,26 @@ struct timeval JXtimevalFromTimeInterval (TimeInterval ti)
 
 - (int)compare:anObject { return (int)(seconds - [anObject seconds]); }
 
-- (Date *)earlierDate:(Date *)otherDate
+- (Date)earlierDate:(Date)otherDate
 {
-    return [otherDate seconds] < seconds ? otherDate : (Date *)self;
+    return [otherDate seconds] < seconds ? otherDate : (Date)self;
 }
 
-- (Date *)laterDate:(Date *)otherDate
+- (Date)laterDate:(Date)otherDate
 {
-    return [otherDate seconds] > seconds ? otherDate : (Date *)self;
+    return [otherDate seconds] > seconds ? otherDate : (Date)self;
 }
 
 /* Intervals adding and subtracting */
 
-- (Date *)addTimeInterval:(TimeInterval)sec
+- (Date)addTimeInterval:(TimeInterval)sec
 {
     return [[self copy] setSeconds:seconds + sec];
 }
 
 - (TimeInterval)timeIntervalSince1970 { return seconds; }
 
-- (TimeInterval)timeIntervalSinceDate:(Date *)otherDate
+- (TimeInterval)timeIntervalSinceDate:(Date)otherDate
 {
     return seconds - [otherDate seconds];
 }

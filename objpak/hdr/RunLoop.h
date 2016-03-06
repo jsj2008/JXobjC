@@ -27,11 +27,11 @@
      * or the Aspect-Oriented Programming. It appears to be a regular SortCltn,
      * Stack, or Set, but in fact, it is proxied through with mutex locking on
      * the call. It transparently segregates a crosscutting concern away. */
-    SortCltn * _timers;
-    Stack * _performs;
-    Set * _eventSources; /* The entries are RunLoopDescriptors. */
+    SortCltn _timers;
+    Stack _performs;
+    Set _eventSources; /* The entries are RunLoopDescriptors. */
 
-    Pipe * _comm;
+    Pipe _comm;
     BOOL _seltabNeedsRebuild;
     fd_set _reads, _writes, _excepts;
     SocketDescriptor highFd;
@@ -43,13 +43,13 @@
 /*! Whether the Run Loop is currently running. */
 @property BOOL running;
 
-+ (RunLoop *)mainRunLoop;
-+ (RunLoop *)currentRunLoop;
++ (RunLoop)mainRunLoop;
++ (RunLoop)currentRunLoop;
 
-- (BOOL)runBeforeDate:(Date *)date;
+- (BOOL)runBeforeDate:(Date)date;
 
-- associateDescriptor:(RunLoopDescriptor *)desc;
-- associateTimer:(Timer *)timer;
+- associateDescriptor:(RunLoopDescriptor)desc;
+- associateTimer:(Timer)timer;
 
 - performSelector:(SEL)sel target:targ argument:arg;
 - performBlock:blk argument:arg;

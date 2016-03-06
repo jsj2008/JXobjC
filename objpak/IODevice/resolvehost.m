@@ -11,7 +11,7 @@
 
 static pthread_mutex_t getaddrinfo_mtx = PTHREAD_MUTEX_INITIALIZER;
 
-static resolvinfo_t ** _jx_resolv_impl (String * host, unsigned short port,
+static resolvinfo_t ** _jx_resolv_impl (String host, unsigned short port,
                                         int typ)
 {
     int err;
@@ -59,10 +59,10 @@ static resolvinfo_t ** _jx_resolv_impl (String * host, unsigned short port,
     return ret;
 }
 
-resolvinfo_t ** jx_resolv (String * host, unsigned short port, int protocol)
+resolvinfo_t ** jx_resolv (String host, unsigned short port, int protocol)
 {
     resolvinfo_t ** result = 0;
-    Exception * except     = 0;
+    Exception except       = 0;
 
     pthread_mutex_lock (&getaddrinfo_mtx);
     [
@@ -80,8 +80,7 @@ resolvinfo_t ** jx_resolv (String * host, unsigned short port, int protocol)
     return result;
 }
 
-static Pair * _jx_addrtonameport_impl (struct sockaddr * addr,
-                                       socklen_t addrlen)
+static Pair _jx_addrtonameport_impl (struct sockaddr * addr, socklen_t addrlen)
 {
     char hostname[NI_MAXHOST], port[NI_MAXSERV], *endptr;
     unsigned short portnum;
@@ -95,14 +94,14 @@ static Pair * _jx_addrtonameport_impl (struct sockaddr * addr,
     if (endptr)
         [Exception signal:"Failed to convert port to integer"];
 
-    return (Pair *)[Pair pairWithFirst:[String str:hostname]
-                                second:[Number numberWithUShort:portnum]];
+    return [Pair pairWithFirst:[String str:hostname]
+                        second:[Number numberWithUShort:portnum]];
 }
 
-Pair * jx_addrtonameport (struct sockaddr * addr, socklen_t addrlen)
+Pair jx_addrtonameport (struct sockaddr * addr, socklen_t addrlen)
 {
-    Pair * result      = 0;
-    Exception * except = 0;
+    Pair result      = 0;
+    Exception except = 0;
 
     pthread_mutex_lock (&getaddrinfo_mtx);
     [

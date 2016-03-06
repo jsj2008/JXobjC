@@ -125,15 +125,15 @@
 }
 - root { return root; }
 
-- (String *)keyPath { return keyPath; }
+- (String)keyPath { return keyPath; }
 
-- (OrdCltn *)keyPathComponents { return keyPathComponents; }
+- (OrdCltn)keyPathComponents { return keyPathComponents; }
 
 - observer { return observer; }
 
 - (void)fireForOldValue:oldValue newValue:newValue
 {
-    Dictionary * changeDic = (Dictionary *)[Dictionary new];
+    Dictionary changeDic = [Dictionary new];
 
     [changeDic atKey:@"keyPath" put:keyPath];
     [changeDic atKey:@"newValue" put:newValue];
@@ -163,12 +163,10 @@
 
 @implementation KPObserverRef
 
-+ (KPObserverRef *)kpoRefWithKPO:(volatile id)kpo
-                       pathIndex:(unsigned int)anIndex
++ (KPObserverRef)kpoRefWithKPO:(volatile id)kpo pathIndex:(unsigned int)anIndex
 {
-    KPObserverRef * new =
-        (KPObserverRef *)[[super alloc] initWithReference:kpo];
-    new.pathIndex = anIndex;
+    KPObserverRef new = [ [super alloc] initWithReference : kpo ];
+    new.pathIndex     = anIndex;
     return new;
 }
 

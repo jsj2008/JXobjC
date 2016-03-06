@@ -131,7 +131,7 @@ id curclassdef;
         [r name:[Symbol sprintf:"_PRIVATE", privtypename]];
         [trlunit defstruct:r];
         [trlunit def:[String str:s]
-              astype:[[[Type new] addspec:r] setIsobject:YES]];
+              astype:[[[[Type new] addspec:r] ampersand] setIsobject:YES]];
     }
 
     /* Only actually needed when this is an implementation, not interface. */
@@ -999,7 +999,7 @@ id curclassdef;
 
 - gen
 {
-    gf ("typedef struct _PRIVATE %s;\n", [classname str]);
+    gf ("typedef struct _PRIVATE * %s;\n", [classname str]);
 
     if (isimpl)
     {

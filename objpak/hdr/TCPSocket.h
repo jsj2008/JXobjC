@@ -32,7 +32,7 @@
  * @param host String hostname to connect to.
  * @param port Unsigned short port to connect to.
  */
-- (id)connectToHostname:(String *)host port:(unsigned short)port;
+- (id)connectToHostname:(String)host port:(unsigned short)port;
 
 /*!
  * @abstract Binds to the specified hostname and port.
@@ -43,7 +43,7 @@
  * @param host String hostname to bind to.
  * @param port Unsigned short port to bind to.
  */
-- (unsigned short)bindToHostname:(String *)host port:(unsigned short)port;
+- (unsigned short)bindToHostname:(String)host port:(unsigned short)port;
 
 /*!
  * @abstract Begins listening for connections.

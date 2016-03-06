@@ -8,7 +8,7 @@
 
 @interface _ObserverDictEntry : Object
 
-@property String * dictEntryName;
+@property String dictEntryName;
 @property id object;
 
 - _initWithName:_name object:_object
@@ -33,7 +33,7 @@
 
 - (BOOL)isEqual:anObject
 {
-    _ObserverDictEntry * otherObject;
+    _ObserverDictEntry otherObject;
     if (![anObject isKindOf:_ObserverDictEntry])
         return NO;
     otherObject = anObject;
@@ -96,7 +96,7 @@
 
 - (BOOL)isEqual:anObject
 {
-    _ObserverDictValue * otherObject;
+    _ObserverDictValue otherObject;
     if (![anObject isKindOf:_ObserverDictValue])
         return NO;
     otherObject = anObject;
@@ -114,7 +114,7 @@
     return block ? [block hash] : ((uintptr_t)object ^ (uintptr_t)selector);
 }
 
-- (void)_dispatch:(Notification *)notification
+- (void)_dispatch:(Notification)notification
 {
     if (block)
         [block value:(id)notification];
@@ -134,7 +134,7 @@
 
 @implementation NotificationCentre
 
-+ (NotificationCentre *)defaultCentre
++ (NotificationCentre)defaultCentre
 {
     if (!defaultCentre)
         defaultCentre = [[[self class] alloc] init];
@@ -154,8 +154,8 @@
     return [super ARC_dealloc];
 }
 
-- (void)_postNotification:(Notification *)notification
-                     name:(String *)name
+- (void)_postNotification:(Notification)notification
+                     name:(String)name
                    object:sender
 {
     id key = [_ObserverDictEntry _keyWithName:name object:sender];
@@ -163,40 +163,39 @@
     [set elementsPerform:@selector (_dispatch:) with:(id)notification];
 }
 
-- (void)postNotification:(Notification *)note
+- (void)postNotification:(Notification)note
 {
-    id object     = [note object];
-    String * name = [note notificationName];
+    id object   = [note object];
+    String name = [note notificationName];
 
     [self _postNotification:note name:name object:object];
     if (object != nil)
         [self _postNotification:note name:name object:nil];
-    if (name != (String *)nil)
-        [self _postNotification:note name:(String *)nil object:object];
-    if (name != (String *)nil && object != nil)
-        [self _postNotification:note name:(String *)nil object:nil];
+    if (name != (String)nil)
+        [self _postNotification:note name:(String)nil object:object];
+    if (name != (String)nil && object != nil)
+        [self _postNotification:note name:(String)nil object:nil];
 }
 
-- (void)postNotificationName:(String *)name object:object
+- (void)postNotificationName:(String)name object:object
 {
-    Notification * note =
-        [Notification notificationWithName:name object:object];
+    Notification note = [Notification notificationWithName:name object:object];
     [self postNotification:note];
 }
 
-- (void)postNotificationName:(String *)name
+- (void)postNotificationName:(String)name
                       object:object
-                    userInfo:(Dictionary *)userInfo
+                    userInfo:(Dictionary)userInfo
 {
-    Notification * note = [Notification notificationWithName:name
-                                                      object:object
-                                                    userInfo:userInfo];
+    Notification note = [Notification notificationWithName:name
+                                                    object:object
+                                                  userInfo:userInfo];
     [self postNotification:note];
 }
 
 - (void)addObserver:observer
            selector:(SEL)selector
-               name:(String *)name
+               name:(String)name
              object:sender
 {
     id key    = [_ObserverDictEntry _keyWithName:name object:sender];
@@ -212,7 +211,7 @@
         add:[_ObserverDictValue _valueWithObject:observer selector:selector]];
 }
 
-- (void)removeObserver:observer name:(String *)name object:sender
+- (void)removeObserver:observer name:(String)name object:sender
 {
     id key    = [_ObserverDictEntry _keyWithName:name object:sender];
     id theSet = [observers atKey:key];

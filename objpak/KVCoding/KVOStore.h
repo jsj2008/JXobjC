@@ -10,8 +10,8 @@
 @interface KPObserver : Object
 {
     /* The original key path. */
-    String * keyPath;
-    OrdCltn * keyPathComponents;
+    String keyPath;
+    OrdCltn keyPathComponents;
     id userInfo;
     BOOL includeOldValue;
 
@@ -41,8 +41,8 @@
 - (BOOL)matchesKeyPath:kp;
 - (BOOL)matchesRoot:root;
 
-- (String *)keyPath;
-- (OrdCltn *)keyPathComponents;
+- (String)keyPath;
+- (OrdCltn)keyPathComponents;
 - (void)fireForOldValue:oldValue newValue:newValue;
 
 @end
@@ -55,8 +55,7 @@
 * X.Y.Z keypath, then this number is 1. */
 @property unsigned int pathIndex;
 
-+ (KPObserverRef *)kpoRefWithKPO:(volatile id)kpo
-                       pathIndex:(unsigned int)anIndex;
++ (KPObserverRef)kpoRefWithKPO:(volatile id)kpo pathIndex:(unsigned int)anIndex;
 
 - (unsigned int)pathIndex;
 
@@ -69,13 +68,13 @@
     /* This dictionary is keyed by Pairs; each Pair consists of a
      * VolatileReference to an object, and a (nonvolatile) property name.
      * These keys map to Sets of KPObserverRefs.*/
-    Dictionary * keyToObservers;
+    Dictionary keyToObservers;
 
     /* This is the owning set of the KPObservers.
      * Its entries represent the event-independent component of an observation.
      * The data stored therein is sufficient to reconstruct a broken tree
      * corresponding to a keypath. */
-    Set * observers;
+    Set observers;
 }
 
 + (void)addObserver:observer

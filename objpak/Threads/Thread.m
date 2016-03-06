@@ -57,19 +57,19 @@
 }
 
 + (BOOL)isMainThread { return mainThread == [Thread currentThread]; }
-+ (Thread *)mainThread { return mainThread; };
-+ (Thread *)currentThread { return pthread_getspecific (currentThread); }
-+ (Dictionary *)threadDictionary
++ (Thread)mainThread { return mainThread; };
++ (Thread)currentThread { return pthread_getspecific (currentThread); }
++ (Dictionary)threadDictionary
 {
     return [[self currentThread] threadDictionary];
 }
 
-+ (void)_setCurrentThread:(Thread *)thrd
++ (void)_setCurrentThread:(Thread)thrd
 {
     pthread_setspecific (currentThread, thrd);
 }
 
-static void * _threadStart2 (Thread * thread)
+static void * _threadStart2 (Thread thread)
 {
 
     [Thread _setCurrentThread:thread];
@@ -86,7 +86,7 @@ static void * _threadStart2 (Thread * thread)
     return 0;
 }
 
-static void * _threadStart (Thread * thread)
+static void * _threadStart (Thread thread)
 {
     /* void * iGetStackBase = (void *)0; */
     return _threadStart2 (thread);

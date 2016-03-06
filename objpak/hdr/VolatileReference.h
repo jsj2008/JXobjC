@@ -19,9 +19,9 @@
 }
 
 /* Creates a new VolatileReference with the specified object reference. */
-- (VolatileReference<T> *)newWithReference:(volatile T)ref;
+- (VolatileReference<T>)newWithReference:(volatile T)ref;
 /*! Initialises a new VolatileReference with the specified object reference. */
-- (VolatileReference<T> *)initWithReference:(volatile T)ref;
+- (VolatileReference<T>)initWithReference:(volatile T)ref;
 /*! Retrieves the object reference hidden inside. If the object has since been
  * deallocates, returns nil. */
 - (T)reference;

@@ -36,22 +36,22 @@
     return [super ARC_dealloc];
 }
 
-+ (RunLoop *)mainRunLoop { return [[Thread mainThread] runLoop]; }
-+ (RunLoop *)currentRunLoop { return [[Thread currentThread] runLoop]; }
++ (RunLoop)mainRunLoop { return [[Thread mainThread] runLoop]; }
++ (RunLoop)currentRunLoop { return [[Thread currentThread] runLoop]; }
 
-- associateDescriptor:(RunLoopDescriptor *)desc
+- associateDescriptor:(RunLoopDescriptor)desc
 {
     [_eventSources add:desc];
     return self;
 }
 
-- associateTimer:(Timer *)timer
+- associateTimer:(Timer)timer
 {
     [_timers add:timer];
     return self;
 }
 
-- (BOOL)runBeforeDate:(Date *)limitDate
+- (BOOL)runBeforeDate:(Date)limitDate
 {
     BOOL inputSourceEvent = NO;
 

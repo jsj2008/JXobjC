@@ -7,19 +7,19 @@
 
 @implementation Pair
 
-+ (Pair *)pairWithFirst:one second:two
++ (Pair)pairWithFirst:one second:two
 {
     return [[self alloc] initWithFirst:one second:two];
 }
 
-+ (Pair *)pairWithVolatileFirst:one volatileSecond:two
++ (Pair)pairWithVolatileFirst:one volatileSecond:two
 {
     return [[self alloc]
         initWithFirst:[[VolatileReference alloc] initWithReference:one]
                second:[[VolatileReference alloc] initWithReference:two]];
 }
 
-+ (Pair *)pairWithVolatileFirst:one second:two
++ (Pair)pairWithVolatileFirst:one second:two
 {
     return [[self alloc]
         initWithFirst:[[VolatileReference alloc] initWithReference:one]

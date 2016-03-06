@@ -7,12 +7,12 @@
 
 @implementation VolatileReference
 
-- (VolatileReference<T> *)newWithReference:(volatile T)ref
+- (VolatileReference<T>)newWithReference:(volatile T)ref
 {
     return [[self alloc] initWithReference:ref];
 }
 
-- (VolatileReference<T> *)initWithReference:(volatile T)ref
+- (VolatileReference<T>)initWithReference:(volatile T)ref
 {
     if (reference)
         [Exception signal:"VolatileReferences may not be initialised twice."];

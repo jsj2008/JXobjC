@@ -7,7 +7,7 @@
 
 + true
 {
-    static Number * aNum = 0;
+    static Number aNum = 0;
     if (!aNum)
         aNum = [self numberWithBool:YES];
     return aNum;
@@ -15,7 +15,7 @@
 
 + false
 {
-    static Number * aNum = 0;
+    static Number aNum = 0;
     if (!aNum)
         aNum = [self numberWithBool:NO];
     return aNum;
@@ -103,7 +103,7 @@
     /* clang-format on */
 }
 
-- (String *)fmt
+- (String)fmt
 {
     if ([self isFloat])
         return [String sprintf:"%G", [self valueAsDouble]];

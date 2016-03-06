@@ -78,11 +78,11 @@
 #endif
 }
 
-- (Pair *)resolveKeyPathFirst:keyPath
+- (Pair)resolveKeyPathFirst:keyPath
 {
-    Pair * indirector$remainder = [Pair new];
-    OrdCltn *components         = [keyPath componentsSeparatedByString:@"."],
-            *first              = nil;
+    Pair indirector$remainder = [Pair new];
+    OrdCltn components        = [keyPath componentsSeparatedByString:@"."],
+            first             = nil;
 
     first = [components removeFirst];
 
@@ -107,7 +107,7 @@
 - valueForKeyPath:keyPath
 {
     id result = nil, indirector = nil;
-    Pair * resolved = [self resolveKeyPathFirst:keyPath];
+    Pair resolved = [self resolveKeyPathFirst:keyPath];
 
     if (!resolved.first)
         result = [self valueForKey:resolved.second];
@@ -126,8 +126,8 @@
 
 - (void)setValue:value forKeyPath:keyPath
 {
-    id indirector   = nil;
-    Pair * resolved = [self resolveKeyPathFirst:keyPath];
+    id indirector = nil;
+    Pair resolved = [self resolveKeyPathFirst:keyPath];
 
     if (!resolved.first)
         [self setValue:value forKey:resolved.second];

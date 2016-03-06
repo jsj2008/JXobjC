@@ -1055,7 +1055,8 @@ void mkclassfwd (id name)
     [r keyw:[Symbol sprintf:"struct"]];
     [r name:[Symbol sprintf:"%s_PRIVATE", [name str]]];
     [trlunit defstruct:r];
-    [trlunit def:name astype:[[[Type new] addspec:r] setIsobject:YES]];
+    [trlunit def:name
+          astype:[[[[Type new] addspec:r] ampersand] setIsobject:YES]];
     [trlunit defasclassfwd:name];
 }
 

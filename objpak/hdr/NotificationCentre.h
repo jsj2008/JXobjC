@@ -7,27 +7,27 @@
 
 @interface NotificationCentre : Object
 {
-    Dictionary * observers;
+    Dictionary observers;
 }
 : {
 	id defaultCentre;
 }
 
-+ (NotificationCentre *)defaultCentre;
++ (NotificationCentre)defaultCentre;
 
 - ARC_dealloc;
 
-- (void)postNotification:(Notification *)notification;
-- (void)postNotificationName:(String *)notificationName object:object;
-- (void)postNotificationName:(String *)notificationName
+- (void)postNotification:(Notification)notification;
+- (void)postNotificationName:(String)notificationName object:object;
+- (void)postNotificationName:(String)notificationName
                       object:object
-                    userInfo:(Dictionary *)userInfo;
+                    userInfo:(Dictionary)userInfo;
 
 - (void)addObserver:observer
            selector:(SEL)selector
-               name:(String *)name
+               name:(String)name
              object:sender;
-- (void)removeObserver:observer name:(String *)name object:sender;
+- (void)removeObserver:observer name:(String)name object:sender;
 - (void)removeObserver:observer;
 
 @end

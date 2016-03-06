@@ -790,7 +790,7 @@ static char * mystrrchr (const char * s, int c)
 {
     id e;
 
-    [classfwds do:{ : f | gf ("typedef struct _PRIVATE %s;\n", [f str])}];
+    [classfwds do:{ : f | gf ("typedef struct _PRIVATE * %s;\n", [f str])}];
 
     [trlunit genLiteralDecls];
 

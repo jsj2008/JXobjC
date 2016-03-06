@@ -4,20 +4,20 @@
 
 @implementation Notification
 
-+ (Notification *)notificationWithName:(String *)name object:object
++ (Notification)notificationWithName:(String)name object:object
 {
     return [[self alloc] initWithName:name object:object userInfo:nil];
 }
 
-+ (Notification *)notificationWithName:(String *)aName
-                                object:anObject
-                              userInfo:(Dictionary *)anUserInfo
++ (Notification)notificationWithName:(String)aName
+                              object:anObject
+                            userInfo:(Dictionary)anUserInfo
 {
     return
         [[self alloc] initWithName:aName object:anObject userInfo:anUserInfo];
 }
 
-- initWithName:(String *)aName object:anObject userInfo:(Dictionary *)anUserInfo
+- initWithName:(String)aName object:anObject userInfo:(Dictionary)anUserInfo
 {
     name     = [aName copy];
     userInfo = [anUserInfo copy];
@@ -33,7 +33,7 @@
     return [super ARC_dealloc];
 }
 
-- (String *)notificationName { return name; }
+- (String)notificationName { return name; }
 
 - (STR)name { return [name str]; }
 
@@ -41,7 +41,7 @@
 
 - object { return object; }
 
-- (Dictionary *)userInfo { return userInfo; }
+- (Dictionary)userInfo { return userInfo; }
 
 - deepCopy
 {

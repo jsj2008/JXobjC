@@ -536,9 +536,9 @@
 
 /* Miscellaneous */
 
-- (String *)componentsJoinedByString:aString
+- (String)componentsJoinedByString:aString
 {
-    MutableString * newString = [MutableString new];
+    MutableString newString = [MutableString new];
     BOOL isAdd;
 
     [self do:

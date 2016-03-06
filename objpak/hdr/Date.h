@@ -41,16 +41,15 @@ struct timeval
 /*! Creates a new Date representing a date in the distant past. */
 + distantPast;
 
-- initWithTimeInterval:(TimeInterval)secsToBeAdded
-             sinceDate:(Date *)anotherDate;
+- initWithTimeInterval:(TimeInterval)secsToBeAdded sinceDate:(Date)anotherDate;
 - initWithTimeIntervalSinceNow:(TimeInterval)secsToBeAdded;
 - initWithTimeIntervalSince1970:(TimeInterval)secs;
 
-- (Date *)earlierDate:(Date *)otherDate;
-- (Date *)laterDate:(Date *)otherDate;
+- (Date)earlierDate:(Date)otherDate;
+- (Date)laterDate:(Date)otherDate;
 
 - (TimeInterval)timeIntervalSince1970;
-- (TimeInterval)timeIntervalSinceDate:(Date *)otherDate;
+- (TimeInterval)timeIntervalSinceDate:(Date)otherDate;
 - (TimeInterval)timeIntervalSinceNow;
 
 - (unsigned int)microsecond;

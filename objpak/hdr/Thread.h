@@ -21,17 +21,17 @@
 @property id _return;
 
 @property BOOL isMainThread, isCancelled, isExecuting, isFinished;
-@property Dictionary * threadDictionary;
-@property RunLoop * runLoop;
+@property Dictionary threadDictionary;
+@property RunLoop runLoop;
 
 + (void)detachNewThreadSelector:(SEL)selector
                        toTarget:target
                      withObject:argument;
 
 + (BOOL)isMainThread;
-+ (Thread *)mainThread;
-+ (Thread *)currentThread;
-+ (Dictionary *)threadDictionary;
++ (Thread)mainThread;
++ (Thread)currentThread;
++ (Dictionary)threadDictionary;
 
 - (void)start;
 - (void)cancel;

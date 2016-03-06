@@ -91,7 +91,7 @@ union number_value_u
 - (double)valueAsDouble;
 
 /*! Returns the String representation of the number. */
-- (String *)fmt;
+- (String)fmt;
 
 #define NumFrom(typ, nam)                                                      \
     +numberWith##nam : (typ)val;                                               \

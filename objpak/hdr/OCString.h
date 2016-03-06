@@ -188,7 +188,7 @@ typedef struct objstr
  * @param aString String to concatenate onto the receiver.
  * @return A new autoreleased string of format "%@%@", rcvr, aString.
  */
-- (String *)stringByConcatenating:(String *)aString;
+- (String)stringByConcatenating:(String)aString;
 
 /*!
  * Creates a new string formed by concatenating a specified C STR to the
@@ -197,7 +197,7 @@ typedef struct objstr
  * @param aString C STR to concatenate onto the receiver.
  * @return A new autoreleased string of format "%@%s", rcvr, aStr.
  */
-- (String *)stringByConcatenatingSTR:(STR)aStr;
+- (String)stringByConcatenatingSTR:(STR)aStr;
 
 /*!
  * Creates a new string formed by concatenating the specified number of bytes
@@ -210,9 +210,9 @@ typedef struct objstr
  * @param n Number of bytes to concatenate into the receiver.
  * @return The new autoreleased string.
  */
-- (String *)stringByInsertingAt:(unsigned)anOffset
-                          bytes:(char *)aString
-                          count:(int)n;
+- (String)stringByInsertingAt:(unsigned)anOffset
+                        bytes:(char *)aString
+                        count:(int)n;
 
 /*!
  * Creates a new string formed by concatenating the specified String into the
@@ -222,7 +222,7 @@ typedef struct objstr
  * @param anOffset Byte offset at which to concatenate the String.
  * @param aString String to concatenate into the receiver.
  */
-- (String *)stringByInsertingAt:(unsigned)anOffset string:(String *)aString;
+- (String)stringByInsertingAt:(unsigned)anOffset string:(String)aString;
 
 /* @functiongroup Deletion */
 
@@ -234,7 +234,7 @@ typedef struct objstr
  * @param p Byte offset to begin deleting from.
  * @param q Byte offset to end deleting from.
  */
-- (String *)stringByDeletingFrom:(unsigned)p to:(unsigned)q;
+- (String)stringByDeletingFrom:(unsigned)p to:(unsigned)q;
 
 /*! @functiongroup Substrings */
 
@@ -262,7 +262,7 @@ typedef struct objstr
  * the receiver String.
  * @param separator String delimiting each component substring.
  */
-- (OrdCltn *)componentsSeparatedByString:separator;
+- (OrdCltn)componentsSeparatedByString:separator;
 
 /*! @functiongroup Conversion */
 

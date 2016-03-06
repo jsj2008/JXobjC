@@ -21,10 +21,10 @@
  * @param one The first object for the pair.
  * @param two The second object for the pair.
  */
-+ (Pair *)pairWithFirst:one second:two;
++ (Pair)pairWithFirst:one second:two;
 
-+ (Pair *)pairWithVolatileFirst:one volatileSecond:two;
-+ (Pair *)pairWithVolatileFirst:one second:two;
++ (Pair)pairWithVolatileFirst:one volatileSecond:two;
++ (Pair)pairWithVolatileFirst:one second:two;
 
 - initWithFirst:one second:two;
 

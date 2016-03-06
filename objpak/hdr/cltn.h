@@ -245,7 +245,7 @@
 @end
 
 @interface Cltn : Object <Cltn>
-- (String *)componentsJoinedByString:aString;
+- (String)componentsJoinedByString:aString;
 
 /* private */
 - eachElement;

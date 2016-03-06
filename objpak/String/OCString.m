@@ -377,7 +377,7 @@ static char putcharat (objstr_t self, int i, char c)
 {
     size_t i, si, sepsize = [separator size];
     STR sepstr            = [separator str];
-    OrdCltn * rset        = [OrdCltn new];
+    OrdCltn rset          = [OrdCltn new];
 
     for (i = 0, si = 0; i < value.count - sepsize; i++)
     {
@@ -453,16 +453,16 @@ static void concat_self (objstr_t self)
 
 - concatenateSTR:(STR)aString { return [self concatSTR:aString]; }
 
-- (String *)stringByConcatenating:(String *)aString
+- (String)stringByConcatenating:(String)aString
 {
-    MutableString * newString = [self mutableCopy];
+    MutableString newString = [self mutableCopy];
     [newString concat:aString];
     return newString;
 }
 
-- (String *)stringByConcatenatingSTR:(STR)aStr
+- (String)stringByConcatenatingSTR:(STR)aStr
 {
-    MutableString * newString = [self mutableCopy];
+    MutableString newString = [self mutableCopy];
     [newString concatSTR:aStr];
     return newString;
 }
@@ -506,17 +506,17 @@ static void atinsert (objstr_t self, int i, char * s, int n)
     return res;
 }
 
-- (String *)stringByInsertingAt:(unsigned)anOffset
-                          bytes:(char *)aString
-                          count:(int)n
+- (String)stringByInsertingAt:(unsigned)anOffset
+                        bytes:(char *)aString
+                        count:(int)n
 {
-    MutableString * newStr = [self mutableCopy];
+    MutableString newStr = [self mutableCopy];
     return [newStr at:anOffset insert:aString count:n];
 }
 
-- (String *)stringByInsertingAt:(unsigned)anOffset string:(String *)aString
+- (String)stringByInsertingAt:(unsigned)anOffset string:(String)aString
 {
-    MutableString * newStr = [self mutableCopy];
+    MutableString newStr = [self mutableCopy];
     return [newStr at:anOffset insert:aString];
 }
 
@@ -550,9 +550,9 @@ static void deleteat (objstr_t self, int p, int n)
     }
 }
 
-- (String *)stringByDeletingFrom:(unsigned)p to:(unsigned)q
+- (String)stringByDeletingFrom:(unsigned)p to:(unsigned)q
 {
-    MutableString * newStr = [self mutableCopy];
+    MutableString newStr = [self mutableCopy];
     return [newStr deleteFrom:p to:q];
 }
 

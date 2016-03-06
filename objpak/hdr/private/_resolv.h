@@ -14,6 +14,6 @@ typedef struct resolvinfo_s
     void * addrinfo;
 } resolvinfo_t;
 
-resolvinfo_t ** jx_resolv (String * host, unsigned short port, int typ);
-Pair * jx_addrtonameport (struct sockaddr * addr, socklen_t addrlen);
+resolvinfo_t ** jx_resolv (String host, unsigned short port, int typ);
+Pair jx_addrtonameport (struct sockaddr * addr, socklen_t addrlen);
 void jx_freeresolv (resolvinfo_t ** toFree);

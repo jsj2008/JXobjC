@@ -23,7 +23,7 @@
     sockclose (descriptor);
 }
 
-- connectToHostname:(String *)host port:(unsigned short)port
+- connectToHostname:(String)host port:(unsigned short)port
 {
     resolvinfo_t **results, **resnext;
 
@@ -60,7 +60,7 @@
     return self;
 }
 
-- (unsigned short)bindToHostname:(String *)host port:(unsigned short)port
+- (unsigned short)bindToHostname:(String)host port:(unsigned short)port
 {
     resolvinfo_t ** results;
     /* Because we aren't sure what protocol will be used, we use this union.
@@ -150,7 +150,7 @@
 
 - accept
 {
-    TCPSocket * cl = [[self class] new];
+    TCPSocket cl = [[self class] new];
     socklen_t alen;
 
     cl.addr    = malloc (sizeof (struct sockaddr_storage));

@@ -554,7 +554,7 @@ BASIC_TYPESPECS basicSpecForSpec (id spec)
 - (BOOL)isNamedClass
 {
     BOOL isObj = NO;
-    Pointer * viewDecl;
+    Decl * viewDecl;
 
     [specs do:
            { : each |
@@ -566,7 +566,8 @@ BASIC_TYPESPECS basicSpecForSpec (id spec)
 
     viewDecl = [decl isKindOf:GenericDecl] ? [decl decl] : decl;
 
-    if (isObj && viewDecl && [viewDecl isKindOf:Pointer] && ![viewDecl pointer])
+    if (isObj &&
+        (!viewDecl || (![viewDecl isKindOf:Pointer] && ![viewDecl pointer])))
         return YES;
 
     return NO;
@@ -621,7 +622,7 @@ BASIC_TYPESPECS basicSpecForSpec (id spec)
 - (BOOL)isscalartype
 {
     /* same as canforward, except for structs */
-    if ([decl ispointer])
+    if ([decl ispointer] || [self isNamedClass])
     {
         return YES;
     }
