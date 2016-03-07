@@ -15,6 +15,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
  */
+/* Copyright (c) 2016 D. Mackay. All rights reserved. */
 
 #ifndef CLASSDEF_H_
 #define CLASSDEF_H_
@@ -22,7 +23,8 @@
 extern id curclassdef;
 extern id curstruct;
 
-@class Selector, OrdCltn, Type, Method, Expr, Decl;
+@class Decl, Expr, Method, MethodDef, OrdCltn, Set, Selector, StructSpec,
+    TranslationUnit, Type;
 
 #include "Dictionary.h"
 #include "node.h"
@@ -30,9 +32,11 @@ extern id curstruct;
 
 @interface ClassDef : Node
 {
-    id unit;
-    id selftype;
-    id classname;
+    TranslationUnit unit;
+    StructSpec privStruct;
+    Type selftype;
+    Symbol classname;
+
     char * otbtypename;
     char * privtypename;
     char * shartypename;
@@ -46,26 +50,33 @@ extern id curstruct;
     char * _m_classname;
     char * _m_classfunname;
     char * _m_superfunname;
+
     id rootc;
     id superc;
-    id supername;
+    Symbol supername;
     id ivars, cvars;
+
     BOOL emitintf;
     BOOL emitimpl;
     BOOL emitfwddecl;
     BOOL isimpl; /* being implemented in this trlunit */
     BOOL iscategory;
-    id clsdispsels, nstdispsels; /* selectors *implemented* (overridden) */
-    id clsdisptbl;               /* class methods *implemented* (overridden) */
-    id nstdisptbl; /* instance methods *implemented* (overridden) */
-    id clssels;    /* selectors of class methods prototyped */
-    id nstsels;    /* selectors of instance methods prototyped */
+
+    Set<Selector> clsdispsels,
+        nstdispsels; /* selectors *implemented* (overridden) */
+    OrdCltn<MethodDef>
+        clsdisptbl; /* class methods *implemented* (overridden) */
+    OrdCltn<MethodDef>
+        nstdisptbl; /* instance methods *implemented* (overridden) */
+
+    OrdCltn<Selector> clssels; /* selectors of class methods prototyped */
+    OrdCltn<Selector> nstsels; /* selectors of instance methods prototyped */
     Dictionary methsForSels;
     Dictionary compdic, ivardic, cvardic;
     OrdCltn<Symbol> compnames, ivarnames, cvarnames;
     OrdCltn<Type> comptypes, ivartypes, cvartypes;
     OrdCltn<Symbol> delegates;
-    id allivarnames, allcvarnames;
+    Set<Symbol> allivarnames, allcvarnames;
     id fileinmethod, fileoutmethod;
     id decrefsmethod, increfsmethod, propmeths;
     long offset;
@@ -92,7 +103,7 @@ extern id curstruct;
 - (char *)_m_classfunname;
 - (char *)_superfunname;
 - (char *)_m_superfunname;
-- classname:sym;
+- classname:(Symbol)sym;
 - (char *)supername;
 - supername:sym;
 - superclassdef;
@@ -170,8 +181,8 @@ extern id curstruct;
 - (Expr)fastAddressForCVar:(Symbol)aVar;
 
 /* Internal use by ClassDef: */
-- genVarOffsetVars_isForFactory:(BOOL)isFactory className:(String)aName;
-- genVarOffsetsArray_isForFactory:(BOOL)isFactory className:(String)aName;
+- genVarOffsetVars_isForFactory:(BOOL)isFactory className:(Symbol)aName;
+- genVarOffsetsArray_isForFactory:(BOOL)isFactory className:(Symbol)aName;
 
 @end
 

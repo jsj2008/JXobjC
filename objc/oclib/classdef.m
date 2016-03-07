@@ -15,6 +15,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
  */
+/* Copyright (c) 2015 D. Mackay. All rights reserved. */
 
 #include <stdlib.h>
 #include <assert.h>
@@ -59,13 +60,13 @@ id curclassdef;
 {
     if (!selftype)
     {
-        id r = [StructSpec new];
+        privStruct = [StructSpec new];
 
-        [r keyw:[Symbol sprintf:"struct"]];
-        [r name:[Symbol sprintf:"%s", privtypename]];
+        [privStruct keyw:[Symbol sprintf:"struct"]];
+        [privStruct name:[Symbol sprintf:"%s", privtypename]];
         assert (privtypename);
         selftype = [Type new];
-        [selftype addspec:r];
+        [selftype addspec:privStruct];
         [selftype decl:[Pointer new]];
     }
     return selftype;
@@ -90,7 +91,7 @@ id curclassdef;
     return self;
 }
 
-- classname:sym
+- classname:(Symbol)sym
 {
     char * s;
 

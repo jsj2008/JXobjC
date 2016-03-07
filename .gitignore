@@ -40,3 +40,4 @@ doc/olddocs
 test/*
 *.i
 y.output
+*.tags

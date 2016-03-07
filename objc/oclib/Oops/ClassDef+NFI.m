@@ -99,7 +99,7 @@
     return [self fastAddressForVar:aVar isFactory:YES];
 }
 
-- genVarOffsetVars_isForFactory:(BOOL)isFactory className:(String)aName
+- genVarOffsetVars_isForFactory:(BOOL)isFactory className:(Symbol)aName
 {
     OrdCltn varnames;
     const char * pszName = [aName ?: classname str];
@@ -122,7 +122,7 @@
     return self;
 }
 
-- genVarOffsetsArray_isForFactory:(BOOL)isFactory className:(String)aName
+- genVarOffsetsArray_isForFactory:(BOOL)isFactory className:(Symbol)aName
 {
     OrdCltn varnames;
     const char * pszName = [aName ?: classname str];
