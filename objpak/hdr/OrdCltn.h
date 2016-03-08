@@ -58,7 +58,7 @@ typedef struct objcol
  */
 + (id) new:(unsigned)n;
 
-+ add:firstObject;
++ add:(T)firstObject;
 
 /*! @functiongroup Instance management */
 
@@ -113,9 +113,9 @@ typedef struct objcol
  * Any extant objects are accordingly moved up to the next higher offset.
  * @param newObject Object to add.
  */
-- addFirst:newObject;
+- addFirst:(T)newObject;
 
-- addLast:newObject;
+- addLast:(T)newObject;
 
 /*!
  * Add an object, but only if the same object isn't already there.
@@ -123,7 +123,7 @@ typedef struct objcol
  * Equality here is determined by equal object addresses.
  * @param anObject Object to add.
  */
-- addIfAbsent:anObject;
+- addIfAbsent:(T)anObject;
 
 /*!
  * Add an object, but only if a matching object isn't already there.
@@ -141,7 +141,7 @@ typedef struct objcol
  * @param anOffset Offset at which to insert the object.
  * @param anObject Object to add.
  */
-- (id)at:(unsigned)anOffset insert:anObject;
+- (T)at:(unsigned)anOffset insert:(T)anObject;
 
 /*!
  * Add an object positioned immediately after a specified object.
@@ -151,7 +151,7 @@ typedef struct objcol
  * @param newObject Object to add.
  * @param oldObject Object to add newObject after.
  */
-- insert:newObject after:oldObject;
+- insert:(T)newObject after:(T)oldObject;
 
 /*!
  * Add an object positioned immediately before a specified object.
@@ -159,17 +159,17 @@ typedef struct objcol
  * @param newObject Object to add.
  * @param oldObject Object to add newObject before.
  */
-- insert:newObject before:oldObject;
+- insert:(T)newObject before:(T)oldObject;
 
 /*! @functiongroup Indexed retrieval */
 
 /*! Retrieves the first object in the collection.
     If the collection is empty, returns nil. */
-- firstElement;
+- (T)firstElement;
 
 /*! Retrieves the last object in the collection.
     If the collection is empty, returns nil. */
-- lastElement;
+- (T)lastElement;
 
 /*!
  * Retrieves the object positioned immediately after anObject.
@@ -179,7 +179,7 @@ typedef struct objcol
  * <em>nil</em> is returned.
  * @param anObject Object whose immediately-following neighbour is retrieved.
  */
-- after:anObject;
+- (T)after:(T)anObject;
 
 /*!
  * Retrieves the object positioned immediately before anObject.
@@ -189,7 +189,7 @@ typedef struct objcol
  * <em>nil</em> is returned.
  * @param anObject Object whose immediately-preceding neighbour is retrieved.
  */
-- before:anObject;
+- (T)before:(T)anObject;
 
 /*!
  * Retrieves the object positioned at the specified offset.
@@ -199,7 +199,8 @@ typedef struct objcol
  * the OrdCltn's size minus 1 for the last.
  * @param anOffset Offset at which to retrieve an object.
  */
-- (id)at:(unsigned)anOffset;
+- at:(unsigned)anOffset;
+/* REDEFINITION OF AT_ARGS */
 
 /*!
  * Retrieves the object at a specified offset and replaces it with another.
@@ -210,7 +211,7 @@ typedef struct objcol
  * @param anObject Object to replace the prior object with.
  * @return The object previously at the specified offset.
  */
-- (id)at:(unsigned)anOffset put:anObject;
+- (T)at:(unsigned)anOffset put:(T)anObject;
 
 /*! @functiongroup Removal */
 
@@ -219,12 +220,12 @@ typedef struct objcol
  *
  * If the collection is empty, returns <em>nil</em>.
  */
-- removeFirst;
+- (T)removeFirst;
 
 /*!
  * Removes the last object from the collection, returning it.
  */
-- removeLast;
+- (T)removeLast;
 
 /*!
  * Removes the object at the specified offset, returning it.
@@ -233,9 +234,9 @@ typedef struct objcol
  * exception.
  * @param anOffset Offset at which to remove and return object.
  */
-- (id)removeAt:(unsigned)anOffset;
+- (T)removeAt:(unsigned)anOffset;
 
-- (id)removeAtIndex:(unsigned)anOffset;
+- (T)removeAtIndex:(unsigned)anOffset;
 
 /*!
  * Removes the exact object specified, returning it.
