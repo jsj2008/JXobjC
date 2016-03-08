@@ -21,19 +21,14 @@ indent_mode=2
 name=JXobjC
 base_path=/ws/JXobjC
 description=
-file_patterns=*.m;*.h;*.c;*.kmk;*.md;*.txt;
+file_patterns=*.m;*.h;*.c;*.kmk;*.md;*.txt;*.ym;*.lm;
 
 [long line marker]
 long_line_behaviour=1
 long_line_column=72
 
 [files]
-current_page=1
-FILE_NAME_0=0;Make;0;EUTF-8;1;1;0;%2Fws%2FJXobjC%2Fobjc%2Foclib%2FMakefile.kmk;0;4
-FILE_NAME_1=2851;Objective-C;0;EUTF-8;0;1;0;%2Fws%2FJXobjC%2Fobjc%2Foclib%2Fclassdef.m;0;4
-FILE_NAME_2=791;Objective-C;0;EUTF-8;0;1;0;%2Fws%2FJXobjC%2Fobjc%2Foclib%2Fclassdef.h;0;4
-FILE_NAME_3=20633;Objective-C;0;EUTF-8;0;1;0;%2Fws%2FJXobjC%2Fobjc%2Foclib%2Ftrlunit.m;0;4
-FILE_NAME_4=57;Objective-C;0;EUTF-8;0;1;0;%2Fws%2FJXobjC%2Fobjc%2Foclib%2Fpropdef.h;0;4
+current_page=-1
 
 [VTE]
 last_dir=/home/david

@@ -23,8 +23,8 @@
 extern id curclassdef;
 extern id curstruct;
 
-@class Decl, Expr, Method, MethodDef, OrdCltn, Set, Selector, StructSpec,
-    TranslationUnit, Type;
+@class ClassDef, ComponentDef, Decl, Expr, Method, MethodDef, OrdCltn, Set,
+    Selector, StructSpec, TranslationUnit, Type;
 
 #include "Dictionary.h"
 #include "node.h"
@@ -51,10 +51,10 @@ extern id curstruct;
     char * _m_classfunname;
     char * _m_superfunname;
 
-    id rootc;
-    id superc;
+    ClassDef rootc;
+    ClassDef superc;
     Symbol supername;
-    id ivars, cvars;
+    OrdCltn<ComponentDef> ivars, cvars;
 
     BOOL emitintf;
     BOOL emitimpl;
@@ -77,8 +77,9 @@ extern id curstruct;
     OrdCltn<Type> comptypes, ivartypes, cvartypes;
     OrdCltn<Symbol> delegates;
     Set<Symbol> allivarnames, allcvarnames;
-    id fileinmethod, fileoutmethod;
-    id decrefsmethod, increfsmethod, propmeths;
+    MethodDef fileinmethod, fileoutmethod;
+    MethodDef decrefsmethod, increfsmethod;
+    OrdCltn<MethodDef> propmeths;
     long offset;
 }
 
