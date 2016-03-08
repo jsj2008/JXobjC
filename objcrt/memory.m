@@ -261,5 +261,5 @@ id (*JX_alloc) (id, unsigned int) = nstalloc;
 id (*JX_copy) (id, unsigned int) = nstcopy;
 id (*JX_dealloc) (id) = nstdealloc;
 #if 0
-id (*JX_realloc) (id, unsigned int);	/* clash IRIX 6.2 and not used */
+id (*JX_realloc) (id, unsigned int);    /* clash IRIX 6.2 and not used */
 #endif

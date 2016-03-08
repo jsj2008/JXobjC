@@ -17,17 +17,21 @@
 #define _Lock_Dictionary pthread_mutex_lock (&dict->Lock)
 #define _Unlock_Dictionary pthread_mutex_unlock (&dict->Lock)
 
-#define _NewAlloc(x)                                                           \
-    isCollectable ? (isAtomic ? OC_MallocAtomic (x) : OC_Malloc (x))           \
-                  : (isAtomic ? OC_MallocAtomicUncollectable (x)               \
-                              : OC_MallocUncollectable (x))
-#define _Alloc(x)                                                              \
-    dict->isCollectable                                                        \
-        ? (dict->isAtomic ? OC_MallocAtomic (x) : OC_Malloc (x))               \
-        : (dict->isAtomic ? OC_MallocAtomicUncollectable (x)                   \
-                          : OC_MallocUncollectable (x))
+#define _NewAlloc(x) dictAlloc (isAtomic, isCollectable, x)
+#define _Alloc(x) dictAlloc (dict->isAtomic, dict->isCollectable, x)
 
 /* internal functions */
+
+INLINE void * dictAlloc (BOOL isAtomic, BOOL isCollectable, size_t x)
+{
+    void * ptr = isCollectable
+                     ? (isAtomic ? OC_MallocAtomic (x) : OC_Malloc (x))
+                     : (isAtomic ? OC_MallocAtomicUncollectable (x)
+                                 : OC_MallocUncollectable (x));
+    if (isAtomic)
+        memset (ptr, 0x0, x);
+    return ptr;
+}
 
 static unsigned long
 jenkins_hash (const char * key) /* Jenkins One-at-a-Time Hash function */
@@ -80,9 +84,8 @@ static Dictionary_t * resize (Dictionary_t * dict)
         for (List_t_ *e = oldEntries[i], *next = 0; e != 0; e = next)
         {
             next = e->Link;
-            /* OC_Free (e); */
-            /* Alert: This is broken for some reason. All kinds of bizarre
-             * things happen if it is left uncommented. */
+            OC_Free (e->data);
+            OC_Free (e);
         }
     }
 
@@ -101,9 +104,7 @@ Dictionary_t * Dictionary_new_i (int size, BOOL isAtomic, BOOL isCollectable,
     newdict->isCollectable = isCollectable;
     newdict->stringKey     = stringKey;
     newdict->size          = size;
-    newdict->entries = _NewAlloc (sizeof (List_t_ *) * newdict->size);
-    if (isAtomic)
-        memset (newdict->entries, 0, sizeof (List_t_ *) * newdict->size);
+    newdict->entries       = _NewAlloc (sizeof (List_t_ *) * newdict->size);
 
     pthread_mutexattr_init (&recursiveAttr);
     pthread_mutexattr_settype (&recursiveAttr, PTHREAD_MUTEX_RECURSIVE);

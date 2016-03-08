@@ -102,7 +102,7 @@ extern id trlunit;
 - defcat:cat;
 - defbuiltinfun:node;
 - defbuiltintype:node;
-- def:sym astype:aType;
+- def:(Symbol)sym astype:(Type)aType;
 - undefSym:node asType:atype;
 - defdata:node astype:aType;
 - def:sym asprotocol:protodef;
