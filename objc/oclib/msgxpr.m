@@ -278,8 +278,9 @@ id msgwraps; /* VICI */
             if (generics)
             {
                 Type pType = [methType genDeclForClass:[[rcvr type] getClass]];
-                methType =
-                    pType ? [generics at:[[pType decl] index]] : methType;
+                methType = pType
+                               ? [generics at:[(GenericDecl)[pType decl] index]]
+                               : methType;
                 dbg ("pType: %p\n", pType);
             }
 

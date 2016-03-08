@@ -66,7 +66,7 @@
     @param aKey Which object's presence as a key in the dictionary should be
     checked.
     @return YES if aKey is in the dictionary, NO if not. */
-- (BOOL)includesKey:aKey;
+- (BOOL)includesKey:(Tkey)aKey;
 
 /*! @functiongroup Comparison */
 
@@ -81,7 +81,7 @@
  * returnsYES.
  * @param aDic Dictionary to compare with.
  */
-- (BOOL)isEqual:aDic;
+- (BOOL)isEqual:(Dictionary)aDic;
 
 /*! @functiongroup Indexed retrieval */
 
@@ -92,7 +92,7 @@
  * If the key is not found, returns <em>nil</em>.
  * @param aKey Key to find value for.
  */
-- atKey:aKey;
+- (Tval)atKey:(Tkey)aKey;
 
 /*!
  * Retrieves the value at the specified key, evaluating a specified block if
@@ -102,7 +102,7 @@
  * @param exceptionBlock Block to be evaluated and value returned if key is
  * not found.
  */
-- atKey:aKey ifAbsent:exceptionBlock;
+- (Tval)atKey:(Tkey)aKey ifAbsent:exceptionBlock;
 
 - atKeySTR:(STR)strKey;
 
@@ -117,7 +117,7 @@
  * @param aKey Key to insert value for.
  * @param anObject Value to associate with <em>aKey</em>.
  */
-- atKey:aKey put:anObject;
+- (Tkey)atKey:(Tkey)aKey put:(Tval)anObject;
 
 - atKeySTR:(STR)strKey put:anObject;
 
@@ -129,7 +129,7 @@
  * If no such key is found, the NotFound exception is signaled.
  * @param key Key whose according association is to be removed.
  */
-- removeKey:key;
+- removeKey:(Tkey)key;
 
 /*!
  * Removes the association keyed to the specified key and returns its value. If
@@ -138,7 +138,7 @@
  * @param key Key whose according association is to be removed.
  * @param aBlock Block to be evaluated & value returned if key is not found.
  */
-- removeKey:key ifAbsent:aBlock;
+- removeKey:(Tkey)key ifAbsent:aBlock;
 
 /*! @functiongroup Iteration */
 

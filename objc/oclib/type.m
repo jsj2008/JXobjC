@@ -128,11 +128,11 @@ BASIC_TYPESPECS basicSpecForSpec (id spec)
     return self;
 }
 
-- specs { return specs; }
+- (OrdCltn)specs { return specs; }
 
-- decl { return decl; }
+- (Decl)decl { return decl; }
 
-- abstrspecs:aList
+- abstrspecs:(OrdCltn)aList
 {
     if (aList)
     {
@@ -188,7 +188,7 @@ BASIC_TYPESPECS basicSpecForSpec (id spec)
     return nil;
 }
 
-- specs:aList
+- specs:(OrdCltn)aList
 {
     if (aList)
     {
@@ -225,21 +225,24 @@ BASIC_TYPESPECS basicSpecForSpec (id spec)
     return self;
 }
 
-- abstrdecl:aDecl
+- abstrdecl:(Decl)aDecl
 {
     decl = aDecl;
     return self;
 }
 
-- decl:aDecl { return [self abstrdecl:(aDecl) ? [aDecl abstrdecl] : nil]; }
+- decl:(Decl)aDecl
+{
+    return [self abstrdecl:(aDecl) ? [aDecl abstrdecl] : nil];
+}
 
-- encode:nested
+- (String)encode
 {
     MutableString result = [MutableString new];
     id d                 = decl;
     // clang-format off
     Pointer p = [decl isKindOf:Pointer] ? decl
-         : [decl isKindOf:StarDecl] ? (d = [decl decl], [decl pointer])
+         : [decl isKindOf:StarDecl] ? (d = [(id)decl decl], [(id)decl pointer])
          : /*_*/ nil;
     // clang-format on
     short ptrCount, i, n;
@@ -369,8 +372,6 @@ BASIC_TYPESPECS basicSpecForSpec (id spec)
 
     return result;
 }
-
-- encode { return [self encode:nil]; }
 
 - (BOOL)haslistinit { return haslistinit; }
 
@@ -564,7 +565,7 @@ BASIC_TYPESPECS basicSpecForSpec (id spec)
                    isObj = YES;
            }];
 
-    viewDecl = [decl isKindOf:GenericDecl] ? [decl decl] : decl;
+    viewDecl = [decl isKindOf:GenericDecl] ? [(id)decl decl] : decl;
 
     if (isObj && (!viewDecl || (![viewDecl isKindOf:Pointer] &&
                                 ![viewDecl isKindOf:StarDecl])))
@@ -760,7 +761,7 @@ BASIC_TYPESPECS basicSpecForSpec (id spec)
     return aType;
 }
 
-- dot:sym
+- (Type)dot:(Symbol)sym
 {
     if (decl)
         return nil;
@@ -776,7 +777,7 @@ BASIC_TYPESPECS basicSpecForSpec (id spec)
         return [[specs at:0] dot:sym];
 }
 
-- star
+- (Type)star
 {
     if (decl == nil && [specs size] == 1)
         return [[specs at:0] star];
@@ -785,7 +786,7 @@ BASIC_TYPESPECS basicSpecForSpec (id spec)
     return [[self copy] abstrdecl:[decl star]];
 }
 
-- ampersand
+- (Type)ampersand
 {
     id s, p;
 
@@ -794,7 +795,7 @@ BASIC_TYPESPECS basicSpecForSpec (id spec)
     return [[self copy] abstrdecl:s];
 }
 
-- funcall
+- (Type)funcall
 {
     if (decl == nil && [specs size] == 1)
         return [[specs at:0] funcall];

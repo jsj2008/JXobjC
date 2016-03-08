@@ -34,11 +34,12 @@ extern id t_id;
 #ifndef TYPE__H__
 #define TYPE__H__
 
-@class GenericSpec, GenericDecl, ClassDef, String;
+@class ClassDef, Decl, GenericSpec, GenericDecl, OrdCltn, String, Symbol;
 
 @interface Type : Node
 {
-    id specs, decl;
+    OrdCltn specs;
+    Decl decl;
     BOOL isstatic;
     BOOL isextern;
     BOOL haslistinit;
@@ -47,13 +48,13 @@ extern id t_id;
 @property BOOL isobject;
 
 + commontypes;
-- specs;
-- specs:aList;
-- abstrspecs:aList;
+- (OrdCltn)specs;
+- specs:(OrdCltn)aList;
+- abstrspecs:(OrdCltn)aList;
 - addspec:aSpec;
-- decl;
-- decl:aDecl;
-- abstrdecl:aDecl;
+- (Decl)decl;
+- decl:(Decl)aDecl;
+- abstrdecl:(Decl)aDecl;
 - (BOOL)isstatic;
 - (BOOL)isextern;
 - (BOOL)haslistinit;
@@ -88,12 +89,12 @@ extern id t_id;
 - (GenericSpec)getGenSpec;
 - (Type)genDeclForClass:aClass;
 
-- encode:nested;
-- encode;
-- dot:sym;
-- star;
-- funcall;
-- ampersand;
+- (String)encode;
+
+- (Type)dot:(Symbol)sym;
+- (Type)star;
+- (Type)funcall;
+- (Type)ampersand;
 
 @end
 

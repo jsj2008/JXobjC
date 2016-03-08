@@ -21,18 +21,19 @@
 
 #include "node.h"
 
-@class String;
+@class String, Symbol;
 
 @interface Decl : Node
 {
 }
 
 - abstrdecl;
+- (BOOL)canforward;
 - (BOOL)isfunproto;
 - (BOOL)ispointer;
 - (BOOL)isinit;
 - (BOOL)islistinit;
-- identifier;
+- (Symbol)identifier;
 - synth;
 - synthinits;
 - star;
@@ -42,7 +43,7 @@
 - genabstrtype;
 - hide:sym rename:x;
 
-- (String)asDefFor:sym;
+- (String)asDefFor:(Symbol)sym;
 
 @end
 
