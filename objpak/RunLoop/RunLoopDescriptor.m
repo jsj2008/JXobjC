@@ -31,4 +31,9 @@
     return self;
 }
 
+/* For these, do something - invoke whatever executor, I don't know. */
+- descriptorReadyForRead:(SocketDescriptor)fd { return self; }
+- descriptorReadyForWrite:(SocketDescriptor)fd { return self; }
+- descriptorException:(SocketDescriptor)fd { return self; }
+
 @end

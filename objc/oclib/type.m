@@ -566,8 +566,8 @@ BASIC_TYPESPECS basicSpecForSpec (id spec)
 
     viewDecl = [decl isKindOf:GenericDecl] ? [decl decl] : decl;
 
-    if (isObj &&
-        (!viewDecl || (![viewDecl isKindOf:Pointer] && ![viewDecl pointer])))
+    if (isObj && (!viewDecl || (![viewDecl isKindOf:Pointer] &&
+                                ![viewDecl isKindOf:StarDecl])))
         return YES;
 
     return NO;

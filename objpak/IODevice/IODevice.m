@@ -33,4 +33,8 @@
     return 0;
 }
 
+- (void)flushReads {}
+
+- (void)flushWrites {}
+
 @end

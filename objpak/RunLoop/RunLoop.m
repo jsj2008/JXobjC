@@ -7,6 +7,11 @@
 #import "RunLoop.h"
 #import "Thread.h"
 
+/* suppress warnings until we implement this */
+@protocol TimerType
+- (Date *)fireDate;
+@end
+
 @implementation RunLoop
 
 + initialize
