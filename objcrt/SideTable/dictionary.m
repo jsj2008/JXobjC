@@ -80,7 +80,9 @@ static Dictionary_t * resize (Dictionary_t * dict)
         for (List_t_ *e = oldEntries[i], *next = 0; e != 0; e = next)
         {
             next = e->Link;
-            OC_Free (e);
+            /* OC_Free (e); */
+            /* Alert: This is broken for some reason. All kinds of bizarre
+             * things happen if it is left uncommented. */
         }
     }
 

@@ -66,16 +66,14 @@ typedef struct objset
 - (BOOL)isEqual:set;
 
 - add:(T)anObject;
-- addNTest:anObject;
-- filter:anObject;
-#if OBJC_BLOCKS
-- add:anObject ifDuplicate:aBlock;
-#endif /* OBJC_BLOCKS */
+- addNTest:(T)anObject;
+- filter:(T)anObject;
+- add:(T)anObject ifDuplicate:aBlock;
 
-- replace:anObject;
+- replace:(T)anObject;
 
-- remove:oldObject;
-- remove:oldObject ifAbsent:exceptionBlock;
+- remove:(T)oldObject;
+- remove:(T)oldObject ifAbsent:exceptionBlock;
 
 - (BOOL)includesAllOf:aCltn;
 - (BOOL)includesAnyOf:aCltn;
@@ -94,37 +92,31 @@ typedef struct objset
 - asSet;
 - asOrdCltn;
 
-#if OBJC_BLOCKS
 - detect:aBlock;
 - detect:aBlock ifNone:noneBlock;
 - select:testBlock;
 - reject:testBlock;
 - collect:transformBlock;
 - (unsigned)count:aBlock;
-#endif /* OBJC_BLOCKS */
 
 - elementsPerform:(SEL)aSelector;
 - elementsPerform:(SEL)aSelector with:anObject;
 - elementsPerform:(SEL)aSelector with:anObject with:otherObject;
 - elementsPerform:(SEL)aSelector with:anObject with:otherObject with:thirdObj;
 
-#if OBJC_BLOCKS
 - do:aBlock;
 - do:aBlock until:(BOOL *)flag;
-#endif /* OBJC_BLOCKS */
 
-- find:anObject;
-- (BOOL)contains:anObject;
-- (BOOL)includes:anObject;
-- (unsigned)occurrencesOf:anObject;
+- find:(T)anObject;
+- (BOOL)contains:(T)anObject;
+- (BOOL)includes:(T)anObject;
+- (unsigned)occurrencesOf:(T)anObject;
 
 - printOn:(IOD)aFile;
 
-#ifdef __PORTABLE_OBJC__
 - fileOutOn:aFiler;
 - fileInFrom:aFiler;
 - awakeFrom:aFiler;
-#endif /* __PORTABLE_OBJC__ */
 
 /* private */
 - (objset_t)objsetvalue;

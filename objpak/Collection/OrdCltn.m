@@ -316,6 +316,8 @@ static BOOL eq (objcol_t a, objcol_t b)
 
 - (BOOL)isEqual:aCltn
 {
+    if (![aCltn isKindOf:OrdCltn])
+        return NO;
     return (self == aCltn) ? YES : eq ((&value), [aCltn objcolvalue]);
 }
 

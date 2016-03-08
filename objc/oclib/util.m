@@ -1101,7 +1101,7 @@ id mkclassdef (id keyw, id name, id sname, id protocols, id ivars, id cvars,
                           "class %s.\n"
                           "  (generics should be specified in the interface)",
                           [r classname]);
-                [[r generics] keysDo: 
+                [[r generics] keysDo:
                     { :aKey |
                         [trlunit def:aKey astype:[[r generics] atKey:aKey]]
                     }];
@@ -1134,7 +1134,7 @@ id mkclassdef (id keyw, id name, id sname, id protocols, id ivars, id cvars,
 
         [generics do:
                   { :each |
-                      GenericDecl gDecl =  [[[GenericDecl new] 
+                      GenericDecl gDecl =  [[[GenericDecl new]
                                                setIndex:i++] setSym:each];
                       Type newType = [[t_id deepCopy] decl:gDecl];
                       [trlunit def:each astype:newType];

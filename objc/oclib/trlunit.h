@@ -19,12 +19,15 @@
 #ifndef TRLUNIT_H_
 #define TRLUNIT_H_
 
+#include "Dictionary.h"
 #include "OCString.h"
 #include "OrdCltn.h"
-#include "Dictionary.h"
+#include "Set.h"
 #include "node.h"
 
 extern id trlunit;
+
+@class Symbol, Type;
 
 @interface TranslationUnit : Node
 {
@@ -33,8 +36,9 @@ extern id trlunit;
     int blockcount;
     int heapvarcount;
     int retlabelcount;
-    id types, typedic;
-    id defdic;
+    Set<Symbol> types;
+    Dictionary<Symbol, Type> typedic;
+    Dictionary defdic;
     id classfwds;
     id globals, globaldic, globalvals;
     id builtinfuns, builtintypes;

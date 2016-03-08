@@ -244,7 +244,7 @@ typedef struct objcol
  * If the specified object could not be found, returns nil.
  * @param anObject Object to be removed from the collection.
  */
-- remove:oldObject;
+- remove:(T)oldObject;
 
 /*!
  * Removes the exact object specified, returning it. If unfound, calls a block.
@@ -257,7 +257,7 @@ typedef struct objcol
  * @param exceptionBlock @link Block @/link to be evaluated if anObject not
  * found.
  */
-- remove:oldObject ifAbsent:exceptionBlock;
+- remove:(T)oldObject ifAbsent:exceptionBlock;
 
 /*! @functiongroup Enumeration */
 
@@ -273,7 +273,7 @@ typedef struct objcol
  * If no such object is found, returns nil.
  * @param anObject Object to find in the collection.
  */
-- find:anObject;
+- find:(T)anObject;
 
 /*!
  * Returns the first object matching (@link isEqual: @/link) a specified
@@ -281,7 +281,7 @@ typedef struct objcol
  * If no such object is found, returns nil.
  * @param anObject Object to find a match for in the collection.
  */
-- findMatching:anObject;
+- findMatching:(T)anObject;
 
 /*!
  * Inquires as to whether an object matching a specified object is in the
@@ -290,7 +290,7 @@ typedef struct objcol
  * @param anObject Object to find a match for in the collection.
  * @return YES if a matching object is found; NO if not.
  */
-- (BOOL)includes:anObject;
+- (BOOL)includes:(T)anObject;
 
 - findSTR:(STR)aString;
 
@@ -300,14 +300,14 @@ typedef struct objcol
  * @param anObject Object to find in the collection.
  * @return YES if the object is found; NO if not.
  */
-- (BOOL)contains:anObject;
+- (BOOL)contains:(T)anObject;
 
 /*!
  * Returns the offset of a specified object in the collection.
  * If no such object is found, returns -1.
  * @param anObject Object to find in the collection.
  */
-- (unsigned)offsetOf:anObject;
+- (unsigned)offsetOf:(T)anObject;
 
 - printOn:(IOD)aFile;
 

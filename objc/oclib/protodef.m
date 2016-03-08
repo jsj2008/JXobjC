@@ -23,7 +23,7 @@
 
 @implementation ProtoDef
 
-- (char *)classname { return "Prototype"; }
+- (char *)classname { return "Protocol"; }
 
 - (int)compare:b
 {
