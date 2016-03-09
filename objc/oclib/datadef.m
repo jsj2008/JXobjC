@@ -251,6 +251,18 @@
             {
                 id x = [mkidentexpr (v) synth];
 
+                /* Appears to occasionally be in the wrong place, if a variable
+                 * initialiser is trying to use the value of something made
+                 * heapvar
+                 * before the heapvar is set.
+                 * e.g. where X is a heapvar:
+                 * int X = 55;
+                 * int Y = X;
+                 * then
+                 * Y = heapvars0->X;
+                 * heapvars0->X = 55;
+                 * is the result.
+                 */
                 [cltn addFirst:mkexprstmt (
                                    mkassignexpr (x, "=", [d initializer]))];
                 [decllist at:n
