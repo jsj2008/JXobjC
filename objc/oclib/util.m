@@ -104,6 +104,7 @@
 #include "protodef.h"
 #include "encxpr.h"
 #include "gendecl.h"
+#include "ClassDef+Categories.h"
 
 void procextdef (id def)
 {
@@ -1069,13 +1070,11 @@ id mkclassdef (id keyw, id name, id sname, id protocols, id ivars, id cvars,
     BOOL implkeyw =
         (keyw != nil && strstr ([keyw str], "implementation") != NULL);
 
-    if (iscategory && sname)
-    {
-        [name at:0 insert:sname];
-    }
-
     if (sname)
         superClass = [trlunit lookupclass:sname];
+
+    if (iscategory && sname)
+        [name at:0 insert:sname];
 
     if ((r = [trlunit lookupclass:name]))
     {
@@ -1172,10 +1171,15 @@ id mkclassdef (id keyw, id name, id sname, id protocols, id ivars, id cvars,
         curclassdef = r;
     }
 
-    if (iscategory && !isExtantClass)
+    if (iscategory)
     {
-        [curclassdef use]; /* ensure it is added to its superclass */
-        [trlunit defcat:curclassdef];
+        [superClass addCategory:r];
+
+        if (!isExtantClass)
+        {
+            [curclassdef use]; /* ensure it is added to its superclass */
+            [trlunit defcat:curclassdef];
+        }
     }
 
     return r;

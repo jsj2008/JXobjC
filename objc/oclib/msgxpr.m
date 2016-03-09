@@ -227,10 +227,10 @@ id msgwraps; /* VICI */
 
     if ([[rcvr type] isNamedClass] && [[rcvr type] getClass])
     {
-        Selector aSel =
-            [[[rcvr type] getClass] lookupSelector:[self selector]
-                                           forDecl:[[rcvr type] decl]];
-        Method meth = [[[rcvr type] getClass] methodForSelector:aSel];
+        ClassDef objCls = [[rcvr type] getClass];
+        Decl objDecl    = [[rcvr type] decl];
+        Selector aSel   = [objCls lookupSelector:[self selector] forDecl:objDecl];
+        Method meth     = [objCls methodForSelector:aSel forDecl:objDecl];
 
         methodfound = NO;
 
@@ -238,7 +238,7 @@ id msgwraps; /* VICI */
         {
             warnat (msg,
                     "selector %s may not be understood by object of class %s",
-                    [sel str], [[[rcvr type] getClass] classname]);
+                    [sel str], [objCls classname]);
             method = [self method];
         }
         else
@@ -614,20 +614,6 @@ id msgwraps; /* VICI */
     }
     gs ("}\n");
     return self;
-}
-
-- st80
-{
-    gc ('(');
-    [rcvr st80];
-    [msg st80];
-    gc (')');
-    return self;
-}
-
-- send:(IMP)i sel:(SEL)sel with:kw to:rcvr
-{
-    return [self subclassResponsibility:_cmd];
 }
 
 @end

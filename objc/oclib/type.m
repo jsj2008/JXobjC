@@ -373,6 +373,8 @@ BASIC_TYPESPECS basicSpecForSpec (id spec)
     return result;
 }
 
+- (String)encode:nested { return [self encode]; }
+
 - (BOOL)haslistinit { return haslistinit; }
 
 - (BOOL)isstatic { return isstatic; }

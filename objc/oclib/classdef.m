@@ -39,6 +39,7 @@
 #include "expr.h"
 #include "msgxpr.h"
 #include "structsp.h"
+#include "method.h"
 
 id curclassdef;
 
@@ -1281,12 +1282,6 @@ id curclassdef;
     return iscvar;
 }
 
-- (Method)methodForSelector:(Selector)aSel
-{
-    Method aMeth = [methsForSels atKey:aSel];
-    return aMeth ?: superc ? [superc methodForSelector:aSel] : nil;
-}
-
 - (int)bytesizeOf:c
 {
     int i, n;
@@ -1446,11 +1441,31 @@ static BOOL checkRelation (ClassDef one, ClassDef two)
         Selector candidate = [clssels findMatching:aSel];
         if (!candidate)
             candidate = [nstsels findMatching:aSel];
-        if (!candidate && superc)
-            return [superc lookupSelector:aSel forDecl:aDecl];
-        else
-            return candidate;
+        if (!candidate && !iscategory && superc)
+            candidate = [superc lookupSelector:aSel forDecl:aDecl];
+        if (!candidate && categories)
+            candidate = [[categories
+                detect:{ : each | [each lookupSelector:aSel forDecl:aDecl]}]
+                lookupSelector:aSel
+                       forDecl:aDecl];
+
+        return candidate;
     }
+}
+
+- (Method)methodForSelector:(Selector)aSel forDecl:(Decl)aDecl
+{
+    Method aMeth;
+
+    aMeth = [methsForSels atKey:aSel];
+    if (!aMeth && superc && !iscategory)
+        aMeth = [superc methodForSelector:aSel forDecl:aDecl];
+    if (!aMeth && categories)
+        aMeth = [[categories
+            detect:{ : each | [each methodForSelector:aSel forDecl:aDecl]}]
+            methodForSelector:aSel
+                      forDecl:aDecl];
+    return aMeth;
 }
 
 @end

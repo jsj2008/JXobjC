@@ -54,6 +54,7 @@ extern id curstruct;
     ClassDef rootc;
     ClassDef superc;
     Symbol supername;
+    OrdCltn<ClassDef> categories;
     OrdCltn<ComponentDef> ivars, cvars;
 
     BOOL emitintf;
@@ -148,7 +149,7 @@ extern id curstruct;
 
 /* Should this be folded into methodForSelector ? */
 - lookupSelector:(Selector)aSel forDecl:(Decl)aDecl;
-- (Method)methodForSelector:(Selector)aSel;
+- (Method)methodForSelector:(Selector)aSel forDecl:(Decl)aDecl;
 - lookupivar:sym;
 - lookupcvar:sym;
 - (BOOL)isivar:sym;

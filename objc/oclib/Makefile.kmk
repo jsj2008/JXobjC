@@ -4,7 +4,7 @@ include $(KBUILD_PATH)/subheader.kmk
 LIBRARIES += oclib
 
 oclib_TEMPLATE = OBJC
-oclib_INCS = $(INTERNAL_INCS)
+oclib_INCS = $(INTERNAL_INCS) Oops
 oclib_SOURCES = casestmt.m datadef.m forstmt.m msgxpr.m propdef.m stmt.m \
     castxpr.m decl.m funbody.m identxpr.m namedecl.m relxpr.m structsp.m \
     addrof.m classdef.m def.m funcall.m ifstmt.m node.m rtrnstmt.m switstmt.m \
