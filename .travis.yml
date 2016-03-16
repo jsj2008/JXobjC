@@ -5,10 +5,8 @@ compiler:
   - gcc
 
 before_script:
-  - sudo apt-get update
-  - sudo apt-get install kbuild libgc-dev
-  - git submodule init
-  - git submodule update
+  - sudo apt-get update -q
+  - sudo apt-get install kbuild libgc-dev byacc -q
 
 script:
   - kmk bootstrap1
