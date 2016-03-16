@@ -1,0 +1,15 @@
+sudo: required
+language: c
+compiler:
+  - gcc
+
+before_script:
+  - sudo apt-get update
+  - sudo apt-get install kbuild
+  - git submodule init
+  - git submodule update
+
+script:
+  - kmk bootstrap1
+  - kmk bootstrap2
+  - kmk bootstrap3
