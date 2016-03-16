@@ -56,11 +56,11 @@ cat <<'EOF' > build.sh
 #!/bin/sh
 
 CCEXE="gcc"
-CC="${CCEXE} -std=c99 -x c"
+CC="${CCEXE} -pthread -std=gnu99 -x c"
 
 ${CC} -c *.i
-cd objc && ${CC} -pthread -lgc -c *.i *.c && cd ../plink
-${CC} -c *.i *.c -pthread -lgc && cd ../
+cd objc && ${CC} -c *.i *.c && cd ../plink
+${CC} -c *.i *.c  && cd ../
 
 ${CCEXE} *.o objc/*.o -lm  -lgc -lpthread -o bin/objc1
 ${CCEXE} *.o plink/*.o -lm -lgc -lpthread -o bin/postlink
