@@ -5,7 +5,7 @@ compiler:
 
 before_script:
   - sudo apt-get update
-  - sudo apt-get install kbuild
+  - sudo apt-get install kbuild libgc-devel
   - git submodule init
   - git submodule update
 

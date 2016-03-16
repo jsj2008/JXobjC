@@ -56,14 +56,15 @@ cat <<'EOF' > build.sh
 #!/bin/sh
 
 CCEXE="gcc"
-CC="${CCEXE} -pthread -std=gnu99 -x c"
+CC="${CCEXE} `pkg-config bdw-gc --cflags` -pthread -std=gnu11 -x c"
+GCLIBS=`pkg-config bdw-gc --libs`
 
 ${CC} -c *.i
 cd objc && ${CC} -c *.i *.c && cd ../plink
 ${CC} -c *.i *.c  && cd ../
 
-${CCEXE} *.o objc/*.o -lm  -lgc -lpthread -o bin/objc1
-${CCEXE} *.o plink/*.o -lm -lgc -lpthread -o bin/postlink
+${CCEXE} *.o objc/*.o -lm -lpthread ${GCLIBS} -o bin/objc1
+${CCEXE} *.o plink/*.o -lm -lpthread ${GCLIBS} -o bin/postlink
 
 EOF
 
