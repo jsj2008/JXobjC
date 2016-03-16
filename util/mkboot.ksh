@@ -20,7 +20,8 @@ OCLIB_SRCS="../objc/oclib/addrof.m ../objc/oclib/classdef.m ../objc/oclib/def.m 
 ../objc/oclib/btincall.m ../objc/oclib/dasmstmt.m ../objc/oclib/exprstmt.m ../objc/oclib/gotostmt.m ../objc/oclib/msgxpr.m ../objc/oclib/propdef.m ../objc/oclib/stmt.m
 ../objc/oclib/casestmt.m ../objc/oclib/datadef.m ../objc/oclib/forstmt.m ../objc/oclib/identxpr.m ../objc/oclib/namedecl.m ../objc/oclib/relxpr.m ../objc/oclib/structsp.m
 ../objc/oclib/castxpr.m ../objc/oclib/decl.m ../objc/oclib/funbody.m ../objc/oclib/ifstmt.m ../objc/oclib/node.m ../objc/oclib/rtrnstmt.m ../objc/oclib/switstmt.m
-../objc/oclib/propdef.m ../objc/oclib/protodef.m ../objc/oclib/prdotxpr.m ../objc/oclib/encxpr.m ../objc/oclib/gendecl.m ../objc/oclib/genspec.m ../objc/oclib/Oops/ClassDef+NFI.m"
+../objc/oclib/propdef.m ../objc/oclib/protodef.m ../objc/oclib/prdotxpr.m ../objc/oclib/encxpr.m ../objc/oclib/gendecl.m ../objc/oclib/genspec.m ../objc/oclib/Oops/ClassDef+NFI.m
+../objc/oclib/Oops/ClassDef+Categories.m"
 OBJC_SRCS="../../objc/objc1.m ../../objc/lexfiltr.m yacc.m lex.m"
 PLINK_SRCS="../../objc/postlink.m"
 
@@ -36,13 +37,15 @@ ${OBJC} -I../objcrt/hdr -I../objpak -I../objpak/hdr -I../objpak/Collection \
     ../objpak/*.m \
     ../objpak/Collection/*.m ../objpak/Exception/*.m ../objpak/IODevice/*.m \
     ../objpak/KVCoding/*.m ../objpak/Notification/*.m ../objpak/String/*.m
-${OBJC} -I../objcrt/hdr -I../objpak/hdr -I../objc/oclib ${OCLIB_SRCS}
+${OBJC} -I../objcrt/hdr -I../objpak/hdr -I../objc/oclib -I../objc/oclib/Oops \
+    ${OCLIB_SRCS}
 
 cd objc
 
 byacc -dtv -o yacc.m ../../objc/yacc.ym
 flex -o lex.m ../../objc/lex.lm
-${OBJC} -I../../objc/oclib -I../../objcrt/hdr -I../../objpak/hdr ${OBJC_SRCS}
+${OBJC} -I../../objc/oclib -I../../objcrt/hdr -I../../objpak/hdr \
+    ${OBJC_SRCS}
 rm -f lex.m yacc.m
 
 cd ../plink

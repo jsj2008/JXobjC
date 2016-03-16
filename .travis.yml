@@ -1,11 +1,12 @@
 sudo: required
+dist: trusty
 language: c
 compiler:
   - gcc
 
 before_script:
   - sudo apt-get update
-  - sudo apt-get install kbuild libgc-devel
+  - sudo apt-get install kbuild libgc-dev
   - git submodule init
   - git submodule update
 
