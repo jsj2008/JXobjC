@@ -98,7 +98,7 @@ TOOL_PCPP_COMPILE_OBJC_DEPORD =
 define TOOL_PCPP_COMPILE_OBJC_CMDS
 	$(QUIET)$(TOOL_PCPP_OBJC) -c\
 		$(flags) $(addprefix -I, $(incs)) $(addprefix -D, $(defs))\
-		-Wp,-Wp,-MD,$(dep)1 -Wp,-Wp,-MT,$(obj) -std=c99 \
+		-Wp,-Wp,-MD,$(dep)1 -Wp,-Wp,-MT,$(obj) \
 		 -o $(obj)\
 		$(abspath $(source))
 	$(QUIET)$(SED) 's|$(notdir $(source:.m=.c))|$(source)|' $(dep)1 > $(dep)
