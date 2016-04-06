@@ -1,23 +1,22 @@
 # JX Objective-C #
 
-![JX Objective-C Logo](doc/res/nlogotyp.png)
+![JX Objective-C Logo](doc/res/ghhdr.png)
 
 ### Overview ###
 
 ![Basic overview](doc/res/duckexpl.jpg)
 
 **JX Objective-C** is a powerful development suite implementing the programming
-language Objective-C *(JX)* (abbreviated **JXobjC**.) It is a derivative
-project of David Stes' *Portable Object Compiler*, and is the reference
+language Objective-C *(JX)* (abbreviated **JXobjC**.) It is the reference
 implementation of the JXobjC language.
 
-JX Objective-C several components: firstly a compiler, `jxobjc`, which provides
-a complete implementation of the Objective-C *(JX)* language, and which is
-itself written in JXobjC. The compiler assists the programmer-user, and is
-designed to act as a friend and assistant, offering clear explanations when an
-issue is encountered.
+JX Objective-C consists of several components: firstly a compiler, `jxobjc`,
+which provides a complete implementation of the Objective-C *(JX)* language,
+and which is itself written in JXobjC. The compiler assists the programmer-user,
+and is designed to act as a friend and assistant, offering clear explanations
+when an issue arises.
 
-A standard library, **Object Kit**, forms the second component. This provides
+A class library, called **Object Kit**, forms the second component. This provides
 a class library equipped with a comprehensive world of objects, allowing the
 creation of powerful programmes and libraries. Classes are provided for working
 with containers, threads, messaging, networking, and more.

@@ -87,7 +87,6 @@
                fromIndex:(unsigned int)index
              withNewRoot:newRoot
 {
-    id tSelf          = self;
     Dictionary kToObs = keyToObservers;
     id matchDetector  = {
         : candidate | [candidate.reference matchesRoot:object] &&
@@ -120,7 +119,7 @@
     /* Later, this should be invoked only from index downwards. */
     if (newRoot)
         [KPOs do:
-              { :each | [tSelf addObserverForKeyPath:keyPath
+              { :each | [self addObserverForKeyPath:keyPath
                      ofObject:newRoot ? : object
                       withKPO:each
                     fromIndex:0];
