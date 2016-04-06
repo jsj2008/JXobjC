@@ -1,6 +1,9 @@
-# JX Objective-C #
-
 ![JX Objective-C Logo](doc/res/ghhdr.png)
+
+[![Travis CI](https://img.shields.io/travis/Objective-C-JX/JXobjC.svg)](https://travis-ci.org/Objective-C-JX/JXobjC)
+[![GitHub release](https://img.shields.io/github/release/Objective-C-JX/JXobjC.svg)](https://github.com/Objective-C-JX/JXobjC/releases)
+![Objective-C (JX) version 5.1](https://img.shields.io/badge/Objective--C%20%28JX%29-v5.1-red.svg)
+![Platforms: FreeBSD, Windows, OS X, Linux](https://img.shields.io/badge/platforms-FreeBSD%20|%20OS%20X%20|%20Windows%20|%20Linux-lightgrey.svg)
 
 ### Overview ###
 
