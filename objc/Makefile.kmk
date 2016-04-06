@@ -38,7 +38,7 @@ $(PATH_OUT)/_predll.o: $(PATH_ROOT)/objc/_predll.c
 	kmk_mv _predll.o $@
 
 $(PATH_OBJ)/yacc.m: $(PATH_SUB_CURRENT)/yacc.ym
-	@printf " B-YaCC \t$(@)\n"
+	@printf " Yacc \t$(@)\n"
 	@byacc -dtv -o $@ $<
 	@kmk_mv y.tab.h $(PATH_OBJ)
 

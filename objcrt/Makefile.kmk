@@ -8,7 +8,7 @@ objcrt_TEMPLATE = OBJC
 objcrt_SOURCES = Object/Block.m Object/Exceptn.m Object/Message.m \
 	Object/Object.m Object/OutOfMem.m Object/Proxy.m Object/RtObject.m \
 	crt.m stktrace.m memory.m seltab.m mod.m messenger.m ivar.m type.m \
-	SideTable/dictionary.m SideTable/List.m SideTable/SideTable.m
+	SideTable/dictionary.m SideTable/SideTable.m
 objcrt_INCS = SideTable
 
 objcrt_s_EXTENDS = objcrt
