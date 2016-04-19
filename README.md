@@ -9,11 +9,11 @@
 
 ![Basic overview](doc/res/duckexpl.jpg)
 
-**JX Objective-C** is a powerful development suite implementing the programming
-language Objective-C *(JX)* (abbreviated **JXobjC**.) It is the reference
-implementation of the JXobjC language.
+**JX Objective-C (*Marxist-Leninist*)** is a powerful development suite
+implementing the programming language Objective-C *(JX)* (abbreviated
+**JXobjC**.) It is the reference implementation of the JXobjC language.
 
-JX Objective-C consists of several components: firstly a compiler, `jxobjc`,
+JX Objective-C (M-L) consists of several components: firstly a compiler, `jxobjc`,
 which provides a complete implementation of the Objective-C *(JX)* language,
 and which is itself written in JXobjC. The compiler assists the programmer-user,
 and is designed to act as a friend and assistant, offering clear explanations
@@ -28,6 +28,7 @@ The Object Kit containers subsuite is derived from the design of the
 overall design of the Object Kit is informed primarily by that of
 *SmallTalk-80*'s famously acclaimed standard library.
 
+
 ### Language ###
 
 Objective-C *(JX)* is a programming language in the *Kayian School* of
@@ -36,12 +37,12 @@ to be the pinnacle of programming language design.
 
 JXobjC is founded upon a humanist, modernist, and universalist philosophy, and
 is unapologetically Object-Oriented in the Kayian sense, with a capital **O**.
-Read about the philosophy of JXobjC [here](doc/Philsphy.md).
+Read about the philosophy of JXobjC [here][philosophy].
 
 The language provides a variety of features. You can read about these in the
 eBook,
 ["The Programming Language Objective-C *(JX)* and Its Implementation `jxobjc`"]
-(doc/Book.md) which is linked. Some features of JXobjC include the following:
+[book] which is linked. Some features of JXobjC include the following:
 - C basis, allowing inlining of C code as desired.
 - Blocks, similar to the lambda expressions of the functional languages:
 
@@ -71,8 +72,26 @@ eBook,
   `AtomicProxy` class (this activates a lock around all messages sent to an
   object from different threads.)
 
+
 ### Compiling ###
 
-Instructions are available in [doc/Build.md](doc/Build.md) detailing compilation
+Instructions are available in [doc/Build.md][build] detailing compilation
 on various platforms. If building presents issues for you, please report this as
 a GitHub issue on this repository.
+
+
+### Community & Contribution ###
+
+Contribution to JX Objective-C (M-L) is welcomed. Pull requests and the creation
+of issues are the ideal means by which to do so.
+
+The JX Objective-C (M-L) community aims to be a place where people of diverse
+bkacgrounds may congregate to build a better computing. Members of the community
+must abide by the [JX Objective-C (M-L) Community Code of Conduct][conduct],
+which has been formulated to promote the creation of a safe, Communist space for
+all. The Code of Conduct does not protect the right to oppose socialism.
+
+[book]: doc/Book.md
+[build]: doc/Build.md
+[conduct]: doc/Conduct.md
+[philosophy]: doc/Philsphy.md
