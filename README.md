@@ -1,5 +1,22 @@
 ![JX Objective-C Logo](doc/res/ghhdr.png)
 
+End of an Era
+=============
+
+I had a lot of fun working with JX Objective-C. It was a fun project that taught
+me much about compiler design and parsing.
+
+But an Objective-C compiler is a fraught endeavour. This is mainly because of
+the C. It is a language that has custom extensions numbering likely in the
+hundreds. I failed to adapt JX Objective-C to support Microsoft C/C++ Optimising
+Compiler because of this.
+
+I have therefore embarked upon a new endeavour -
+[Oopsilon](http://github.com/Oopsilon/Oopsilon) - which is deeply inspired by
+Objective-C, but which does not form a C superset.
+
+The historic readme is preserved below for posterity.
+
 [![Travis CI](https://img.shields.io/travis/Objective-C-JX/JXobjC.svg)](https://travis-ci.org/Objective-C-JX/JXobjC)
 [![GitHub release](https://img.shields.io/github/release/Objective-C-JX/JXobjC.svg)](https://github.com/Objective-C-JX/JXobjC/releases)
 ![Objective-C (JX) version 5.1](https://img.shields.io/badge/Objective--C%20%28JX%29-v5.1-red.svg)
@@ -9,11 +26,11 @@
 
 ![Basic overview](doc/res/duckexpl.jpg)
 
-**JX Objective-C (*Marxist-Leninist*)** is a powerful development suite
+**JX Objective-C** is a powerful development suite
 implementing the programming language Objective-C *(JX)* (abbreviated
 **JXobjC**.) It is the reference implementation of the JXobjC language.
 
-JX Objective-C (M-L) consists of several components: firstly a compiler, `jxobjc`,
+JX Objective-C consists of several components: firstly a compiler, `jxobjc`,
 which provides a complete implementation of the Objective-C *(JX)* language,
 and which is itself written in JXobjC. The compiler assists the programmer-user,
 and is designed to act as a friend and assistant, offering clear explanations
@@ -86,10 +103,7 @@ Contribution to JX Objective-C (M-L) is welcomed. Pull requests and the creation
 of issues are the ideal means by which to do so.
 
 The JX Objective-C (M-L) community aims to be a place where people of diverse
-bkacgrounds may congregate to build a better computing. Members of the community
-must abide by the [JX Objective-C (M-L) Community Code of Conduct][conduct],
-which has been formulated to promote the creation of a safe, Communist space for
-all. The Code of Conduct does not protect the right to oppose socialism.
+bkacgrounds may congregate to build a better computing.
 
 [book]: doc/Book.md
 [build]: doc/Build.md
